@@ -3,8 +3,8 @@ title: javascriptテスト
 date: 2016-07-03 23:04:03
 tags:
 ---
-少ない数の素因数分解
-入力：<input id="soinsu_bunkai_input" size="25" type="text" value="1234567890123456" /><div id="soinsu_bunkai_return">出力：ここに結果が表示されます</div>
+小さい数の素因数分解
+入力：<input id="soinsu_bunkai_input" size="25" type="text" value="" /><div id="soinsu_bunkai_return">出力：ここに結果が表示されます</div>
 ※javascriptでは53ビット整数の上限(9007199254740991)を超えると自動的に64ビット浮動小数点型に変換されて誤差が出るため使えません
 
 
