@@ -9,7 +9,7 @@ Rubyでは組み合わせを作成することができる[Array#combination](ht
 これを使えば、例えば下記のように
 ```ruby
 require 'json'
-
+  
 jsonstr = <<JSON
 [
   {
@@ -26,7 +26,7 @@ jsonstr = <<JSON
   }
 ]
 JSON
-
+ 
 p JSON.load(jsonstr)
     .combination(2)
     .to_a
@@ -42,45 +42,50 @@ p JSON.load(jsonstr)
 これをJavaで書きたい時、どうすればいいのか悩みました。  
 今回は再帰的なやりかたでやってみました。
 ```java
-import java.util.LinkedList;
-import java.util.List;
-
-private static final <E> List<List<E>> combination(List<E> parameter, final long combinationCount) {
-  final int parameterSize = parameter.size();
-  if (parameterSize < combinationCount) {
-    throw new IllegalArgumentException("リストの要素数が組み合わせ個数より少ないです。");
-  }else if (combinationCount <= 0) {
-    throw new IllegalArgumentException("組み合わせ個数が不正です。");
-  }else if (combinationCount == 1) {
-    List<List<E>> result = new LinkedList<List<E>>();
-    parameter
-      .forEach(x->{
-        List<E> resultWork = new LinkedList<E>();
-        resultWork.add(x);
-        result.add(resultWork);
-      });
-    return result;
-  } else {
-    List<List<E>> result = new LinkedList<List<E>>();
-    for (int i = 0; i < parameterSize - combinationCount + 1; i++) {
-      List<List<E>> resultWork = combination(parameter.subList(1 + i, parameterSize), combinationCount - 1);
-      for(List<E> resultWorkForEach: resultWork) {
-        resultWorkForEach.add(0, parameter.get(i));
-      }
-      result.addAll(resultWork);
-    }
-    return result;
-  }
+/**
+ * 組み合わせを返す
+ * 
+ * @param parameter 組み合わせを作成するリスト
+ * @param combinationCount 組み合わせの個数
+ * @return 組み合わせのリスト
+ */
+private static final <E> List<List<E>> combination(
+		final List<E> parameter,
+		final long combinationCount) {
+	
+	final int parameterSize = parameter.size();
+	
+	if (parameterSize < combinationCount) {
+		throw new IllegalArgumentException("リストの要素数が組み合わせ個数より少ないです。");
+	} else if (combinationCount <= 0) {
+		throw new IllegalArgumentException("組み合わせ個数が不正です。");
+	} else if (combinationCount == 1) {
+		List<List<E>> result = new LinkedList<List<E>>();
+		parameter.forEach(x -> {
+			List<E> resultWork = new LinkedList<E>();
+			resultWork.add(x);
+			result.add(resultWork);
+		});
+		return result;
+	} else {
+		List<List<E>> result = new LinkedList<List<E>>();
+		for (int i = 0; i < parameterSize - combinationCount + 1; i++) {
+			List<List<E>> resultWork = combination(
+					parameter.subList(1 + i, parameterSize),
+					combinationCount - 1);
+			for (List<E> resultWorkForEach : resultWork) {
+				resultWorkForEach.add(0, parameter.get(i));
+			}
+			result.addAll(resultWork);
+		}
+		return result;
+	}
 }
 ```
 LinkedListを使っているのは先頭追加があるためです。  
 ちょっと見た目がヘビーですが、使えます。  
 こんな感じです。
 ```java
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 class Item {
 	public Item(int price, String name){
 		this.price = price;
@@ -88,13 +93,13 @@ class Item {
 	}
 	int price;
 	String name;
-
-    @Override
+ 
+	@Override
 	public String toString() {
 		return name + ":" + price + "円";
 	}
-}
-
+}  
+  
 class Main {
 	public static void main(String[] args) {
         Item[] itemArray = {
@@ -104,7 +109,7 @@ class Main {
         		new Item(999, "meta")
         	};
         List<Item> itemList = Arrays.asList(itemArray);
-
+ 
         combination(itemList,3)
         	.stream()
         	.forEach(x->{System.out.println(Arrays.toString(x.toArray()));});
