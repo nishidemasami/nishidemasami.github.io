@@ -34,4 +34,4 @@ date: 2016-04-21 01:12:15
 * FE(基本情報技術者)
 * AP(応用情報技術者)
 * SC(情報セキュリティスペシャリスト)
-* 大阪オープン2008 ルービックキューブ3x3x3 1分04秒81(世界45228位、日本国内862位)https://www.worldcubeassociation.org/results/p.php?i=2008NISH01
+* [大阪オープン2008 ルービックキューブ3x3x3 1分04秒81(世界45228位、日本国内862位)](https://www.worldcubeassociation.org/results/p.php?i=2008NISH01)
