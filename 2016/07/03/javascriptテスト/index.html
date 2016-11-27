@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>javascriptテスト | 文系SEのプログラマーズハイ</title>
+  <meta name="author" content="nishidemasami">
+  
+  <meta name="description" content="小さい数の素因数分解入力：出力：ここに結果が表示されます※javascriptでは53ビット整数の上限(9007199254740991)を超えると自動的に64ビット浮動小数点型に変換されて誤差が出るため使えません
+
+$(&#39;#soinsu_bunkai_input&#39;).on(&#39;keyup chang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="javascriptテスト"/>
+  <meta property="og:site_name" content="文系SEのプログラマーズハイ"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="文系SEのプログラマーズハイ" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">文系SEのプログラマーズハイ</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2016-07-03T14:04:03.000Z"><a href="/2016/07/03/javascriptテスト/">2016-07-03</a></time>
+      
+      
+  
+    <h1 class="title">javascriptテスト</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>小さい数の素因数分解<br>入力：<input id="soinsu_bunkai_input" size="25" type="text" value=""><div id="soinsu_bunkai_return">出力：ここに結果が表示されます</div><br>※javascriptでは53ビット整数の上限(9007199254740991)を超えると自動的に64ビット浮動小数点型に変換されて誤差が出るため使えません</p>
+<script type="text/javascript">
+$('#soinsu_bunkai_input').on('keyup change paste', function() {
+  var start = new Date();
+  var kotae = soinsu5($('#soinsu_bunkai_input').val());
+  var end = new Date();
+  $('#soinsu_bunkai_return').html("出力：" + kotae + "<br>\n ※処理時間:" + (end - start) + "ms");
+});
+var soinsu5=function(b){
+  if(b.match(/[^0-9]/g))return"\u30a8\u30e9\u30fc:\u8aa4\u3063\u305f\u5165\u529b\u3067\u3059";
+  var f=[],c=Number(b);if(!(9007199254740991>=c))return"\u30a8\u30e9\u30fc:\u6570\u5024\u304c\u5927\u304d\u3059\u304e\u307e\u3059\u3002<br>\n";
+  if(2>c)return b;
+  var d=Math.sqrt(c),d=[2,3,5,7,11,13,17,19,23,29];
+  for(b=0;9>=b;b++)for(;0==c%d[b];)c/=d[b],f.push(d[b]);
+  if(30>c)return f.join(" * ");
+  for(var e=30,g=[1,7,11,13,17,19,23,29],d=Math.sqrt(c);e<=d;){for(b=0;7>=b;b++)for(;0==c%(e+g[b]);)c/=
+  e+g[b],f.push(e+g[b]),d=Math.sqrt(c);e+=30}1!=c&&f.push(c);
+  return f.join(" * ")
+};
+</script>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="https://nishidemasami.github.io/2016/07/03/javascriptテスト/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:nishidemasami.github.io">
+  </form>
+</div>
+
+  
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2016 nishidemasami
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
