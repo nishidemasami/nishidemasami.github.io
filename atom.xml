@@ -1,66 +1,28 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-  <meta charset="utf-8">
-  
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
   <title>文系SEプログラマーズハイ</title>
-  <meta name="author" content="nishidemasami">
   
+  <link href="/atom.xml" rel="self"/>
   
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+  <link href="https://nishidemasami.github.io/"/>
+  <updated>2016-11-27T14:07:17.000Z</updated>
+  <id>https://nishidemasami.github.io/</id>
   
-  <meta property="og:site_name" content="文系SEプログラマーズハイ"/>
-
+  <author>
+    <name>nishidemasami</name>
+    
+  </author>
   
-    <meta property="og:image" content="undefined"/>
+  <generator uri="http://hexo.io/">Hexo</generator>
   
-
-  <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="文系SEプログラマーズハイ" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  
-
-</head>
-
-
-<body>
-  <header id="header"><div class="meta inner">
-  <h1><a href="/">文系SEプログラマーズハイ</a></h1>
-  <h2><a href="/"></a></h2>
-  <nav id="main-nav">
-    <ul>
-      
-      <li><a href="/about-me">About Me</a></li>
-      
-      <li><a href="/archives">Archives</a></li>
-      
-      <li><a href="/atom.xml">RSS</a></li>
-      
-    </ul>
-    <div class="clearfix"></div>
-  </nav>
-</div>
-<div class="clearfix"></div>
-</header>
-  <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
-  <div class="post-content">
-    <header>
-      
-  
-    <h1 class="title"><a href="/2016/11/27/java-combination/">JAVAで組み合わせ</a></h1>
-  
-
-      
-        <time datetime="2016-11-27T00:04:03.000Z">2016-11-27</time>
-      
-    </header>
-    <div class="entry">
-      
-        <p>Rubyでは組み合わせを作成することができる<a href="https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html" target="_blank" rel="external">Array#combination</a>が用意されています。<br>これを使えば、例えば下記のように<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'json'</span></div><div class="line">  </div><div class="line">jsonstr = <span class="string">&lt;&lt;JSON</span></div><div class="line">[</div><div class="line">  &#123;</div><div class="line">    "price": 432,</div><div class="line">    "name": "hoge"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 531,</div><div class="line">    "name": "fuga"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 568,</div><div class="line">    "name": "piyo"</div><div class="line">  &#125;</div><div class="line">]</div><div class="line">JSON</div><div class="line"> </div><div class="line">p JSON.load(jsonstr)</div><div class="line">    .combination(<span class="number">2</span>)</div><div class="line">    .to_a</div><div class="line">    .select(&amp;-&gt;x&#123;x.reduce(&amp;-&gt;x,y&#123;x[<span class="string">"price"</span>] + y[<span class="string">"price"</span>]&#125;) == <span class="number">1000</span>&#125;)</div></pre></td></tr></table></figure></p>
+  <entry>
+    <title>JAVAで組み合わせ</title>
+    <link href="https://nishidemasami.github.io/2016/11/27/java-combination/"/>
+    <id>https://nishidemasami.github.io/2016/11/27/java-combination/</id>
+    <published>2016-11-27T00:04:03.000Z</published>
+    <updated>2016-11-27T14:07:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Rubyでは組み合わせを作成することができる<a href="https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html" target="_blank" rel="external">Array#combination</a>が用意されています。<br>これを使えば、例えば下記のように<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'json'</span></div><div class="line">  </div><div class="line">jsonstr = <span class="string">&lt;&lt;JSON</span></div><div class="line">[</div><div class="line">  &#123;</div><div class="line">    "price": 432,</div><div class="line">    "name": "hoge"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 531,</div><div class="line">    "name": "fuga"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 568,</div><div class="line">    "name": "piyo"</div><div class="line">  &#125;</div><div class="line">]</div><div class="line">JSON</div><div class="line"> </div><div class="line">p JSON.load(jsonstr)</div><div class="line">    .combination(<span class="number">2</span>)</div><div class="line">    .to_a</div><div class="line">    .select(&amp;-&gt;x&#123;x.reduce(&amp;-&gt;x,y&#123;x[<span class="string">"price"</span>] + y[<span class="string">"price"</span>]&#125;) == <span class="number">1000</span>&#125;)</div></pre></td></tr></table></figure></p>
 <p>こうすれば、JSONの商品リストからpriceの合計が1000になるもの(hogeとpiyo)を抜き出してくれます。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[&#123;&quot;price&quot;=&gt;432, &quot;name&quot;=&gt;&quot;hoge&quot;&#125;, &#123;&quot;price&quot;=&gt;568, &quot;name&quot;=&gt;&quot;piyo&quot;&#125;]]</div></pre></td></tr></table></figure></p>
 <p>非常にイージー。</p>
 <p>ところが、combinationはJavaには無いんですよね。<br>これをJavaで書きたい時、どうすればいいのか悩みました。<br>今回は再帰的なやりかたでやってみました。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 組み合わせを返す</div><div class="line"> * </div><div class="line"> * <span class="doctag">@param</span> parameter 組み合わせを作成するリスト</div><div class="line"> * <span class="doctag">@param</span> combinationCount 組み合わせの個数</div><div class="line"> * <span class="doctag">@return</span> 組み合わせのリスト</div><div class="line"> */</div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> &lt;E&gt; List&lt;List&lt;E&gt;&gt; combination(</div><div class="line">		<span class="keyword">final</span> List&lt;E&gt; parameter,</div><div class="line">		<span class="keyword">final</span> <span class="keyword">long</span> combinationCount) &#123;</div><div class="line">	</div><div class="line">	<span class="keyword">final</span> <span class="keyword">int</span> parameterSize = parameter.size();</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (parameterSize &lt; combinationCount) &#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"リストの要素数が組み合わせ個数より少ないです。"</span>);</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (combinationCount &lt;= <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"組み合わせ個数が不正です。"</span>);</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (combinationCount == <span class="number">1</span>) &#123;</div><div class="line">		List&lt;List&lt;E&gt;&gt; result = <span class="keyword">new</span> LinkedList&lt;List&lt;E&gt;&gt;();</div><div class="line">		parameter.forEach(x -&gt; &#123;</div><div class="line">			List&lt;E&gt; resultWork = <span class="keyword">new</span> LinkedList&lt;E&gt;();</div><div class="line">			resultWork.add(x);</div><div class="line">			result.add(resultWork);</div><div class="line">		&#125;);</div><div class="line">		<span class="keyword">return</span> result;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		List&lt;List&lt;E&gt;&gt; result = <span class="keyword">new</span> LinkedList&lt;List&lt;E&gt;&gt;();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; parameterSize - combinationCount + <span class="number">1</span>; i++) &#123;</div><div class="line">			List&lt;List&lt;E&gt;&gt; resultWork = combination(</div><div class="line">					parameter.subList(<span class="number">1</span> + i, parameterSize),</div><div class="line">					combinationCount - <span class="number">1</span>);</div><div class="line">			<span class="keyword">for</span> (List&lt;E&gt; resultWorkForEach : resultWork) &#123;</div><div class="line">				resultWorkForEach.add(<span class="number">0</span>, parameter.get(i));</div><div class="line">			&#125;</div><div class="line">			result.addAll(resultWork);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> result;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -70,37 +32,29 @@
 <p>こうなります。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[hoge:432円, piyo:568円]</div></pre></td></tr></table></figure></p>
 <p>java8のstreamなのに遅延評価が役に立たないのは、Rubyもcombinationを<a href="https://docs.ruby-lang.org/ja/latest/class/Enumerator=3a=3aLazy.html" target="_blank" rel="external">Enumerator::Lazy</a>で使えないのと一緒ですね。<br>java8は遅延評価がデフォルトとなっているので、気軽にlimit(1)などで一瞬で返ってくるつもりでいたらcombination部分が延々返ってこない…なんてことが発生しないようになのかもしれません。</p>
 <p>Rubyで使えたcombinationが無くて困った話でした。</p>
-
-      
-    </div>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-      </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  <div class="post-content">
-    <header>
-      
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Rubyでは組み合わせを作成することができる&lt;a href=&quot;https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Array
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="https://nishidemasami.github.io/tags/Java/"/>
+    
+      <category term="Ruby" scheme="https://nishidemasami.github.io/tags/Ruby/"/>
+    
+  </entry>
   
-    <h1 class="title"><a href="/2016/07/03/javascriptテスト/">javascriptテスト</a></h1>
-  
-
-      
-        <time datetime="2016-07-03T14:04:03.000Z">2016-07-03</time>
-      
-    </header>
-    <div class="entry">
-      
-        <p>小さい数の素因数分解<br>入力：<input id="soinsu_bunkai_input" size="25" type="text" value=""><div id="soinsu_bunkai_return">出力：ここに結果が表示されます</div><br>※javascriptでは53ビット整数の上限(9007199254740991)を超えると自動的に64ビット浮動小数点型に変換されて誤差が出るため使えません</p>
+  <entry>
+    <title>javascriptテスト</title>
+    <link href="https://nishidemasami.github.io/2016/07/03/javascript%E3%83%86%E3%82%B9%E3%83%88/"/>
+    <id>https://nishidemasami.github.io/2016/07/03/javascriptテスト/</id>
+    <published>2016-07-03T14:04:03.000Z</published>
+    <updated>2016-11-27T00:52:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>小さい数の素因数分解<br>入力：<input id="soinsu_bunkai_input" size="25" type="text" value=""><div id="soinsu_bunkai_return">出力：ここに結果が表示されます</div><br>※javascriptでは53ビット整数の上限(9007199254740991)を超えると自動的に64ビット浮動小数点型に変換されて誤差が出るため使えません</p>
 <script type="text/javascript">
 $('#soinsu_bunkai_input').on('keyup change paste', function() {
   var start = new Date();
@@ -120,104 +74,35 @@ var soinsu5=function(b){
   return f.join(" * ")
 };
 </script>
-
-      
-    </div>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-      </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  <div class="post-content">
-    <header>
-      
-  
-    <h1 class="title"><a href="/2016/07/02/hello-world/">はじめまして</a></h1>
-  
-
-      
-        <time datetime="2016-07-01T19:58:43.000Z">2016-07-02</time>
-      
-    </header>
-    <div class="entry">
-      
-        <p>はじめての投稿です。<br>これから、なにか有益なことや無益なことを書いてゆこうと思います。<br>よろしくお願いします。</p>
-
-      
-    </div>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-      </footer>
-  </div>
-</article>
-
-
-
-
-
-
-<nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav></div></div>
-    <aside id="sidebar" class="alignright">
-  
-<div class="widget tag">
-  <h3 class="title">Neueste Artikel</h3>
-  <ul class="entry">
+]]></content>
     
-      <li>
-        <a href="/2016/11/27/java-combination/">JAVAで組み合わせ</a>
-      </li>
+    <summary type="html">
     
-      <li>
-        <a href="/2016/07/03/javascriptテスト/">javascriptテスト</a>
-      </li>
+      &lt;p&gt;小さい数の素因数分解&lt;br&gt;入力：&lt;input id=&quot;soinsu_bunkai_input&quot; size=&quot;25&quot; type=&quot;text&quot; value=&quot;&quot;&gt;&lt;div id=&quot;soinsu_bunkai_return&quot;&gt;出力：ここに結果が表示されます&lt;/div&gt;&lt;br&gt;※
     
-      <li>
-        <a href="/2016/07/02/hello-world/">はじめまして</a>
-      </li>
+    </summary>
     
-  </ul>
-</div>
-
-
+    
+  </entry>
   
+  <entry>
+    <title>はじめまして</title>
+    <link href="https://nishidemasami.github.io/2016/07/02/hello-world/"/>
+    <id>https://nishidemasami.github.io/2016/07/02/hello-world/</id>
+    <published>2016-07-01T19:58:43.000Z</published>
+    <updated>2016-11-27T00:52:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>はじめての投稿です。<br>これから、なにか有益なことや無益なことを書いてゆこうと思います。<br>よろしくお願いします。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;はじめての投稿です。&lt;br&gt;これから、なにか有益なことや無益なことを書いてゆこうと思います。&lt;br&gt;よろしくお願いします。&lt;/p&gt;
 
+    
+    </summary>
+    
+    
+  </entry>
   
-<div class="widget tagcloud">
-  <h3 class="title">Tag-Cloud</h3>
-  <div class="entry">
-    <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a>
-  </div>
-</div>
-
-</aside>
-    <div class="clearfix"></div>
-  </div>
-  <footer id="footer" class="inner"><div class="alignleft">
-  
-  &copy; 2016 nishidemasami
-  
-</div>
-<div class="clearfix"></div></footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-
-</body>
-</html>
-
+</feed>
