@@ -29,7 +29,6 @@ p JSON.load(jsonstr)
     .combination(2)
     .to_a
     .select(&->x{x.reduce(&->x,y{x["price"] + y["price"]}) == 1000})
-
 ```
 こうすれば、JSONの商品リストからpriceの合計が1000になるもの(hogeとpiyo)を抜き出してくれます。
 ```
