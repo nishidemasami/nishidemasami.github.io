@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   
+  
   <title>JAVAで組み合わせ | 文系SEプログラマーズハイ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
   <meta name="description" content="Rubyでは組み合わせを作成することができるArray#combinationが用意されています。これを使えば、例えば下記のように1234567891011121314151617181920212223require &apos;json&apos;  jsonstr = &amp;lt;&amp;lt;JSON[  &amp;#123;    &quot;price&quot;: 432,    &quot;name&quot;: &quot;hoge&quot;  &amp;#125;,  &amp;#123">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVAで組み合わせ">
@@ -16,88 +18,70 @@
 <meta name="twitter:title" content="JAVAで組み合わせ">
 <meta name="twitter:description" content="Rubyでは組み合わせを作成することができるArray#combinationが用意されています。これを使えば、例えば下記のように1234567891011121314151617181920212223require &apos;json&apos;  jsonstr = &amp;lt;&amp;lt;JSON[  &amp;#123;    &quot;price&quot;: 432,    &quot;name&quot;: &quot;hoge&quot;  &amp;#125;,  &amp;#123">
   
-    <link rel="alternate" href="/atom.xml" title="文系SEプログラマーズハイ" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="文系SEプログラマーズハイ" type="application/atom+xml">
   
   
+    <link rel="icon" href="/favicon.png">
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link href='//fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css">
   
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
-
-  <link rel="stylesheet" href="/css/styles.css">
-  
-<!-- Google Analytics -->
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-88094521-1', 'auto');
-ga('send', 'pageview');
-
-</script>
-<!-- End Google Analytics -->
-
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">文系SEプログラマーズハイ</a>
+      </h1>
       
     </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about-me">Abount Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        
+          <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://nishidemasami.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="main-menu-navbar">
-      <ul class="nav navbar-nav">
-        
-          <li><a class=""
-                 href="/index.html">Home</a></li>
-        
-          <li><a class=""
-                 href="/archives/">Archives</a></li>
-        
-          <li><a class=""
-                 href="/about-me/">About Me</a></li>
-        
-      </ul>
+      <div class="outer">
+        <section id="main"><article id="post-java-combination" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/27/java-combination/" class="article-date">
+  <time datetime="2016-11-27T00:04:03.000Z" itemprop="datePublished">2016-11-27</time>
+</a>
 
-      <!--
-      <ul class="nav navbar-nav navbar-right">
-        
-          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
-        
-      </ul>
-      -->
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-  <div class="container">
-    <div class="blog-header">
-  <h1 class="blog-title">文系SEプログラマーズハイ</h1>
-  
-</div>
-
-    <div class="row">
-        <div class="col-sm-8 blog-main">
-          <article id="post-java-combination" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
     
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
   
     <h1 class="article-title" itemprop="name">
       JAVAで組み合わせ
@@ -105,21 +89,24 @@ ga('send', 'pageview');
   
 
 
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/2016/11/27/java-combination/" class="article-date"><time datetime="2016-11-27T00:04:03.000Z" itemprop="datePublished">2016-11-27</time></a>
-</div>
-
+      </header>
     
-    
-
-  </div>
-  <div class="article-inner">
-
     <div class="article-entry" itemprop="articleBody">
       
+        <div class="article-sharing">
+  <ul>
+    <li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-via="{{ theme.twitter }}" data-counturl="https://nishidemasami.github.io/2016/11/27/java-combination/" >Tweet</a>
+    </li>
+    <li>
+      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/11/27/java-combination/"></div>
+    </li>
+  </ul>
+</div>
+
+      
+      
+        
         <p>Rubyでは組み合わせを作成することができる<a href="https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html" target="_blank" rel="external">Array#combination</a>が用意されています。<br>これを使えば、例えば下記のように<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'json'</span></div><div class="line">  </div><div class="line">jsonstr = <span class="string">&lt;&lt;JSON</span></div><div class="line">[</div><div class="line">  &#123;</div><div class="line">    "price": 432,</div><div class="line">    "name": "hoge"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 531,</div><div class="line">    "name": "fuga"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 568,</div><div class="line">    "name": "piyo"</div><div class="line">  &#125;</div><div class="line">]</div><div class="line">JSON</div><div class="line"> </div><div class="line">p JSON.load(jsonstr)</div><div class="line">    .combination(<span class="number">2</span>)</div><div class="line">    .to_a</div><div class="line">    .select(&amp;-&gt;x&#123;x.reduce(&amp;-&gt;x,y&#123;x[<span class="string">"price"</span>] + y[<span class="string">"price"</span>]&#125;) == <span class="number">1000</span>&#125;)</div></pre></td></tr></table></figure></p>
 <p>こうすれば、JSONの商品リストからpriceの合計が1000になるもの(hogeとpiyo)を抜き出してくれます。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[&#123;&quot;price&quot;=&gt;432, &quot;name&quot;=&gt;&quot;hoge&quot;&#125;, &#123;&quot;price&quot;=&gt;568, &quot;name&quot;=&gt;&quot;piyo&quot;&#125;]]</div></pre></td></tr></table></figure></p>
 <p>非常にイージー。</p>
@@ -133,16 +120,10 @@ ga('send', 'pageview');
 
       
     </div>
-
-    
-      
-
-    
-
     <footer class="article-footer">
-      <a data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-id="civzy0nng0003dnizyzaescij" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
+      
+        <a data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-id="ciw2bkfoq0002p0izkg57j1uy" class="article-share-link">Share</a>
+      
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ruby/">Ruby</a></li></ul>
@@ -152,17 +133,15 @@ ga('send', 'pageview');
   </div>
   
     
-<ul id="article-nav" class="nav nav-pills nav-justified">
+<nav id="article-nav">
   
-  <li role="presentation">
+  
     <a href="/2016/07/03/javascriptテスト/" id="article-nav-older" class="article-nav-link-wrap">
-      <i class="fa fa-chevron-left pull-left"></i>
-      <span class="article-nav-link-title">javascriptテスト</span>
+      <strong class="article-nav-caption">Older Post</strong>
+      <div class="article-nav-title">javascriptテスト</div>
     </a>
-  </li>
   
-  
-</ul>
+</nav>
 
 
   
@@ -170,87 +149,129 @@ ga('send', 'pageview');
 
 
 
-
-        </div>
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-          
-  <div class="sidebar-module sidebar-module-inset">
-  <h4>About</h4>
-  <p>西出正美のブログです。 有益なことや無益なことなど書いています。</p>
-
-</div>
-
-
+</section>
+        
+          <aside id="sidebar">
   
-
-
-  
-  <div class="sidebar-module">
-    <h4>Tags</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/tags/Java/">Java</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/tags/Ruby/">Ruby</a><span class="sidebar-module-list-count">1</span></li></ul>
-  </div>
-
-
-
-  
-  <div class="sidebar-module">
-    <h4>Tag Cloud</h4>
-    <p class="tagcloud">
-      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a>
-    </p>
-  </div>
-
-
-  
-  <div class="sidebar-module">
-    <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">2</span></li></ul>
-  </div>
-
-
-
-  
-  <div class="sidebar-module">
-    <h4>Recents</h4>
-    <ul class="sidebar-module-list">
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-about" class="widget-title">About</h3>
+    <div class="widget">
       
-        <li>
-          <a href="/2016/11/27/java-combination/">JAVAで組み合わせ</a>
-        </li>
+        <p> nishidemasami </p>
       
-        <li>
-          <a href="/2016/07/03/javascriptテスト/">javascriptテスト</a>
-        </li>
       
-        <li>
-          <a href="/2016/07/02/hello-world/">はじめまして</a>
-        </li>
+      </p>
       
-    </ul>
-  </div>
-
-
-
-        </div>
+      
     </div>
   </div>
-  <footer class="blog-footer">
-  <div class="container">
+
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-tag" class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-archive" class="widget-title" data-skip-mobile-nav="true">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-recent-posts" class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/27/java-combination/">JAVAで組み合わせ</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/03/javascriptテスト/">javascriptテスト</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/02/hello-world/">はじめまして</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2016 nishidemasami<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Copyrights &copy; 2016 nishidemasami All Rights Reserved. <br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.
+      Themed by <a href="https://github.com/kwhrtsk/hexo-theme-ingenuous">Ingenuous</a> (based on <a href="https://github.com/hexojs/hexo-theme-landscape">Landscape</a>).
     </div>
   </div>
 </footer>
 
+    </div>
+    <nav id="mobile-nav">
   
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about-me" class="mobile-nav-link">Abount Me</a>
+  
+</nav>
+
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.4";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 <script src="/js/script.js"></script>
 
+
+  </div>
 </body>
 </html>
