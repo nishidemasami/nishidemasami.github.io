@@ -2,6 +2,7 @@
 title: javascriptテスト
 date: 2016-07-03 23:04:03
 tags:
+- "JavaScript"
 ---
 小さい数の素因数分解
 入力：<input id="soinsu_bunkai_input" size="25" type="text" value="" /><div id="soinsu_bunkai_return">出力：ここに結果が表示されます</div>
