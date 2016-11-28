@@ -41,8 +41,3 @@ theme: ingenuous
 deploy:
   type: git
   repo: 'git@nishidemasami-ssh-github:nishidemasami/nishidemasami.github.io.git'
-theme_config:
-  menu:
-    Home: /
-    Archives: /archives
-    Abount Me: /about-me
