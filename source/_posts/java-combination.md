@@ -9,7 +9,7 @@ Rubyでは組み合わせを作成することができる[Array#combination](ht
 これを使えば、例えば下記のように
 ```ruby
 require 'json'
-  
+
 jsonstr = <<JSON
 [
   {
@@ -26,7 +26,7 @@ jsonstr = <<JSON
   }
 ]
 JSON
- 
+
 p JSON.load(jsonstr)
     .combination(2)
     .to_a
@@ -44,7 +44,7 @@ p JSON.load(jsonstr)
 ```java
 /**
  * 組み合わせを返す
- * 
+ *
  * @param parameter 組み合わせを作成するリスト
  * @param combinationCount 組み合わせの個数
  * @return 組み合わせのリスト
@@ -52,9 +52,9 @@ p JSON.load(jsonstr)
 private static final <E> List<List<E>> combination(
 		final List<E> parameter,
 		final long combinationCount) {
-	
+
 	final int parameterSize = parameter.size();
-	
+
 	if (parameterSize < combinationCount) {
 		throw new IllegalArgumentException("リストの要素数が組み合わせ個数より少ないです。");
 	} else if (combinationCount <= 0) {
@@ -93,23 +93,22 @@ class Item {
 	}
 	int price;
 	String name;
- 
+
 	@Override
 	public String toString() {
 		return name + ":" + price + "円";
 	}
 }  
-  
+
 class Main {
 	public static void main(String[] args) {
-        Item[] itemArray = {
+        List<Item> itemList = Arrays.asList(new Item[]{
         		new Item(432, "hoge"),
         		new Item(531, "fuga"),
         		new Item(568, "piyo"),
         		new Item(999, "meta")
-        	};
-        List<Item> itemList = Arrays.asList(itemArray);
- 
+      	});
+
         combination(itemList,3)
         	.stream()
         	.forEach(x->{System.out.println(Arrays.toString(x.toArray()));});
