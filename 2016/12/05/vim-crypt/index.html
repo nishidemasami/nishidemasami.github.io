@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <meta http-equiv="content-language" content="ja">
+  <meta charset="utf-8">
+  
+  
+  <title>Vimで暗号化 | 文系SEコーディングハイ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="Vimで暗号化を行うには、次の方法が用意されています。1:set cryptmethod=blowfish
+このblowfishの他にzipや、環境によってはblowfish2が用意されています。使えるならばセキュリティの面から考えてblowfish2を使うべきでしょう。しかしです。本当にセキュリティの面から考えると、blowfishの発展型であるTwofish※注：blowfish2はTwofi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vimで暗号化">
+<meta property="og:url" content="https://nishidemasami.github.io/2016/12/05/vim-crypt/index.html">
+<meta property="og:site_name" content="文系SEコーディングハイ">
+<meta property="og:description" content="Vimで暗号化を行うには、次の方法が用意されています。1:set cryptmethod=blowfish
+このblowfishの他にzipや、環境によってはblowfish2が用意されています。使えるならばセキュリティの面から考えてblowfish2を使うべきでしょう。しかしです。本当にセキュリティの面から考えると、blowfishの発展型であるTwofish※注：blowfish2はTwofi">
+<meta property="og:updated_time" content="2016-12-04T20:26:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vimで暗号化">
+<meta name="twitter:description" content="Vimで暗号化を行うには、次の方法が用意されています。1:set cryptmethod=blowfish
+このblowfishの他にzipや、環境によってはblowfish2が用意されています。使えるならばセキュリティの面から考えてblowfish2を使うべきでしょう。しかしです。本当にセキュリティの面から考えると、blowfishの発展型であるTwofish※注：blowfish2はTwofi">
+  
+    <link rel="alternative" href="/atom.xml" title="文系SEコーディングハイ" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href='//fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-88094521-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">文系SEコーディングハイ</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about-me">Abount Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        
+          <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://nishidemasami.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vim-crypt" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/05/vim-crypt/" class="article-date">
+  <time datetime="2016-12-05T00:04:03.000Z" itemprop="datePublished">2016-12-05</time>
+</a>
+
+    
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vimで暗号化
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div class="article-sharing">
+  <ul>
+    <li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-counturl="https://nishidemasami.github.io/2016/12/05/vim-crypt/" >Tweet</a>
+    </li>
+    <li>
+      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/12/05/vim-crypt/"></div>
+    </li>
+  </ul>
+</div>
+
+      
+      
+        
+        <p>Vimで暗号化を行うには、次の方法が用意されています。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:set cryptmethod=blowfish</div></pre></td></tr></table></figure></p>
+<p>このblowfishの他にzipや、環境によってはblowfish2が用意されています。使えるならばセキュリティの面から考えてblowfish2を使うべきでしょう。<br>しかしです。本当にセキュリティの面から考えると、blowfishの発展型であるTwofish<a href="http://vim.1045645.n5.nabble.com/Blowfish2-td5726043.html" target="_blank" rel="external">※注：blowfish2はTwofishではありません</a>やAES等の方がより良い選択肢なはずです。<br>今回、Vimの暗号化機能に頼らず、自前でopensslを用いてAESにて暗号化・復号をしてみたいと思います。</p>
+<p>通常vimで文章を保存するのには<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w</div></pre></td></tr></table></figure></p>
+<p>を行いますが、出力先を標準入力としてコマンドを実行することもできます。<br>すなわち、opensslへ以下のように渡せば良いわけです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !openssl aes-256-cbc -out ~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
+<p>2回パスワードを聞かれるため、それを入力すれば指定した場所(この場合は~/vim_enc_test_file)へ書き込まれます。</p>
+<p>復号する際は、Vimから<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !openssl aes-256-cbc -d -in ~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
+<p>とするか、もしくはコマンドラインから<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -</div></pre></td></tr></table></figure></p>
+<p>とします。</p>
+<p>ただ、非常にイケてないことにこの書き込まれたファイルをhexdumpして見てみると、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">00000000  53 61 6c 74 65 64 5f 5f  04 12 0d 0c 9e e8 74 aa  |Salted__......t.|</div><div class="line">00000010  f6 60 00 e7 d1 60 7b 64  19 23 a5 ad 7f 4d 62 19  |.`...`&#123;d.#...Mb.|</div></pre></td></tr></table></figure></p>
+<p>このように、ファイルの頭に「Salted__」の文字列が入るため、opensslにて暗号化したことはわかる人にはバレバレです。<br>もっとも、Vimの暗号化機能でも以下のように、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">00000000  56 69 6d 43 72 79 70 74  7e 30 32 21 de 8b b9 db  |VimCrypt~02!....|</div><div class="line">00000010  03 c7 6b 23 86 e1 25 79  e7 ee 6c 5e 27 9d eb 58  |..k#..%y..l^&apos;..X|</div><div class="line">00000020  f8                                                |.|</div></pre></td></tr></table></figure></p>
+<p>「VimCrypt~02!」という文字列が入るのでバレバレなのですが。</p>
+<p>このバレバレなのをどうにかしたい時も、opensslでやる場合は簡単です。<br>以下のようにddで8バイトスキップすれば「Salted__」の文字列を消すことができます。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !openssl aes-256-cbc | dd ibs=8 skip=1 of=~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
+<p>そうすると、以下のようなファイルが出力されます。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">00000000  92 3a 22 ce 3e 26 5a cf  26 6c da e5 3c ec e9 c6  |.:&quot;.&gt;&amp;Z.&amp;l..&lt;...|</div><div class="line">00000010  ad 3b c1 47 13 d6 e9 d2                           |.;.G....|</div></pre></td></tr></table></figure></p>
+<p>当然、一見ランダムですから、ただの乱数ファイルにも見えますし、たとえ暗号化されたファイルだとわかったとしてもいったいなんのソフトで暗号化されたのかもわかりません。</p>
+<p>読み込みは以下のように行います。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -</div></pre></td></tr></table></figure>
+<p>ちなみに圧縮もしてみましょう。書き込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !bzip2 | openssl aes-256-cbc | dd ibs=8 skip=1 of=~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
+<p>読み込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | bzcat</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | bzcat | vim -</div></pre></td></tr></table></figure>
+<p>さて、最後にあとひと押しです。<br>「aes-256-cbc」はパスワードが間違っている場合にエラーを出します。CentOS6.8の場合は以下のエラーとなります。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">digital envelope routines:EVP_DecryptFinal_ex:wrong final block length</div></pre></td></tr></table></figure></p>
+<p>これは、総当りで復号化を試みるクラッカーにとっては助けにもなってしまいます。なぜなら、パスワードが間違っていることがわかるためです。<br>Mac等では使えませんが、「aes-256-cbc」の代わりに「aes-256-ofb」を使うことで解決されます。<br>「aes-256-ofb」なら、パスワードが合っているのか間違っているのすらわかりません。<br>書き込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !bzip2 | openssl aes-256-ofb | dd ibs=8 skip=1 of=~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
+<p>読み込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat | vim -</div></pre></td></tr></table></figure>
+<p>パスワードが合っているのか間違っているのすらわからないというのは、つまり最後は自前で確認しなければならないということです。<br>人間には不可能ですし、機械的に判定しようにも非常に手をこまねくはずです。<br>環境が許せばぜひやってみて下さい。</p>
+<p>Vimとopensslで暗号化・復号をしようというお話でした。<br>みなさんもぜひやってみて下さい。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-id="ciwbnpl2k0001pxiz738jn07m" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vim/">Vim</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/27/java-combination/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older Post</strong>
+      <div class="article-nav-title">JAVAで組み合わせ</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-about" class="widget-title">About</h3>
+    <div class="widget">
+      
+        <p> nishidemasami </p>
+      
+      
+      </p>
+      
+      
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-tag" class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-archive" class="widget-title" data-skip-mobile-nav="true">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-recent-posts" class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/12/05/vim-crypt/">Vimで暗号化</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/27/java-combination/">JAVAで組み合わせ</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/03/javascript-test/">javascriptテスト</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/02/hello-world/">はじめまして</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyrights &copy; 2016 nishidemasami All Rights Reserved. <br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.
+      Themed by <a href="https://github.com/kwhrtsk/hexo-theme-ingenuous">Ingenuous</a> (based on <a href="https://github.com/hexojs/hexo-theme-landscape">Landscape</a>).
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about-me" class="mobile-nav-link">Abount Me</a>
+  
+</nav>
+
+    
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.4";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<script src="/js/script.js"></script>
+
+
+  </div>
+</body>
+</html>
