@@ -80,6 +80,75 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-hexo-themes-error" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/11/hexo-themes-error/" class="article-date">
+  <time datetime="2016-12-11T14:04:03.000Z" itemprop="datePublished">2016-12-11</time>
+</a>
+
+    
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/11/hexo-themes-error/">hexoのテーマを変更した時テーマだけデプロイされない</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div class="article-sharing">
+  <ul>
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="//b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="//b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    <li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-counturl="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" >Tweet</a>
+    </li>
+    <li>
+      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/"></div>
+    </li>
+  </ul>
+</div>
+
+      
+      
+        
+        <p>このブログは<a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>にて構築し、<a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a>にて公開しています。</p>
+<p>先日、テーマを変更した際にテーマが正しく反映されず困ったので、今どうやって動いているかを覚え書きしておきます。</p>
+<p>今回、ingenuousというテーマを利用したのですが、「hexo server」では正しく表示されるのに、確認後「hexo deploy -g」でGitHub Pagesへデプロイするとレイアウトが崩れるという現象に見舞われました。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">$ tree -L 2</div><div class="line">.</div><div class="line">├── _config.yml</div><div class="line">├── node_modules</div><div class="line">│   └── (省略)</div><div class="line">├── package.json</div><div class="line">├── public</div><div class="line">│   ├── 2016</div><div class="line">│   ├── about-me</div><div class="line">│   ├── archives</div><div class="line">│   ├── atom.xml</div><div class="line">│   ├── css</div><div class="line">│   ├── fancybox</div><div class="line">│   ├── index.html</div><div class="line">│   ├── js</div><div class="line">│   └── tags</div><div class="line">├── scaffolds</div><div class="line">│   └── (省略)</div><div class="line">├── source</div><div class="line">│   └── _posts</div><div class="line">└── themes</div><div class="line">    ├── ingenuous</div><div class="line">    └── landscape</div></pre></td></tr></table></figure></p>
+<p>この、cssらへんがブラウザから取得できておらず、どうやら記事ファイルだけ書き換わってデプロイされ、cssはデプロイされず放置されている現象が置きてるっぽかったです。<br>hexo deployがpublic内の更新を取得できていないのなら、全部消してしまえばいいじゃないということで、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo deploy -g</div></pre></td></tr></table></figure>
+<p>で無事にレイアウトも含めてデプロイすることができました。<br>ちょっとネットで検索しても出てこなかったのでみなさまの助けになればという意味も含め覚え書きでした。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="ciwknua0i00005hizhrft9zmy" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-vim-crypt" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/12/05/vim-crypt/" class="article-date">
@@ -146,7 +215,7 @@ ga('send', 'pageview');
 <p>これは、総当りで復号化を試みるクラッカーにとっては助けにもなってしまいます。なぜなら、パスワードが間違っていることがわかるためです。<br>Mac等では使えませんが、「aes-256-cbc」の代わりに「aes-256-ofb」を使うことで解決されます。<br>「aes-256-ofb」なら、パスワードが合っているのか間違っているのすらわかりません。<br>書き込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !bzip2 | openssl aes-256-ofb | dd ibs=8 skip=1 of=~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
 <p>読み込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat</div></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat | vim -</div></pre></td></tr></table></figure>
-<p>パスワードが合っているのか間違っているのすらわからないというのは、つまり最後は自前で確認しなければならないということです。<br>人間には不可能ですし、機械的に判定しようにも非常に手をこまねくはずです。<br>環境が許せばぜひやってみて下さい。</p>
+<p>パスワードが合っているのか間違っているのすらわからないというのは、つまりあなたのパスワードを突破しようとしても、パスワード1つ1つを確認しなければならないということです。<br>人間には不可能ですし、機械的に判定しようにも非常に手をこまねくはずです。<br>環境が許せばぜひやってみて下さい。</p>
 <p>Vimとopensslで暗号化・復号をしようというお話でした。<br>みなさんもぜひやってみて下さい。</p>
 
       
@@ -416,7 +485,7 @@ var soinsu5=function(b){
   <div class="widget-wrap">
     <h3 id="widget-title-tag" class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -426,7 +495,7 @@ var soinsu5=function(b){
   <div class="widget-wrap">
     <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a>
+      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
     </div>
   </div>
 
@@ -436,7 +505,7 @@ var soinsu5=function(b){
   <div class="widget-wrap">
     <h3 id="widget-title-archive" class="widget-title" data-skip-mobile-nav="true">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -447,6 +516,10 @@ var soinsu5=function(b){
     <h3 id="widget-title-recent-posts" class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/12/11/hexo-themes-error/">hexoのテーマを変更した時テーマだけデプロイされない</a>
+          </li>
         
           <li>
             <a href="/2016/12/05/vim-crypt/">Vimで暗号化</a>

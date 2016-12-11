@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nishidemasami.github.io/"/>
-  <updated>2016-12-04T20:26:41.000Z</updated>
+  <updated>2016-12-11T17:44:42.000Z</updated>
   <id>https://nishidemasami.github.io/</id>
   
   <author>
@@ -16,11 +16,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>hexoのテーマを変更した時テーマだけデプロイされない</title>
+    <link href="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/"/>
+    <id>https://nishidemasami.github.io/2016/12/11/hexo-themes-error/</id>
+    <published>2016-12-11T14:04:03.000Z</published>
+    <updated>2016-12-11T17:44:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>このブログは<a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>にて構築し、<a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a>にて公開しています。</p>
+<p>先日、テーマを変更した際にテーマが正しく反映されず困ったので、今どうやって動いているかを覚え書きしておきます。</p>
+<p>今回、ingenuousというテーマを利用したのですが、「hexo server」では正しく表示されるのに、確認後「hexo deploy -g」でGitHub Pagesへデプロイするとレイアウトが崩れるという現象に見舞われました。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">$ tree -L 2</div><div class="line">.</div><div class="line">├── _config.yml</div><div class="line">├── node_modules</div><div class="line">│   └── (省略)</div><div class="line">├── package.json</div><div class="line">├── public</div><div class="line">│   ├── 2016</div><div class="line">│   ├── about-me</div><div class="line">│   ├── archives</div><div class="line">│   ├── atom.xml</div><div class="line">│   ├── css</div><div class="line">│   ├── fancybox</div><div class="line">│   ├── index.html</div><div class="line">│   ├── js</div><div class="line">│   └── tags</div><div class="line">├── scaffolds</div><div class="line">│   └── (省略)</div><div class="line">├── source</div><div class="line">│   └── _posts</div><div class="line">└── themes</div><div class="line">    ├── ingenuous</div><div class="line">    └── landscape</div></pre></td></tr></table></figure></p>
+<p>この、cssらへんがブラウザから取得できておらず、どうやら記事ファイルだけ書き換わってデプロイされ、cssはデプロイされず放置されている現象が置きてるっぽかったです。<br>hexo deployがpublic内の更新を取得できていないのなら、全部消してしまえばいいじゃないということで、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo deploy -g</div></pre></td></tr></table></figure>
+<p>で無事にレイアウトも含めてデプロイすることができました。<br>ちょっとネットで検索しても出てこなかったのでみなさまの助けになればという意味も含め覚え書きでした。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;このブログは&lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;にて構築し、&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;ex
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="https://nishidemasami.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Vimで暗号化</title>
     <link href="https://nishidemasami.github.io/2016/12/05/vim-crypt/"/>
     <id>https://nishidemasami.github.io/2016/12/05/vim-crypt/</id>
     <published>2016-12-05T00:04:03.000Z</published>
-    <updated>2016-12-04T20:26:41.000Z</updated>
+    <updated>2016-12-11T12:57:26.000Z</updated>
     
     <content type="html"><![CDATA[<p>Vimで暗号化を行うには、次の方法が用意されています。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:set cryptmethod=blowfish</div></pre></td></tr></table></figure></p>
 <p>このblowfishの他にzipや、環境によってはblowfish2が用意されています。使えるならばセキュリティの面から考えてblowfish2を使うべきでしょう。<br>しかしです。本当にセキュリティの面から考えると、blowfishの発展型であるTwofish<a href="http://vim.1045645.n5.nabble.com/Blowfish2-td5726043.html" target="_blank" rel="external">※注：blowfish2はTwofishではありません</a>やAES等の方がより良い選択肢なはずです。<br>今回、Vimの暗号化機能に頼らず、自前でopensslを用いてAESにて暗号化・復号をしてみたいと思います。</p>
@@ -45,7 +71,7 @@
 <p>これは、総当りで復号化を試みるクラッカーにとっては助けにもなってしまいます。なぜなら、パスワードが間違っていることがわかるためです。<br>Mac等では使えませんが、「aes-256-cbc」の代わりに「aes-256-ofb」を使うことで解決されます。<br>「aes-256-ofb」なら、パスワードが合っているのか間違っているのすらわかりません。<br>書き込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !bzip2 | openssl aes-256-ofb | dd ibs=8 skip=1 of=~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
 <p>読み込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat</div></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat | vim -</div></pre></td></tr></table></figure>
-<p>パスワードが合っているのか間違っているのすらわからないというのは、つまり最後は自前で確認しなければならないということです。<br>人間には不可能ですし、機械的に判定しようにも非常に手をこまねくはずです。<br>環境が許せばぜひやってみて下さい。</p>
+<p>パスワードが合っているのか間違っているのすらわからないというのは、つまりあなたのパスワードを突破しようとしても、パスワード1つ1つを確認しなければならないということです。<br>人間には不可能ですし、機械的に判定しようにも非常に手をこまねくはずです。<br>環境が許せばぜひやってみて下さい。</p>
 <p>Vimとopensslで暗号化・復号をしようというお話でした。<br>みなさんもぜひやってみて下さい。</p>
 ]]></content>
     
@@ -65,7 +91,7 @@
     <link href="https://nishidemasami.github.io/2016/11/27/java-combination/"/>
     <id>https://nishidemasami.github.io/2016/11/27/java-combination/</id>
     <published>2016-11-27T00:04:03.000Z</published>
-    <updated>2016-11-30T00:20:26.000Z</updated>
+    <updated>2016-12-11T13:05:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>Rubyでは組み合わせを作成することができる<a href="https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html" target="_blank" rel="external">Array#combination</a>が用意されています。<br>これを使えば、例えば下記のように<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'json'</span></div><div class="line"></div><div class="line">jsonstr = <span class="string">&lt;&lt;JSON</span></div><div class="line">[</div><div class="line">  &#123;</div><div class="line">    "price": 432,</div><div class="line">    "name": "hoge"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 531,</div><div class="line">    "name": "fuga"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 568,</div><div class="line">    "name": "piyo"</div><div class="line">  &#125;</div><div class="line">]</div><div class="line">JSON</div><div class="line"></div><div class="line">p JSON.load(jsonstr)</div><div class="line">    .combination(<span class="number">2</span>)</div><div class="line">    .to_a</div><div class="line">    .select(&amp;-&gt;x&#123;x.reduce(&amp;-&gt;x,y&#123;x[<span class="string">"price"</span>] + y[<span class="string">"price"</span>]&#125;) == <span class="number">1000</span>&#125;)</div></pre></td></tr></table></figure></p>
 <p>こうすれば、JSONの商品リストからpriceの合計が1000になるもの(hogeとpiyo)を抜き出してくれます。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[&#123;&quot;price&quot;=&gt;432, &quot;name&quot;=&gt;&quot;hoge&quot;&#125;, &#123;&quot;price&quot;=&gt;568, &quot;name&quot;=&gt;&quot;piyo&quot;&#125;]]</div></pre></td></tr></table></figure></p>
