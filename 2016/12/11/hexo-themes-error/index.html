@@ -4,24 +4,38 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <meta http-equiv="content-language" content="ja">
   <meta charset="utf-8">
+  <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: { equationNumbers: { autoNumber: "AMS" }},
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      },
+      "HTML-CSS": { matchFontHeight: false },
+      displayAlign: "left",
+      displayIndent: "2em"
+    });
+  </script>
+
   
   
-  <title>hexoのテーマを変更した時テーマだけデプロイされない | 文系SEコーディングハイ</title>
+  <title>hexoのテーマを変更した時に、テーマだけデプロイされない | 文系SEコーディングハイ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="description" content="このブログはHexoにて構築し、GitHub Pagesにて公開しています。
 先日、テーマを変更した際にテーマが正しく反映されず困ったので、今どうやって動いているかを覚え書きしておきます。
 今回、ingenuousというテーマを利用したのですが、「hexo server」では正しく表示されるのに、確認後「hexo deploy -g」でGitHub Pagesへデプロイするとレイアウトが崩れるとい">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexoのテーマを変更した時テーマだけデプロイされない">
+<meta property="og:title" content="hexoのテーマを変更した時に、テーマだけデプロイされない">
 <meta property="og:url" content="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/index.html">
 <meta property="og:site_name" content="文系SEコーディングハイ">
 <meta property="og:description" content="このブログはHexoにて構築し、GitHub Pagesにて公開しています。
 先日、テーマを変更した際にテーマが正しく反映されず困ったので、今どうやって動いているかを覚え書きしておきます。
 今回、ingenuousというテーマを利用したのですが、「hexo server」では正しく表示されるのに、確認後「hexo deploy -g」でGitHub Pagesへデプロイするとレイアウトが崩れるとい">
-<meta property="og:updated_time" content="2016-12-11T17:44:42.000Z">
+<meta property="og:updated_time" content="2016-12-15T11:08:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexoのテーマを変更した時テーマだけデプロイされない">
+<meta name="twitter:title" content="hexoのテーマを変更した時に、テーマだけデプロイされない">
 <meta name="twitter:description" content="このブログはHexoにて構築し、GitHub Pagesにて公開しています。
 先日、テーマを変更した際にテーマが正しく反映されず困ったので、今どうやって動いているかを覚え書きしておきます。
 今回、ingenuousというテーマを利用したのですが、「hexo server」では正しく表示されるのに、確認後「hexo deploy -g」でGitHub Pagesへデプロイするとレイアウトが崩れるとい">
@@ -69,7 +83,7 @@ ga('send', 'pageview');
         
           <a class="main-nav-link" href="/archives">Archives</a>
         
-          <a class="main-nav-link" href="/about-me">Abount Me</a>
+          <a class="main-nav-link" href="/about-me">About Me</a>
         
       </nav>
       <nav id="sub-nav">
@@ -105,7 +119,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      hexoのテーマを変更した時テーマだけデプロイされない
+      hexoのテーマを変更した時に、テーマだけデプロイされない
     </h1>
   
 
@@ -155,6 +169,15 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
+    <a href="/2016/12/18/network-specialist-examination/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer Post</strong>
+      <div class="article-nav-title">
+        
+          ネットワークスペシャリスト合格体験記
+        
+      </div>
+    </a>
+  
   
     <a href="/2016/12/05/vim-crypt/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older Post</strong>
@@ -183,6 +206,10 @@ ga('send', 'pageview');
       
       </p>
       
+        <p> 文系SEです。有益なことや無益なことなどいろいろ書いています。<br /> <a href="/about-me/">about me</a> </p>
+      
+      
+        <p>  </p>
       
     </div>
   </div>
@@ -196,7 +223,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 id="widget-title-tag" class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/情報処理技術者試験/">情報処理技術者試験</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -206,7 +233,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Ruby/" style="font-size: 10px;">Ruby</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/情報処理技術者試験/" style="font-size: 10px;">情報処理技術者試験</a>
     </div>
   </div>
 
@@ -216,7 +243,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 id="widget-title-archive" class="widget-title" data-skip-mobile-nav="true">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -229,7 +256,11 @@ ga('send', 'pageview');
       <ul>
         
           <li>
-            <a href="/2016/12/11/hexo-themes-error/">hexoのテーマを変更した時テーマだけデプロイされない</a>
+            <a href="/2016/12/18/network-specialist-examination/">ネットワークスペシャリスト合格体験記</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/11/hexo-themes-error/">hexoのテーマを変更した時に、テーマだけデプロイされない</a>
           </li>
         
           <li>
@@ -242,10 +273,6 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2016/07/03/javascript-test/">javascriptテスト</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/02/hello-world/">はじめまして</a>
           </li>
         
       </ul>
@@ -276,7 +303,7 @@ ga('send', 'pageview');
   
     <a href="/archives" class="mobile-nav-link">Archives</a>
   
-    <a href="/about-me" class="mobile-nav-link">Abount Me</a>
+    <a href="/about-me" class="mobile-nav-link">About Me</a>
   
 </nav>
 
