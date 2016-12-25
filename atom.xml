@@ -62,9 +62,9 @@
     </summary>
     
     
-      <category term="情報処理技術者試験" scheme="https://nishidemasami.github.io/tags/%E6%83%85%E5%A0%B1%E5%87%A6%E7%90%86%E6%8A%80%E8%A1%93%E8%80%85%E8%A9%A6%E9%A8%93/"/>
-    
       <category term="ライトイールド" scheme="https://nishidemasami.github.io/tags/%E3%83%A9%E3%82%A4%E3%83%88%E3%82%A4%E3%83%BC%E3%83%AB%E3%83%89/"/>
+    
+      <category term="情報処理技術者試験" scheme="https://nishidemasami.github.io/tags/%E6%83%85%E5%A0%B1%E5%87%A6%E7%90%86%E6%8A%80%E8%A1%93%E8%80%85%E8%A9%A6%E9%A8%93/"/>
     
   </entry>
   
@@ -137,9 +137,9 @@
     </summary>
     
     
-      <category term="Vim" scheme="https://nishidemasami.github.io/tags/Vim/"/>
-    
       <category term="ライトイールド" scheme="https://nishidemasami.github.io/tags/%E3%83%A9%E3%82%A4%E3%83%88%E3%82%A4%E3%83%BC%E3%83%AB%E3%83%89/"/>
+    
+      <category term="Vim" scheme="https://nishidemasami.github.io/tags/Vim/"/>
     
   </entry>
   
@@ -169,11 +169,11 @@
     </summary>
     
     
+      <category term="ライトイールド" scheme="https://nishidemasami.github.io/tags/%E3%83%A9%E3%82%A4%E3%83%88%E3%82%A4%E3%83%BC%E3%83%AB%E3%83%89/"/>
+    
       <category term="Java" scheme="https://nishidemasami.github.io/tags/Java/"/>
     
       <category term="Ruby" scheme="https://nishidemasami.github.io/tags/Ruby/"/>
-    
-      <category term="ライトイールド" scheme="https://nishidemasami.github.io/tags/%E3%83%A9%E3%82%A4%E3%83%88%E3%82%A4%E3%83%BC%E3%83%AB%E3%83%89/"/>
     
   </entry>
   
@@ -213,9 +213,9 @@ var soinsu5=function(b){
     </summary>
     
     
-      <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
-    
       <category term="ライトイールド" scheme="https://nishidemasami.github.io/tags/%E3%83%A9%E3%82%A4%E3%83%88%E3%82%A4%E3%83%BC%E3%83%AB%E3%83%89/"/>
+    
+      <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
     
   </entry>
   
