@@ -3,7 +3,7 @@ title: hexoのテーマを変更した時に、テーマだけデプロイされ
 date: 2016-12-11 23:04:03
 tags:
 - "hexo"
-- "ライトイールド"
+- "lightyield"
 ---
 このブログは[Hexo](https://hexo.io/)にて構築し、[GitHub Pages](https://pages.github.com/)にて公開しています。
 
