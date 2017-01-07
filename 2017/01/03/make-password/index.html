@@ -20,15 +20,25 @@
 
   
   
-  <title>文系SEコーディングハイ</title>
+  <title>PBKDF2でパスワード生成 | 文系SEコーディングハイ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="文系SEコーディングハイ">
-<meta property="og:url" content="https://nishidemasami.github.io/index.html">
+  <meta name="description" content="パスワード生成スクリプトを作った話です。
+茶番N君「よし！新しいサイトに会員登録するぞ！まずはパスワードを考えなくちゃ！」
+N君は新規会員登録をするため、新しいパスワードを考えます。当然N君は「1234」や「password」などのパスワードは使いません。N君は「とても強いパスワード」を求めているのです。さて、N君はより堅牢なセキュリティを目指して、「とても強いパスワード」を以下のように定義しまし">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PBKDF2でパスワード生成">
+<meta property="og:url" content="https://nishidemasami.github.io/2017/01/03/make-password/index.html">
 <meta property="og:site_name" content="文系SEコーディングハイ">
+<meta property="og:description" content="パスワード生成スクリプトを作った話です。
+茶番N君「よし！新しいサイトに会員登録するぞ！まずはパスワードを考えなくちゃ！」
+N君は新規会員登録をするため、新しいパスワードを考えます。当然N君は「1234」や「password」などのパスワードは使いません。N君は「とても強いパスワード」を求めているのです。さて、N君はより堅牢なセキュリティを目指して、「とても強いパスワード」を以下のように定義しまし">
+<meta property="og:updated_time" content="2017-01-06T08:36:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文系SEコーディングハイ">
+<meta name="twitter:title" content="PBKDF2でパスワード生成">
+<meta name="twitter:description" content="パスワード生成スクリプトを作った話です。
+茶番N君「よし！新しいサイトに会員登録するぞ！まずはパスワードを考えなくちゃ！」
+N君は新規会員登録をするため、新しいパスワードを考えます。当然N君は「1234」や「password」などのパスワードは使いません。N君は「とても強いパスワード」を求めているのです。さて、N君はより堅牢なセキュリティを目指して、「とても強いパスワード」を以下のように定義しまし">
   
     <link rel="alternative" href="/atom.xml" title="文系SEコーディングハイ" type="application/atom+xml">
   
@@ -92,9 +102,7 @@ ga('send', 'pageview');
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-make-password" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-make-password" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/03/make-password/" class="article-date">
   <time datetime="2017-01-03T14:04:03.000Z" itemprop="datePublished">2017-01-03</time>
@@ -110,8 +118,8 @@ ga('send', 'pageview');
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/03/make-password/">PBKDF2でパスワード生成</a>
+    <h1 class="article-title" itemprop="name">
+      PBKDF2でパスワード生成
     </h1>
   
 
@@ -451,482 +459,21 @@ var function20170101makepassword=function(){
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-network-specialist-examination" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/18/network-specialist-examination/" class="article-date">
-  <time datetime="2016-12-18T09:04:03.000Z" itemprop="datePublished">2016-12-18</time>
-</a>
-
-    
-
-  </div>
-  <div class="article-inner">
-    
-
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/18/network-specialist-examination/">ネットワークスペシャリスト合格体験記</a>
-    </h1>
+    <a href="/2016/12/18/network-specialist-examination/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older Post</strong>
+      <div class="article-nav-title">ネットワークスペシャリスト合格体験記</div>
+    </a>
   
+</nav>
 
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div class="article-sharing">
-  <ul>
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="//b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="//b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-counturl="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" >Tweet</a>
-    </li>
-    <li>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/"></div>
-    </li>
-  </ul>
-</div>
-
-      
-      
-        
-        <p>念願のネットワークスペシャリストに合格しました！<br>本当に念願で、というのも情報セキュリティスペシャリスト合格から今回で丸2年経っていて、今回合格できなければ午前I免除が終わってしまうところだったんです。</p>
-<p>こちらが成績です。<br><img src="/img/network_specialist.png" alt="ネットワークスペシャリスト成績" title="ネットワークスペシャリスト成績"><br>60点が合格ラインなので、ゆとりを持った合格となりました！</p>
-<p>2年前の情報セキュリティスペシャリストの時は午前I免除、午前IIが84点、午後Iが71点、午後IIが62点と午後IIがギリギリでした。<br>しかし今回は、午前Iが同じく免除で、午前IIが72点、午後Iが70点、午後IIが72点でした。いずれも7割超です！<br>では今回のネットワークスペシャリストが余裕だったかと言うとそうではなく、今回も非常に厳しい戦いとなりました。</p>
-<p>今後ネットワークスペシャリストに挑戦するみなさんの助けになるよう、自分の今回の勉強法を書いていきたいと思います。</p>
-<h3 id="良い教本に出会う"><a href="#良い教本に出会う" class="headerlink" title="良い教本に出会う"></a>良い教本に出会う</h3><p>僕はネットワークスペシャリストに合格するのに2年かかりました。<br>長い間お付き合いする本ですから、教本選びは大切です。<br>僕は、定番のポケットスタディで勉強しました。「ポケットスタディ ネットワークスペシャリスト」で検索すれば出てくると思います。<br>コンパクトなのでいつでも持ち歩けますし、外出先でも気軽に読めて便利です。<br>ポケットスタディだけで基礎を完璧にはできないかもしれませんが、必要知識のリストアップとして効果的です。<br>不足知識や理解しきれない部分はネットで調べました。<br>ネットとポケットスタディで、常に勉強ができる状態を維持するところがポイントです。</p>
-<p>また、過去問の解答の解説にはネスペの剣なども読みました。<br>問題・解答は無料で公式サイトからダウンロードできますが、解説は別に必要です。<br>ただ、解説本に手を出すのもおそらく基礎を身に付けてからの話だと思います。<br>それに、基礎を身につける間にネットでわからないところを検索していると、いつの間にか解説なしでも問題を読めるようになっているものです。<br>ちなみに僕はBGPやOSPFなどがピンと来ないのでそこらへんは本に頼りました。</p>
-<p>それから、これまた定番の「3 Minutes Networking(<a href="http://www5e.biglobe.ne.jp/aji/3min/" target="_blank" rel="external">http://www5e.biglobe.ne.jp/aji/3min/</a>)」もオススメです。<br>ネットワーク技術をある程度体系的にまとめて教えてくれる貴重なサイトです。しかも1講座3分で読めるのだそうです(※読めません！)。<br>ぜひ読破に挑戦してみましょう！</p>
-<h3 id="新しい技術を学ぶ"><a href="#新しい技術を学ぶ" class="headerlink" title="新しい技術を学ぶ"></a>新しい技術を学ぶ</h3><p>データベーススペシャリストは、新しい技術はあまり出てきません。出てきてNoSQLくらいです。データベーススペシャリストは話のわかるヤツです。<br>けどネットワークスペシャリストはそんなの気にしません。<br>今回、午後IIではSTUNやWebRTCが問題に登場しました。<br>WebSocketや、過去にはOpenFlowも出ています。<br>2013年なんて午後IIの問2が丸々OpenFlowだったので、OpenFlowをノーチェックだった人は問1しか選択肢が無く非常に不利な戦いとなったはずです。<br>今こうしている間にも新しい技術はどんどん出現していますので、後学のためにも話題の新技術は怯まずぜひチェックしてゆきましょう。</p>
-<h3 id="確実に基礎を固める"><a href="#確実に基礎を固める" class="headerlink" title="確実に基礎を固める"></a>確実に基礎を固める</h3><p>上に書いたことと関連するのですが、新技術を学ぶことは、当然基礎を固めることから始まります。<br>新技術もおおむね基礎の上に成り立っています。既存の技術をパッケージしたAJAXのような例もありますし、また問題によっては、わからない技術がちょこっとあったとしても基礎ができていれば解ける問題もあります。<br>ネットワークスペシャリスト試験はネットワーク技術に絞った試験…と言われる範囲は狭いと思われがちですが、実際の所、ネットワーク技術がクライアントからサーバ、バックボーン、セキュリティまでも出るので範囲は広いです。ホントに途方もない範囲です。<br>しかし、だいたいのネットワークはTCP/IPの上で動いているのでTCP/IPさえ理解すれば問題文から解ける時もあります。<br>試験問題は意外にも親切丁寧に書かれていたりします。基礎を固めておくだけで、チャンスはぐっと広がります。<br>例えば今回受験した平成28年度から以下の問題です。</p>
-<blockquote>
-<p><small><em>迷惑メールの送信を防止する対策として、OP25B(Outbound Port 25 Blocking)のポリシでメールシステムを運用している。具体的には、自社が動的に割り当てたIPアドレスのホストから、自社のサービスネットワーク外のホストへの宛先ポート番号25のSMTP通信を許可しないという運用上のルールを適用している。<br>(中略)B社のPCからA社のメールサーバへSMTPによるメール送信ができたとしても、そのメールサーバはA社のドメイン以外への宛先へはメールを転送しない設定となっている。<br>この設定がないことによって生じる情報セキュリティ上のリスクを、25字以内で答えよ<br>(※平成28年度 ネットワークスペシャリスト試験午後I試験問題より引用・要約)</em></small></p>
-</blockquote>
-<p>これは「第三者中継」に関する問題です。今時当たり前すぎて見逃しがちな「第三者中継」、だからなのか随分親切な問題文です。<br>「第三者中継」という概念を知らなくとも、これだけ丁寧に説明されていれば、基礎をわかっていれば答えられるはずです。<br>※もちろんこれは問題文から必要な箇所だけ抜きだしたものなので簡単そうに見えますが実際は何ページもある問題文からヒントを見つけなければいけません！</p>
-<p>ちなみに解答は以下の通りです。</p>
-<blockquote>
-<p><small><em>不正メールの踏み台にされてしまうリスク<br>(※平成28年度 ネットワークスペシャリスト試験午後I試験解答例より引用)</em></small></p>
-</blockquote>
-<p>このように、基礎さえわかっていれば自力で解ける問題もあります。<br>それに基礎は実務では必須です。ぜひ幅広く身につけましょう。<br>iptablesでルータを作ってみたり、Wiresharkなどで通信を覗いてみたりすると楽しいくて勉強にもなるのでおすすめです！</p>
-<h3 id="過去問の解答例を学ぶ"><a href="#過去問の解答例を学ぶ" class="headerlink" title="過去問の解答例を学ぶ"></a>過去問の解答例を学ぶ</h3><p>記述式の問題にはしばしば、なんて答えればいいか悩む問題があります。例えば同じく平成28年度から以下の問題です。</p>
-<blockquote>
-<p><small><em>ロードバランサは、通信の行きと戻りを同じISP経由にするが、通信の行きと戻りが同じISPでない場合の問題を、社外からWebサーバへのアクセスを例に、IPアドレスという用語を用いて40文字以内で述べよ。<br>(※平成28年度 ネットワークスペシャリスト試験午後II試験問題より引用・要約)</em></small></p>
-</blockquote>
-<p>さて、困りました。こんなこと聞かれては。<br>通信の行きと戻りで違うISPでを使うと言われても、そんなことすればブラウザからホームページへアクセスしても、問い合わせしたところと全然違うところからレスポンスが横殴りで返ってくるわけです。<br>ESTABLISHEDしてないんですから、今時NAPTやファイアーウォールでガチガチに守られている我々のブラウザには、戻りの通信は届きすらしなさそうです。<br>なんと答えればいいでしょうか？<br>「戻りのIPアドレスの通信がファイアーウォールで弾かれてしまう」でしょうか？<br>そもそも「戻りの通信のIPアドレスがESTABLISHEDしていない」でしょうか？</p>
-<p>解答を見てみましょう。</p>
-<blockquote>
-<p><small><em>応答が行きの宛先IPアドレスとは異なる送信元IPアドレスから戻る。<br>(※平成28年度 ネットワークスペシャリスト試験午後II試験解答例より引用)</em></small></p>
-</blockquote>
-<p>根本的！<br>そうなんです。解答に困ったら「で、実際のところなにが言いたいの？」というところを突き詰めてゆくと、自ずとシンプルな答えが出てくるはずです。<br>この問題はTCP/IPの知識があれば答えられますが、後半の問題はSTUNも絡んできます。STUNですよ！ワクワクしますよね？<br>ですがワクワクするからといって、例えば変にSkype黎明期の苦労話などを知っていると「そもそもNAT超えというのは〜〜」などと長々と講釈を書いてしまいそうになりますが、<br>それは心の中にそっと閉まっておくのが試験合格のため（そして普段の円滑な業務遂行のため）の秘訣です。<br>◯◯文字以内という解答に求められているレベル感を掴むためにも、過去問はぜひ1度解いてみましょう。なんていったって過去問は公式サイトからダウンロード無料です。</p>
-<h3 id="心を強く持つ"><a href="#心を強く持つ" class="headerlink" title="心を強く持つ"></a>心を強く持つ</h3><p>最後になりましたが！<br>諦めてはそこで試験終了です！<br>僕は過去に何度も試験中諦めそうになった問題を気合で解いてきました！そしてそのうち半分くらいは合格してました！<br>心を強く持って、挫けずにトライすることが大切です！<br>がんばりましょう！僕もがんばります！次は春はデータベーススペシャリスト、秋はシステムアーキテクトかもしくはITストラテジストを受ける予定です！</p>
-<p>ネットワークスペシャリストに合格したという話でした！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-id="cixn972hr0006ssizg0e14jrj" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lightyield/">lightyield</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/情報処理技術者試験/">情報処理技術者試験</a></li></ul>
-
-
-    </footer>
-  </div>
   
 </article>
 
-
-
-  
-    <article id="post-hexo-themes-error" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/11/hexo-themes-error/" class="article-date">
-  <time datetime="2016-12-11T14:04:03.000Z" itemprop="datePublished">2016-12-11</time>
-</a>
-
-    
-
-  </div>
-  <div class="article-inner">
-    
-
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/11/hexo-themes-error/">hexoのテーマを変更した時に、テーマだけデプロイされない</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div class="article-sharing">
-  <ul>
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="//b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="//b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-counturl="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" >Tweet</a>
-    </li>
-    <li>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/"></div>
-    </li>
-  </ul>
-</div>
-
-      
-      
-        
-        <p>このブログは<a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>にて構築し、<a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a>にて公開しています。</p>
-<p>先日、テーマを変更した際にテーマが正しく反映されず困ったので、今どうやって動いているかを覚え書きしておきます。</p>
-<p>今回、ingenuousというテーマを利用したのですが、「hexo server」では正しく表示されるのに、確認後「hexo deploy -g」でGitHub Pagesへデプロイするとレイアウトが崩れるという現象に見舞われました。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">$ tree -L 2</div><div class="line">.</div><div class="line">├── _config.yml</div><div class="line">├── node_modules</div><div class="line">│   └── (省略)</div><div class="line">├── package.json</div><div class="line">├── public</div><div class="line">│   ├── 2016</div><div class="line">│   ├── about-me</div><div class="line">│   ├── archives</div><div class="line">│   ├── atom.xml</div><div class="line">│   ├── css</div><div class="line">│   ├── fancybox</div><div class="line">│   ├── index.html</div><div class="line">│   ├── js</div><div class="line">│   └── tags</div><div class="line">├── scaffolds</div><div class="line">│   └── (省略)</div><div class="line">├── source</div><div class="line">│   └── _posts</div><div class="line">└── themes</div><div class="line">    ├── ingenuous</div><div class="line">    └── landscape</div></pre></td></tr></table></figure></p>
-<p>この、cssらへんがブラウザから取得できておらず、どうやら記事ファイルだけ書き換わってデプロイされ、cssはデプロイされず放置されている現象が置きてるっぽかったです。<br>hexo deployがpublic内の更新を取得できていないのなら、全部消してしまえばいいじゃないということで、</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo deploy -g</div></pre></td></tr></table></figure>
-<p>で無事にレイアウトも含めてデプロイすることができました。<br>ちょっとネットで検索しても出てこなかったのでみなさまの助けになればという意味も含め覚え書きでした。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="cixn972hj0002ssizs6qub77q" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lightyield/">lightyield</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-vim-crypt" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/05/vim-crypt/" class="article-date">
-  <time datetime="2016-12-05T00:04:03.000Z" itemprop="datePublished">2016-12-05</time>
-</a>
-
-    
-
-  </div>
-  <div class="article-inner">
-    
-
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/05/vim-crypt/">Vimで暗号化</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div class="article-sharing">
-  <ul>
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/https://nishidemasami.github.io/2016/12/05/vim-crypt/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="//b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="//b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-counturl="https://nishidemasami.github.io/2016/12/05/vim-crypt/" >Tweet</a>
-    </li>
-    <li>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/12/05/vim-crypt/"></div>
-    </li>
-  </ul>
-</div>
-
-      
-      
-        
-        <p>Vimで暗号化を行うには、次の方法が用意されています。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:set cryptmethod=blowfish</div></pre></td></tr></table></figure></p>
-<p>このblowfishの他にzipや、環境によってはblowfish2が用意されています。使えるならばセキュリティの面から考えてblowfish2を使うべきでしょう。<br>しかしです。本当にセキュリティの面から考えると、blowfishの発展型であるTwofish<a href="http://vim.1045645.n5.nabble.com/Blowfish2-td5726043.html" target="_blank" rel="external">※注：blowfish2はTwofishではありません</a>やAES等の方がより良い選択肢なはずです。<br>今回、Vimの暗号化機能に頼らず、自前でopensslを用いてAESにて暗号化・復号をしてみたいと思います。</p>
-<p>通常vimで文章を保存するのには<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w</div></pre></td></tr></table></figure></p>
-<p>を行いますが、出力先を標準入力としてコマンドを実行することもできます。<br>すなわち、opensslへ以下のように渡せば良いわけです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !openssl aes-256-cbc -out ~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
-<p>2回パスワードを聞かれるため、それを入力すれば指定した場所(この場合は~/vim_enc_test_file)へ書き込まれます。</p>
-<p>復号する際は、Vimから<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !openssl aes-256-cbc -d -in ~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
-<p>とするか、もしくはコマンドラインから<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -</div></pre></td></tr></table></figure></p>
-<p>とします。</p>
-<p>ただ、非常にイケてないことにこの書き込まれたファイルをhexdumpして見てみると、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">00000000  53 61 6c 74 65 64 5f 5f  04 12 0d 0c 9e e8 74 aa  |Salted__......t.|</div><div class="line">00000010  f6 60 00 e7 d1 60 7b 64  19 23 a5 ad 7f 4d 62 19  |.`...`&#123;d.#...Mb.|</div></pre></td></tr></table></figure></p>
-<p>このように、ファイルの頭に「Salted__」の文字列が入るため、opensslにて暗号化したことはわかる人にはバレバレです。<br>もっとも、Vimの暗号化機能でも以下のように、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">00000000  56 69 6d 43 72 79 70 74  7e 30 32 21 de 8b b9 db  |VimCrypt~02!....|</div><div class="line">00000010  03 c7 6b 23 86 e1 25 79  e7 ee 6c 5e 27 9d eb 58  |..k#..%y..l^&apos;..X|</div><div class="line">00000020  f8                                                |.|</div></pre></td></tr></table></figure></p>
-<p>「VimCrypt~02!」という文字列が入るのでバレバレなのですが。</p>
-<p>このバレバレなのをどうにかしたい時も、opensslでやる場合は簡単です。<br>以下のようにddで8バイトスキップすれば「Salted__」の文字列を消すことができます。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !openssl aes-256-cbc | dd ibs=8 skip=1 of=~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
-<p>そうすると、以下のようなファイルが出力されます。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">00000000  92 3a 22 ce 3e 26 5a cf  26 6c da e5 3c ec e9 c6  |.:&quot;.&gt;&amp;Z.&amp;l..&lt;...|</div><div class="line">00000010  ad 3b c1 47 13 d6 e9 d2                           |.;.G....|</div></pre></td></tr></table></figure></p>
-<p>当然、一見ランダムですから、ただの乱数ファイルにも見えますし、たとえ暗号化されたファイルだとわかったとしてもいったいなんのソフトで暗号化されたのかもわかりません。</p>
-<p>読み込みは以下のように行います。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -</div></pre></td></tr></table></figure>
-<p>ちなみに圧縮もしてみましょう。書き込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !bzip2 | openssl aes-256-cbc | dd ibs=8 skip=1 of=~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
-<p>読み込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | bzcat</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | bzcat | vim -</div></pre></td></tr></table></figure>
-<p>さて、最後にあとひと押しです。<br>「aes-256-cbc」はパスワードが間違っている場合にエラーを出します。CentOS6.8の場合は以下のエラーとなります。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">digital envelope routines:EVP_DecryptFinal_ex:wrong final block length</div></pre></td></tr></table></figure></p>
-<p>これは、総当りで復号化を試みるクラッカーにとっては助けにもなってしまいます。なぜなら、パスワードが間違っていることがわかるためです。<br>Mac等では使えませんが、「aes-256-cbc」の代わりに「aes-256-ofb」を使うことで解決されます。<br>「aes-256-ofb」なら、パスワードが合っているのか間違っているのすらわかりません。<br>書き込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:w !bzip2 | openssl aes-256-ofb | dd ibs=8 skip=1 of=~/vim_enc_test_file</div></pre></td></tr></table></figure></p>
-<p>読み込みは以下の通りです。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:r !cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat &lt;(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat | vim -</div></pre></td></tr></table></figure>
-<p>パスワードが合っているのか間違っているのすらわからないというのは、つまりあなたのパスワードを突破しようとしても、パスワード1つ1つを確認しなければならないということです。<br>人間には不可能ですし、機械的に判定しようにも非常に手をこまねくはずです。<br>環境が許せばぜひやってみて下さい。</p>
-<p>Vimとopensslで暗号化・復号をしようというお話でした。<br>みなさんもぜひやってみて下さい。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-id="cixn972hv0009ssizw75rg4yi" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vim/">Vim</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lightyield/">lightyield</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-java-combination" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/27/java-combination/" class="article-date">
-  <time datetime="2016-11-27T00:04:03.000Z" itemprop="datePublished">2016-11-27</time>
-</a>
-
-    
-
-  </div>
-  <div class="article-inner">
-    
-
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/27/java-combination/">JAVAで組み合わせ</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div class="article-sharing">
-  <ul>
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/https://nishidemasami.github.io/2016/11/27/java-combination/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="//b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="//b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-counturl="https://nishidemasami.github.io/2016/11/27/java-combination/" >Tweet</a>
-    </li>
-    <li>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/11/27/java-combination/"></div>
-    </li>
-  </ul>
-</div>
-
-      
-      
-        
-        <p>Rubyでは組み合わせを作成することができる<a href="https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html" target="_blank" rel="external">Array#combination</a>が用意されています。<br>これを使えば、例えば下記のように<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'json'</span></div><div class="line"></div><div class="line">jsonstr = <span class="string">&lt;&lt;JSON</span></div><div class="line">[</div><div class="line">  &#123;</div><div class="line">    "price": 432,</div><div class="line">    "name": "hoge"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 531,</div><div class="line">    "name": "fuga"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 568,</div><div class="line">    "name": "piyo"</div><div class="line">  &#125;</div><div class="line">]</div><div class="line">JSON</div><div class="line"></div><div class="line">p JSON.load(jsonstr)</div><div class="line">    .combination(<span class="number">2</span>)</div><div class="line">    .to_a</div><div class="line">    .select(&amp;-&gt;x&#123;x.reduce(&amp;-&gt;x,y&#123;x[<span class="string">"price"</span>] + y[<span class="string">"price"</span>]&#125;) == <span class="number">1000</span>&#125;)</div></pre></td></tr></table></figure></p>
-<p>こうすれば、JSONの商品リストからpriceの合計が1000になるもの(hogeとpiyo)を抜き出してくれます。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[&#123;&quot;price&quot;=&gt;432, &quot;name&quot;=&gt;&quot;hoge&quot;&#125;, &#123;&quot;price&quot;=&gt;568, &quot;name&quot;=&gt;&quot;piyo&quot;&#125;]]</div></pre></td></tr></table></figure></p>
-<p>非常にイージー。</p>
-<p>ところが、combinationはJavaには無いんですよね。<br>これをJavaで書きたい時、どうすればいいのか悩みました。<br>今回は再帰的なやりかたでやってみました。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 組み合わせを返す</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> parameter 組み合わせを作成するリスト</div><div class="line"> * <span class="doctag">@param</span> combinationCount 組み合わせの個数</div><div class="line"> * <span class="doctag">@return</span> 組み合わせのリスト</div><div class="line"> */</div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> &lt;E&gt; List&lt;List&lt;E&gt;&gt; combination(</div><div class="line">		<span class="keyword">final</span> List&lt;E&gt; parameter,</div><div class="line">		<span class="keyword">final</span> <span class="keyword">long</span> combinationCount) &#123;</div><div class="line"></div><div class="line">	<span class="keyword">final</span> <span class="keyword">int</span> parameterSize = parameter.size();</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (parameterSize &lt; combinationCount) &#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"リストの要素数が組み合わせ個数より少ないです。"</span>);</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (combinationCount &lt;= <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"組み合わせ個数が不正です。"</span>);</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (combinationCount == <span class="number">1</span>) &#123;</div><div class="line">		List&lt;List&lt;E&gt;&gt; result = <span class="keyword">new</span> LinkedList&lt;List&lt;E&gt;&gt;();</div><div class="line">		parameter.forEach(x -&gt; &#123;</div><div class="line">			List&lt;E&gt; resultWork = <span class="keyword">new</span> LinkedList&lt;E&gt;();</div><div class="line">			resultWork.add(x);</div><div class="line">			result.add(resultWork);</div><div class="line">		&#125;);</div><div class="line">		<span class="keyword">return</span> result;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		List&lt;List&lt;E&gt;&gt; result = <span class="keyword">new</span> LinkedList&lt;List&lt;E&gt;&gt;();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; parameterSize - combinationCount + <span class="number">1</span>; i++) &#123;</div><div class="line">			List&lt;List&lt;E&gt;&gt; resultWork = combination(</div><div class="line">					parameter.subList(<span class="number">1</span> + i, parameterSize),</div><div class="line">					combinationCount - <span class="number">1</span>);</div><div class="line">			<span class="keyword">for</span> (List&lt;E&gt; resultWorkForEach : resultWork) &#123;</div><div class="line">				resultWorkForEach.add(<span class="number">0</span>, parameter.get(i));</div><div class="line">			&#125;</div><div class="line">			result.addAll(resultWork);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> result;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>LinkedListを使っているのは先頭追加があるためです。<br>ちょっと見た目がヘビーですが、使えます。<br>こんな感じです。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Item</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Item</span><span class="params">(<span class="keyword">int</span> price, String name)</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.price = price;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> price;</div><div class="line">	String name;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> name + <span class="string">":"</span> + price + <span class="string">"円"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;Item&gt; itemList = Arrays.asList(<span class="keyword">new</span> Item[]&#123;</div><div class="line">        		<span class="keyword">new</span> Item(<span class="number">432</span>, <span class="string">"hoge"</span>),</div><div class="line">        		<span class="keyword">new</span> Item(<span class="number">531</span>, <span class="string">"fuga"</span>),</div><div class="line">        		<span class="keyword">new</span> Item(<span class="number">568</span>, <span class="string">"piyo"</span>),</div><div class="line">        		<span class="keyword">new</span> Item(<span class="number">999</span>, <span class="string">"meta"</span>)</div><div class="line">      	&#125;);</div><div class="line"></div><div class="line">        combination(itemList,<span class="number">3</span>)</div><div class="line">        	.stream()</div><div class="line">        	.forEach(x-&gt;&#123;System.out.println(Arrays.toString(x.toArray()));&#125;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>こうなります。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[hoge:432円, fuga:531円, piyo:568円]</div><div class="line">[hoge:432円, fuga:531円, meta:999円]</div><div class="line">[hoge:432円, piyo:568円, meta:999円]</div><div class="line">[fuga:531円, piyo:568円, meta:999円]</div></pre></td></tr></table></figure></p>
-<p>Rubyの例題と同じようにこうすると、<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">combination(itemList,<span class="number">2</span>)</div><div class="line">	.stream()</div><div class="line">	.filter(x-&gt; x.stream().map(y -&gt; y.price).reduce((y, z)-&gt; y + z).get() == <span class="number">1000</span>)</div><div class="line">	.forEach(x-&gt;&#123;System.out.println(Arrays.toString(x.toArray()));&#125;);</div></pre></td></tr></table></figure></p>
-<p>こうなります。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[hoge:432円, piyo:568円]</div></pre></td></tr></table></figure></p>
-<p>java8のstreamなのに遅延評価が役に立たないのは、Rubyもcombinationを<a href="https://docs.ruby-lang.org/ja/latest/class/Enumerator=3a=3aLazy.html" target="_blank" rel="external">Enumerator::Lazy</a>で使えないのと一緒ですね。<br>java8は遅延評価がデフォルトとなっているので、気軽にlimit(1)などで一瞬で返ってくるつもりでいたらcombination部分が延々返ってこない…なんてことが発生しないようになのかもしれません。</p>
-<p>Rubyで使えたcombinationが無くて困った話でした。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-id="cixn972ho0004ssizwxwp22kg" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ruby/">Ruby</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lightyield/">lightyield</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-javascript-test" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/03/javascript-test/" class="article-date">
-  <time datetime="2016-07-03T14:04:03.000Z" itemprop="datePublished">2016-07-03</time>
-</a>
-
-    
-
-  </div>
-  <div class="article-inner">
-    
-
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/03/javascript-test/">javascriptテスト</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div class="article-sharing">
-  <ul>
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/https://nishidemasami.github.io/2016/07/03/javascript-test/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="//b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="//b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-counturl="https://nishidemasami.github.io/2016/07/03/javascript-test/" >Tweet</a>
-    </li>
-    <li>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/07/03/javascript-test/"></div>
-    </li>
-  </ul>
-</div>
-
-      
-      
-        
-        <p>小さい数の素因数分解<br>入力：<input id="soinsu_bunkai_input" size="25" type="text" value=""><div id="soinsu_bunkai_return">出力：ここに結果が表示されます</div><br>※javascriptでは53ビット整数の上限(9007199254740991)を超えると自動的に64ビット浮動小数点型に変換されて誤差が出るため使えません</p>
-<script type="text/javascript">
-$('#soinsu_bunkai_input').on('keyup change paste', function() {
-  var start = new Date();
-  var kotae = soinsu5($('#soinsu_bunkai_input').val());
-  var end = new Date();
-  $('#soinsu_bunkai_return').html("出力：" + kotae + "<br>\n ※処理時間:" + (end - start) + "ms");
-});
-var soinsu5=function(b){
-  if(b.match(/[^0-9]/g))return"\u30a8\u30e9\u30fc:\u8aa4\u3063\u305f\u5165\u529b\u3067\u3059";
-  var f=[],c=Number(b);if(!(9007199254740991>=c))return"\u30a8\u30e9\u30fc:\u6570\u5024\u304c\u5927\u304d\u3059\u304e\u307e\u3059\u3002<br>\n";
-  if(2>c)return b;
-  var d=Math.sqrt(c),d=[2,3,5,7,11,13,17,19,23,29];
-  for(b=0;9>=b;b++)for(;0==c%d[b];)c/=d[b],f.push(d[b]);
-  if(30>c)return f.join(" * ");
-  for(var e=30,g=[1,7,11,13,17,19,23,29],d=Math.sqrt(c);e<=d;){for(b=0;7>=b;b++)for(;0==c%(e+g[b]);)c/=
-  e+g[b],f.push(e+g[b]),d=Math.sqrt(c);e+=30}1!=c&&f.push(c);
-  return f.join(" * ")
-};
-</script>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-id="cixn972hp0005ssizpf1p940t" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lightyield/">lightyield</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/02/hello-world/" class="article-date">
-  <time datetime="2016-07-01T19:58:43.000Z" itemprop="datePublished">2016-07-02</time>
-</a>
-
-    
-
-  </div>
-  <div class="article-inner">
-    
-
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/02/hello-world/">はじめまして</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div class="article-sharing">
-  <ul>
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/https://nishidemasami.github.io/2016/07/02/hello-world/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="//b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="//b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/07/02/hello-world/" data-counturl="https://nishidemasami.github.io/2016/07/02/hello-world/" >Tweet</a>
-    </li>
-    <li>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/07/02/hello-world/"></div>
-    </li>
-  </ul>
-</div>
-
-      
-      
-        
-        <p>はじめての投稿です。<br>これから、なにか有益なことや無益なことを書いてゆこうと思います。<br>よろしくお願いします。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="https://nishidemasami.github.io/2016/07/02/hello-world/" data-id="cixn972hh0001ssiz9scrupe5" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lightyield/">lightyield</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-  
 
 
 </section>
