@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nishidemasami.github.io/"/>
-  <updated>2017-01-20T16:59:12.000Z</updated>
+  <updated>2017-01-21T14:04:26.000Z</updated>
   <id>https://nishidemasami.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://nishidemasami.github.io/2017/01/21/dtmf-generator/"/>
     <id>https://nishidemasami.github.io/2017/01/21/dtmf-generator/</id>
     <published>2017-01-20T16:04:03.000Z</published>
-    <updated>2017-01-20T16:59:12.000Z</updated>
+    <updated>2017-01-21T14:04:26.000Z</updated>
     
     <content type="html"><![CDATA[<p>必要に迫られたため、入力された電話番号の音を鳴らすやつを作りました。<br>(この音はDTMFという名前らしいです。<a href="https://ja.wikipedia.org/wiki/DTMF" target="_blank" rel="external">DTMF - Wikipedia</a>)<br>Wikipediaを見ると数字、*、#だけでなく、A、B、C、Dもあるそうなのでそれも鳴らせるようにしています。</p>
 <p>電話番号入力：<input id="phone_number" size="40" type="text" value=""> <button id="phone_call" disabled>鳴らす</button><br>※注：音が鳴ります<br>※鳴らすボタンが押せない時は、ロード中か、もしくはブラウザが対応していません</p>
@@ -38,6 +38,12 @@ $('#phone_call').on('click', function() {
 });
 var phone_number_call = function(phonenumberString) {
 
+    if(playflag) {
+      return;
+    }
+    playflag = true;
+    $("#phone_call").prop("disabled", true);
+
     phonenumberArray = phonenumberString.replace(/[Ａ-Ｄａ-ｄ０-９]/g,function(s){return String.fromCharCode(s.charCodeAt(0)-0xFEE0)}).toUpperCase().split('').filter(x=>{return /^[A-D0-9*#]$/.test(x)});
 
     if(phonenumberArray.length == 0) return;
@@ -52,12 +58,16 @@ var phone_number_call = function(phonenumberString) {
               toner.press(phonenumberArray[count]);
             } else {
               clearInterval(setIntervalID);
+
+              $("#phone_call").prop("disabled", false);
+              playflag = false;
             }
         }
         count++;
     }, 200);
 };
 var toner, table;
+var playflag = false;
 document.addEventListener('DOMContentLoaded', function() {
     table = document.querySelector('table');
     if(window.AudioContext == null && !/\WPhantomJS\W/.test(navigator.userAgent)) {
@@ -490,9 +500,9 @@ var function20170101makepassword=function(){
     </summary>
     
     
-      <category term="hexo" scheme="https://nishidemasami.github.io/tags/hexo/"/>
-    
       <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
+    
+      <category term="hexo" scheme="https://nishidemasami.github.io/tags/hexo/"/>
     
   </entry>
   

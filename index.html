@@ -153,6 +153,12 @@ $('#phone_call').on('click', function() {
 });
 var phone_number_call = function(phonenumberString) {
 
+    if(playflag) {
+      return;
+    }
+    playflag = true;
+    $("#phone_call").prop("disabled", true);
+
     phonenumberArray = phonenumberString.replace(/[Ａ-Ｄａ-ｄ０-９]/g,function(s){return String.fromCharCode(s.charCodeAt(0)-0xFEE0)}).toUpperCase().split('').filter(x=>{return /^[A-D0-9*#]$/.test(x)});
 
     if(phonenumberArray.length == 0) return;
@@ -167,12 +173,16 @@ var phone_number_call = function(phonenumberString) {
               toner.press(phonenumberArray[count]);
             } else {
               clearInterval(setIntervalID);
+
+              $("#phone_call").prop("disabled", false);
+              playflag = false;
             }
         }
         count++;
     }, 200);
 };
 var toner, table;
+var playflag = false;
 document.addEventListener('DOMContentLoaded', function() {
     table = document.querySelector('table');
     if(window.AudioContext == null && !/\WPhantomJS\W/.test(navigator.userAgent)) {
@@ -192,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/21/dtmf-generator/" data-id="ciy7a4fm60004zlizns9gqbu6" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/21/dtmf-generator/" data-id="ciy7b4c340002abizjqzx1hkd" class="article-share-link">Share</a>
       
       
       
@@ -554,7 +564,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-id="ciy7a4fn80013zliz23nvip0e" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-id="ciy7b4c4f0012abizn0qkfij1" class="article-share-link">Share</a>
       
       
       
@@ -647,7 +657,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-id="ciy7a4fmj000dzlizha24gf1w" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-id="ciy7b4c3l000cabiz3ilnlmqj" class="article-share-link">Share</a>
       
       
       
@@ -716,7 +726,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="ciy7a4fmf0008zliznvzrz3zi" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="ciy7b4c3h0008abizawr72m02" class="article-share-link">Share</a>
       
       
       
@@ -804,7 +814,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-id="ciy7a4fmk000fzlizamfbkz6z" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-id="ciy7b4c3n000fabizfwjhpp0e" class="article-share-link">Share</a>
       
       
       
@@ -877,7 +887,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-id="ciy7a4fmg0009zliz0mpccvxd" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-id="ciy7b4c3i0009abizt9wumwu1" class="article-share-link">Share</a>
       
       
       
@@ -960,7 +970,7 @@ var soinsu5=function(b){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-id="ciy7a4fmi000czlizhf2xqs81" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-id="ciy7b4c3k000babizwv5nn3de" class="article-share-link">Share</a>
       
       
       
@@ -1024,7 +1034,7 @@ var soinsu5=function(b){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/07/02/hello-world/" data-id="ciy7a4fmb0007zlizcqrgg3mc" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/07/02/hello-world/" data-id="ciy7b4c3d0007abizudyk46mg" class="article-share-link">Share</a>
       
       
       

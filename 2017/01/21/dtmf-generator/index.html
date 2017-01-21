@@ -39,7 +39,7 @@ $(&apos;#p">
 
 
 $(&apos;#p">
-<meta property="og:updated_time" content="2017-01-20T16:59:12.000Z">
+<meta property="og:updated_time" content="2017-01-21T14:04:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="電話番号の音を鳴らすやつ">
 <meta name="twitter:description" content="必要に迫られたため、入力された電話番号の音を鳴らすやつを作りました。(この音はDTMFという名前らしいです。DTMF - Wikipedia)Wikipediaを見ると数字、*、#だけでなく、A、B、C、Dもあるそうなのでそれも鳴らせるようにしています。
@@ -170,6 +170,12 @@ $('#phone_call').on('click', function() {
 });
 var phone_number_call = function(phonenumberString) {
 
+    if(playflag) {
+      return;
+    }
+    playflag = true;
+    $("#phone_call").prop("disabled", true);
+
     phonenumberArray = phonenumberString.replace(/[Ａ-Ｄａ-ｄ０-９]/g,function(s){return String.fromCharCode(s.charCodeAt(0)-0xFEE0)}).toUpperCase().split('').filter(x=>{return /^[A-D0-9*#]$/.test(x)});
 
     if(phonenumberArray.length == 0) return;
@@ -184,12 +190,16 @@ var phone_number_call = function(phonenumberString) {
               toner.press(phonenumberArray[count]);
             } else {
               clearInterval(setIntervalID);
+
+              $("#phone_call").prop("disabled", false);
+              playflag = false;
             }
         }
         count++;
     }, 200);
 };
 var toner, table;
+var playflag = false;
 document.addEventListener('DOMContentLoaded', function() {
     table = document.querySelector('table');
     if(window.AudioContext == null && !/\WPhantomJS\W/.test(navigator.userAgent)) {
@@ -209,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/21/dtmf-generator/" data-id="ciy7a4fm60004zlizns9gqbu6" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/21/dtmf-generator/" data-id="ciy7b4c340002abizjqzx1hkd" class="article-share-link">Share</a>
       
       
       
