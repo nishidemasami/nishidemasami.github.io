@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nishidemasami.github.io/"/>
-  <updated>2017-01-06T08:36:26.000Z</updated>
+  <updated>2017-01-20T16:59:12.000Z</updated>
   <id>https://nishidemasami.github.io/</id>
   
   <author>
@@ -16,11 +16,83 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>電話番号の音を鳴らすやつ</title>
+    <link href="https://nishidemasami.github.io/2017/01/21/dtmf-generator/"/>
+    <id>https://nishidemasami.github.io/2017/01/21/dtmf-generator/</id>
+    <published>2017-01-20T16:04:03.000Z</published>
+    <updated>2017-01-20T16:59:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>必要に迫られたため、入力された電話番号の音を鳴らすやつを作りました。<br>(この音はDTMFという名前らしいです。<a href="https://ja.wikipedia.org/wiki/DTMF" target="_blank" rel="external">DTMF - Wikipedia</a>)<br>Wikipediaを見ると数字、*、#だけでなく、A、B、C、Dもあるそうなのでそれも鳴らせるようにしています。</p>
+<p>電話番号入力：<input id="phone_number" size="40" type="text" value=""> <button id="phone_call" disabled>鳴らす</button><br>※注：音が鳴ります<br>※鳴らすボタンが押せない時は、ロード中か、もしくはブラウザが対応していません</p>
+<p>よければ！</p>
+<script type="text/javascript" src="/js/phone.js"></script>
+<script type="text/javascript">
+$('#phone_number').keypress(e=>{
+    if(e.which == 13){
+    phone_number_call($('#phone_number').val());
+        return false;
+    }
+});
+$('#phone_call').on('click', function() {
+  phone_number_call($('#phone_number').val());
+});
+var phone_number_call = function(phonenumberString) {
+
+    phonenumberArray = phonenumberString.replace(/[Ａ-Ｄａ-ｄ０-９]/g,function(s){return String.fromCharCode(s.charCodeAt(0)-0xFEE0)}).toUpperCase().split('').filter(x=>{return /^[A-D0-9*#]$/.test(x)});
+
+    if(phonenumberArray.length == 0) return;
+
+    var count = 0;
+    var setIntervalID = setInterval(function() {
+        if(count == 0) {
+          toner.press(phonenumberArray[count]);
+        } else {
+          toner.release(phonenumberArray[count-1]);
+          if (phonenumberArray.length > count) {
+              toner.press(phonenumberArray[count]);
+            } else {
+              clearInterval(setIntervalID);
+            }
+        }
+        count++;
+    }, 200);
+};
+var toner, table;
+document.addEventListener('DOMContentLoaded', function() {
+    table = document.querySelector('table');
+    if(window.AudioContext == null && !/\WPhantomJS\W/.test(navigator.userAgent)) {
+        table.style.display = 'none';
+        document.querySelector('div').style.display = '';
+        return;
+    }
+    var ctx = new AudioContext();
+    toner = new DTMFToner(ctx);
+    toner.connect(ctx.destination);
+    //adjustSize();
+    $("#phone_call").prop("disabled", false);
+});
+</script>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;必要に迫られたため、入力された電話番号の音を鳴らすやつを作りました。&lt;br&gt;(この音はDTMFという名前らしいです。&lt;a href=&quot;https://ja.wikipedia.org/wiki/DTMF&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DTM
+    
+    </summary>
+    
+    
+      <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
+    
+      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
+    
+  </entry>
+  
+  <entry>
     <title>PBKDF2でパスワード生成</title>
     <link href="https://nishidemasami.github.io/2017/01/03/make-password/"/>
     <id>https://nishidemasami.github.io/2017/01/03/make-password/</id>
     <published>2017-01-03T14:04:03.000Z</published>
-    <updated>2017-01-06T08:36:26.000Z</updated>
+    <updated>2017-01-13T08:18:19.000Z</updated>
     
     <content type="html"><![CDATA[<p>パスワード生成スクリプトを作った話です。</p>
 <h2 id="茶番"><a href="#茶番" class="headerlink" title="茶番"></a>茶番</h2><p>N君「よし！新しいサイトに会員登録するぞ！まずはパスワードを考えなくちゃ！」</p>
@@ -331,13 +403,13 @@ var function20170101makepassword=function(){
     </summary>
     
     
+      <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
+    
       <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
     
       <category term="Java" scheme="https://nishidemasami.github.io/tags/Java/"/>
     
       <category term="Ruby" scheme="https://nishidemasami.github.io/tags/Ruby/"/>
-    
-      <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
     
       <category term="Node.js" scheme="https://nishidemasami.github.io/tags/Node-js/"/>
     
@@ -418,9 +490,9 @@ var function20170101makepassword=function(){
     </summary>
     
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
       <category term="hexo" scheme="https://nishidemasami.github.io/tags/hexo/"/>
+    
+      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
     
   </entry>
   
@@ -541,9 +613,9 @@ var soinsu5=function(b){
     </summary>
     
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
       <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
+    
+      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
     
   </entry>
   

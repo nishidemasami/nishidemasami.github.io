@@ -94,6 +94,119 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-dtmf-generator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/21/dtmf-generator/" class="article-date">
+  <time datetime="2017-01-20T16:04:03.000Z" itemprop="datePublished">2017-01-21</time>
+</a>
+
+    
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/dtmf-generator/">電話番号の音を鳴らすやつ</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div class="article-sharing">
+  <ul>
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/https://nishidemasami.github.io/2017/01/21/dtmf-generator/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="//b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="//b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    <li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2017/01/21/dtmf-generator/" data-counturl="https://nishidemasami.github.io/2017/01/21/dtmf-generator/" >Tweet</a>
+    </li>
+    <li>
+      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2017/01/21/dtmf-generator/"></div>
+    </li>
+  </ul>
+</div>
+
+      
+      
+        
+        <p>必要に迫られたため、入力された電話番号の音を鳴らすやつを作りました。<br>(この音はDTMFという名前らしいです。<a href="https://ja.wikipedia.org/wiki/DTMF" target="_blank" rel="external">DTMF - Wikipedia</a>)<br>Wikipediaを見ると数字、*、#だけでなく、A、B、C、Dもあるそうなのでそれも鳴らせるようにしています。</p>
+<p>電話番号入力：<input id="phone_number" size="40" type="text" value=""> <button id="phone_call" disabled>鳴らす</button><br>※注：音が鳴ります<br>※鳴らすボタンが押せない時は、ロード中か、もしくはブラウザが対応していません</p>
+<p>よければ！</p>
+<script type="text/javascript" src="/js/phone.js"></script>
+<script type="text/javascript">
+$('#phone_number').keypress(e=>{
+    if(e.which == 13){
+    phone_number_call($('#phone_number').val());
+        return false;
+    }
+});
+$('#phone_call').on('click', function() {
+  phone_number_call($('#phone_number').val());
+});
+var phone_number_call = function(phonenumberString) {
+
+    phonenumberArray = phonenumberString.replace(/[Ａ-Ｄａ-ｄ０-９]/g,function(s){return String.fromCharCode(s.charCodeAt(0)-0xFEE0)}).toUpperCase().split('').filter(x=>{return /^[A-D0-9*#]$/.test(x)});
+
+    if(phonenumberArray.length == 0) return;
+
+    var count = 0;
+    var setIntervalID = setInterval(function() {
+        if(count == 0) {
+          toner.press(phonenumberArray[count]);
+        } else {
+          toner.release(phonenumberArray[count-1]);
+          if (phonenumberArray.length > count) {
+              toner.press(phonenumberArray[count]);
+            } else {
+              clearInterval(setIntervalID);
+            }
+        }
+        count++;
+    }, 200);
+};
+var toner, table;
+document.addEventListener('DOMContentLoaded', function() {
+    table = document.querySelector('table');
+    if(window.AudioContext == null && !/\WPhantomJS\W/.test(navigator.userAgent)) {
+        table.style.display = 'none';
+        document.querySelector('div').style.display = '';
+        return;
+    }
+    var ctx = new AudioContext();
+    toner = new DTMFToner(ctx);
+    toner.connect(ctx.destination);
+    //adjustSize();
+    $("#phone_call").prop("disabled", false);
+});
+</script>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="https://nishidemasami.github.io/2017/01/21/dtmf-generator/" data-id="ciy7a4fm60004zlizns9gqbu6" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lightyield/">lightyield</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-make-password" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/03/make-password/" class="article-date">
@@ -441,7 +554,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-id="cixn972io000vssiz84j79955" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-id="ciy7a4fn80013zliz23nvip0e" class="article-share-link">Share</a>
       
       
       
@@ -534,7 +647,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-id="cixn972hr0006ssizg0e14jrj" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-id="ciy7a4fmj000dzlizha24gf1w" class="article-share-link">Share</a>
       
       
       
@@ -603,7 +716,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="cixn972hj0002ssizs6qub77q" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="ciy7a4fmf0008zliznvzrz3zi" class="article-share-link">Share</a>
       
       
       
@@ -691,7 +804,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-id="cixn972hv0009ssizw75rg4yi" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-id="ciy7a4fmk000fzlizamfbkz6z" class="article-share-link">Share</a>
       
       
       
@@ -764,7 +877,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-id="cixn972ho0004ssizwxwp22kg" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-id="ciy7a4fmg0009zliz0mpccvxd" class="article-share-link">Share</a>
       
       
       
@@ -847,7 +960,7 @@ var soinsu5=function(b){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-id="cixn972hp0005ssizpf1p940t" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-id="ciy7a4fmi000czlizhf2xqs81" class="article-share-link">Share</a>
       
       
       
@@ -911,7 +1024,7 @@ var soinsu5=function(b){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/07/02/hello-world/" data-id="cixn972hh0001ssiz9scrupe5" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/07/02/hello-world/" data-id="ciy7a4fmb0007zlizcqrgg3mc" class="article-share-link">Share</a>
       
       
       
@@ -960,7 +1073,7 @@ var soinsu5=function(b){
   <div class="widget-wrap">
     <h3 id="widget-title-tag" class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lightyield/">lightyield</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/情報処理技術者試験/">情報処理技術者試験</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lightyield/">lightyield</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/情報処理技術者試験/">情報処理技術者試験</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -970,7 +1083,7 @@ var soinsu5=function(b){
   <div class="widget-wrap">
     <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/Ruby/" style="font-size: 15px;">Ruby</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/lightyield/" style="font-size: 20px;">lightyield</a> <a href="/tags/情報処理技術者試験/" style="font-size: 10px;">情報処理技術者試験</a>
+      <a href="/tags/Java/" style="font-size: 13.33px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 16.67px;">JavaScript</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/Ruby/" style="font-size: 13.33px;">Ruby</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/lightyield/" style="font-size: 20px;">lightyield</a> <a href="/tags/情報処理技術者試験/" style="font-size: 10px;">情報処理技術者試験</a>
     </div>
   </div>
 
@@ -980,7 +1093,7 @@ var soinsu5=function(b){
   <div class="widget-wrap">
     <h3 id="widget-title-archive" class="widget-title" data-skip-mobile-nav="true">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -991,6 +1104,10 @@ var soinsu5=function(b){
     <h3 id="widget-title-recent-posts" class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/01/21/dtmf-generator/">電話番号の音を鳴らすやつ</a>
+          </li>
         
           <li>
             <a href="/2017/01/03/make-password/">PBKDF2でパスワード生成</a>
@@ -1006,10 +1123,6 @@ var soinsu5=function(b){
         
           <li>
             <a href="/2016/12/05/vim-crypt/">Vimで暗号化</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/27/java-combination/">JAVAで組み合わせ</a>
           </li>
         
       </ul>
