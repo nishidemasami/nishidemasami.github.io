@@ -142,7 +142,7 @@ ga('send', 'pageview');
 <p>・メリット<br>サーバと通信しないのでどんなに大量でもデータ通信帯域などを消費しない<br>・デメリット<br>動かないブラウザがある(IE)</p>
 <p>よければ！</p>
 <!-- <a id="download" href="#" download="ダミー個人情報.csv" onclick="dummyKojinjohoDownload()">ダウンロード</a> -->
-<div class="widget">ダミー個人情報作成くん<br><button onclick="run();">ダウンロード</button><br><br>パラメータ<br><br>ダミーの個人情報の件数：<input id="dummyKojinjohoKensu" size="10" type="number" value="100"><br><br>項目<br><label for="dummyKojinjohoNameCheckbox"><input id="dummyKojinjohoNameCheckbox" type="checkbox" checked border="0">名前(苗字と名前の間は全角スペース区切りです)</label><br><label for="dummyKojinjohoAgeCheckbox"><input id="dummyKojinjohoAgeCheckbox" type="checkbox" checked border="0">年齢(生年月日から計算しています)</label><br><label for="dummyKojinjohoBirthdayCheckbox"><input id="dummyKojinjohoBirthdayCheckbox" type="checkbox" checked border="0">生年月日(現在の日付から100年前までの間でランダムです)</label><br><label for="dummyKojinjohoSeibetsuCheckbox"><input id="dummyKojinjohoSeibetsuCheckbox" type="checkbox" checked border="0">性別(男、女からランダムです。その他の人が3%います)</label><br><label for="dummyKojinjohoATodofukenCheckbox"><input id="dummyKojinjohoATodofukenCheckbox" type="checkbox" checked border="0">都道府県(47都道府県からランダムです)</label><br><label for="dummyKojinjohoPhoneCheckbox"><input id="dummyKojinjohoPhoneCheckbox" type="checkbox" checked border="0">携帯電話番号(080,090から始まり、下8桁はランダムです)</label><br><label for="dummyKojinjohoBloodCheckbox"><input id="dummyKojinjohoBloodCheckbox" type="checkbox" checked border="0">血液型(40%でA、20%でB、30%でO、10%でABです)</label><br><label for="dummyKojinjohoChokinCheckbox"><input id="dummyKojinjohoChokinCheckbox" type="checkbox" checked border="0">貯金額(0~10000000の間でランダムです)</label><br><label for="dummyKojinjohoDainigengoCheckbox"><input id="dummyKojinjohoDainigengoCheckbox" type="checkbox" checked border="0">プログラミング言語(メジャーなプログラミング言語からランダムです)</label><br><label for="dummyKojinjohoPasswordCheckbox"><input id="dummyKojinjohoPasswordCheckbox" type="checkbox" checked border="0">パスワード(5文字〜20文字の半角英数字です。半分くらいの人は簡単なパスワードを使っています。)</label></div>
+<div class="widget">ダミー個人情報作成くん<br><button onclick="dummyKojinjohoDownload();">ダウンロード</button><br><br>パラメータ<br><br>ダミーの個人情報の件数：<input id="dummyKojinjohoKensu" size="10" type="number" value="100"><br><label for="dummyKojinjohoSentokomokugyoCheckbox"><input id="dummyKojinjohoSentokomokugyoCheckbox" type="checkbox" checked border="0">先頭の項目行</label><br><br>項目<br><label for="dummyKojinjohoNameCheckbox"><input id="dummyKojinjohoNameCheckbox" type="checkbox" checked border="0">名前(苗字と名前の間は全角スペース区切りです)</label><br><label for="dummyKojinjohoAgeCheckbox"><input id="dummyKojinjohoAgeCheckbox" type="checkbox" checked border="0">年齢(生年月日から計算しています)</label><br><label for="dummyKojinjohoBirthdayCheckbox"><input id="dummyKojinjohoBirthdayCheckbox" type="checkbox" checked border="0">生年月日(現在の日付から100年前までの間でランダムです)</label><br><label for="dummyKojinjohoSeibetsuCheckbox"><input id="dummyKojinjohoSeibetsuCheckbox" type="checkbox" checked border="0">性別(男、女からランダムです。その他の人が3%います)</label><br><label for="dummyKojinjohoATodofukenCheckbox"><input id="dummyKojinjohoATodofukenCheckbox" type="checkbox" checked border="0">都道府県(47都道府県からランダムです)</label><br><label for="dummyKojinjohoPhoneCheckbox"><input id="dummyKojinjohoPhoneCheckbox" type="checkbox" checked border="0">携帯電話番号(080,090から始まり、下8桁はランダムです)</label><br><label for="dummyKojinjohoBloodCheckbox"><input id="dummyKojinjohoBloodCheckbox" type="checkbox" checked border="0">血液型(40%でA、20%でB、30%でO、10%でABです)</label><br><label for="dummyKojinjohoChokinCheckbox"><input id="dummyKojinjohoChokinCheckbox" type="checkbox" checked border="0">貯金額(0~10000000の間でランダムです)</label><br><label for="dummyKojinjohoDainigengoCheckbox"><input id="dummyKojinjohoDainigengoCheckbox" type="checkbox" checked border="0">プログラミング言語(メジャーなプログラミング言語からランダムです)</label><br><label for="dummyKojinjohoPasswordCheckbox"><input id="dummyKojinjohoPasswordCheckbox" type="checkbox" checked border="0">パスワード(5文字〜20文字の半角英数字です。半分くらいの人は簡単なパスワードを使っています。)</label></div>
 
 <script type="text/javascript">
 
@@ -196,50 +196,19 @@ var global_dummyKojinjohoEasypassword = ["123456","password","12345678","qwerty"
 var global_today = new Date();
 var global_today_int = parseInt("" + global_today.getFullYear() + ( "0" + (global_today.getMonth() + 1)).slice(-2) + ( "0" + global_today.getDate()).slice(-2));
 
-// ダミーの個人情報をダウンロード
-function dummyKojinjohoDownload() {
-
-        var prm = {
-            "name" : $("#dummyKojinjohoNameCheckbox:checked").val(),
-            "age" : $("#dummyKojinjohoAgeCheckbox:checked").val(),
-            "todofuken" : $("#dummyKojinjohoATodofukenCheckbox:checked").val(),
-            "dainigengo" : $("#dummyKojinjohoDainigengoCheckbox:checked").val(),
-            "seibetsu" : $("#dummyKojinjohoSeibetsuCheckbox:checked").val(),
-            "phone" : $("#dummyKojinjohoPhoneCheckbox:checked").val(),
-            "blood" : $("#dummyKojinjohoBloodCheckbox:checked").val(),
-            "chokin" : $("#dummyKojinjohoChokinCheckbox:checked").val(),
-            "birthday" : $("#dummyKojinjohoBirthdayCheckbox:checked").val(),
-            "password" : $("#dummyKojinjohoPasswordCheckbox:checked").val(),
-            "kensu" : parseInt($('#dummyKojinjohoKensu').val(), 10)
-        };
-
-    var blob = new Blob(dummyKojinjohosMaker(prm), { "type" : "text/csv" });
-
-        var filename = "ダミー個人情報.csv";
-
-    if (window.navigator.msSaveBlob) {
-        window.navigator.msSaveBlob(blob, filename);
-
-        // msSaveOrOpenBlobの場合はファイルを保存せずに開ける
-        window.navigator.msSaveOrOpenBlob(blob, filename);
-    } else {
-        document.getElementById("download").href = window.URL.createObjectURL(blob);
-    }
-}
-
 // ダミーの個人情報を作成
 function dummyKojinjohosMaker(prm) {
 
   var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
     var content = '';
 
-    content += global_dummyKojinjohoColumnsOrder
-                            .filter(x=>{return prm[x]})
-                            .map(x=>{return '"' + global_dummyKojinjohoColumns[x] + '"'})
-                            .join(",")
-                        + "\n";
-
-
+    if(prm["sentokomokugyo"]) {
+        content += global_dummyKojinjohoColumnsOrder
+                                .filter(x=>{return prm[x]})
+                                .map(x=>{return '"' + global_dummyKojinjohoColumns[x] + '"'})
+                                .join(",")
+                            + "\n";
+    }
 
     for(var i = 0; i < prm["kensu"]; i++) {
         var adummyKojinjoho = dummyKojinjohoMaker(prm);
@@ -366,20 +335,8 @@ function dummyKojinjohoMaker(prm) {
     return adummyKojinjoho;
 }
 
-function SaveToFile(FileName,Stream) {
-  if (window.navigator.msSaveBlob) {
-    window.navigator.msSaveBlob(Stream, FileName);
-  } else {
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([Stream], { type: "text/plain" }));
-    a.download = FileName;
-    document.body.appendChild(a) //  FireFox specification
-    a.click();
-    document.body.removeChild(a) //  FireFox specification
-  }
-}
-
-function run(){    
+// ダミーの個人情報をダウンロード
+function dummyKojinjohoDownload(){    
 
         var prm = {
             "name" : $("#dummyKojinjohoNameCheckbox:checked").val(),
@@ -392,13 +349,27 @@ function run(){
             "chokin" : $("#dummyKojinjohoChokinCheckbox:checked").val(),
             "birthday" : $("#dummyKojinjohoBirthdayCheckbox:checked").val(),
             "password" : $("#dummyKojinjohoPasswordCheckbox:checked").val(),
+            "sentokomokugyo" : $("#dummyKojinjohoSentokomokugyoCheckbox:checked").val(),
             "kensu" : parseInt($('#dummyKojinjohoKensu').val(), 10)
         };
 
         var filename = "ダミー個人情報.csv";
 
+        var data = new Blob(dummyKojinjohosMaker(prm), { "type" : "text/csv" });
 
-  SaveToFile(filename, new Blob(dummyKojinjohosMaker(prm), { "type" : "text/csv" }));
+      if (window.navigator.msSaveBlob) {
+        window.navigator.msSaveBlob(data, filename);
+            // window.navigator.msSaveOrOpenBlob(data, filename);
+      } else {
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(data);
+        a.download = filename;
+        document.body.appendChild(a) //  FireFox specification
+        a.click();
+        document.body.removeChild(a) //  FireFox specification
+
+      // document.getElementById("download").href = window.URL.createObjectURL(blob);
+      }
 }
 </script>
 
@@ -406,7 +377,7 @@ function run(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/" data-id="ciyivkgzm000b9lizpdflxou0" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/" data-id="ciyixabn00009r2iz4sqp0xd5" class="article-share-link">Share</a>
       
       
       
@@ -529,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/21/dtmf-generator/" data-id="ciyivkgz300029lizxw27qbrn" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/21/dtmf-generator/" data-id="ciyixabmp0002r2izqi862j2s" class="article-share-link">Share</a>
       
       
       
@@ -891,7 +862,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-id="ciyivkh0n001c9liz4i8n752t" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-id="ciyixaboa001dr2izu2byfw7e" class="article-share-link">Share</a>
       
       
       
@@ -984,7 +955,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-id="ciyivkgzz000m9liz4s1ka44c" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-id="ciyixabnt0011r2iz3dfevumx" class="article-share-link">Share</a>
       
       
       
@@ -1053,7 +1024,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="ciyivkgzn000c9liztrx8y0ww" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="ciyixabnh000qr2izsd4kt3d4" class="article-share-link">Share</a>
       
       
       
@@ -1141,7 +1112,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-id="ciyivkgzv000k9liz8hq4gyt6" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/05/vim-crypt/" data-id="ciyixabnr000yr2izgffczhv9" class="article-share-link">Share</a>
       
       
       
@@ -1214,7 +1185,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-id="ciyivkgzs000f9lizewlfmrul" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/11/27/java-combination/" data-id="ciyixabno000vr2iz1l84r4lj" class="article-share-link">Share</a>
       
       
       
@@ -1297,7 +1268,7 @@ var soinsu5=function(b){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-id="ciyivkgzu000h9lizj3e3uzvy" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-id="ciyixabnl000sr2iz9wev1bfn" class="article-share-link">Share</a>
       
       
       
@@ -1361,7 +1332,7 @@ var soinsu5=function(b){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/07/02/hello-world/" data-id="ciyivkgzk00099lizztv4c5og" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/07/02/hello-world/" data-id="ciyixabms0004r2izgab13d6s" class="article-share-link">Share</a>
       
       
       
