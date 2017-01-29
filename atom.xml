@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nishidemasami.github.io/"/>
-  <updated>2017-01-29T17:07:55.000Z</updated>
+  <updated>2017-01-29T17:48:55.000Z</updated>
   <id>https://nishidemasami.github.io/</id>
   
   <author>
@@ -20,14 +20,14 @@
     <link href="https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/"/>
     <id>https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/</id>
     <published>2017-01-28T16:04:03.000Z</published>
-    <updated>2017-01-29T17:07:55.000Z</updated>
+    <updated>2017-01-29T17:48:55.000Z</updated>
     
     <content type="html"><![CDATA[<p>Javascriptだけでなにかデータのダウンロードをさせてみたいと思ったので、試しにダミーの個人情報を作成するやつを作りました。<br>特に統計に基づいたりなどはしていない適当なデータです。</p>
 <p>ChromeとFirefox、Safariで動きます。<br>マイクロソフト社製ブラウザしか使わないポリシーの方は「Microsoft Edge」を使って下さい。</p>
 <p>・メリット<br>サーバと通信しないのでどんなに大量でもデータ通信帯域などを消費しない<br>・デメリット<br>動かないブラウザがある(IE)</p>
 <p>よければ！</p>
 <!-- <a id="download" href="#" download="ダミー個人情報.csv" onclick="dummyKojinjohoDownload()">ダウンロード</a> -->
-<div class="widget">ダミー個人情報作成くん<br><button onclick="dummyKojinjohoDownload();">ダウンロード</button><br><br>パラメータ<br><br>ダミーの個人情報の件数：<input id="dummyKojinjohoKensu" size="10" type="number" value="100"><br><label for="dummyKojinjohoSentokomokugyoCheckbox"><input id="dummyKojinjohoSentokomokugyoCheckbox" type="checkbox" checked border="0">先頭の項目行</label><br><br>項目<br><label for="dummyKojinjohoNameCheckbox"><input id="dummyKojinjohoNameCheckbox" type="checkbox" checked border="0">名前(苗字と名前の間は全角スペース区切りです)</label><br><label for="dummyKojinjohoAgeCheckbox"><input id="dummyKojinjohoAgeCheckbox" type="checkbox" checked border="0">年齢(生年月日から計算しています)</label><br><label for="dummyKojinjohoBirthdayCheckbox"><input id="dummyKojinjohoBirthdayCheckbox" type="checkbox" checked border="0">生年月日(現在の日付から100年前までの間でランダムです)</label><br><label for="dummyKojinjohoSeibetsuCheckbox"><input id="dummyKojinjohoSeibetsuCheckbox" type="checkbox" checked border="0">性別(男、女からランダムです。その他の人が3%います)</label><br><label for="dummyKojinjohoATodofukenCheckbox"><input id="dummyKojinjohoATodofukenCheckbox" type="checkbox" checked border="0">都道府県(47都道府県からランダムです)</label><br><label for="dummyKojinjohoPhoneCheckbox"><input id="dummyKojinjohoPhoneCheckbox" type="checkbox" checked border="0">携帯電話番号(080,090から始まり、下8桁はランダムです)</label><br><label for="dummyKojinjohoBloodCheckbox"><input id="dummyKojinjohoBloodCheckbox" type="checkbox" checked border="0">血液型(40%でA、20%でB、30%でO、10%でABです)</label><br><label for="dummyKojinjohoChokinCheckbox"><input id="dummyKojinjohoChokinCheckbox" type="checkbox" checked border="0">貯金額(0~10000000の間でランダムです)</label><br><label for="dummyKojinjohoDainigengoCheckbox"><input id="dummyKojinjohoDainigengoCheckbox" type="checkbox" checked border="0">プログラミング言語(メジャーなプログラミング言語からランダムです)</label><br><label for="dummyKojinjohoPasswordCheckbox"><input id="dummyKojinjohoPasswordCheckbox" type="checkbox" checked border="0">パスワード(5文字〜20文字の半角英数字です。半分くらいの人は簡単なパスワードを使っています。)</label></div>
+<div class="widget">ダミー個人情報作成くん<br><br><button onclick="dummyKojinjohoDownload();">ダミー個人情報作成</button><br><br>パラメータ<br><br><label for="dummyKojinjohoSentokomokugyoCheckbox"><input id="dummyKojinjohoSentokomokugyoCheckbox" type="checkbox" checked border="0">先頭の項目行</label><br>ダミーの個人情報の件数：<input id="dummyKojinjohoKensu" size="10" type="number" value="100"><br>ファイル形式：<select id="dummyKojinjohoTypeSelectbox" size="1"><br>    <option value="plaincsv">CSVファイルをそのまま表示<br>    </option><option value="csv">CSVファイルをダウンロード<br></option></select> ※Microsoft Edgeではそのまま表示はできません。Safariでは表示しかできません。<br><br>項目<br><label for="dummyKojinjohoNameCheckbox"><input id="dummyKojinjohoNameCheckbox" type="checkbox" checked border="0">名前(苗字と名前の間は全角スペース区切りです)</label><br><label for="dummyKojinjohoAgeCheckbox"><input id="dummyKojinjohoAgeCheckbox" type="checkbox" checked border="0">年齢(生年月日から計算しています)</label><br><label for="dummyKojinjohoBirthdayCheckbox"><input id="dummyKojinjohoBirthdayCheckbox" type="checkbox" checked border="0">生年月日(現在の日付から100年前までの間でランダムです)</label><br><label for="dummyKojinjohoSeibetsuCheckbox"><input id="dummyKojinjohoSeibetsuCheckbox" type="checkbox" checked border="0">性別(男、女からランダムです。その他の人が3%います)</label><br><label for="dummyKojinjohoATodofukenCheckbox"><input id="dummyKojinjohoATodofukenCheckbox" type="checkbox" checked border="0">都道府県(47都道府県からランダムです)</label><br><label for="dummyKojinjohoPhoneCheckbox"><input id="dummyKojinjohoPhoneCheckbox" type="checkbox" checked border="0">携帯電話番号(080,090から始まり、下8桁はランダムです)</label><br><label for="dummyKojinjohoBloodCheckbox"><input id="dummyKojinjohoBloodCheckbox" type="checkbox" checked border="0">血液型(40%でA、20%でB、30%でO、10%でABです)</label><br><label for="dummyKojinjohoChokinCheckbox"><input id="dummyKojinjohoChokinCheckbox" type="checkbox" checked border="0">貯金額(0~10000000の間でランダムです)</label><br><label for="dummyKojinjohoDainigengoCheckbox"><input id="dummyKojinjohoDainigengoCheckbox" type="checkbox" checked border="0">プログラミング言語(メジャーなプログラミング言語からランダムです)</label><br><label for="dummyKojinjohoPasswordCheckbox"><input id="dummyKojinjohoPasswordCheckbox" type="checkbox" checked border="0">パスワード(5文字〜20文字の半角英数字です。半分くらいの人は簡単なパスワードを使っています。)</label></div>
 
 <script type="text/javascript">
 
@@ -77,6 +77,11 @@ var global_dummyKojinjohoGengo = ["COBOL","PASCAL","Scheme","Clojure","Haskell",
 // 簡単なパスワード
 var global_dummyKojinjohoEasypassword = ["123456","password","12345678","qwerty","12345","123456789","baseball","welcome","1234567890","abc123","111111","1qaz2wsx","dragon","master","monkey","login","princess","qwertyuiop","passw0rd","football",];
 
+// ダウンロード方式
+var global_type = {
+    "csv" : { "type" : "text/csv" },
+    "plaincsv" : { "type" : "text/plain" }
+}
 
 var global_today = new Date();
 var global_today_int = parseInt("" + global_today.getFullYear() + ( "0" + (global_today.getMonth() + 1)).slice(-2) + ( "0" + global_today.getDate()).slice(-2));
@@ -235,20 +240,28 @@ function dummyKojinjohoDownload(){
             "birthday" : $("#dummyKojinjohoBirthdayCheckbox:checked").val(),
             "password" : $("#dummyKojinjohoPasswordCheckbox:checked").val(),
             "sentokomokugyo" : $("#dummyKojinjohoSentokomokugyoCheckbox:checked").val(),
+            "type" : $("#dummyKojinjohoTypeSelectbox").val(),
             "kensu" : parseInt($('#dummyKojinjohoKensu').val(), 10)
         };
 
         var filename = "ダミー個人情報.csv";
 
-        var data = new Blob(dummyKojinjohosMaker(prm), { "type" : "text/csv" });
+        console.log(global_type[prm["type"]]);
+        console.log(prm["type"]);
+
+        var data = new Blob(dummyKojinjohosMaker(prm), global_type[prm["type"]]);
 
       if (window.navigator.msSaveBlob) {
-        window.navigator.msSaveBlob(data, filename);
+            if(!prm["type"].match(/^plain/)) {
+            window.navigator.msSaveBlob(data, filename);
+            } else {
+            window.navigator.msSaveOrOpenBlob(data, filename);
+            }
             // window.navigator.msSaveOrOpenBlob(data, filename);
       } else {
         var a = document.createElement("a");
         a.href = URL.createObjectURL(data);
-        a.download = filename;
+        if(!prm["type"].match(/^plain/))a.download = filename;
         document.body.appendChild(a) //  FireFox specification
         a.click();
         document.body.removeChild(a) //  FireFox specification
@@ -758,9 +771,9 @@ var function20170101makepassword=function(){
     </summary>
     
     
-      <category term="hexo" scheme="https://nishidemasami.github.io/tags/hexo/"/>
-    
       <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
+    
+      <category term="hexo" scheme="https://nishidemasami.github.io/tags/hexo/"/>
     
   </entry>
   
