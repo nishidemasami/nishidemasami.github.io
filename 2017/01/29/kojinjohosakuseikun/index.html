@@ -33,7 +33,7 @@ ChromeとFirefox、Safariで動きます。マイクロソフト社製ブラウ�
 <meta property="og:description" content="Javascriptだけでなにかデータのダウンロードをさせてみたいと思ったので、試しにダミーの個人情報を作成するやつを作りました。特に統計に基づいたりなどはしていない適当なデータです。
 ChromeとFirefox、Safariで動きます。マイクロソフト社製ブラウザしか使わないポリシーの方は「Microsoft Edge」を使って下さい。
 ・メリットサーバと通信しないのでどんなに大量でもデータ通信">
-<meta property="og:updated_time" content="2017-01-29T15:15:53.000Z">
+<meta property="og:updated_time" content="2017-01-29T16:21:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ダミー個人情報作成くん">
 <meta name="twitter:description" content="Javascriptだけでなにかデータのダウンロードをさせてみたいと思ったので、試しにダミーの個人情報を作成するやつを作りました。特に統計に基づいたりなどはしていない適当なデータです。
@@ -281,11 +281,10 @@ function dummyKojinjohoMaker(prm) {
             var length = (Math.floor( Math.random() * 15 ) + 5);
             var password = "";
             var password_string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            for(var i = 0; i < length; i++){
+            for(var i = 0; i <= length; i++){
               password += password_string[Math.floor(Math.random() * password_string.length)];
             }
             return password;
-            //return Math.floor(Math.random()).toString(36).slice(-(Math.floor( Math.random() * 16 )+4));;
         }
     };
 
@@ -415,7 +414,7 @@ function run(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/" data-id="ciyitnupf000bwoizg2o9zc5v" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/" data-id="ciyivkgzm000b9lizpdflxou0" class="article-share-link">Share</a>
       
       
       
