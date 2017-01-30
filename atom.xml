@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nishidemasami.github.io/"/>
-  <updated>2017-01-29T18:27:18.000Z</updated>
+  <updated>2017-01-30T05:27:58.000Z</updated>
   <id>https://nishidemasami.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/"/>
     <id>https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/</id>
     <published>2017-01-28T16:04:03.000Z</published>
-    <updated>2017-01-29T18:27:18.000Z</updated>
+    <updated>2017-01-30T05:27:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>Javascriptだけでなにかデータのダウンロードをさせてみたいと思ったので、試しにダミーの個人情報を作成するやつを作りました。<br>特に統計に基づいたりなどはしていない適当なデータです。</p>
 <p>ChromeとFirefox、Safariで動きます。<br>マイクロソフト社製ブラウザしか使わないポリシーの方は「Microsoft Edge」を使って下さい。</p>
@@ -252,6 +252,10 @@ function dummyKojinjohoDownload(){
         };
 
         var filename = "ダミー個人情報.csv";
+
+        if(prm["type"].match(/tsv/)) {
+            filename = "ダミー個人情報.tsv";
+        }
 
         console.log(global_type[prm["type"]]);
         console.log(prm["type"]);

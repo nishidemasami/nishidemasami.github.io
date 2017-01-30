@@ -33,7 +33,7 @@ ChromeとFirefox、Safariで動きます。マイクロソフト社製ブラウ�
 <meta property="og:description" content="Javascriptだけでなにかデータのダウンロードをさせてみたいと思ったので、試しにダミーの個人情報を作成するやつを作りました。特に統計に基づいたりなどはしていない適当なデータです。
 ChromeとFirefox、Safariで動きます。マイクロソフト社製ブラウザしか使わないポリシーの方は「Microsoft Edge」を使って下さい。
 ・メリットサーバと通信しないのでどんなに大量でもデータ通信">
-<meta property="og:updated_time" content="2017-01-29T18:27:18.000Z">
+<meta property="og:updated_time" content="2017-01-30T05:27:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ダミー個人情報作成くん">
 <meta name="twitter:description" content="Javascriptだけでなにかデータのダウンロードをさせてみたいと思ったので、試しにダミーの個人情報を作成するやつを作りました。特に統計に基づいたりなどはしていない適当なデータです。
@@ -376,6 +376,10 @@ function dummyKojinjohoDownload(){
 
         var filename = "ダミー個人情報.csv";
 
+        if(prm["type"].match(/tsv/)) {
+            filename = "ダミー個人情報.tsv";
+        }
+
         console.log(global_type[prm["type"]]);
         console.log(prm["type"]);
 
@@ -410,7 +414,7 @@ function dummyKojinjohoDownload(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/" data-id="ciyj02qug000cfwiza8p0zekx" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/" data-id="ciyjnmjkv000c9wizrz2gyj2v" class="article-share-link">Share</a>
       
       
       
