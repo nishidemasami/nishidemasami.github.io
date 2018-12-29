@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://nishidemasami.github.io/"/>
-  <updated>2017-01-30T05:27:58.000Z</updated>
+  <updated>2018-12-29T01:41:26.671Z</updated>
   <id>https://nishidemasami.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/"/>
     <id>https://nishidemasami.github.io/2017/01/29/kojinjohosakuseikun/</id>
     <published>2017-01-28T16:04:03.000Z</published>
-    <updated>2017-01-30T05:27:58.000Z</updated>
+    <updated>2018-12-29T01:41:26.671Z</updated>
     
     <content type="html"><![CDATA[<p>Javascriptだけでなにかデータのダウンロードをさせてみたいと思ったので、試しにダミーの個人情報を作成するやつを作りました。<br>特に統計に基づいたりなどはしていない適当なデータです。</p>
 <p>ChromeとFirefox、Safariで動きます。<br>マイクロソフト社製ブラウザしか使わないポリシーの方は「Microsoft Edge」を使って下さい。</p>
@@ -298,8 +298,6 @@ function dummyKojinjohoDownload(){
     
       <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
   </entry>
   
   <entry>
@@ -307,7 +305,7 @@ function dummyKojinjohoDownload(){
     <link href="https://nishidemasami.github.io/2017/01/21/dtmf-generator/"/>
     <id>https://nishidemasami.github.io/2017/01/21/dtmf-generator/</id>
     <published>2017-01-20T16:04:03.000Z</published>
-    <updated>2017-01-21T14:04:26.000Z</updated>
+    <updated>2018-12-29T01:40:50.207Z</updated>
     
     <content type="html"><![CDATA[<p>必要に迫られたため、入力された電話番号の音を鳴らすやつを作りました。<br>(この音はDTMFという名前らしいです。<a href="https://ja.wikipedia.org/wiki/DTMF" target="_blank" rel="external">DTMF - Wikipedia</a>)<br>Wikipediaを見ると数字、*、#だけでなく、A、B、C、Dもあるそうなのでそれも鳴らせるようにしています。</p>
 <p>電話番号入力：<input id="phone_number" size="40" type="text" value=""> <button id="phone_call" disabled>鳴らす</button><br>※注：音が鳴ります<br>※鳴らすボタンが押せない時は、ロード中か、もしくはブラウザが対応していません</p>
@@ -380,8 +378,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
       <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
   </entry>
   
   <entry>
@@ -389,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <link href="https://nishidemasami.github.io/2017/01/03/make-password/"/>
     <id>https://nishidemasami.github.io/2017/01/03/make-password/</id>
     <published>2017-01-03T14:04:03.000Z</published>
-    <updated>2017-01-13T08:18:19.000Z</updated>
+    <updated>2018-12-29T01:41:32.105Z</updated>
     
     <content type="html"><![CDATA[<p>パスワード生成スクリプトを作った話です。</p>
 <h2 id="茶番"><a href="#茶番" class="headerlink" title="茶番"></a>茶番</h2><p>N君「よし！新しいサイトに会員登録するぞ！まずはパスワードを考えなくちゃ！」</p>
@@ -702,8 +698,6 @@ var function20170101makepassword=function(){
     
       <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
       <category term="Java" scheme="https://nishidemasami.github.io/tags/Java/"/>
     
       <category term="Ruby" scheme="https://nishidemasami.github.io/tags/Ruby/"/>
@@ -717,7 +711,7 @@ var function20170101makepassword=function(){
     <link href="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/"/>
     <id>https://nishidemasami.github.io/2016/12/18/network-specialist-examination/</id>
     <published>2016-12-18T09:04:03.000Z</published>
-    <updated>2016-12-25T09:55:31.000Z</updated>
+    <updated>2018-12-29T01:41:40.986Z</updated>
     
     <content type="html"><![CDATA[<p>念願のネットワークスペシャリストに合格しました！<br>本当に念願で、というのも情報セキュリティスペシャリスト合格から今回で丸2年経っていて、今回合格できなければ午前I免除が終わってしまうところだったんです。</p>
 <p>こちらが成績です。<br><img src="/img/network_specialist.png" alt="ネットワークスペシャリスト成績" title="ネットワークスペシャリスト成績"><br>60点が合格ラインなので、ゆとりを持った合格となりました！</p>
@@ -759,9 +753,9 @@ var function20170101makepassword=function(){
     </summary>
     
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
       <category term="情報処理技術者試験" scheme="https://nishidemasami.github.io/tags/%E6%83%85%E5%A0%B1%E5%87%A6%E7%90%86%E6%8A%80%E8%A1%93%E8%80%85%E8%A9%A6%E9%A8%93/"/>
+    
+      <category term="ネットワークスペシャリスト" scheme="https://nishidemasami.github.io/tags/%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AA%E3%82%B9%E3%83%88/"/>
     
   </entry>
   
@@ -770,7 +764,7 @@ var function20170101makepassword=function(){
     <link href="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/"/>
     <id>https://nishidemasami.github.io/2016/12/11/hexo-themes-error/</id>
     <published>2016-12-11T14:04:03.000Z</published>
-    <updated>2016-12-25T09:55:19.000Z</updated>
+    <updated>2018-12-29T01:41:11.665Z</updated>
     
     <content type="html"><![CDATA[<p>このブログは<a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>にて構築し、<a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a>にて公開しています。</p>
 <p>先日、テーマを変更した際にテーマが正しく反映されず困ったので、今どうやって動いているかを覚え書きしておきます。</p>
@@ -789,8 +783,6 @@ var function20170101makepassword=function(){
     
       <category term="hexo" scheme="https://nishidemasami.github.io/tags/hexo/"/>
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
   </entry>
   
   <entry>
@@ -798,7 +790,7 @@ var function20170101makepassword=function(){
     <link href="https://nishidemasami.github.io/2016/12/05/vim-crypt/"/>
     <id>https://nishidemasami.github.io/2016/12/05/vim-crypt/</id>
     <published>2016-12-05T00:04:03.000Z</published>
-    <updated>2016-12-25T09:55:34.000Z</updated>
+    <updated>2018-12-29T01:42:00.882Z</updated>
     
     <content type="html"><![CDATA[<p>Vimで暗号化を行うには、次の方法が用意されています。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:set cryptmethod=blowfish</div></pre></td></tr></table></figure></p>
 <p>このblowfishの他にzipや、環境によってはblowfish2が用意されています。使えるならばセキュリティの面から考えてblowfish2を使うべきでしょう。<br>しかしです。本当にセキュリティの面から考えると、blowfishの発展型であるTwofish<a href="http://vim.1045645.n5.nabble.com/Blowfish2-td5726043.html" target="_blank" rel="external">※注：blowfish2はTwofishではありません</a>やAES等の方がより良い選択肢なはずです。<br>今回、Vimの暗号化機能に頼らず、自前でopensslを用いてAESにて暗号化・復号をしてみたいと思います。</p>
@@ -834,9 +826,9 @@ var function20170101makepassword=function(){
     </summary>
     
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
       <category term="Vim" scheme="https://nishidemasami.github.io/tags/Vim/"/>
+    
+      <category term="OpenSSL" scheme="https://nishidemasami.github.io/tags/OpenSSL/"/>
     
   </entry>
   
@@ -845,7 +837,7 @@ var function20170101makepassword=function(){
     <link href="https://nishidemasami.github.io/2016/11/27/java-combination/"/>
     <id>https://nishidemasami.github.io/2016/11/27/java-combination/</id>
     <published>2016-11-27T00:04:03.000Z</published>
-    <updated>2016-12-25T09:55:22.000Z</updated>
+    <updated>2018-12-29T01:41:15.352Z</updated>
     
     <content type="html"><![CDATA[<p>Rubyでは組み合わせを作成することができる<a href="https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html" target="_blank" rel="external">Array#combination</a>が用意されています。<br>これを使えば、例えば下記のように<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require</span> <span class="string">'json'</span></div><div class="line"></div><div class="line">jsonstr = <span class="string">&lt;&lt;JSON</span></div><div class="line">[</div><div class="line">  &#123;</div><div class="line">    "price": 432,</div><div class="line">    "name": "hoge"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 531,</div><div class="line">    "name": "fuga"</div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    "price": 568,</div><div class="line">    "name": "piyo"</div><div class="line">  &#125;</div><div class="line">]</div><div class="line">JSON</div><div class="line"></div><div class="line">p JSON.load(jsonstr)</div><div class="line">    .combination(<span class="number">2</span>)</div><div class="line">    .to_a</div><div class="line">    .select(&amp;-&gt;x&#123;x.reduce(&amp;-&gt;x,y&#123;x[<span class="string">"price"</span>] + y[<span class="string">"price"</span>]&#125;) == <span class="number">1000</span>&#125;)</div></pre></td></tr></table></figure></p>
 <p>こうすれば、JSONの商品リストからpriceの合計が1000になるもの(hogeとpiyo)を抜き出してくれます。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[&#123;&quot;price&quot;=&gt;432, &quot;name&quot;=&gt;&quot;hoge&quot;&#125;, &#123;&quot;price&quot;=&gt;568, &quot;name&quot;=&gt;&quot;piyo&quot;&#125;]]</div></pre></td></tr></table></figure></p>
@@ -866,8 +858,6 @@ var function20170101makepassword=function(){
     </summary>
     
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
       <category term="Java" scheme="https://nishidemasami.github.io/tags/Java/"/>
     
       <category term="Ruby" scheme="https://nishidemasami.github.io/tags/Ruby/"/>
@@ -879,7 +869,7 @@ var function20170101makepassword=function(){
     <link href="https://nishidemasami.github.io/2016/07/03/javascript-test/"/>
     <id>https://nishidemasami.github.io/2016/07/03/javascript-test/</id>
     <published>2016-07-03T14:04:03.000Z</published>
-    <updated>2016-12-25T09:55:26.000Z</updated>
+    <updated>2018-12-29T01:41:22.801Z</updated>
     
     <content type="html"><![CDATA[<p>小さい数の素因数分解<br>入力：<input id="soinsu_bunkai_input" size="25" type="text" value=""><div id="soinsu_bunkai_return">出力：ここに結果が表示されます</div><br>※javascriptでは53ビット整数の上限(9007199254740991)を超えると自動的に64ビット浮動小数点型に変換されて誤差が出るため使えません</p>
 <script type="text/javascript">
@@ -912,8 +902,6 @@ var soinsu5=function(b){
     
       <category term="JavaScript" scheme="https://nishidemasami.github.io/tags/JavaScript/"/>
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
-    
   </entry>
   
   <entry>
@@ -921,7 +909,7 @@ var soinsu5=function(b){
     <link href="https://nishidemasami.github.io/2016/07/02/hello-world/"/>
     <id>https://nishidemasami.github.io/2016/07/02/hello-world/</id>
     <published>2016-07-01T19:58:43.000Z</published>
-    <updated>2016-12-25T09:55:15.000Z</updated>
+    <updated>2018-12-29T01:41:04.384Z</updated>
     
     <content type="html"><![CDATA[<p>はじめての投稿です。<br>これから、なにか有益なことや無益なことを書いてゆこうと思います。<br>よろしくお願いします。</p>
 ]]></content>
@@ -934,7 +922,7 @@ var soinsu5=function(b){
     </summary>
     
     
-      <category term="lightyield" scheme="https://nishidemasami.github.io/tags/lightyield/"/>
+      <category term="hello world" scheme="https://nishidemasami.github.io/tags/hello-world/"/>
     
   </entry>
   
