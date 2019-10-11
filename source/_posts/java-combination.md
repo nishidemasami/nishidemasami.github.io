@@ -4,7 +4,6 @@ date: 2016-11-27 09:04:03
 tags:
 - "Java"
 - "Ruby"
-- "lightyield"
 ---
 Rubyでは組み合わせを作成することができる[Array#combination](https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html)が用意されています。  
 これを使えば、例えば下記のように

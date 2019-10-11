@@ -6,7 +6,6 @@ tags:
 - "Ruby"
 - "JavaScript"
 - "Node.js"
-- "lightyield"
 ---
 パスワード生成スクリプトを作った話です。
 

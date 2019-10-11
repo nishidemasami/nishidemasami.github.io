@@ -41,3 +41,4 @@ theme: ingenuous
 deploy:
   type: git
   repo: 'git@nishidemasami-ssh-github:nishidemasami/nishidemasami.github.io.git'
+disqus_shortname: wen-xi-sekodeinguhai
