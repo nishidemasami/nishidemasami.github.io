@@ -95,6 +95,318 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main">
   
+    <article id="post-vue-helloworld" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/15/vue-helloworld/" class="article-date">
+  <time datetime="2019-10-15T14:04:03.000Z" itemprop="datePublished">2019-10-15</time>
+</a>
+
+    
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/15/vue-helloworld/">Vue.jsおためし</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div class="article-sharing">
+  <ul>
+    <li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2019/10/15/vue-helloworld/" data-counturl="https://nishidemasami.github.io/2019/10/15/vue-helloworld/"  target="_blank">Tweet</a>
+    </li>
+    <li>
+      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2019/10/15/vue-helloworld/"></div>
+    </li>
+  </ul>
+</div>
+
+      
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+<br>
+なんかVue.jsがおもしろそうだったのでおためしです。
+<div class="widget">
+<div id="app">
+<div>
+<!-- 
+<h2 class="text-center">VueNews</h2> 
+<h3 class="text-center"></h3> 
+<h3 class="text-center"></h3> 
+<h4 class="text-center">.</h4> 
+<input @click="getTenki" type="button" value="天気を取得"> -->
+</div>
+</div>
+</div>
+
+<!-- <div id=app></div>
+        <script type=text/javascript src=/js/vue20191015/static/js/manifest.404b7e7865715b29fc48.text></script>
+        <script type=text/javascript src=/js/vue20191015/static/js/vendor.cb29043f681d8df309ac.text></script>
+        <script type=text/javascript src=/js/vue20191015/static/js/app.4ed5bb6e589a65643228.text></script> -->
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+
+<script type="text/javascript">
+$(document).ready(function(){
+const vm = new Vue({
+  el: '#app',
+  template: `<div>
+
+    <h2 class="text-center">天気取得VUE</h2> 
+    <h3 class="text-center"><p v-text="test1"></p></h3> 
+    <h4 class="text-center"><p v-text="test2"></p>.</h4>   
+    <select name="category" v-model="selectedCategory" v-on:change="fetchTags">  
+    <option v-for="category in categories" v-bind:value="category.id">
+      &#123;&#123; category.name &#125;&#125;
+    </option>
+    </select>
+    <input @click="getTenki" type="button" value="天気を取得"></div>`,
+  // data () {
+  //   return {
+  //       message: 'Hello Vue.js',
+  //       test1: 'shokikatest1',
+  //       test2: 'shokikatest2',
+  //       info: 'info'
+  //   }
+  data: {
+    selectedCategory: '011000',
+    message: 'Hello Vue.js',
+    test1: 'エリア',
+    test2: '詳細',
+    info: 'info',
+    categories: [
+      {id: '011000', name: '稚内'},
+      {id: '012010', name: '旭川'},
+      {id: '012020', name: '留萌'},
+      {id: '016010', name: '札幌'},
+      {id: '016020', name: '岩見沢'},
+      {id: '016030', name: '倶知安'},
+      {id: '013010', name: '網走'},
+      {id: '013020', name: '北見'},
+      {id: '013030', name: '紋別'},
+      {id: '014010', name: '根室'},
+      {id: '014020', name: '釧路'},
+      {id: '014030', name: '帯広'},
+      {id: '015010', name: '室蘭'},
+      {id: '015020', name: '浦河'},
+      {id: '017010', name: '函館'},
+      {id: '017020', name: '江差'},
+      {id: '020010', name: '青森'},
+      {id: '020020', name: 'むつ'},
+      {id: '020030', name: '八戸'},
+      {id: '030010', name: '盛岡'},
+      {id: '030020', name: '宮古'},
+      {id: '030030', name: '大船渡'},
+      {id: '040010', name: '仙台'},
+      {id: '040020', name: '白石'},
+      {id: '050010', name: '秋田'},
+      {id: '050020', name: '横手'},
+      {id: '060010', name: '山形'},
+      {id: '060020', name: '米沢'},
+      {id: '060030', name: '酒田'},
+      {id: '060040', name: '新庄'},
+      {id: '070010', name: '福島'},
+      {id: '070020', name: '小名浜'},
+      {id: '070030', name: '若松'},
+      {id: '130010', name: '東京'},
+      {id: '130020', name: '大島'},
+      {id: '130030', name: '八丈島'},
+      {id: '130040', name: '父島'},
+      {id: '140010', name: '横浜'},
+      {id: '140020', name: '小田原'},
+      {id: '110010', name: 'さいたま'},
+      {id: '110020', name: '熊谷'},
+      {id: '110030', name: '秩父'},
+      {id: '120010', name: '千葉'},
+      {id: '120020', name: '銚子'},
+      {id: '120030', name: '館山'},
+      {id: '080010', name: '水戸'},
+      {id: '080020', name: '土浦'},
+      {id: '090010', name: '宇都宮'},
+      {id: '090020', name: '大田原'},
+      {id: '100010', name: '前橋'},
+      {id: '100020', name: 'みなかみ'},
+      {id: '190010', name: '甲府'},
+      {id: '190020', name: '河口湖'},
+      {id: '150010', name: '新潟'},
+      {id: '150020', name: '長岡'},
+      {id: '150030', name: '高田'},
+      {id: '150040', name: '相川'},
+      {id: '200010', name: '長野'},
+      {id: '200020', name: '松本'},
+      {id: '200030', name: '飯田'},
+      {id: '160010', name: '富山'},
+      {id: '160020', name: '伏木'},
+      {id: '170010', name: '金沢'},
+      {id: '170020', name: '輪島'},
+      {id: '180010', name: '福井'},
+      {id: '180020', name: '敦賀'},
+      {id: '230010', name: '名古屋'},
+      {id: '230020', name: '豊橋'},
+      {id: '210010', name: '岐阜'},
+      {id: '210020', name: '高山'},
+      {id: '220010', name: '静岡'},
+      {id: '220020', name: '網代'},
+      {id: '220030', name: '三島'},
+      {id: '220040', name: '浜松'},
+      {id: '240010', name: '津'},
+      {id: '240020', name: '尾鷲'},
+      {id: '270000', name: '大阪'},
+      {id: '280010', name: '神戸'},
+      {id: '280020', name: '豊岡'},
+      {id: '260010', name: '京都'},
+      {id: '260020', name: '舞鶴'},
+      {id: '250010', name: '大津'},
+      {id: '250020', name: '彦根'},
+      {id: '290010', name: '奈良'},
+      {id: '290020', name: '風屋'},
+      {id: '300010', name: '和歌山'},
+      {id: '300020', name: '潮岬'},
+      {id: '310010', name: '鳥取'},
+      {id: '310020', name: '米子'},
+      {id: '320010', name: '松江'},
+      {id: '320020', name: '浜田'},
+      {id: '320030', name: '西郷'},
+      {id: '330010', name: '岡山'},
+      {id: '330020', name: '津山'},
+      {id: '340010', name: '広島'},
+      {id: '340020', name: '庄原'},
+      {id: '350010', name: '下関'},
+      {id: '350020', name: '山口'},
+      {id: '350030', name: '柳井'},
+      {id: '350040', name: '萩'},
+      {id: '360010', name: '徳島'},
+      {id: '360020', name: '日和佐'},
+      {id: '370000', name: '高松'},
+      {id: '380010', name: '松山'},
+      {id: '380020', name: '新居浜'},
+      {id: '380030', name: '宇和島'},
+      {id: '390010', name: '高知'},
+      {id: '390020', name: '室戸岬'},
+      {id: '390030', name: '清水'},
+      {id: '400010', name: '福岡'},
+      {id: '400020', name: '八幡'},
+      {id: '400030', name: '飯塚'},
+      {id: '400040', name: '久留米'},
+      {id: '440010', name: '大分'},
+      {id: '440020', name: '中津'},
+      {id: '440030', name: '日田'},
+      {id: '440040', name: '佐伯'},
+      {id: '420010', name: '長崎'},
+      {id: '420020', name: '佐世保'},
+      {id: '420030', name: '厳原'},
+      {id: '420040', name: '福江'},
+      {id: '410010', name: '佐賀'},
+      {id: '410020', name: '伊万里'},
+      {id: '430010', name: '熊本'},
+      {id: '430020', name: '阿蘇乙姫'},
+      {id: '430030', name: '牛深'},
+      {id: '430040', name: '人吉'},
+      {id: '450010', name: '宮崎'},
+      {id: '450020', name: '延岡'},
+      {id: '450030', name: '都城'},
+      {id: '450040', name: '高千穂'},
+      {id: '460010', name: '鹿児島'},
+      {id: '460020', name: '鹿屋'},
+      {id: '460030', name: '種子島'},
+      {id: '460040', name: '名瀬'},
+      {id: '471010', name: '那覇'},
+      {id: '471020', name: '名護'},
+      {id: '471030', name: '久米島'},
+      {id: '472000', name: '南大東'},
+      {id: '473000', name: '宮古島'},
+      {id: '474010', name: '石垣島'},
+      {id: '474020', name: '与那国島'},
+    ]
+  },
+  methods: {
+    fetchTags: function() {},
+    getTenki () {
+      console.log(this.info)
+      console.log(this.message)
+      this.info = 'getTenkiinfo'
+      axios
+        .get('http://weather.livedoor.com/forecast/webservice/json/v1?city=' + this.selectedCategory) // ここにURLを入れる
+        // .get('http://localhost:4000/static/test.text') // ここにURLを入れる
+        // .then(response => (this.info = response))
+        .then(response => {
+          console.log('status:', response.status) // 200
+          console.log('body:', response.data) // response body.
+          // catchでエラー時の挙動を定義する
+          let teststring = response.data
+          console.dir(teststring)
+          console.log('teststring')
+          console.log(teststring.title)
+          this.test1 = teststring.title
+          this.test2 = teststring.description.text
+        }).catch(err => {
+          console.log('err:', err)
+        })
+    }
+  },
+  beforeMount() {
+    this.info = "beforeMount"
+  },
+  mounted() {
+    this.info = 'info'
+    // axios
+    //   .get('http://localhost:4000/static/test.json') // ここにURLを入れる http://weather.livedoor.com/forecast/webservice/json/v1?city=200010
+    //   // .then(response => (this.info = response))
+    //   .then(response => {
+    //     console.log('status:', response.status) // 200
+    //     console.log('body:', response.data) // response body.
+    //     // catchでエラー時の挙動を定義する
+    //     let teststring = response.data
+    //     console.dir(teststring)
+    //     console.log('teststring')
+    //     console.dir(teststring)
+    //     console.log(teststring)
+    //     console.log(this.test1)
+    //     this.test1 = 'testdesu'// .title
+    //     this.test2 = teststring// .description.text
+    //   }).catch(err => {
+    //     console.log('err:', err)
+    //   })
+  }
+});
+
+});
+</script>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="https://nishidemasami.github.io/2019/10/15/vue-helloworld/" data-id="ck1sd450u000qh8izhlzm03cd" class="article-share-link">Share</a>
+      
+      
+        <a href="https://nishidemasami.github.io/2019/10/15/vue-helloworld/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue-js/">Vue.js</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-kojinjohosakuseikun" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/28/kojinjohosakuseikun/" class="article-date">
@@ -124,7 +436,7 @@ ga('send', 'pageview');
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2017/01/28/kojinjohosakuseikun/" data-counturl="https://nishidemasami.github.io/2017/01/28/kojinjohosakuseikun/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2017/01/28/kojinjohosakuseikun/" data-counturl="https://nishidemasami.github.io/2017/01/28/kojinjohosakuseikun/"  target="_blank">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2017/01/28/kojinjohosakuseikun/"></div>
@@ -404,7 +716,7 @@ function dummyKojinjohoDownload(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/28/kojinjohosakuseikun/" data-id="ck1llqqfl000sraizqcvo3uw0" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/28/kojinjohosakuseikun/" data-id="ck1sd450x000vh8izkhxnm39o" class="article-share-link">Share</a>
       
       
         <a href="https://nishidemasami.github.io/2017/01/28/kojinjohosakuseikun/#disqus_thread" class="article-comment-link">Comments</a>
@@ -450,7 +762,7 @@ function dummyKojinjohoDownload(){
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2017/01/20/dtmf-generator/" data-counturl="https://nishidemasami.github.io/2017/01/20/dtmf-generator/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2017/01/20/dtmf-generator/" data-counturl="https://nishidemasami.github.io/2017/01/20/dtmf-generator/"  target="_blank">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2017/01/20/dtmf-generator/"></div>
@@ -526,7 +838,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/20/dtmf-generator/" data-id="ck1llqqff000iraizxzoqy3mu" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/20/dtmf-generator/" data-id="ck1sd450o000hh8iz8qqs3abj" class="article-share-link">Share</a>
       
       
         <a href="https://nishidemasami.github.io/2017/01/20/dtmf-generator/#disqus_thread" class="article-comment-link">Comments</a>
@@ -572,7 +884,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-counturl="https://nishidemasami.github.io/2017/01/03/make-password/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-counturl="https://nishidemasami.github.io/2017/01/03/make-password/"  target="_blank">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2017/01/03/make-password/"></div>
@@ -887,7 +1199,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-id="ck1llqqg30018raizglxa99jv" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2017/01/03/make-password/" data-id="ck1sd451p001dh8izubxkxpcx" class="article-share-link">Share</a>
       
       
         <a href="https://nishidemasami.github.io/2017/01/03/make-password/#disqus_thread" class="article-comment-link">Comments</a>
@@ -933,7 +1245,7 @@ var function20170101makepassword=function(){
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-counturl="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-counturl="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/"  target="_blank">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/"></div>
@@ -979,7 +1291,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-id="ck1llqqfn000uraizhbsek4c2" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/" data-id="ck1sd450z000xh8izd2ybpboe" class="article-share-link">Share</a>
       
       
         <a href="https://nishidemasami.github.io/2016/12/18/network-specialist-examination/#disqus_thread" class="article-comment-link">Comments</a>
@@ -1025,7 +1337,7 @@ var function20170101makepassword=function(){
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-counturl="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-counturl="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/"  target="_blank">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/"></div>
@@ -1047,7 +1359,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="ck1llqqfh000lraizcagv0e8u" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/" data-id="ck1sd450t000nh8izldhfzep6" class="article-share-link">Share</a>
       
       
         <a href="https://nishidemasami.github.io/2016/12/11/hexo-themes-error/#disqus_thread" class="article-comment-link">Comments</a>
@@ -1093,7 +1405,7 @@ var function20170101makepassword=function(){
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/04/vim-crypt/" data-counturl="https://nishidemasami.github.io/2016/12/04/vim-crypt/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/12/04/vim-crypt/" data-counturl="https://nishidemasami.github.io/2016/12/04/vim-crypt/"  target="_blank">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/12/04/vim-crypt/"></div>
@@ -1134,7 +1446,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/12/04/vim-crypt/" data-id="ck1llqqfp000wraizfz6r8st6" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/12/04/vim-crypt/" data-id="ck1sd450w000sh8izdabpqdrp" class="article-share-link">Share</a>
       
       
         <a href="https://nishidemasami.github.io/2016/12/04/vim-crypt/#disqus_thread" class="article-comment-link">Comments</a>
@@ -1180,7 +1492,7 @@ var function20170101makepassword=function(){
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/11/26/java-combination/" data-counturl="https://nishidemasami.github.io/2016/11/26/java-combination/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/11/26/java-combination/" data-counturl="https://nishidemasami.github.io/2016/11/26/java-combination/"  target="_blank">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/11/26/java-combination/"></div>
@@ -1206,7 +1518,7 @@ var function20170101makepassword=function(){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/11/26/java-combination/" data-id="ck1llqqfj000nraiziniv5fit" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/11/26/java-combination/" data-id="ck1sd450q000ih8izdz8zwx0j" class="article-share-link">Share</a>
       
       
         <a href="https://nishidemasami.github.io/2016/11/26/java-combination/#disqus_thread" class="article-comment-link">Comments</a>
@@ -1252,7 +1564,7 @@ var function20170101makepassword=function(){
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-counturl="https://nishidemasami.github.io/2016/07/03/javascript-test/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-counturl="https://nishidemasami.github.io/2016/07/03/javascript-test/"  target="_blank">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/07/03/javascript-test/"></div>
@@ -1288,7 +1600,7 @@ var soinsu5=function(b){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-id="ck1llqqfk000praizm0lbkble" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/07/03/javascript-test/" data-id="ck1sd450s000lh8iz55nyezo4" class="article-share-link">Share</a>
       
       
         <a href="https://nishidemasami.github.io/2016/07/03/javascript-test/#disqus_thread" class="article-comment-link">Comments</a>
@@ -1334,7 +1646,7 @@ var soinsu5=function(b){
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/07/01/hello-world/" data-counturl="https://nishidemasami.github.io/2016/07/01/hello-world/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://nishidemasami.github.io/2016/07/01/hello-world/" data-counturl="https://nishidemasami.github.io/2016/07/01/hello-world/"  target="_blank">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="https://nishidemasami.github.io/2016/07/01/hello-world/"></div>
@@ -1351,7 +1663,7 @@ var soinsu5=function(b){
     </div>
     <footer class="article-footer">
       
-        <a data-url="https://nishidemasami.github.io/2016/07/01/hello-world/" data-id="ck1llqqfe000graizjj64m103" class="article-share-link">Share</a>
+        <a data-url="https://nishidemasami.github.io/2016/07/01/hello-world/" data-id="ck1sd450n000gh8izti8fnvjw" class="article-share-link">Share</a>
       
       
         <a href="https://nishidemasami.github.io/2016/07/01/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
@@ -1383,11 +1695,11 @@ var soinsu5=function(b){
         <p> nishidemasami </p>
       
       
-        <p> <a href="http://twitter.com/nishidemasami">@nishidemasami</a> </p>
+        <p> <a href="http://twitter.com/nishidemasami" target="_blank">@nishidemasami</a> </p>
       
       </p>
       
-        <p> 文系SEです。有益なことや無益なことなどいろいろ書いています。<br /> <a href="https://amazon.co.jp/gp/registry/wishlist/SRZQ7QW7MSHC/">ほしいものリスト</a><br /> <a href="/about-me/">about me</a> </p>
+        <p> 文系SEです。有益なことや無益なことなどいろいろ書いています。<br /> <a href="https://amazon.co.jp/gp/registry/wishlist/SRZQ7QW7MSHC/" target="_blank">ほしいものリスト</a><br /> <a href="/about-me/">about me</a> </p>
       
       
         <p>  </p>
@@ -1409,7 +1721,7 @@ var soinsu5=function(b){
   <div class="widget-wrap">
     <h3 id="widget-title-tag" class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSL/">OpenSSL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hello-world/">hello world</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ネットワークスペシャリスト/">ネットワークスペシャリスト</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/情報処理技術者試験/">情報処理技術者試験</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenSSL/">OpenSSL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ruby/">Ruby</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vim/">Vim</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hello-world/">hello world</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ネットワークスペシャリスト/">ネットワークスペシャリスト</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/情報処理技術者試験/">情報処理技術者試験</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1419,7 +1731,7 @@ var soinsu5=function(b){
   <div class="widget-wrap">
     <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/OpenSSL/" style="font-size: 10px;">OpenSSL</a> <a href="/tags/Ruby/" style="font-size: 15px;">Ruby</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/hello-world/" style="font-size: 10px;">hello world</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/ネットワークスペシャリスト/" style="font-size: 10px;">ネットワークスペシャリスト</a> <a href="/tags/情報処理技術者試験/" style="font-size: 10px;">情報処理技術者試験</a>
+      <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/OpenSSL/" style="font-size: 10px;">OpenSSL</a> <a href="/tags/Ruby/" style="font-size: 15px;">Ruby</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Vue-js/" style="font-size: 10px;">Vue.js</a> <a href="/tags/hello-world/" style="font-size: 10px;">hello world</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/ネットワークスペシャリスト/" style="font-size: 10px;">ネットワークスペシャリスト</a> <a href="/tags/情報処理技術者試験/" style="font-size: 10px;">情報処理技術者試験</a>
     </div>
   </div>
 
@@ -1429,7 +1741,7 @@ var soinsu5=function(b){
   <div class="widget-wrap">
     <h3 id="widget-title-archive" class="widget-title" data-skip-mobile-nav="true">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -1440,6 +1752,10 @@ var soinsu5=function(b){
     <h3 id="widget-title-recent-posts" class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/10/15/vue-helloworld/">Vue.jsおためし</a>
+          </li>
         
           <li>
             <a href="/2017/01/28/kojinjohosakuseikun/">ダミー個人情報作成くん</a>
@@ -1455,10 +1771,6 @@ var soinsu5=function(b){
         
           <li>
             <a href="/2016/12/18/network-specialist-examination/">ネットワークスペシャリスト合格体験記</a>
-          </li>
-        
-          <li>
-            <a href="/2016/12/11/hexo-themes-error/">hexoのテーマを変更した時に、テーマだけデプロイされない</a>
           </li>
         
       </ul>
