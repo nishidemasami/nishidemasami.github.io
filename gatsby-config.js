@@ -108,6 +108,10 @@ module.exports = {
     },
     "gatsby-plugin-netlify-cms-paths",
     {
+      resolve: "gatsby-plugin-graphql-codegen",
+      options: { fileName: `types/graphql-types.d.ts` },
+    },
+    {
       resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
