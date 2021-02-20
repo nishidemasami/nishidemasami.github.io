@@ -255,5 +255,6 @@ module.exports = {
     },
     "gatsby-plugin-flow",
     "gatsby-plugin-optimize-svgs",
+    "gatsby-plugin-styled-components",
   ],
 };

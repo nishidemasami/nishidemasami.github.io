@@ -21,7 +21,7 @@ const PostTemplate = ({ data }: Props) => {
     socialImage,
   } = frontmatter;
   const metaDescription = postDescription || siteSubtitle;
-  const socialImageUrl = socialImage?.publicURL;
+  const socialImageUrl = socialImage;
 
   return (
     <Layout
@@ -29,8 +29,8 @@ const PostTemplate = ({ data }: Props) => {
       description={metaDescription}
       socialImage={socialImageUrl}
     >
-      <Sidebar />
       <Post post={data.markdownRemark} />
+      <Sidebar />
     </Layout>
   );
 };
@@ -49,9 +49,7 @@ export const query = graphql`
         description
         tags
         title
-        socialImage {
-          publicURL
-        }
+        socialImage
       }
     }
   }

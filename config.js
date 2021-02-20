@@ -1,50 +1,47 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  url: 'https://lumen.netlify.com',
-  pathPrefix: '/',
-  title: 'Blog by John Doe',
-  subtitle: 'Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu.',
-  copyright: '© All rights reserved.',
-  disqusShortname: '',
-  postsPerPage: 4,
-  googleAnalyticsId: 'UA-73379983-2',
-  useKatex: false,
+  url: "https://nishidemasami.github.io/",
+  pathPrefix: "/",
+  title: "コーディングハイ",
+  subtitle:
+    "個人的なブログです。有益なことや無益なことなどいろいろ書いています。",
+  copyright: "© All rights reserved.",
+  disqusShortname: "",
+  postsPerPage: 10,
+  googleAnalyticsId: "UA-88094521-1",
+  useKatex: true,
   menu: [
     {
-      label: 'Articles',
-      path: '/'
+      label: "About Me",
+      path: "/pages/about",
     },
     {
-      label: 'About me',
-      path: '/pages/about'
+      label: "Portfolio",
+      path: "/pages/portfolio",
     },
-    {
-      label: 'Contact me',
-      path: '/pages/contacts'
-    }
   ],
   author: {
-    name: 'John Doe',
-    photo: '/photo.jpg',
-    bio: 'Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu.',
+    name: "西出正美",
+    photo: "/photo.jpg",
+    bio: "個人のブログです。有益なことや無益なことなどいろいろ書いています。",
     contacts: {
-      email: '',
-      facebook: '#',
-      telegram: '#',
-      twitter: '#',
-      github: '#',
-      rss: '',
-      vkontakte: '',
-      linkedin: '#',
-      instagram: '#',
-      line: '',
-      gitlab: '',
-      weibo: '',
-      codepen: '',
-      youtube: '',
-      soundcloud: '',
-      medium: '',
-    }
-  }
+      email: "nishidemasami@gmail.com",
+      facebook: "masaminish",
+      telegram: "",
+      twitter: "nishidemasami",
+      github: "nishidemasami",
+      rss: "",
+      vkontakte: "",
+      linkedin: "masami-nishide-66820bb2",
+      instagram: "nishidemasami",
+      line: "",
+      gitlab: "",
+      weibo: "",
+      codepen: "",
+      youtube: "",
+      soundcloud: "",
+      medium: "",
+    },
+  },
 };

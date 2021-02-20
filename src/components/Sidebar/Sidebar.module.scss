@@ -1,11 +1,10 @@
 @import "../../assets/scss/variables";
 @import "../../assets/scss/mixins";
+@import "./Menu/Menu.module.scss";
 
 .sidebar {
   width: 100%;
-  position: sticky;
   float: right;
-  top: 0px;
   &__inner {
     position: relative;
     padding: 25px 20px 0;
@@ -14,7 +13,9 @@
 
 @include breakpoint-sm {
   .sidebar {
-    width: calc(99.9% * 5 / 12);
+    position: sticky;
+    top: 0px;
+    lost-column: 1/4;
     &__inner {
       padding: 30px 20px 0;
       &::before {
@@ -39,9 +40,35 @@
 
 @include breakpoint-md {
   .sidebar {
-    width: calc(99.9% * 1 / 3);
+    position: sticky;
+    top: 0px;
+    lost-column: 1/4;
     &__inner {
       padding: 40px;
+    }
+  }
+}
+
+.title {
+  @include margin-bottom(1);
+
+  &__item {
+    list-style: none;
+    padding: 0;
+    margin: 10px;
+
+    &-link {
+      font-size: $typographic-base-font-size;
+      color: $typographic-base-font-color;
+      font-weight: normal;
+      border: 0;
+      font-weight: bold;
+
+      &:hover,
+      &:focus {
+        color: $color-primary;
+        border-bottom: 1px solid $color-primary;
+      }
     }
   }
 }

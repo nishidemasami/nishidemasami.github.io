@@ -9,8 +9,8 @@ import { useSiteMetadata } from "../hooks";
 import type { AllMarkdownRemark, PageContext } from "../types";
 
 type Props = {
-  data: AllMarkdownRemark,
-  pageContext: PageContext,
+  data: AllMarkdownRemark;
+  pageContext: PageContext;
 };
 
 const TagTemplate = ({ data, pageContext }: Props) => {
@@ -33,7 +33,6 @@ const TagTemplate = ({ data, pageContext }: Props) => {
 
   return (
     <Layout title={pageTitle} description={siteSubtitle}>
-      <Sidebar />
       <Page title={tag}>
         <Feed edges={edges} />
         <Pagination
@@ -43,6 +42,7 @@ const TagTemplate = ({ data, pageContext }: Props) => {
           hasNextPage={hasNextPage}
         />
       </Page>
+      <Sidebar />
     </Layout>
   );
 };

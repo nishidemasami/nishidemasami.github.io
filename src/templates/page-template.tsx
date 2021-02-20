@@ -8,8 +8,8 @@ import type { MarkdownRemark } from "../types";
 
 type Props = {
   data: {
-    markdownRemark: MarkdownRemark,
-  },
+    markdownRemark: MarkdownRemark;
+  };
 };
 
 const PageTemplate = ({ data }: Props) => {
@@ -22,7 +22,7 @@ const PageTemplate = ({ data }: Props) => {
     socialImage,
   } = frontmatter;
   const metaDescription = pageDescription || siteSubtitle;
-  const socialImageUrl = socialImage?.publicURL;
+  const socialImageUrl = socialImage;
 
   return (
     <Layout
@@ -30,10 +30,10 @@ const PageTemplate = ({ data }: Props) => {
       description={metaDescription}
       socialImage={socialImageUrl}
     >
-      <Sidebar />
       <Page title={pageTitle}>
         <div dangerouslySetInnerHTML={{ __html: pageBody }} />
       </Page>
+      <Sidebar />
     </Layout>
   );
 };
@@ -47,9 +47,7 @@ export const query = graphql`
         title
         date
         description
-        socialImage {
-          publicURL
-        }
+        socialImage
       }
     }
   }

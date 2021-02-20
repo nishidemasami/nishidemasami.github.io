@@ -37,15 +37,15 @@
   }
 }
 
-@include breakpoint-md {
+@include breakpoint-sm {
   .post {
-    lost-column: 7/12;
+    lost-column: 20/27;
   }
 }
 
 @include breakpoint-md {
   .post {
-    lost-column: 2/3;
+    lost-column: 20/27;
     &__footer {
       padding: 0;
     }

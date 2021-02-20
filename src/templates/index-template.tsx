@@ -9,8 +9,8 @@ import { useSiteMetadata } from "../hooks";
 import type { PageContext, AllMarkdownRemark } from "../types";
 
 type Props = {
-  data: AllMarkdownRemark,
-  pageContext: PageContext,
+  data: AllMarkdownRemark;
+  pageContext: PageContext;
 };
 
 const IndexTemplate = ({ data, pageContext }: Props) => {
@@ -30,7 +30,6 @@ const IndexTemplate = ({ data, pageContext }: Props) => {
 
   return (
     <Layout title={pageTitle} description={siteSubtitle}>
-      <Sidebar isIndex />
       <Page>
         <Feed edges={edges} />
         <Pagination
@@ -40,6 +39,7 @@ const IndexTemplate = ({ data, pageContext }: Props) => {
           hasNextPage={hasNextPage}
         />
       </Page>
+      <Sidebar isIndex />
     </Layout>
   );
 };
