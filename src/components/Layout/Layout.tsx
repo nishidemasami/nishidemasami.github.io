@@ -17,20 +17,36 @@ const Layout = ({ children, title, description, socialImage = "" }: Props) => {
   const metaImageUrl = url + metaImage;
 
   return (
-    <div className={styles.layout}>
-      <Helmet>
-        <html lang="ja" />
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:site_name" content={title} />
-        <meta property="og:image" content={metaImageUrl} />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={metaImageUrl} />
-      </Helmet>
-      {children}
-    </div>
+    <React.Fragment>
+      <div className={styles.layout}>
+        <Helmet>
+          <html lang="ja" />
+          <title>{title}</title>
+          <meta name="description" content={description} />
+          <meta property="og:site_name" content={title} />
+          <meta property="og:image" content={metaImageUrl} />
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:image" content={metaImageUrl} />
+        </Helmet>
+        {children}
+        <div className={styles.area}>
+          <ul className={styles.circles}>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 

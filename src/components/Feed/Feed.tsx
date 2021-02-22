@@ -10,7 +10,19 @@ type Props = {
 const Feed = ({ edges }: Props) => (
   <div className={styles["feed"]}>
     {edges.map((edge) => {
-      const path = edge.node.fields.slug;
+      const pageDate = new Date(edge.node.frontmatter.date);
+      const pagePath = (
+        "/" +
+        ("000" + pageDate.getFullYear()).slice(-4) +
+        "/" +
+        ("0" + (pageDate.getMonth() + 1)).slice(-2) +
+        "/" +
+        ("0" + pageDate.getDate()).slice(-2) +
+        edge.node.fields.slug
+      ).replace(/\/\//g, "/");
+      console.log(pageDate);
+      console.log(pagePath);
+      console.log(edge.node.fields.slug);
       return (
         <div className={styles["feed__item"]} key={edge.node.fields.slug}>
           <div className={styles["feed__item-meta"]}>
@@ -44,14 +56,14 @@ const Feed = ({ edges }: Props) => (
             </span>
           </div>
           <h2 className={styles["feed__item-title"]}>
-            <Link className={styles["feed__item-title-link"]} to={path}>
+            <Link className={styles["feed__item-title-link"]} to={pagePath}>
               {edge.node.frontmatter.title}
             </Link>
           </h2>
           <p className={styles["feed__item-description"]}>
             {edge.node.frontmatter.description}
           </p>
-          <Link className={styles["feed__item-readmore"]} to={path}>
+          <Link className={styles["feed__item-readmore"]} to={pagePath}>
             続きを読む
           </Link>
         </div>

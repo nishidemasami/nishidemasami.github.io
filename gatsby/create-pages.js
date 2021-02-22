@@ -58,9 +58,22 @@ const createPages = async ({ graphql, actions }) => {
         context: { slug: edge.node.fields.slug },
       });
     } else if (_.get(edge, "node.frontmatter.template") === "post") {
+      const pageDate = new Date(edge.node.frontmatter.date);
+      const pagePath = (
+        "/" +
+        ("000" + pageDate.getFullYear()).slice(-4) +
+        "/" +
+        ("0" + (pageDate.getMonth() + 1)).slice(-2) +
+        "/" +
+        ("0" + pageDate.getDate()).slice(-2) +
+        edge.node.fields.slug
+      ).replace(/\/\//g, "/");
+
+      console.log(pageDate);
+      console.log(pagePath);
       console.log(edge.node.fields.slug);
       createPage({
-        path: edge.node.fields.slug,
+        path: pagePath,
         component: path.resolve("./src/templates/post-template.tsx"),
         context: { slug: edge.node.fields.slug },
       });

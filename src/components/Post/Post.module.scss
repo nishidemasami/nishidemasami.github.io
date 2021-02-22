@@ -2,6 +2,8 @@
 @import "../../assets/scss/mixins";
 
 .post {
+  float: left;
+
   &__footer {
     max-width: $layout-post-width;
     margin: 0 auto;
@@ -16,7 +18,7 @@
 
   &__home-button {
     display: block;
-    max-width: 90px;
+    width: fit-content;
     height: $button-height;
     padding: 0 24px;
     line-height: $button-height;
@@ -39,13 +41,15 @@
 
 @include breakpoint-sm {
   .post {
-    lost-column: 20/27;
+    // lost-column: 20/27;
+    width: calc(99.9% * 20 / 27);
   }
 }
 
 @include breakpoint-md {
   .post {
-    lost-column: 20/27;
+    // lost-column: 20/27;
+    width: calc(99.9% * 20 / 27);
     &__footer {
       padding: 0;
     }
