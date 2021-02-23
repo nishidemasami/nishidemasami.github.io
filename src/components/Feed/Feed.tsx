@@ -20,9 +20,6 @@ const Feed = ({ edges }: Props) => (
         ("0" + pageDate.getDate()).slice(-2) +
         edge.node.fields.slug
       ).replace(/\/\//g, "/");
-      console.log(pageDate);
-      console.log(pagePath);
-      console.log(edge.node.fields.slug);
       return (
         <div className={styles["feed__item"]} key={edge.node.fields.slug}>
           <div className={styles["feed__item-meta"]}>
