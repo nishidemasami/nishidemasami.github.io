@@ -13,8 +13,8 @@ type Props = {
 };
 
 const Post = ({ post }: Props) => {
-  const { html } = post;
-  const { tagSlugs, slug } = post.fields;
+  const { body } = post;
+  const { slug } = post.frontmatter;
   const { tags, title, date } = post.frontmatter;
 
   return (
@@ -24,12 +24,12 @@ const Post = ({ post }: Props) => {
       </Link>
 
       <div className={styles["post__content"]}>
-        <Content body={html} title={title} />
+        <Content body={body} title={title} />
       </div>
 
       <div className={styles["post__footer"]}>
         <Meta date={date} />
-        {tags && tagSlugs && <Tags tags={tags} tagSlugs={tagSlugs} />}
+        {tags && <Tags tags={tags} tagSlugs={tags} />}
         {/* <Author /> */}
       </div>
 

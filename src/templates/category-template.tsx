@@ -6,10 +6,10 @@ import Feed from "../components/Feed";
 import Page from "../components/Page";
 import Pagination from "../components/Pagination";
 import { useSiteMetadata } from "../hooks";
-import type { PageContext, AllMarkdownRemark } from "../types";
+import type { PageContext, allMdx } from "../types";
 
 type Props = {
-  data: AllMarkdownRemark;
+  data: allMdx;
   pageContext: PageContext;
 };
 
@@ -25,7 +25,7 @@ const CategoryTemplate = ({ data, pageContext }: Props) => {
     hasNextPage,
   } = pageContext;
 
-  const { edges } = data.allMarkdownRemark;
+  const { edges } = data.allMdx;
   const pageTitle =
     currentPage > 0
       ? `${category} - Page ${currentPage} - ${siteTitle}`
@@ -49,25 +49,22 @@ const CategoryTemplate = ({ data, pageContext }: Props) => {
 
 export const query = graphql`
   query CategoryPage($category: String, $postsLimit: Int!, $postsOffset: Int!) {
-    allMarkdownRemark(
+    allMdx(
       limit: $postsLimit
       skip: $postsOffset
       filter: {
         frontmatter: {
           category: { eq: $category }
           template: { eq: "post" }
-          draft: { ne: true }
+          draft: { eq: false }
         }
       }
       sort: { order: DESC, fields: [frontmatter___date] }
     ) {
       edges {
         node {
-          fields {
-            categorySlug
-            slug
-          }
           frontmatter {
+            slug
             date
             description
             category

@@ -18,10 +18,10 @@ const Feed = ({ edges }: Props) => (
         ("0" + (pageDate.getMonth() + 1)).slice(-2) +
         "/" +
         ("0" + pageDate.getDate()).slice(-2) +
-        edge.node.fields.slug
+        edge.node.frontmatter.slug
       ).replace(/\/\//g, "/");
       return (
-        <div className={styles["feed__item"]} key={edge.node.fields.slug}>
+        <div className={styles["feed__item"]} key={edge.node.frontmatter.slug}>
           <div className={styles["feed__item-meta"]}>
             <time
               className={styles["feed__item-meta-time"]}
@@ -45,7 +45,7 @@ const Feed = ({ edges }: Props) => (
             <span className={styles["feed__item-meta-divider"]} />
             <span className={styles["feed__item-meta-category"]}>
               <Link
-                to={edge.node.fields.categorySlug!}
+                to={edge.node.frontmatter.category!}
                 className={styles["feed__item-meta-category-link"]}
               >
                 {edge.node.frontmatter.category}

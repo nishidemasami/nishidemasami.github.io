@@ -5,7 +5,7 @@
   "description": "It's my blog generator.",
   "main": "n/a",
   "scripts": {
-    "develop": "yarn clean && gatsby develop",
+    "develop": "yarn clean && gatsby develop --verbose",
     "build": "yarn clean && gatsby build",
     "deploy": "yarn clean && gatsby build --prefix-paths && gh-pages -d public",
     "clean": "rimraf .cache public",
@@ -38,6 +38,8 @@
     "disqus"
   ],
   "dependencies": {
+    "@mdx-js/mdx": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
     "@sentry/gatsby": "^6.0.1",
     "@sentry/tracing": "^6.1.0",
     "babel-plugin-styled-components": "^1.12.0",
@@ -51,6 +53,7 @@
     "gatsby-plugin-flow": "^1.9.0",
     "gatsby-plugin-google-gtag": "^2.7.0",
     "gatsby-plugin-manifest": "^2.11.0",
+    "gatsby-plugin-mdx": "^1.10.0",
     "gatsby-plugin-netlify": "^2.10.0",
     "gatsby-plugin-netlify-cms": "^4.9.0",
     "gatsby-plugin-netlify-cms-paths": "^1.3.0",

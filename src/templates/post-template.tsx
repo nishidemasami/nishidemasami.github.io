@@ -3,18 +3,18 @@ import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import Post from "../components/Post";
 import { useSiteMetadata } from "../hooks";
-import type { MarkdownRemark } from "../types";
+import type { mdx } from "../types";
 import Sidebar from "../components/Sidebar";
 
 type Props = {
   data: {
-    markdownRemark: MarkdownRemark;
+    mdx: mdx;
   };
 };
 
 const PostTemplate = ({ data }: Props) => {
   const { title: siteTitle, subtitle: siteSubtitle } = useSiteMetadata();
-  const { frontmatter } = data.markdownRemark;
+  const { frontmatter } = data.mdx;
   const {
     title: postTitle,
     description: postDescription = "",
@@ -29,7 +29,7 @@ const PostTemplate = ({ data }: Props) => {
       description={metaDescription}
       socialImage={socialImageUrl}
     >
-      <Post post={data.markdownRemark} />
+      <Post post={data.mdx} />
       <Sidebar />
     </Layout>
   );
@@ -37,14 +37,11 @@ const PostTemplate = ({ data }: Props) => {
 
 export const query = graphql`
   query PostBySlug($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    mdx(frontmatter: { slug: { eq: $slug } }) {
       id
-      html
-      fields {
-        slug
-        tagSlugs
-      }
+      body
       frontmatter {
+        slug
         date
         description
         tags

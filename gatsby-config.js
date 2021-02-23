@@ -66,29 +66,27 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }) =>
-              allMarkdownRemark.edges.map((edge) => ({
+            serialize: ({ query: { site, allMdx } }) =>
+              allMdx.edges.map((edge) => ({
                 ...edge.node.frontmatter,
                 description: edge.node.frontmatter.description,
                 date: edge.node.frontmatter.date,
                 url: site.siteMetadata.site_url + edge.node.fields.slug,
                 guid: site.siteMetadata.site_url + edge.node.fields.slug,
-                custom_elements: [{ "content:encoded": edge.node.html }],
+                custom_elements: [{ "content:encoded": edge.node.body }],
               })),
             query: `
               {
-                allMarkdownRemark(
+                allMdx(
                   limit: 1000,
                   sort: { order: DESC, fields: [frontmatter___date] },
-                  filter: { frontmatter: { template: { eq: "post" }, draft: { ne: true } } }
+                  filter: { frontmatter: { template: { eq: "post" }, draft: { eq: false } } }
                 ) {
                   edges {
                     node {
-                      html
-                      fields {
-                        slug
-                      }
+                      body
                       frontmatter {
+                        slug
                         title
                         date
                         template
@@ -112,9 +110,10 @@ module.exports = {
       options: { fileName: `types/graphql-types.d.ts` },
     },
     {
-      resolve: "gatsby-transformer-remark",
+      resolve: "gatsby-plugin-mdx",
       options: {
-        plugins: [
+        extensions: [".mdx"],
+        gatsbyRemarkPlugins: [
           "gatsby-remark-relative-images",
           {
             resolve: "gatsby-remark-katex",

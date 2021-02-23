@@ -30,16 +30,12 @@ const createPages = async ({ graphql, actions }) => {
   // Posts and pages from markdown
   const result = await graphql(`
     {
-      allMarkdownRemark(filter: { frontmatter: { draft: { ne: true } } }) {
+      allMdx(filter: { frontmatter: { draft: { eq: false } } }) {
         edges {
           node {
             frontmatter {
               template
-            }
-            fields {
               slug
-            }
-            frontmatter {
               date
             }
           }
@@ -48,14 +44,14 @@ const createPages = async ({ graphql, actions }) => {
     }
   `);
 
-  const { edges } = result.data.allMarkdownRemark;
+  const { edges } = result.data.allMdx;
 
   _.each(edges, (edge) => {
     if (_.get(edge, "node.frontmatter.template") === "page") {
       createPage({
-        path: edge.node.fields.slug,
+        path: edge.node.frontmatter.slug,
         component: path.resolve("./src/templates/page-template.tsx"),
-        context: { slug: edge.node.fields.slug },
+        context: { slug: edge.node.frontmatter.slug },
       });
     } else if (_.get(edge, "node.frontmatter.template") === "post") {
       const pageDate = new Date(edge.node.frontmatter.date);
@@ -66,16 +62,13 @@ const createPages = async ({ graphql, actions }) => {
         ("0" + (pageDate.getMonth() + 1)).slice(-2) +
         "/" +
         ("0" + pageDate.getDate()).slice(-2) +
-        edge.node.fields.slug
+        edge.node.frontmatter.slug
       ).replace(/\/\//g, "/");
 
-      console.log(pageDate);
-      console.log(pagePath);
-      console.log(edge.node.fields.slug);
       createPage({
         path: pagePath,
         component: path.resolve("./src/templates/post-template.tsx"),
-        context: { slug: edge.node.fields.slug },
+        context: { slug: edge.node.frontmatter.slug },
       });
     }
   });
