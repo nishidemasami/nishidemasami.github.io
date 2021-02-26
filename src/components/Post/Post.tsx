@@ -34,31 +34,8 @@ const Post = ({ post, next, previous }: Props) => {
     frontmatter: { tags, title, date, slug },
   } = post;
 
-  const nextpageDate = next && new Date(next.frontmatter.date);
-  const nextpagePath =
-    next &&
-    nextpageDate &&
-    "/" +
-      ("000" + nextpageDate.getFullYear()).slice(-4) +
-      "/" +
-      ("0" + (nextpageDate.getMonth() + 1)).slice(-2) +
-      "/" +
-      ("0" + nextpageDate.getDate()).slice(-2) +
-      "/" +
-      next.frontmatter.slug;
-
-  const previouspageDate = previous && new Date(previous.frontmatter.date);
-  const previouspagePath =
-    previous &&
-    previouspageDate &&
-    "/" +
-      ("000" + previouspageDate.getFullYear()).slice(-4) +
-      "/" +
-      ("0" + (previouspageDate.getMonth() + 1)).slice(-2) +
-      "/" +
-      ("0" + previouspageDate.getDate()).slice(-2) +
-      "/" +
-      previous.frontmatter.slug;
+  const nextpagePath = next && next.frontmatter.slug;
+  const previouspagePath = previous && previous.frontmatter.slug;
 
   const cx = classNames.bind(styles);
 

@@ -12,16 +12,7 @@ const Recents = () => {
       Recents
       <ul className={styles["recents__list"]}>
         {edges.map((edge) => {
-          const pageDate = new Date(edge.node.frontmatter.date);
-          const pagePath =
-            "/" +
-            ("000" + pageDate.getFullYear()).slice(-4) +
-            "/" +
-            ("0" + (pageDate.getMonth() + 1)).slice(-2) +
-            "/" +
-            ("0" + pageDate.getDate()).slice(-2) +
-            "/" +
-            edge.node.frontmatter.slug;
+          const pagePath = edge.node.frontmatter.slug;
           return (
             <li
               className={styles["recents__list-item"]}

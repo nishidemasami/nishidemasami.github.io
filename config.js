@@ -8,17 +8,17 @@ module.exports = {
     "個人的なブログです。有益なことや無益なことなどいろいろ書いています。",
   copyright: "© All rights reserved.",
   disqusShortname: "",
-  postsPerPage: 10,
+  postsPerPage: 5,
   googleAnalyticsId: "UA-88094521-1",
   useKatex: true,
   menu: [
     {
-      label: "About Me",
-      path: "/pages/about",
+      label: "About",
+      path: "/about",
     },
     {
       label: "Portfolio",
-      path: "/pages/portfolio",
+      path: "/portfolio",
     },
   ],
   author: {

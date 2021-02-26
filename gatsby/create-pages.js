@@ -102,16 +102,7 @@ const createPages = async ({ graphql, actions }) => {
   console.log(posts);
   // posts.forEach((post) => {
   _.each(posts, (post) => {
-    const pageDate = new Date(post.node.frontmatter.date);
-    const pagePath =
-      "/" +
-      ("000" + pageDate.getFullYear()).slice(-4) +
-      "/" +
-      ("0" + (pageDate.getMonth() + 1)).slice(-2) +
-      "/" +
-      ("0" + pageDate.getDate()).slice(-2) +
-      "/" +
-      post.node.frontmatter.slug;
+    const pagePath = post.node.frontmatter.slug;
 
     createPage({
       path: pagePath,
@@ -123,39 +114,6 @@ const createPages = async ({ graphql, actions }) => {
       },
     });
   });
-
-  // _.each(edges, (edge) => {
-  //   if (_.get(edge, "node.frontmatter.template") === "page") {
-  //     createPage({
-  //       path: edge.node.frontmatter.slug,
-  //       component: path.resolve("./src/templates/page-template.tsx"),
-  //       context: {
-  //         slug: edge.node.frontmatter.slug,
-  //       },
-  //     });
-  //   } else if (_.get(edge, "node.frontmatter.template") === "post") {
-  //     const pageDate = new Date(edge.node.frontmatter.date);
-  //     const pagePath =
-  //       "/" +
-  //       ("000" + pageDate.getFullYear()).slice(-4) +
-  //       "/" +
-  //       ("0" + (pageDate.getMonth() + 1)).slice(-2) +
-  //       "/" +
-  //       ("0" + pageDate.getDate()).slice(-2) +
-  //       "/" +
-  //       edge.node.frontmatter.slug;
-
-  //     createPage({
-  //       path: pagePath,
-  //       component: path.resolve("./src/templates/post-template.tsx"),
-  //       context: {
-  //         slug: edge.node.frontmatter.slug,
-  //         next: edge.next,
-  //         previous: edge.previous,
-  //       },
-  //     });
-  //   }
-  // });
 
   // Feeds
   await createTagsPages(graphql, actions);
