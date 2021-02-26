@@ -6,6 +6,8 @@ import Menu from "./Menu";
 import styles from "./Sidebar.module.scss";
 import { useSiteMetadata } from "../../hooks";
 import { Link } from "gatsby";
+import Tags from "./Tags";
+import Recents from "./Recents";
 
 type Props = {
   isIndex?: boolean;
@@ -13,7 +15,6 @@ type Props = {
 
 const Sidebar = ({ isIndex }: Props) => {
   const { author, copyright, menu, title } = useSiteMetadata();
-
   return (
     <div className={styles["sidebar"]}>
       <div className={styles["sidebar__inner"]}>
@@ -22,6 +23,8 @@ const Sidebar = ({ isIndex }: Props) => {
         </Link>
         <Author author={author} />
         <Menu menu={menu} />
+        <Recents />
+        <Tags />
         <Contacts contacts={author.contacts} />
         <Copyright copyright={copyright} />
       </div>

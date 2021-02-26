@@ -10,9 +10,26 @@ type Props = {
   data: {
     mdx: mdx;
   };
+  pathContext: {
+    next: {
+      frontmatter: {
+        slug: string;
+        title: string;
+      };
+    };
+    previous: {
+      frontmatter: {
+        slug: string;
+        title: string;
+      };
+    };
+  };
 };
 
-const PostTemplate = ({ data }: Props) => {
+const PostTemplate = (props: Props) => {
+  const data: {
+    mdx: mdx;
+  } = props.data;
   const { title: siteTitle, subtitle: siteSubtitle } = useSiteMetadata();
   const { frontmatter } = data.mdx;
   const {
@@ -29,7 +46,11 @@ const PostTemplate = ({ data }: Props) => {
       description={metaDescription}
       socialImage={socialImageUrl}
     >
-      <Post post={data.mdx} />
+      <Post
+        post={data.mdx}
+        next={props.pathContext.next}
+        previous={props.pathContext.previous}
+      />
       <Sidebar />
     </Layout>
   );

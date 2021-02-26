@@ -1,20 +1,24 @@
-// @flow strict
-import React from 'react';
-import { Link } from 'gatsby';
-import styles from './Tags.module.scss';
+import Icons from "@material-ui/icons";
+import React from "react";
+import { Link } from "gatsby";
+import styles from "./Tags.module.scss";
+import _ from "lodash";
 
 type Props = {
-  tags: string[],
-  tagSlugs: string[]
+  tags: string[];
+  tagSlugs: string[];
 };
 
-const Tags = ({ tags, tagSlugs }: Props) => (
-  <div className={styles['tags']}>
-    <ul className={styles['tags__list']}>
-      {tagSlugs && tagSlugs.map((slug, i) => (
-        <li className={styles['tags__list-item']} key={tags[i]}>
-          <Link to={slug} className={styles['tags__list-item-link']}>
-            {tags[i]}
+const Tags = ({ tags }: Props) => (
+  <div className={styles["tags"]}>
+    <ul className={styles["tags__list"]}>
+      {tags.map((slug) => (
+        <li className={styles["tags__list-item"]} key={slug}>
+          <Link
+            to={"/tag/" + _.kebabCase(slug)}
+            className={styles["tags__list-item-link"]}
+          >
+            ＃{slug}
           </Link>
         </li>
       ))}

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 import type { Edges } from "../../types";
 import styles from "./Feed.module.scss";
+import _ from "lodash";
 
 type Props = {
   edges: Edges;
@@ -11,22 +12,22 @@ const Feed = ({ edges }: Props) => (
   <div className={styles["feed"]}>
     {edges.map((edge) => {
       const pageDate = new Date(edge.node.frontmatter.date);
-      const pagePath = (
+      const pagePath =
         "/" +
         ("000" + pageDate.getFullYear()).slice(-4) +
         "/" +
         ("0" + (pageDate.getMonth() + 1)).slice(-2) +
         "/" +
         ("0" + pageDate.getDate()).slice(-2) +
-        edge.node.frontmatter.slug
-      ).replace(/\/\//g, "/");
+        "/" +
+        edge.node.frontmatter.slug;
       return (
         <div className={styles["feed__item"]} key={edge.node.frontmatter.slug}>
           <div className={styles["feed__item-meta"]}>
             <time
               className={styles["feed__item-meta-time"]}
               dateTime={new Date(edge.node.frontmatter.date).toLocaleDateString(
-                "en-US",
+                "ja-JP",
                 {
                   year: "numeric",
                   month: "long",
@@ -35,7 +36,7 @@ const Feed = ({ edges }: Props) => (
               )}
             >
               {new Date(edge.node.frontmatter.date).toLocaleDateString(
-                "en-US",
+                "ja-JP",
                 {
                   year: "numeric",
                   month: "long",
@@ -45,7 +46,7 @@ const Feed = ({ edges }: Props) => (
             <span className={styles["feed__item-meta-divider"]} />
             <span className={styles["feed__item-meta-category"]}>
               <Link
-                to={edge.node.frontmatter.category!}
+                to={"/category/" + _.kebabCase(edge.node.frontmatter.category!)}
                 className={styles["feed__item-meta-category-link"]}
               >
                 {edge.node.frontmatter.category}

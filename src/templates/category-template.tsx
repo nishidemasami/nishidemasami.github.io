@@ -33,7 +33,7 @@ const CategoryTemplate = ({ data, pageContext }: Props) => {
 
   return (
     <Layout title={pageTitle} description={siteSubtitle}>
-      <Page title={category}>
+      <Page title={`${category}カテゴリ`}>
         <Feed edges={edges} />
         <Pagination
           prevPagePath={prevPagePath}

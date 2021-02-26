@@ -1,0 +1,63 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.tags {
+  @include margin-bottom(1);
+  position: relative;
+
+  &__title {
+    &-link {
+      color: $typographic-link-p-font-color;
+
+      &:hover,
+      &:focus {
+        color: $color-primary;
+        border-bottom: 1px solid $color-primary;
+      }
+
+      &--active {
+        color: $color-base;
+        border-bottom: 1px solid $color-base;
+      }
+    }
+  }
+
+  &__list {
+    list-style: circle;
+    margin: 0;
+    border: 0px solid $color-gray;
+
+    li {
+      margin: 0;
+    }
+
+    &-expandbutton {
+      width: 100%;
+      text-align: center;
+      border: 0px solid $color-gray;
+      position: absolute;
+      bottom: 0px;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    &-item {
+      &-link {
+        font-size: smaller;
+        color: $typographic-link-p-font-color;
+        font-weight: lighter;
+        border: 0;
+
+        &:hover,
+        &:focus {
+          color: $color-primary;
+          border-bottom: 1px solid $color-primary;
+        }
+
+        &--active {
+          color: $color-base;
+          border-bottom: 1px solid $color-base;
+        }
+      }
+    }
+  }
+}

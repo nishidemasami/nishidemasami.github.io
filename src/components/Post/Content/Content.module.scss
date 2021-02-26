@@ -3,7 +3,7 @@
 
 .content {
   max-width: $layout-post-single-width;
-  padding: 0 15px;
+  padding: 0 2 0 15px;
   margin: 0 auto;
 
   &__title {
@@ -31,7 +31,6 @@
         @include padding(1, 0);
 
         & p {
-          max-width: $layout-post-width;
           font-size: $typographic-base-font-size * 1.6817;
           margin-top: 0;
           @include margin-bottom(1);
@@ -45,7 +44,6 @@
     }
 
     & * {
-      max-width: $layout-post-width;
       margin-left: auto;
       margin-right: auto;
     }
@@ -58,7 +56,7 @@
 
 @include breakpoint-md {
   .content {
-    padding: 0;
+    padding: 25px 2px 25px 20px;
 
     &__title {
       font-size: $typographic-base-font-size * 3;

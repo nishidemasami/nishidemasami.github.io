@@ -51,7 +51,7 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-feed",
+      resolve: "gatsby-plugin-feed-mdx",
       options: {
         query: `
           {
@@ -71,8 +71,8 @@ module.exports = {
                 ...edge.node.frontmatter,
                 description: edge.node.frontmatter.description,
                 date: edge.node.frontmatter.date,
-                url: site.siteMetadata.site_url + edge.node.fields.slug,
-                guid: site.siteMetadata.site_url + edge.node.fields.slug,
+                url: site.siteMetadata.site_url + edge.node.frontmatter.slug,
+                guid: site.siteMetadata.site_url + edge.node.frontmatter.slug,
                 custom_elements: [{ "content:encoded": edge.node.body }],
               })),
             query: `
@@ -112,7 +112,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-mdx",
       options: {
-        extensions: [".mdx"],
+        extensions: [".mdx", ".md"],
         gatsbyRemarkPlugins: [
           "gatsby-remark-relative-images",
           {
