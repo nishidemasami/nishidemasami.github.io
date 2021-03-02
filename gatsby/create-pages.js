@@ -83,14 +83,12 @@ const createPages = async ({ graphql, actions }) => {
             frontmatter {
               title
               slug
-              date
             }
           }
           previous {
             frontmatter {
               title
               slug
-              date
             }
           }
         }

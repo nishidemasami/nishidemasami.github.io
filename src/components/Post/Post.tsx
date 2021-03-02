@@ -16,14 +16,12 @@ type Props = {
     frontmatter: {
       slug: string;
       title: string;
-      date: string;
     };
   };
   previous?: {
     frontmatter: {
       slug: string;
       title: string;
-      date: string;
     };
   };
 };
