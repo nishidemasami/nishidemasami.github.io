@@ -39,6 +39,12 @@
   }
 }
 
+@include breakpoint-xs {
+  .post {
+    width: 100%;
+  }
+}
+
 @include breakpoint-sm {
   .post {
     // lost-column: 20/27;
