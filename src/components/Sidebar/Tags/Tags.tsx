@@ -12,9 +12,13 @@ const toolTipStyles = makeStyles({
     width: "100%",
     textAlign: "center",
     position: "initial",
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    backgroundImage:
+      "linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9))",
+    borderRadius: 0,
     "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.9)",
+      backgroundImage:
+        "linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9))",
+      borderRadius: 0,
     },
   },
   toolTip: {
@@ -23,9 +27,13 @@ const toolTipStyles = makeStyles({
     // border: "0px solid $color-gray",
     // position: "absolute",
     // bottom: "0px",
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    backgroundImage:
+      "linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9))",
+    borderRadius: 0,
     "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.9)",
+      backgroundImage:
+        "linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9))",
+      borderRadius: 0,
     },
     color: "black",
   },
@@ -36,9 +44,13 @@ const hiddenToolTipStyles = makeStyles({
     width: "100%",
     textAlign: "center",
     position: "absolute",
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    backgroundImage:
+      "linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))",
+    borderRadius: 0,
     "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.9)",
+      backgroundImage:
+        "linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1))",
+      borderRadius: 0,
     },
   },
   toolTip: {

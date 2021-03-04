@@ -17,8 +17,8 @@
     position: sticky;
     float: right;
     top: 0px;
-    // align-self: flex-end;
-    // bottom: 0px;
+    align-self: flex-end;
+    bottom: 0px;
     // lost-column: 1/4;
     width: calc(99.9% * 1 / 4);
     &__inner {

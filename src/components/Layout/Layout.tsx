@@ -3,6 +3,7 @@ import Helmet from "react-helmet";
 import type Node from "react";
 import { useSiteMetadata } from "../../hooks";
 import styles from "./Layout.module.scss";
+import Background from "./Background";
 
 type Props = {
   children: Node.ReactNode;
@@ -30,30 +31,7 @@ const Layout = ({ children, title, description, socialImage = "" }: Props) => {
         <meta name="twitter:image" content={metaImageUrl} />
       </Helmet>
       <div className={styles.layout}>{children}</div>
-      <div className={styles.area}>
-        <ul className={styles.circles}>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </div>
+      <Background />
     </React.Fragment>
   );
 };
