@@ -238,7 +238,7 @@
       animation: sunshineRaybackgroundanimate 25s linear infinite;
       animation-duration: 30s;
       background-color: rgba(255, 255, 255, 0);
-      border-width: 20px;
+      border-width: 30px;
       border-style: dashed;
       border-radius: 50%;
     }
@@ -254,8 +254,8 @@
       border-color: aquamarine;
     }
     li:nth-child(3) {
-      animation-delay: -135s;
-      animation-duration: 450s;
+      animation-delay: -270s;
+      animation-duration: 900s;
       border-color: deeppink;
     }
     li:nth-child(4) {
@@ -269,8 +269,8 @@
       border-color: lime;
     }
     li:nth-child(6) {
-      animation-delay: -240s;
-      animation-duration: 400s;
+      animation-delay: -480s;
+      animation-duration: 800s;
       border-color: magenta;
     }
     li:nth-child(7) {

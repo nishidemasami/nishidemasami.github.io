@@ -730,8 +730,8 @@ export type FileFieldsEnum =
   | 'childrenMdx___frontmatter___title'
   | 'childrenMdx___frontmatter___date'
   | 'childrenMdx___frontmatter___socialImage'
-  | 'childrenMdx___frontmatter___draft'
   | 'childrenMdx___frontmatter___template'
+  | 'childrenMdx___frontmatter___draft'
   | 'childrenMdx___frontmatter___slug'
   | 'childrenMdx___frontmatter___category'
   | 'childrenMdx___frontmatter___description'
@@ -792,8 +792,8 @@ export type FileFieldsEnum =
   | 'childMdx___frontmatter___title'
   | 'childMdx___frontmatter___date'
   | 'childMdx___frontmatter___socialImage'
-  | 'childMdx___frontmatter___draft'
   | 'childMdx___frontmatter___template'
+  | 'childMdx___frontmatter___draft'
   | 'childMdx___frontmatter___slug'
   | 'childMdx___frontmatter___category'
   | 'childMdx___frontmatter___description'
@@ -1669,8 +1669,8 @@ export type MdxFieldsEnum =
   | 'frontmatter___title'
   | 'frontmatter___date'
   | 'frontmatter___socialImage'
-  | 'frontmatter___draft'
   | 'frontmatter___template'
+  | 'frontmatter___draft'
   | 'frontmatter___slug'
   | 'frontmatter___category'
   | 'frontmatter___description'
@@ -1802,8 +1802,8 @@ export type MdxFrontmatter = {
   title: Scalars['String'];
   date?: Maybe<Scalars['Date']>;
   socialImage?: Maybe<Scalars['String']>;
-  draft?: Maybe<Scalars['Boolean']>;
   template?: Maybe<Scalars['String']>;
+  draft?: Maybe<Scalars['Boolean']>;
   slug?: Maybe<Scalars['String']>;
   category?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -1822,8 +1822,8 @@ export type MdxFrontmatterFilterInput = {
   title?: Maybe<StringQueryOperatorInput>;
   date?: Maybe<DateQueryOperatorInput>;
   socialImage?: Maybe<StringQueryOperatorInput>;
-  draft?: Maybe<BooleanQueryOperatorInput>;
   template?: Maybe<StringQueryOperatorInput>;
+  draft?: Maybe<BooleanQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;
@@ -2050,6 +2050,8 @@ export type QueryAllDirectoryArgs = {
 export type QuerySiteArgs = {
   buildTime?: Maybe<DateQueryOperatorInput>;
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
+  port?: Maybe<IntQueryOperatorInput>;
+  host?: Maybe<StringQueryOperatorInput>;
   pathPrefix?: Maybe<StringQueryOperatorInput>;
   polyfill?: Maybe<BooleanQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
@@ -2188,6 +2190,8 @@ export type QueryAllSitePluginArgs = {
 export type Site = Node & {
   buildTime?: Maybe<Scalars['Date']>;
   siteMetadata?: Maybe<SiteSiteMetadata>;
+  port?: Maybe<Scalars['Int']>;
+  host?: Maybe<Scalars['String']>;
   pathPrefix?: Maybe<Scalars['String']>;
   polyfill?: Maybe<Scalars['Boolean']>;
   id: Scalars['ID'];
@@ -2415,6 +2419,8 @@ export type SiteFieldsEnum =
   | 'siteMetadata___author___contacts___youtube'
   | 'siteMetadata___author___contacts___soundcloud'
   | 'siteMetadata___author___contacts___medium'
+  | 'port'
+  | 'host'
   | 'pathPrefix'
   | 'polyfill'
   | 'id'
@@ -2507,6 +2513,8 @@ export type SiteFieldsEnum =
 export type SiteFilterInput = {
   buildTime?: Maybe<DateQueryOperatorInput>;
   siteMetadata?: Maybe<SiteSiteMetadataFilterInput>;
+  port?: Maybe<IntQueryOperatorInput>;
+  host?: Maybe<StringQueryOperatorInput>;
   pathPrefix?: Maybe<StringQueryOperatorInput>;
   polyfill?: Maybe<BooleanQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
@@ -2603,13 +2611,11 @@ export type SitePageContextNextFilterInput = {
 export type SitePageContextNextFrontmatter = {
   title?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['Date']>;
 };
 
 export type SitePageContextNextFrontmatterFilterInput = {
   title?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
-  date?: Maybe<DateQueryOperatorInput>;
 };
 
 export type SitePageContextPrevious = {
@@ -2623,13 +2629,11 @@ export type SitePageContextPreviousFilterInput = {
 export type SitePageContextPreviousFrontmatter = {
   title?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['Date']>;
 };
 
 export type SitePageContextPreviousFrontmatterFilterInput = {
   title?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
-  date?: Maybe<DateQueryOperatorInput>;
 };
 
 export type SitePageEdge = {
@@ -2734,10 +2738,8 @@ export type SitePageFieldsEnum =
   | 'context___slug'
   | 'context___next___frontmatter___title'
   | 'context___next___frontmatter___slug'
-  | 'context___next___frontmatter___date'
   | 'context___previous___frontmatter___title'
   | 'context___previous___frontmatter___slug'
-  | 'context___previous___frontmatter___date'
   | 'context___tag'
   | 'context___currentPage'
   | 'context___postsLimit'

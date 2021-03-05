@@ -24,6 +24,28 @@
     @include line-height(1);
     @include margin(0, 0, 1);
   }
+
+  &__home-button {
+    display: block;
+    width: fit-content;
+    height: $button-height;
+    padding: 0 24px;
+    line-height: $button-height;
+    text-align: center;
+    color: $color-base;
+    border: 1px solid $color-gray-border;
+    border-radius: $button-border-radius;
+    font-size: $typographic-base-font-size;
+    font-weight: bolder;
+    margin-right: auto;
+    @include margin-top(1);
+    @include margin-left(1);
+
+    &:hover,
+    &:focus {
+      color: $color-primary;
+    }
+  }
 }
 
 @include breakpoint-xs {
@@ -41,6 +63,10 @@
 
     &__inner {
       padding: 30px 2px 30px 20px;
+    }
+
+    &__home-button {
+      display: none;
     }
   }
 }
