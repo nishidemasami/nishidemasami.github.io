@@ -3,7 +3,14 @@
 
 .layout {
   width: 100%;
-  position: absolute;
+  position: relative;
+  display: contents;
+}
+
+@include breakpoint-sm {
+  .layout {
+    display: flex;
+  }
 }
 
 .context {

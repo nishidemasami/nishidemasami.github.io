@@ -14,9 +14,11 @@
 
 @include breakpoint-sm {
   .sidebar {
+    height: 100%;
+    display: flex;
     position: sticky;
     float: right;
-    top: 0px;
+    top: auto;
     align-self: flex-end;
     bottom: 0px;
     // lost-column: 1/4;
@@ -43,13 +45,12 @@
   }
 }
 
-@include breakpoint-md {
+@include breakpoint-sm {
   .sidebar {
     // lost-column: 1/4;
     width: calc(99.9% * 1 / 4);
     position: sticky;
     float: right;
-    top: 0px;
     // align-self: flex-end;
     // bottom: 0px;
     &__inner {
