@@ -27,10 +27,10 @@
     border: 1px solid $color-gray-border;
     border-radius: $button-border-radius;
     font-size: $typographic-base-font-size;
-    font-weight: normal;
-    margin-left: auto;
+    font-weight: bolder;
     margin-right: auto;
     @include margin-top(1);
+    @include margin-left(1);
 
     &:hover,
     &:focus {
@@ -49,6 +49,10 @@
   .post {
     // lost-column: 20/27;
     width: calc(99.9% * 20 / 27);
+
+    &__home-button {
+      display: none;
+    }
   }
 }
 
@@ -62,6 +66,10 @@
 
     &__comments {
       padding: 0;
+    }
+
+    &__home-button {
+      display: none;
     }
   }
 }

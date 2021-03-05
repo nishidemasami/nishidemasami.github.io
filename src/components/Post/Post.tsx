@@ -9,6 +9,7 @@ import Tags from "./Tags";
 import styles from "./Post.module.scss";
 import type { Node } from "../../types";
 import PAGINATION from "../../constants/pagination";
+import { useSiteMetadata } from "../../hooks";
 
 type Props = {
   post: Node;
@@ -27,6 +28,7 @@ type Props = {
 };
 
 const Post = ({ post, next, previous }: Props) => {
+  const { title: websitetitle } = useSiteMetadata();
   const {
     body,
     frontmatter: { tags, title, date, slug },
@@ -50,7 +52,7 @@ const Post = ({ post, next, previous }: Props) => {
   return (
     <div className={styles["post"]}>
       <Link className={styles["post__home-button"]} to="/">
-        トップページに戻る
+        {websitetitle}
       </Link>
 
       <div className={styles["post__content"]}>

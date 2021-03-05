@@ -19,10 +19,18 @@
 
   &__body {
     font-size: $typographic-base-font-size;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: $backgroundcolor-base;
     padding: 10px;
     @include line-height(1);
     @include margin(0, 0, 1);
+  }
+}
+
+@include breakpoint-xs {
+  .page {
+    &__inner {
+      padding: 3%;
+    }
   }
 }
 

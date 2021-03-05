@@ -2,15 +2,38 @@ import React from "react";
 import type Node from "react";
 import styles from "./Background.module.scss";
 
-const Background = () => {
-  return <RotatedSquareBackground />;
+const SunshineRayBackground = () => {
+  return (
+    <React.Fragment>
+      <div className={styles.sunshineRaybackground}>
+        <ul
+          style={{ listStyle: "none" }}
+          className={styles.sunshineRaybackground__sunshineRays}
+        >
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+    </React.Fragment>
+  );
 };
 
-const RotatedSquareBackground = () => {
+export const RotatedSquareBackground = () => {
   return (
     <React.Fragment>
       <div className={styles.rotatedsquarebackground}>
-        <ul className={styles.rotatedsquarebackground__circles}>
+        <ul
+          style={{ listStyle: "none" }}
+          className={styles.rotatedsquarebackground__circles}
+        >
           <li></li>
           <li></li>
           <li></li>
@@ -37,4 +60,4 @@ const RotatedSquareBackground = () => {
   );
 };
 
-export default Background;
+export default SunshineRayBackground;
