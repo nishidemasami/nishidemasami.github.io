@@ -54,6 +54,12 @@
   }
 }
 
+@include breakpoint-xs {
+  .content {
+    width: 97%;
+  }
+}
+
 @include breakpoint-md {
   .content {
     padding: 25px 2px 25px 20px;

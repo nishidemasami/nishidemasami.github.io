@@ -50,6 +50,7 @@
 
 @include breakpoint-xs {
   .page {
+    width: 100%;
     &__inner {
       padding: 3%;
     }
