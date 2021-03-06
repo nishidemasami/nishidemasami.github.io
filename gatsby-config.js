@@ -84,7 +84,7 @@ module.exports = {
                 ) {
                   edges {
                     node {
-                      body
+                      html
                       frontmatter {
                         slug
                         title

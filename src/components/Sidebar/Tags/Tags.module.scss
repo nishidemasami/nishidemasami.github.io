@@ -31,15 +31,6 @@
       margin: 0;
     }
 
-    &-expandbutton {
-      width: 100%;
-      text-align: center;
-      border: 0px solid $color-gray;
-      position: absolute;
-      bottom: 0px;
-      background-color: rgba(255, 255, 255, 0.9);
-    }
-
     &-item {
       &-link {
         font-size: smaller;

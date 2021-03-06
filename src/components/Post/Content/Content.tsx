@@ -1,5 +1,6 @@
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import React from "react";
+import { useSiteMetadata } from "../../../hooks";
 import styles from "./Content.module.scss";
 
 type Props = {
@@ -7,13 +8,30 @@ type Props = {
   title: string;
 };
 
-const Content = ({ body, title }: Props) => (
-  <div className={styles["content"]}>
-    <h1 className={styles["content__title"]}>{title}</h1>
-    <div className={styles["content__body"]}>
+const Content = ({ body, title }: Props) => {
+  const { title: websitetitle } = useSiteMetadata();
+  return (
+    <div className={styles["content"]}>
+      <h1 className={styles["content__title"]}>{title}</h1>
+      <div className={styles["content__body"]}>
+        <MDXRenderer>{body}</MDXRenderer>
+      </div>
+      <a
+        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+        className={styles["content__snssharebutton"] + " twitter-share-button"}
+        data-text={title + " | " + websitetitle}
+        data-via={"nishidemasami"}
+        data-related={"nishidemasami"}
+        data-show-count="false"
+        data-lang="ja"
+      >
+        Tweet
+      </a>
       <a
         href="https://b.hatena.ne.jp/entry/"
-        className="hatena-bookmark-button"
+        className={
+          styles["content__snssharebutton"] + " hatena-bookmark-button"
+        }
         data-hatena-bookmark-layout="vertical-normal"
         data-hatena-bookmark-lang="ja"
         title="このエントリーをはてなブックマークに追加"
@@ -26,15 +44,8 @@ const Content = ({ body, title }: Props) => (
           style={{ border: "none" }}
         />
       </a>
-      <script
-        type="text/javascript"
-        src="https://b.st-hatena.com/js/bookmark_button.js"
-        charSet="utf-8"
-        async
-      ></script>
-      <MDXRenderer>{body}</MDXRenderer>
     </div>
-  </div>
-);
+  );
+};
 
 export default Content;

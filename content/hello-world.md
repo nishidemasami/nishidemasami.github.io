@@ -8,7 +8,6 @@ slug: "/2016/07/01/hello-world"
 category: "ブログ"
 description: "はじめての投稿です。"
 tags:
-  - "hello world"
 ---
 
 はじめての投稿です。

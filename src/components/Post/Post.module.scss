@@ -5,7 +5,7 @@
   float: left;
 
   &__footer {
-    max-width: $layout-post-width;
+    // max-width: $layout-post-width;
     margin: 0 auto;
     padding: 0 15px;
   }
@@ -61,7 +61,7 @@
     // lost-column: 20/27;
     width: calc(99.9% * 20 / 27);
     &__footer {
-      padding: 0;
+      padding: 20px;
     }
 
     &__comments {

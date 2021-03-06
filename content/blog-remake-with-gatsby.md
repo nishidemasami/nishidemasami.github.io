@@ -23,6 +23,7 @@ tags:
 - React が動いている・生で React が書ける
 - ページ間の遷移の速度が速い(React の仮想 DOM 操作に由来している)
 - ちょっとがんばれば Typescript でも書ける(使用する Gatsby のテンプレートによっては最初から Typescript を使っているらしい)
+- Gatsby が静的にページを作ってくれているので Javascript をオフにしてても見れる
 
 <ReactHelloWorld>
   こんな感じで普通にReact が<br />
