@@ -29,6 +29,17 @@ const Layout = ({ children, title, description, socialImage = "" }: Props) => {
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={metaImageUrl} />
+        <script
+          type="text/javascript"
+          src="https://b.st-hatena.com/js/bookmark_button.js"
+          charSet="utf-8"
+          async
+        />
+        <script
+          async
+          src="https://platform.twitter.com/widgets.js"
+          charSet="utf-8"
+        />
       </Helmet>
       <div className={styles.layout}>{children}</div>
       <Background />

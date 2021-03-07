@@ -1,10 +1,10 @@
 ---
 title: Gatsbyでブログをリニューアルしてみました
-date: "2021-02-26T22:04:03+0900"
+date: "2021-03-06T18:04:03+0900"
 socialImage: "photo.jpg"
 template: "post"
 draft: false
-slug: "/2021/02/26/blog-renewal-with-gatsby"
+slug: "/2021/03/06/blog-renewal-with-gatsby"
 category: "ブログ"
 description: "このブログをリニューアルしてみました。このブログのソースはここ ↓ で公開しています。https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby見てみた感じどうですか？すごくないですか！？…"
 tags:
