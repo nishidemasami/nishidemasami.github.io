@@ -22,7 +22,7 @@
     align-self: flex-end;
     bottom: 0px;
     // lost-column: 1/4;
-    width: calc(99.9% * 1 / 4);
+    width: 29%;
     &__inner {
       padding: 5%;
       &::before {
@@ -36,10 +36,9 @@
         position: absolute;
         content: "";
         width: 1px;
-        height: 540px;
-        top: 30px;
-        left: -2px;
-        bottom: 0;
+        height: 100%;
+        top: 0px;
+        left: 0px;
       }
     }
   }
@@ -48,7 +47,7 @@
 @include breakpoint-md {
   .sidebar {
     // lost-column: 1/4;
-    width: calc(99.9% * 1 / 4);
+    width: 29%;
     position: sticky;
     float: right;
     // align-self: flex-end;

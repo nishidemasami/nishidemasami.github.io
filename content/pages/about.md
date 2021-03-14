@@ -22,9 +22,21 @@ slug: /about
   title="著者近影"
 />
 
+### 連絡先
+
+email: [nishidemasami@gmail.com](mailto:nishidemasami@gmail.com)  
+twitter: [@nishidemasami](https://twitter.com/nishidemasami)  
+github: [nishidemasami](https://github.com/nishidemasami)
+
 ### このブログについて
 
 最初はこのブログを書く高尚な目的があったんですけど、いつしか無くなって気楽な気持ちで書いています。
+
+このブログは、Gatsby.js + TypeScript + React で作成しています。  
+jQuery レス・WordPress レスを実現していて、レスポンシブデザイン・マテリアルデザインを考慮しています。  
+ソースコードはすべて GitHub に公開しています。  
+https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby  
+WEB サイト制作依頼も受け付けています。
 
 ### 目下の目標
 
