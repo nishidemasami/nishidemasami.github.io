@@ -62,6 +62,14 @@
 @include breakpoint-xs {
   .content {
     width: 97%;
+
+    &__body {
+      code[class*="language-"],
+      pre[class*="language-"] {
+        word-break: break-word;
+        font-size: smaller;
+      }
+    }
   }
 }
 

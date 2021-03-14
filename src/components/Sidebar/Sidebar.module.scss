@@ -24,7 +24,7 @@
     // lost-column: 1/4;
     width: calc(99.9% * 1 / 4);
     &__inner {
-      padding: 30px 20px 0;
+      padding: 5%;
       &::before {
         background: $color-gray-border;
         background: linear-gradient(
@@ -45,7 +45,7 @@
   }
 }
 
-@include breakpoint-sm {
+@include breakpoint-md {
   .sidebar {
     // lost-column: 1/4;
     width: calc(99.9% * 1 / 4);
@@ -64,7 +64,7 @@
 
   &__item {
     list-style: none;
-    padding: 0;
+    padding: 5%;
     margin: 10px;
 
     &-link {

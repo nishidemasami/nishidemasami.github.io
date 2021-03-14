@@ -1,12 +1,14 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { MDXProvider } from "@mdx-js/react";
 import ReactHelloWorld from "./src/components/Content/ReactHelloWorld";
-export const wrapRootElement = ({
-  element,
-}: {
-  element: ReactNode;
-}): ReactNode => (
-  <MDXProvider components={{ ReactHelloWorld: ReactHelloWorld }}>
-    {element}
+import ReactAudioTest from "./src/components/Content/ReactAudioTest";
+export const MDXWrapRootElement = ({ children }) => (
+  <MDXProvider
+    components={{
+      ReactHelloWorld: ReactHelloWorld,
+      ReactAudioTest: ReactAudioTest,
+    }}
+  >
+    {children}
   </MDXProvider>
 );

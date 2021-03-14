@@ -1,6 +1,12 @@
-"use strict";
-require("./src/assets/scss/init.scss");
-require("./static/css/prismjs/theme.min.css");
+import React from "react";
+import "./src/assets/scss/init.scss";
+import "./static/css/prismjs/theme.min.css";
+import { store } from "./src/redux/store";
+import { Provider } from "react-redux";
 
-import { wrapRootElement as wrap } from "./mdx-root";
-export const wrapRootElement = wrap;
+import { MDXWrapRootElement } from "./mdx-root";
+export const wrapRootElement = ({ element }) => (
+  <Provider store={store}>
+    <MDXWrapRootElement>{element}</MDXWrapRootElement>
+  </Provider>
+);

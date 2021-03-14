@@ -1,4 +1,11 @@
-"use strict";
-import { wrapRootElement as wrap } from "./mdx-root";
+import React from "react";
+import { store } from "./src/redux/store";
+import { Provider } from "react-redux";
 export const onRenderBody = require("./gatsby/on-render-body.js");
-export const wrapRootElement = wrap;
+
+import { MDXWrapRootElement } from "./mdx-root";
+export const wrapRootElement = ({ element }) => (
+  <Provider store={store}>
+    <MDXWrapRootElement>{element}</MDXWrapRootElement>
+  </Provider>
+);
