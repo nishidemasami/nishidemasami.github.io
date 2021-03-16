@@ -3,6 +3,7 @@
 
 .contacts {
   @include margin-bottom(1);
+  border-top: 1px solid #dedede;
 
   &__list {
     display: flex;

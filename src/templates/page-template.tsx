@@ -32,7 +32,16 @@ const PageTemplate = ({ data }: Props) => {
       socialImage={socialImageUrl}
     >
       <Page title={pageTitle}>
-        <MDXRenderer>{pageBody}</MDXRenderer>
+        <div
+          style={{
+            borderRadius: 10,
+            padding: "12px 20px",
+            border: "1px solid #e6e6e6",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+          }}
+        >
+          <MDXRenderer>{pageBody}</MDXRenderer>
+        </div>
       </Page>
       <Sidebar />
     </Layout>

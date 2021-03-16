@@ -4,6 +4,7 @@
 .recents {
   @include margin-bottom(1);
   position: relative;
+  border-top: 1px solid #dedede;
 
   &__list {
     list-style: none;

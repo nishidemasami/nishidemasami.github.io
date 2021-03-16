@@ -26,6 +26,8 @@
   &__body {
     background-color: $backgroundcolor-base;
     padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #e6e6e6;
     & figure {
       @include margin-bottom(1);
 

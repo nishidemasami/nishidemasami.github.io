@@ -729,9 +729,9 @@ export type FileFieldsEnum =
   | 'childrenMdx___fileAbsolutePath'
   | 'childrenMdx___frontmatter___title'
   | 'childrenMdx___frontmatter___template'
-  | 'childrenMdx___frontmatter___draft'
   | 'childrenMdx___frontmatter___date'
   | 'childrenMdx___frontmatter___socialImage'
+  | 'childrenMdx___frontmatter___draft'
   | 'childrenMdx___frontmatter___slug'
   | 'childrenMdx___frontmatter___category'
   | 'childrenMdx___frontmatter___description'
@@ -791,9 +791,9 @@ export type FileFieldsEnum =
   | 'childMdx___fileAbsolutePath'
   | 'childMdx___frontmatter___title'
   | 'childMdx___frontmatter___template'
-  | 'childMdx___frontmatter___draft'
   | 'childMdx___frontmatter___date'
   | 'childMdx___frontmatter___socialImage'
+  | 'childMdx___frontmatter___draft'
   | 'childMdx___frontmatter___slug'
   | 'childMdx___frontmatter___category'
   | 'childMdx___frontmatter___description'
@@ -1668,9 +1668,9 @@ export type MdxFieldsEnum =
   | 'fileAbsolutePath'
   | 'frontmatter___title'
   | 'frontmatter___template'
-  | 'frontmatter___draft'
   | 'frontmatter___date'
   | 'frontmatter___socialImage'
+  | 'frontmatter___draft'
   | 'frontmatter___slug'
   | 'frontmatter___category'
   | 'frontmatter___description'
@@ -1801,9 +1801,9 @@ export type MdxFilterListInput = {
 export type MdxFrontmatter = {
   title: Scalars['String'];
   template?: Maybe<Scalars['String']>;
-  draft?: Maybe<Scalars['Boolean']>;
   date?: Maybe<Scalars['Date']>;
   socialImage?: Maybe<Scalars['String']>;
+  draft?: Maybe<Scalars['Boolean']>;
   slug?: Maybe<Scalars['String']>;
   category?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -1821,9 +1821,9 @@ export type MdxFrontmatterDateArgs = {
 export type MdxFrontmatterFilterInput = {
   title?: Maybe<StringQueryOperatorInput>;
   template?: Maybe<StringQueryOperatorInput>;
-  draft?: Maybe<BooleanQueryOperatorInput>;
   date?: Maybe<DateQueryOperatorInput>;
   socialImage?: Maybe<StringQueryOperatorInput>;
+  draft?: Maybe<BooleanQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<StringQueryOperatorInput>;
   description?: Maybe<StringQueryOperatorInput>;

@@ -35,11 +35,6 @@ const Layout = ({ children, title, description, socialImage = "" }: Props) => {
           charSet="utf-8"
           async
         />
-        <script
-          async
-          src="https://platform.twitter.com/widgets.js"
-          charSet="utf-8"
-        />
       </Helmet>
       <div className={styles.layout}>{children}</div>
       <Background />

@@ -8,7 +8,7 @@ module.exports = {
     "個人的なブログです。有益なことや無益なことなどいろいろ書いています。",
   copyright: "© All rights reserved.",
   disqusShortname: "",
-  postsPerPage: 5,
+  postsPerPage: 6,
   googleAnalyticsId: "UA-88094521-1",
   useKatex: true,
   menu: [

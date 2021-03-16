@@ -17,17 +17,6 @@ const Content = ({ body, title }: Props) => {
         <MDXRenderer>{body}</MDXRenderer>
       </div>
       <a
-        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-        className={styles["content__snssharebutton"] + " twitter-share-button"}
-        data-text={title + " | " + websitetitle}
-        data-via={"nishidemasami"}
-        data-related={"nishidemasami"}
-        data-show-count="false"
-        data-lang="ja"
-      >
-        Tweet
-      </a>
-      <a
         href="https://b.hatena.ne.jp/entry/"
         className={
           styles["content__snssharebutton"] + " hatena-bookmark-button"
