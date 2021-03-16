@@ -1,6 +1,13 @@
 {
   "parser": "@typescript-eslint/parser",
   "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/recommended",
+    "plugin:jsx-a11y/strict",
+    "react-app",
+    "plugin:react/all",
+    "prettier/react",
     "eslint:all",
     "airbnb-base",
     "plugin:prettier/recommended",

@@ -1,60 +1,70 @@
 import React from "react";
-import type Node from "react";
 import styles from "./Background.module.scss";
 
 const SunshineRayBackground = () => {
   return (
     <React.Fragment>
       <div className={styles.sunshineRaybackground}>
-        <ul
-          style={{ listStyle: "none" }}
+        <svg
           className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
         >
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </div>
-    </React.Fragment>
-  );
-};
-
-export const RotatedSquareBackground = () => {
-  return (
-    <React.Fragment>
-      <div className={styles.rotatedsquarebackground}>
-        <ul
-          style={{ listStyle: "none" }}
-          className={styles.rotatedsquarebackground__circles}
+          <circle cx="40" cy="40" r="15" />
+        </svg>
+        <svg
+          className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
         >
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
+          <circle cx="40" cy="40" r="15" />
+        </svg>
+        <svg
+          className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
+        >
+          <circle cx="40" cy="40" r="15" />
+        </svg>
+        <svg
+          className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
+        >
+          <circle cx="40" cy="40" r="15" />
+        </svg>
+        <svg
+          className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
+        >
+          <circle cx="40" cy="40" r="15" />
+        </svg>
+        <svg
+          className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
+        >
+          <circle cx="40" cy="40" r="15" />
+        </svg>
+        <svg
+          className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
+        >
+          <circle cx="40" cy="40" r="15" />
+        </svg>
+        <svg
+          className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
+        >
+          <circle cx="40" cy="40" r="15" />
+        </svg>
+        <svg
+          className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
+        >
+          <circle cx="40" cy="40" r="15" />
+        </svg>
+        <svg
+          className={styles.sunshineRaybackground__sunshineRays}
+          viewBox="20 20 40 40"
+        >
+          <circle cx="40" cy="40" r="15" />
+        </svg>
       </div>
     </React.Fragment>
   );
