@@ -8,6 +8,7 @@ import { useSiteMetadata } from "../../hooks";
 import { Link } from "gatsby";
 import Tags from "./Tags";
 import Recents from "./Recents";
+import { Paper } from "@material-ui/core";
 
 type Props = {
   isIndex?: boolean;
@@ -16,7 +17,7 @@ type Props = {
 const Sidebar = ({ isIndex }: Props) => {
   const { author, copyright, menu, title } = useSiteMetadata();
   return (
-    <div className={styles["sidebar"]}>
+    <Paper className={styles["sidebar"]}>
       <div className={styles["sidebar__inner"]}>
         <Link to={"/"} className={styles["title__item-link"]}>
           {title}
@@ -28,7 +29,7 @@ const Sidebar = ({ isIndex }: Props) => {
         <Contacts contacts={author.contacts} />
         <Copyright copyright={copyright} />
       </div>
-    </div>
+    </Paper>
   );
 };
 

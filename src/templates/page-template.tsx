@@ -6,6 +6,7 @@ import Page from "../components/Page";
 import { useSiteMetadata } from "../hooks";
 import type { mdx } from "../types";
 import { MDXRenderer } from "gatsby-plugin-mdx";
+import { Paper } from "@material-ui/core";
 
 type Props = {
   data: {
@@ -32,16 +33,13 @@ const PageTemplate = ({ data }: Props) => {
       socialImage={socialImageUrl}
     >
       <Page title={pageTitle}>
-        <div
+        <Paper
           style={{
-            borderRadius: 10,
             padding: "12px 20px",
-            border: "1px solid #e6e6e6",
-            backgroundColor: "rgba(255, 255, 255, 0.9)",
           }}
         >
           <MDXRenderer>{pageBody}</MDXRenderer>
-        </div>
+        </Paper>
       </Page>
       <Sidebar />
     </Layout>

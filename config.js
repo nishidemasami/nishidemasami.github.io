@@ -13,11 +13,11 @@ module.exports = {
   useKatex: true,
   menu: [
     {
-      label: "About",
+      label: "このブログについて",
       path: "/about",
     },
     {
-      label: "Portfolio",
+      label: "ポートフォリオ",
       path: "/portfolio",
     },
   ],

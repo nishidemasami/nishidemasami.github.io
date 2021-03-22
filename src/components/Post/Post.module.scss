@@ -20,17 +20,11 @@
     display: block;
     width: fit-content;
     height: $button-height;
-    padding: 0 24px;
-    line-height: $button-height;
     text-align: center;
     color: $color-base;
-    border: 1px solid $color-gray-border;
-    border-radius: $button-border-radius;
-    font-size: $typographic-base-font-size;
+    font-size: $typographic-title-font-size;
     font-weight: bolder;
-    margin-right: auto;
-    @include margin-top(1);
-    @include margin-left(1);
+    @include margin(1, 1);
 
     &:hover,
     &:focus {

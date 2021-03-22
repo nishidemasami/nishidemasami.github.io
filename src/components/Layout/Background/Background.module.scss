@@ -10,173 +10,90 @@
 
   &__sunshineRays {
     position: fixed;
-    top: min(-25vh, -25vw);
-    left: min(-12.5vh, -12.5vw);
+    top: min(-45vh, -45vh);
+    left: min(-45vh, -45vh);
+    width: calc(max(100vh, 100vw) * 1.5);
+    height: calc(max(100vh, 100vw) * 1.5);
     // width: 20px;
     // height: 20px;
     // left: min(-25vh, -25vw);
     // top: min(-25vh, -25vw);
-    animation-name: sunshineRaybackgroundanimate;
-    animation-duration: 25s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
     stroke-linecap: round;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
 
-    circle {
+    > * {
       fill: none;
-      transform: scale(1);
+      transform-origin: 40px 40px;
     }
 
     &:nth-child(1) {
-      animation-delay: -5s;
-      animation-duration: 5s;
+      animation-name: sunshineRaybackgroundanimateclockwise;
       stroke: aqua;
-      transform: scale(0.8) rotate(0deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 3;
-      }
     }
 
     &:nth-child(2) {
-      animation-delay: -15s;
-      animation-duration: 15s;
       stroke: deeppink;
-      transform: scale(0.5) rotate(170deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 2;
-      }
+      animation-name: sunshineRaybackgroundanimatecounterclockwise;
     }
     &:nth-child(3) {
-      animation-delay: -27s;
-      animation-duration: 90s;
-      stroke: deeppink;
-      transform: scale(0.3) rotate(90deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 3;
-      }
+      animation-name: sunshineRaybackgroundanimateclockwise;
+      stroke: chartreuse;
     }
     &:nth-child(4) {
-      animation-delay: -72s;
-      animation-duration: 18s;
+      animation-name: sunshineRaybackgroundanimatecounterclockwise;
       stroke: lightpink;
-      transform: scale(1) rotate(310deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 1;
-      }
     }
     &:nth-child(5) {
-      animation-delay: -15s;
-      animation-duration: 30s;
+      animation-name: sunshineRaybackgroundanimateclockwise;
       stroke: lime;
-      transform: scale(1.5) rotate(180deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 1.8;
-      }
     }
     &:nth-child(6) {
-      animation-delay: -48s;
-      animation-duration: 80s;
+      animation-name: sunshineRaybackgroundanimatecounterclockwise;
       stroke: magenta;
-      transform: scale(1.4) rotate(110deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 5;
-      }
     }
     &:nth-child(7) {
-      animation-delay: -14s;
-      animation-duration: 20s;
-      stroke: paleturquoise;
-      transform: scale(1.3) rotate(130deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 4.2;
-      }
+      animation-name: sunshineRaybackgroundanimateclockwise;
+      stroke: #e7ff00;
     }
 
     &:nth-child(8) {
-      animation-delay: -8s;
-      animation-duration: 10s;
+      animation-name: sunshineRaybackgroundanimatecounterclockwise;
       stroke: salmon;
-      transform: scale(1.2) rotate(350deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 3.5;
-      }
     }
 
     &:nth-child(9) {
-      animation-delay: -315s;
-      animation-duration: 35s;
+      animation-name: sunshineRaybackgroundanimateclockwise;
       stroke: violet;
-      transform: scale(1) rotate(260deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 2;
-      }
     }
     &:nth-child(10) {
-      animation-delay: 0s;
-      animation-duration: 21s;
+      animation-name: sunshineRaybackgroundanimatecounterclockwise;
       stroke: yellowgreen;
-      transform: scale(1.8) rotate(30deg);
-      width: calc(max(100vh, 100vw));
-      height: calc(max(100vh, 100vw));
-      circle {
-        stroke-width: 1;
-      }
     }
   }
 
-  @keyframes sunshineRaybackgroundanimate {
+  @keyframes sunshineRaybackgroundanimatecounterclockwise {
     0% {
-      // transform: rotate(0deg); //  scale(0.2);
-      opacity: 0;
-      stroke-dasharray: 100px, 200px;
-      stroke-dashoffset: -15px;
-      stroke-width: 10;
-    }
-    25% {
-      // transform: rotate(180deg); // scale(1);
-      // opacity: 1;
-      stroke-dasharray: 200px, 200px;
+      transform: rotate(180deg);
+      stroke-dasharray: 10px, 200px;
       stroke-dashoffset: 0px;
-      stroke-width: 9;
-    }
-    75% {
-      // transform: rotate(540deg); // scale(1.8);
-      // opacity: 1;
-      stroke-dasharray: 200px, 200px;
-      stroe-dashozffset: -100px;
-      stroke-width: 3;
-    }
-    87% {
-      // transform: rotate(540deg); // scale(1.8);
-      // opacity: 1;
-      stroke-dasharray: 100px, 200px;
-      stroke-dashoffset: -100px;
-      stroke-width: 3;
     }
     100% {
-      // transform: rotate(720deg); // scale(2);
-      // opacity: 0;
-      stroke-dasharray: 100px, 200px;
-      stroke-dashoffset: -15px;
-      stroke-width: 3;
+      transform: rotate(0deg);
+      stroke-dasharray: 350px, 200px;
+    }
+  }
+
+  @keyframes sunshineRaybackgroundanimateclockwise {
+    0% {
+      transform: rotate(-180deg);
+      stroke-dasharray: 10px, 200px;
+    }
+    100% {
+      transform: rotate(0deg);
+      stroke-dasharray: 350px, 200px;
     }
   }
 }

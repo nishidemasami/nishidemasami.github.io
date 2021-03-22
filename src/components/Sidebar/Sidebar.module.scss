@@ -5,6 +5,7 @@
 .sidebar {
   width: 100%;
   float: right;
+  background-color: $backgroundcolor-base;
   &__inner {
     position: relative;
     padding: 25px 20px 0;

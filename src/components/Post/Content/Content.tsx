@@ -1,21 +1,26 @@
+import { Paper } from "@material-ui/core";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import React from "react";
 import { useSiteMetadata } from "../../../hooks";
+import Meta from "../Meta";
 import styles from "./Content.module.scss";
 
 type Props = {
   body: string;
   title: string;
+  date: string;
 };
 
-const Content = ({ body, title }: Props) => {
+const Content = ({ body, title, date }: Props) => {
   const { title: websitetitle } = useSiteMetadata();
   return (
     <div className={styles["content"]}>
       <h1 className={styles["content__title"]}>{title}</h1>
-      <div className={styles["content__body"]}>
+      <Paper className={styles["content__body"]}>
         <MDXRenderer>{body}</MDXRenderer>
-      </div>
+
+        <Meta date={date} />
+      </Paper>
       <a
         href="https://b.hatena.ne.jp/entry/"
         className={

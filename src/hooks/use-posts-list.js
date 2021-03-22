@@ -5,7 +5,7 @@ const usePostsList = () => {
     graphql`
       query recentPostsTemplate {
         allMdx(
-          limit: 5
+          limit: 6
           filter: {
             frontmatter: { template: { eq: "post" }, draft: { eq: false } }
           }

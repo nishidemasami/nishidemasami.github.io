@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import Sidebar from "../components/Sidebar";
 import Page from "../components/Page";
 import { useSiteMetadata, useTagsList } from "../hooks";
+import { Paper } from "@material-ui/core";
 
 const TagsListTemplate = () => {
   const { title, subtitle } = useSiteMetadata();
@@ -13,14 +14,7 @@ const TagsListTemplate = () => {
   return (
     <Layout title={`Tags - ${title}`} description={subtitle}>
       <Page title="Tags">
-        <div
-          style={{
-            borderRadius: 10,
-            padding: "12px 20px",
-            border: "1px solid #e6e6e6",
-            backgroundColor: "rgba(255, 255, 255, 0.9)",
-          }}
-        >
+        <Paper>
           <ul>
             {tags.map((tag) => (
               <li key={tag.fieldValue}>
@@ -30,7 +24,7 @@ const TagsListTemplate = () => {
               </li>
             ))}
           </ul>
-        </div>
+        </Paper>
       </Page>
       <Sidebar />
     </Layout>

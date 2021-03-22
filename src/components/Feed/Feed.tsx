@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import type { Edges } from "../../types";
 import styles from "./Feed.module.scss";
 import _ from "lodash";
+import { Paper } from "@material-ui/core";
 
 type Props = {
   edges: Edges;
@@ -13,7 +14,10 @@ const Feed = ({ edges }: Props) => (
     {edges.map((edge) => {
       const pagePath = edge.node.frontmatter.slug;
       return (
-        <div className={styles["feed__item"]} key={edge.node.frontmatter.slug}>
+        <Paper
+          className={styles["feed__item"]}
+          key={edge.node.frontmatter.slug}
+        >
           <div className={styles["feed__item-meta"]}>
             <time
               className={styles["feed__item-meta-time"]}
@@ -55,7 +59,7 @@ const Feed = ({ edges }: Props) => (
           <Link className={styles["feed__item-readmore"]} to={pagePath}>
             続きを読む
           </Link>
-        </div>
+        </Paper>
       );
     })}
   </div>
