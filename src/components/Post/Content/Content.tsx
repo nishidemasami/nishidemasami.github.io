@@ -3,15 +3,17 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 import React from "react";
 import { useSiteMetadata } from "../../../hooks";
 import Meta from "../Meta";
+import Tags from "../Tags";
 import styles from "./Content.module.scss";
 
 type Props = {
   body: string;
   title: string;
   date: string;
+  tags?: string[];
 };
 
-const Content = ({ body, title, date }: Props) => {
+const Content = ({ body, title, date, tags }: Props) => {
   const { title: websitetitle } = useSiteMetadata();
   return (
     <div className={styles["content"]}>
@@ -20,24 +22,25 @@ const Content = ({ body, title, date }: Props) => {
         <MDXRenderer>{body}</MDXRenderer>
 
         <Meta date={date} />
+        <a
+          href="https://b.hatena.ne.jp/entry/"
+          className={
+            styles["content__snssharebutton"] + " hatena-bookmark-button"
+          }
+          data-hatena-bookmark-layout="vertical-normal"
+          data-hatena-bookmark-lang="ja"
+          title="このエントリーをはてなブックマークに追加"
+        >
+          <img
+            src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png"
+            alt="このエントリーをはてなブックマークに追加"
+            width="20"
+            height="20"
+            style={{ border: "none" }}
+          />
+        </a>
+        {tags && <Tags tags={tags} />}
       </Paper>
-      <a
-        href="https://b.hatena.ne.jp/entry/"
-        className={
-          styles["content__snssharebutton"] + " hatena-bookmark-button"
-        }
-        data-hatena-bookmark-layout="vertical-normal"
-        data-hatena-bookmark-lang="ja"
-        title="このエントリーをはてなブックマークに追加"
-      >
-        <img
-          src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png"
-          alt="このエントリーをはてなブックマークに追加"
-          width="20"
-          height="20"
-          style={{ border: "none" }}
-        />
-      </a>
     </div>
   );
 };

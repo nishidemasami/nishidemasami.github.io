@@ -14,86 +14,107 @@
     left: min(-45vh, -45vh);
     width: calc(max(100vh, 100vw) * 1.5);
     height: calc(max(100vh, 100vw) * 1.5);
-    // width: 20px;
-    // height: 20px;
-    // left: min(-25vh, -25vw);
-    // top: min(-25vh, -25vw);
     stroke-linecap: round;
     animation-timing-function: ease-in-out;
+
     animation-iteration-count: 1;
-    animation-duration: 0.5s;
+    animation-duration: 0.7s;
     animation-delay: 0s;
 
-    > * {
+    circle {
+      stroke-dashoffset: 10px;
+      stroke-dasharray: 55px, 200px;
       fill: none;
       transform-origin: 40px 40px;
     }
+  }
 
-    &:nth-child(1) {
-      animation-name: sunshineRaybackgroundanimateclockwise;
-      stroke: aqua;
-    }
+  svg:nth-child(1) {
+    animation-name: sunshineRaybackgroundanimateclockwise;
+    stroke: aqua;
+  }
+  svg:nth-child(2) {
+    stroke: deeppink;
+    animation-name: sunshineRaybackgroundanimatecounterclockwise;
+  }
+  svg:nth-child(3) {
+    animation-name: sunshineRaybackgroundanimateclockwise;
+    stroke: chartreuse;
+  }
+  svg:nth-child(4) {
+    animation-name: sunshineRaybackgroundanimatecounterclockwise;
+    stroke: lightpink;
+  }
+  svg:nth-child(5) {
+    animation-name: sunshineRaybackgroundanimateclockwise;
+    stroke: lime;
+  }
+  svg:nth-child(6) {
+    animation-name: sunshineRaybackgroundanimatecounterclockwise;
+    stroke: magenta;
+  }
+  svg:nth-child(7) {
+    animation-name: sunshineRaybackgroundanimateclockwise;
+    stroke: #e7ff00;
+  }
+  svg:nth-child(8) {
+    animation-name: sunshineRaybackgroundanimatecounterclockwise;
+    stroke: salmon;
+  }
+  svg:nth-child(9) {
+    animation-name: sunshineRaybackgroundanimateclockwise;
+    stroke: violet;
+  }
+  svg:nth-child(10) {
+    animation-name: sunshineRaybackgroundanimatecounterclockwise;
+    stroke: yellowgreen;
+  }
 
-    &:nth-child(2) {
-      stroke: deeppink;
-      animation-name: sunshineRaybackgroundanimatecounterclockwise;
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes sunshineRaybackgroundanimatecounterclockwise {
+      0% {
+        transform: rotate(180deg);
+        stroke-dasharray: 10px, 200px;
+      }
+      100% {
+        transform: rotate(0deg);
+        stroke-dasharray: 40px, 200px;
+      }
     }
-    &:nth-child(3) {
-      animation-name: sunshineRaybackgroundanimateclockwise;
-      stroke: chartreuse;
-    }
-    &:nth-child(4) {
-      animation-name: sunshineRaybackgroundanimatecounterclockwise;
-      stroke: lightpink;
-    }
-    &:nth-child(5) {
-      animation-name: sunshineRaybackgroundanimateclockwise;
-      stroke: lime;
-    }
-    &:nth-child(6) {
-      animation-name: sunshineRaybackgroundanimatecounterclockwise;
-      stroke: magenta;
-    }
-    &:nth-child(7) {
-      animation-name: sunshineRaybackgroundanimateclockwise;
-      stroke: #e7ff00;
-    }
-
-    &:nth-child(8) {
-      animation-name: sunshineRaybackgroundanimatecounterclockwise;
-      stroke: salmon;
-    }
-
-    &:nth-child(9) {
-      animation-name: sunshineRaybackgroundanimateclockwise;
-      stroke: violet;
-    }
-    &:nth-child(10) {
-      animation-name: sunshineRaybackgroundanimatecounterclockwise;
-      stroke: yellowgreen;
+    @keyframes sunshineRaybackgroundanimateclockwise {
+      0% {
+        transform: rotate(-180deg);
+        stroke-dasharray: 10px, 200px;
+      }
+      100% {
+        transform: rotate(0deg);
+        stroke-dasharray: 40px, 200px;
+      }
     }
   }
 
-  @keyframes sunshineRaybackgroundanimatecounterclockwise {
-    0% {
-      transform: rotate(180deg);
-      stroke-dasharray: 10px, 200px;
-      stroke-dashoffset: 0px;
+  @media (prefers-reduced-motion: reduce) {
+    @keyframes sunshineRaybackgroundanimatecounterclockwise {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
     }
-    100% {
-      transform: rotate(0deg);
-      stroke-dasharray: 350px, 200px;
-    }
-  }
-
-  @keyframes sunshineRaybackgroundanimateclockwise {
-    0% {
-      transform: rotate(-180deg);
-      stroke-dasharray: 10px, 200px;
-    }
-    100% {
-      transform: rotate(0deg);
-      stroke-dasharray: 350px, 200px;
+    @keyframes sunshineRaybackgroundanimateclockwise {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
     }
   }
 }

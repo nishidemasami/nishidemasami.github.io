@@ -56,13 +56,10 @@ const Post = ({ post, next, previous }: Props) => {
       </Link>
 
       <div className={styles["post__content"]}>
-        <Content body={body} title={title} date={date} />
+        <Content body={body} title={title} date={date} tags={tags} />
       </div>
 
       <div className={styles["post__footer"]}>
-        {tags && <Tags tags={tags} tagSlugs={tags} />}
-        {/* <Author /> */}
-
         <div className={styles["pagination"]}>
           <div className={styles["pagination__prev"]}>
             <Link

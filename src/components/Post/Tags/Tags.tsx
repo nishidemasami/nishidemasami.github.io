@@ -6,7 +6,6 @@ import _ from "lodash";
 
 type Props = {
   tags: string[];
-  tagSlugs: string[];
 };
 
 const Tags = ({ tags }: Props) => (
