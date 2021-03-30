@@ -1,11 +1,21 @@
 ---
-title: "ABOUT"
+title: "このブログについて"
 template: "page"
 draft: false
 date: "2016-04-21T01:12:15+0900"
 socialImage: "photo.jpg"
 slug: /about
 ---
+
+### このブログについて
+
+最初はこのブログを書く高尚な目的があったんですけど、いつしか無くなって気楽な気持ちで書いています。
+
+このブログは、Gatsby.js + TypeScript + React で作成しています。  
+jQuery レス・WordPress レスを実現していて、レスポンシブデザイン・マテリアルデザインを考慮しています。  
+ソースコードはすべて GitHub に公開しています。  
+https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby  
+WEB サイト制作依頼も受け付けています。
 
 ### 自分について
 
@@ -27,16 +37,6 @@ slug: /about
 email: [nishidemasami@gmail.com](mailto:nishidemasami@gmail.com)  
 twitter: [@nishidemasami](https://twitter.com/nishidemasami)  
 github: [nishidemasami](https://github.com/nishidemasami)
-
-### このブログについて
-
-最初はこのブログを書く高尚な目的があったんですけど、いつしか無くなって気楽な気持ちで書いています。
-
-このブログは、Gatsby.js + TypeScript + React で作成しています。  
-jQuery レス・WordPress レスを実現していて、レスポンシブデザイン・マテリアルデザインを考慮しています。  
-ソースコードはすべて GitHub に公開しています。  
-https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby  
-WEB サイト制作依頼も受け付けています。
 
 ### 目下の目標
 

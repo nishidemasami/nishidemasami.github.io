@@ -5,9 +5,7 @@
     "plugin:react-hooks/recommended",
     "plugin:import/recommended",
     "plugin:jsx-a11y/strict",
-    "react-app",
     "plugin:react/all",
-    "prettier/react",
     "eslint:all",
     "airbnb-base",
     "plugin:prettier/recommended",
@@ -20,12 +18,19 @@
     "es6": true,
     "jest/globals": true
   },
-  "plugins": ["react", "jest", "jsx-a11y", "import"],
+  "plugins": [
+    "react",
+    "jest",
+    "jsx-a11y",
+    "import",
+    "@typescript-eslint",
+    "prettier"
+  ],
   "globals": {
     "graphql": true
   },
   "rules": {
-    // "linebreak-style": ["error", "windows"],
+    "linebreak-style": ["error", "windows"],
     "comma-dangle": 0,
     "import/imports-first": 0,
     "global-require": 0,

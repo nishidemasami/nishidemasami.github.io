@@ -15,9 +15,7 @@ const SunshineRayBackground = () => {
             r="15"
             strokeWidth="5"
             style={{
-              transform: `scale(0.3) rotate(${
-                0 + Math.random() * 360
-              } + Math.random() * 360 }deg)`,
+              transform: `scale(0.3) rotate(${0 + Math.random() * 360}deg)`,
             }}
           />
         </svg>
