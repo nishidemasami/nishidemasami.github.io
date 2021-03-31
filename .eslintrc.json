@@ -32,7 +32,6 @@
     "JSX": true
   },
   "rules": {
-    "comma-dangle": "warn",
     "import/imports-first": "warn",
     "global-require": "warn",
     "class-methods-use-this": "warn",
@@ -56,7 +55,6 @@
       }
     ],
     "no-underscore-dangle": "warn",
-    "no-use-before-define": "warn",
     "eol-last": "warn",
     "no-shadow": "warn",
     "quotes": ["warn", "double"],
@@ -67,6 +65,13 @@
     "react/jsx-filename-extension": [
       "error",
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
-    ]
+    ],
+
+    // for prettier
+    "comma-dangle": "off",
+
+    // for TypeScript
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"]
   }
 }

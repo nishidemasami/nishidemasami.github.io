@@ -5,8 +5,8 @@ type Props = {
   copyright: string;
 };
 
-const Copyright = ({ copyright }: Props) => (
-  <div className={styles["copyright"]}>{copyright}</div>
-);
+function Copyright({ copyright }: Props): JSX.Element {
+  return <div className={styles.copyright}>{copyright}</div>;
+}
 
 export default Copyright;

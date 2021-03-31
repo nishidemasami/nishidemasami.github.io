@@ -10,19 +10,21 @@ type Props = {
   };
 };
 
-const Author = ({ author }: Props) => (
-  <div className={styles["author"]}>
-    <p className={styles["author__subtitle"]}>{author.bio}</p>
-    <Link to={"/about"}>
-      <img
-        src={withPrefix(author.photo)}
-        className={styles["author__photo"]}
-        width="75"
-        height="75"
-        alt={author.name}
-      />
-    </Link>
-  </div>
-);
+function Author({ author }: Props) {
+  return (
+    <div className={styles.author}>
+      <p className={styles.author__subtitle}>{author.bio}</p>
+      <Link to="/about">
+        <img
+          alt={author.name}
+          className={styles.author__photo}
+          height="75"
+          src={withPrefix(author.photo)}
+          width="75"
+        />
+      </Link>
+    </div>
+  );
+}
 
 export default Author;
