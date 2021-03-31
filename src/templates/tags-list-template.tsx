@@ -1,18 +1,18 @@
 import React from "react";
 import { Link } from "gatsby";
 import kebabCase from "lodash/kebabCase";
+import { Paper } from "@material-ui/core";
 import Layout from "../components/Layout";
 import Sidebar from "../components/Sidebar";
 import Page from "../components/Page";
 import { useSiteMetadata, useTagsList } from "../hooks";
-import { Paper } from "@material-ui/core";
 
-const TagsListTemplate = () => {
+function TagsListTemplate(): JSX.Element {
   const { title, subtitle } = useSiteMetadata();
   const tags: { fieldValue: string; totalCount: number }[] = useTagsList();
 
   return (
-    <Layout title={`Tags - ${title}`} description={subtitle}>
+    <Layout description={subtitle} title={`Tags - ${title}`}>
       <Page title="Tags">
         <Paper>
           <ul>
@@ -29,6 +29,6 @@ const TagsListTemplate = () => {
       <Sidebar />
     </Layout>
   );
-};
+}
 
 export default TagsListTemplate;
