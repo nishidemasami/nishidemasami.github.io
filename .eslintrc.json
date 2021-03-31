@@ -28,13 +28,14 @@
   ],
   "globals": {
     "graphql": true,
+    "React": true,
     "JSX": true
   },
   "rules": {
-    "comma-dangle": "off",
-    "import/imports-first": "off",
-    "global-require": "off",
-    "class-methods-use-this": "off",
+    "comma-dangle": "warn",
+    "import/imports-first": "warn",
+    "global-require": "warn",
+    "class-methods-use-this": "warn",
     "arrow-body-style": ["error", "as-needed"],
     "arrow-parens": ["error", "always"],
     "import/no-extraneous-dependencies": [
@@ -43,23 +44,23 @@
         "devDependencies": true
       }
     ],
-    "no-debugger": "off",
-    "dot-notation": "off",
-    "no-console": "off",
-    "new-cap": "off",
-    "strict": "off",
+    "no-debugger": "warn",
+    "dot-notation": "warn",
+    "no-console": "warn",
+    "new-cap": "warn",
+    "strict": "warn",
     "no-param-reassign": [
       "error",
       {
         "props": false
       }
     ],
-    "no-underscore-dangle": "off",
-    "no-use-before-define": "off",
-    "eol-last": "off",
-    "no-shadow": "off",
-    "quotes": ["error", "double"],
-    "jsx-quotes": ["off", "prefer-single"],
+    "no-underscore-dangle": "warn",
+    "no-use-before-define": "warn",
+    "eol-last": "warn",
+    "no-shadow": "warn",
+    "quotes": ["warn", "double"],
+    "jsx-quotes": ["warn", "prefer-double"],
     "react/jsx-no-undef": "warn",
     "react/jsx-uses-react": "warn",
     "react/jsx-uses-vars": "warn",
