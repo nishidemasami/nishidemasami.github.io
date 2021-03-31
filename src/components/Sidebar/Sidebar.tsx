@@ -1,25 +1,25 @@
 import React from "react";
+import { Link } from "gatsby";
+import { Paper } from "@material-ui/core";
 import Author from "./Author";
 import Contacts from "./Contacts";
 import Copyright from "./Copyright";
 import Menu from "./Menu";
 import styles from "./Sidebar.module.scss";
 import { useSiteMetadata } from "../../hooks";
-import { Link } from "gatsby";
-import Tags from "./Tags";
+import Tags from "./Tags/index";
 import Recents from "./Recents";
-import { Paper } from "@material-ui/core";
 
 type Props = {
   isIndex?: boolean;
 };
 
-const Sidebar = ({ isIndex }: Props) => {
+function Sidebar({ isIndex }: Props) {
   const { author, copyright, menu, title } = useSiteMetadata();
   return (
-    <Paper className={styles["sidebar"]}>
-      <div className={styles["sidebar__inner"]}>
-        <Link to={"/"} className={styles["title__item-link"]}>
+    <Paper className={styles.sidebar}>
+      <div className={styles.sidebar__inner}>
+        <Link className={styles["title__item-link"]} to="/">
           {title}
         </Link>
         <Author author={author} />
@@ -31,6 +31,6 @@ const Sidebar = ({ isIndex }: Props) => {
       </div>
     </Paper>
   );
-};
+}
 
 export default Sidebar;

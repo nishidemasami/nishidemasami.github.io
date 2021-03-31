@@ -10,7 +10,7 @@ module.exports = {
       {
         test: /\.(tsx|ts|js|jsx)$/,
         use: [{ loader: "ts-loader" }],
-        include: path.resolve(__dirname, "src"),
+        include: `${__dirname}/src`,
         exclude: /node_modules/,
       },
     ],
@@ -20,4 +20,7 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".json", ".scss"],
   },
   target: ["web", "esnext"],
+  settings: {
+    "import/resolver": "webpack",
+  },
 };

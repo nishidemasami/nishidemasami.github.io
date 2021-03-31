@@ -31,6 +31,13 @@
     "React": true,
     "JSX": true
   },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.js"
+      }
+    }
+  },
   "rules": {
     "import/imports-first": "warn",
     "global-require": "warn",
@@ -72,6 +79,9 @@
 
     // for TypeScript
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"]
+    "@typescript-eslint/no-use-before-define": ["error"],
+
+    // for webpack
+    "import/extensions": ["off", [".js", ".jsx", ".json", ".ts", ".tsx"]]
   }
 }
