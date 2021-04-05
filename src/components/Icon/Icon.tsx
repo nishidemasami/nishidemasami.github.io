@@ -1,19 +1,21 @@
 import React from "react";
-import styles from "./Icon.module.scss";
+import { icon as iconStyle } from "./Icon.module.scss";
 
 type Props = {
-  name: string,
+  name: string;
   icon: {
-    viewBox?: string,
-    path?: string,
-  },
+    viewBox?: string;
+    path?: string;
+  };
 };
 
-const Icon = ({ name, icon }: Props) => (
-  <svg className={styles["icon"]} viewBox={icon.viewBox}>
-    <title>{name}</title>
-    <path d={icon.path} />
-  </svg>
-);
+function Icon({ name, icon }: Props): JSX.Element {
+  return (
+    <svg className={iconStyle} viewBox={icon.viewBox}>
+      <title>{name}</title>
+      <path d={icon.path} />
+    </svg>
+  );
+}
 
 export default Icon;

@@ -6,12 +6,12 @@
   padding: 0 2 0 15px;
   margin: 0 auto;
 
-  &__snssharebutton {
+  &Snssharebutton {
     display: none;
     // @include margin(1, 1);
   }
 
-  &__title {
+  &Title {
     font-size: $typographic-base-font-size * 2;
     max-width: $layout-post-single-width;
     margin-left: auto;
@@ -23,7 +23,7 @@
     @include margin-bottom(0);
   }
 
-  &__body {
+  &Body {
     background-color: $backgroundcolor-base;
     padding: 10px;
     border-radius: 10px;
@@ -65,7 +65,7 @@
   .content {
     width: 97%;
 
-    &__body {
+    &Body {
       code[class*="language-"],
       pre[class*="language-"] {
         word-break: break-word;
@@ -79,14 +79,14 @@
   .content {
     padding: 25px 2px 25px 20px;
 
-    &__title {
+    &Title {
       font-size: $typographic-base-font-size * 3;
       @include line-height(2.25);
       @include margin-top(2.25);
       @include margin-bottom(1.5);
     }
 
-    &__body {
+    &Body {
       font-size: $typographic-base-font-size * 1.125;
       @include line-height(1.125);
       @include margin-bottom(1.125);

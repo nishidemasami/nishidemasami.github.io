@@ -3,11 +3,11 @@
   width: fit-content;
   height: fit-content;
 
-  &-logo {
+  &Logo {
     height: 40vmin;
     pointer-events: none;
   }
-  &-header {
+  &Header {
     background-color: #282c34;
     display: flex;
     flex-direction: column;
@@ -16,14 +16,14 @@
     font-size: calc(10px + 2vmin);
     color: white;
   }
-  &-link {
+  &Link {
     color: #61dafb;
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .reactHelloWorld {
-    &-logo {
+    &Logo {
       animation: reactHelloWorld-logo-spin infinite 20s linear;
     }
   }

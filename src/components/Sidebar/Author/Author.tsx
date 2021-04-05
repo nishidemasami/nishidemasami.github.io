@@ -1,6 +1,10 @@
 import React from "react";
 import { withPrefix, Link } from "gatsby";
-import styles from "./Author.module.scss";
+import {
+  author as authorStyle,
+  authorSubtitle,
+  authorPhoto,
+} from "./Author.module.scss";
 
 type Props = {
   author: {
@@ -10,14 +14,14 @@ type Props = {
   };
 };
 
-function Author({ author }: Props) {
+function Author({ author }: Props): JSX.Element {
   return (
-    <div className={styles.author}>
-      <p className={styles.author__subtitle}>{author.bio}</p>
+    <div className={authorStyle}>
+      <p className={authorSubtitle}>{author.bio}</p>
       <Link to="/about">
         <img
           alt={author.name}
-          className={styles.author__photo}
+          className={authorPhoto}
           height="75"
           src={withPrefix(author.photo)}
           width="75"

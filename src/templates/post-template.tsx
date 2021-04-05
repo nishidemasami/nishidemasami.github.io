@@ -10,7 +10,7 @@ type Props = {
   data: {
     mdx: mdx;
   };
-  pathContext: {
+  pageContext: {
     next: {
       frontmatter: {
         slug: string;
@@ -26,10 +26,8 @@ type Props = {
   };
 };
 
-const PostTemplate = (props: Props) => {
-  const data: {
-    mdx: mdx;
-  } = props.data;
+function PostTemplate(props: Props) {
+  const { data } = props;
   const { title: siteTitle, subtitle: siteSubtitle } = useSiteMetadata();
   const { frontmatter } = data.mdx;
   const {
@@ -42,19 +40,19 @@ const PostTemplate = (props: Props) => {
 
   return (
     <Layout
-      title={`${postTitle} - ${siteTitle}`}
       description={metaDescription}
       socialImage={socialImageUrl}
+      title={`${postTitle} - ${siteTitle}`}
     >
       <Post
+        next={props.pageContext.next}
         post={data.mdx}
-        next={props.pathContext.next}
-        previous={props.pathContext.previous}
+        previous={props.pageContext.previous}
       />
       <Sidebar />
     </Layout>
   );
-};
+}
 
 export const query = graphql`
   query PostBySlug($slug: String!) {

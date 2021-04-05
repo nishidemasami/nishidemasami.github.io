@@ -5,11 +5,11 @@
   @include margin-bottom(0);
   float: left;
 
-  &__inner {
+  &Inner {
     padding: 1px 1px;
   }
 
-  &__title {
+  &Title {
     font-size: $typographic-base-font-size * 2.5;
     font-weight: 600;
     @include line-height(2);
@@ -17,14 +17,14 @@
     @include margin-bottom(1.45);
   }
 
-  &__body {
+  &Body {
     font-size: $typographic-base-font-size;
     padding: 10px;
     @include line-height(1);
     @include margin(0, 0, 0);
   }
 
-  &__home-button {
+  &HomeButton {
     display: block;
     width: fit-content;
     height: $button-height;
@@ -54,11 +54,11 @@
     // lost-column: 20/27;
     width: calc(99.9% * 20 / 27);
 
-    &__inner {
+    &Inner {
       padding: 30px 20px 30px 20px;
     }
 
-    &__home-button {
+    &HomeButton {
       display: none;
     }
   }
@@ -69,7 +69,7 @@
     // lost-column: 20/27;
     width: calc(99.9% * 20 / 27);
 
-    &__inner {
+    &Inner {
       padding: 40px 35px 40px 35px;
     }
   }

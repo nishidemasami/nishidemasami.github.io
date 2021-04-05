@@ -5,7 +5,7 @@ import Author from "./Author";
 import Contacts from "./Contacts";
 import Copyright from "./Copyright";
 import Menu from "./Menu";
-import styles from "./Sidebar.module.scss";
+import { sidebar, sidebarInner, titleItemLink } from "./Sidebar.module.scss";
 import { useSiteMetadata } from "../../hooks";
 import Tags from "./Tags/index";
 import Recents from "./Recents";
@@ -17,9 +17,9 @@ type Props = {
 function Sidebar({ isIndex }: Props) {
   const { author, copyright, menu, title } = useSiteMetadata();
   return (
-    <Paper className={styles.sidebar}>
-      <div className={styles.sidebar__inner}>
-        <Link className={styles["title__item-link"]} to="/">
+    <Paper className={sidebar}>
+      <div className={sidebarInner}>
+        <Link className={titleItemLink} to="/">
           {title}
         </Link>
         <Author author={author} />

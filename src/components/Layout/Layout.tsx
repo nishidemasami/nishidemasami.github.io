@@ -2,7 +2,7 @@ import React from "react";
 import Helmet from "react-helmet";
 import type Node from "react";
 import { useSiteMetadata } from "../../hooks";
-import styles from "./Layout.module.scss";
+import { layout } from "./Layout.module.scss";
 import Background from "./Background";
 
 type Props = {
@@ -12,34 +12,39 @@ type Props = {
   socialImage?: string;
 };
 
-const Layout = ({ children, title, description, socialImage = "" }: Props) => {
+function Layout({
+  children,
+  title,
+  description,
+  socialImage = "",
+}: Props): JSX.Element {
   const { author, url } = useSiteMetadata();
   const metaImage = socialImage || author.photo;
   const metaImageUrl = url + metaImage;
 
   return (
-    <React.Fragment>
+    <>
       <Helmet>
         <html lang="ja" />
         <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:site_name" content={title} />
-        <meta property="og:image" content={metaImageUrl} />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={metaImageUrl} />
+        <meta content={description} name="description" />
+        <meta content={title} property="og:site_name" />
+        <meta content={metaImageUrl} property="og:image" />
+        <meta content="summary" name="twitter:card" />
+        <meta content={title} name="twitter:title" />
+        <meta content={description} name="twitter:description" />
+        <meta content={metaImageUrl} name="twitter:image" />
         <script
-          type="text/javascript"
-          src="https://b.st-hatena.com/js/bookmark_button.js"
-          charSet="utf-8"
           async
+          charSet="utf-8"
+          src="https://b.st-hatena.com/js/bookmark_button.js"
+          type="text/javascript"
         />
       </Helmet>
-      <div className={styles.layout}>{children}</div>
+      <div className={layout}>{children}</div>
       <Background />
-    </React.Fragment>
+    </>
   );
-};
+}
 
 export default Layout;

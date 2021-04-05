@@ -1,10 +1,14 @@
 import { Paper } from "@material-ui/core";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import React from "react";
-import { useSiteMetadata } from "../../../hooks";
 import Meta from "../Meta";
 import Tags from "../Tags";
-import styles from "./Content.module.scss";
+import {
+  content,
+  contentTitle,
+  contentBody,
+  contentSnssharebutton,
+} from "./Content.module.scss";
 
 type Props = {
   body: string;
@@ -13,36 +17,33 @@ type Props = {
   tags?: string[];
 };
 
-const Content = ({ body, title, date, tags }: Props) => {
-  const { title: websitetitle } = useSiteMetadata();
+function Content({ body, title, date, tags }: Props): JSX.Element {
   return (
-    <div className={styles["content"]}>
-      <h1 className={styles["content__title"]}>{title}</h1>
-      <Paper className={styles["content__body"]}>
+    <div className={content}>
+      <h1 className={contentTitle}>{title}</h1>
+      <Paper className={contentBody}>
         <MDXRenderer>{body}</MDXRenderer>
 
         <Meta date={date} />
         <a
-          href="https://b.hatena.ne.jp/entry/"
-          className={
-            styles["content__snssharebutton"] + " hatena-bookmark-button"
-          }
-          data-hatena-bookmark-layout="vertical-normal"
+          className={`${contentSnssharebutton} hatena-bookmark-button`}
           data-hatena-bookmark-lang="ja"
+          data-hatena-bookmark-layout="vertical-normal"
+          href="https://b.hatena.ne.jp/entry/"
           title="このエントリーをはてなブックマークに追加"
         >
           <img
-            src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png"
             alt="このエントリーをはてなブックマークに追加"
-            width="20"
             height="20"
+            src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png"
             style={{ border: "none" }}
+            width="20"
           />
         </a>
         {tags && <Tags tags={tags} />}
       </Paper>
     </div>
   );
-};
+}
 
 export default Content;

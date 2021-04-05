@@ -1,7 +1,12 @@
 import React from "react";
 import { getContactHref, getIcon } from "../../../utils";
 import Icon from "../../Icon";
-import styles from "./Contacts.module.scss";
+import {
+  contacts as contactsStyle,
+  contactsList,
+  contactsListItem,
+  contactsListItemLink,
+} from "./Contacts.module.scss";
 
 type Props = {
   contacts: {
@@ -11,13 +16,13 @@ type Props = {
 
 function Contacts({ contacts }: Props): JSX.Element {
   return (
-    <div className={styles.contacts}>
-      <ul className={styles.contacts__list}>
+    <div className={contactsStyle}>
+      <ul className={contactsList}>
         {Object.keys(contacts).map((name) =>
           !contacts[name] ? null : (
-            <li className={styles["contacts__list-item"]} key={name}>
+            <li className={contactsListItem} key={name}>
               <a
-                className={styles["contacts__list-item-link"]}
+                className={contactsListItemLink}
                 href={getContactHref(name, contacts[name])}
                 rel="noopener noreferrer"
                 target="_blank"

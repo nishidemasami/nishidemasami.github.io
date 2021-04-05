@@ -1,6 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import { Link } from "gatsby";
-import styles from "./Page.module.scss";
+import {
+  page,
+  pageHomeButton,
+  pageInner,
+  pageTitle,
+  pageBody,
+} from "./Page.module.scss";
 import { useSiteMetadata } from "../../hooks";
 
 type Props = {
@@ -8,7 +14,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Page = ({ title, children }: Props) => {
+function Page({ title, children }: Props): JSX.Element {
   const { title: websitetitle } = useSiteMetadata();
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -19,18 +25,16 @@ const Page = ({ title, children }: Props) => {
   });
 
   return (
-    <React.Fragment>
-      <div ref={pageRef} className={styles["page"]}>
-        <Link className={styles["page__home-button"]} to="/">
-          {websitetitle}
-        </Link>
-        <div className={styles["page__inner"]}>
-          {title && <h1 className={styles["page__title"]}>{title}</h1>}
-          <div className={styles["page__body"]}>{children}</div>
-        </div>
+    <div className={page} ref={pageRef}>
+      <Link className={pageHomeButton} to="/">
+        {websitetitle}
+      </Link>
+      <div className={pageInner}>
+        {title && <h1 className={pageTitle}>{title}</h1>}
+        <div className={pageBody}>{children}</div>
       </div>
-    </React.Fragment>
+    </div>
   );
-};
+}
 
 export default Page;

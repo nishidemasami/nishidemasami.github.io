@@ -1,29 +1,37 @@
 import React from "react";
 import { Link } from "gatsby";
-import styles from "./Tags.module.scss";
-import { useTagsList } from "../../../hooks";
 import _ from "lodash";
+import {
+  tags as tagsStyle,
+  tagsTitleLinkActive,
+  tagsTitleLink,
+  tagsList,
+  tagsListItem,
+  tagsListItemLinkActive,
+  tagsListItemLink,
+} from "./Tags.module.scss";
+import { useTagsList } from "../../../hooks";
 
-const Tags = () => {
+function Tags(): JSX.Element {
   const tags: { fieldValue: string; totalCount: number }[] = useTagsList();
   return (
-    <nav className={styles["tags"]}>
+    <nav className={tagsStyle}>
       <Link
-        to={`/tags/`}
-        className={styles["tags__title-link"]}
-        activeClassName={styles["tags__title-link--active"]}
+        activeClassName={tagsTitleLinkActive}
+        className={tagsTitleLink}
+        to="/tags/"
       >
         Tags
       </Link>
-      <ul className={styles["tags__list"]}>
+      <ul className={tagsList}>
         {tags
           .sort((left, right) => right.totalCount - left.totalCount)
           .map((tag) => (
-            <li className={styles["tags__list-item"]} key={tag.fieldValue}>
+            <li className={tagsListItem} key={tag.fieldValue}>
               <Link
+                activeClassName={tagsListItemLinkActive}
+                className={tagsListItemLink}
                 to={`/tag/${_.kebabCase(tag.fieldValue)}/`}
-                className={styles["tags__list-item-link"]}
-                activeClassName={styles["tags__list-item-link--active"]}
               >
                 {tag.fieldValue}({tag.totalCount})
               </Link>
@@ -32,6 +40,6 @@ const Tags = () => {
       </ul>
     </nav>
   );
-};
+}
 
 export default Tags;

@@ -1,7 +1,7 @@
 import { Button, Grid, Slider } from "@material-ui/core";
 import { VolumeDown, VolumeUp } from "@material-ui/icons";
 import React from "react";
-import styles from "./ReactAudioTest.module.scss";
+import { ReactAudioTest as ReactAudioTestStyles } from "./ReactAudioTest.module.scss";
 
 // webkit用Typescript型宣言
 declare global {
@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-const ReactAudioTest: React.FunctionComponent = () => {
+function ReactAudioTest(): JSX.Element {
   // 音量：初期値25
   const [volume, setVolume] = React.useState(25);
   // 再生状態：初期値false
@@ -76,10 +76,10 @@ const ReactAudioTest: React.FunctionComponent = () => {
           audioContext.sampleRate
         );
 
-        for (var channel = 0; channel < channels; channel++) {
+        for (let channel = 0; channel < channels; channel++) {
           // ホワイトノイズ生成
-          var nowBuffering = myArrayBuffer.getChannelData(channel);
-          for (var i = 0; i < frameCount; i++) {
+          const nowBuffering = myArrayBuffer.getChannelData(channel);
+          for (let i = 0; i < frameCount; i++) {
             nowBuffering[i] = Math.random() * 2 - 1;
           }
         }
@@ -95,50 +95,46 @@ const ReactAudioTest: React.FunctionComponent = () => {
   }, [playingFlag, audioContext, gainState]);
 
   if (!audioContext || !gainState) {
-    return (
-      <React.Fragment>
-        出力オーディオの準備中か、このブラウザでは対応していません。
-      </React.Fragment>
-    );
+    return <>出力オーディオの準備中か、このブラウザでは対応していません。</>;
   }
 
   return (
-    <div className={styles["ReactAudioTest"]}>
+    <div className={ReactAudioTestStyles}>
       <Grid container>
-        <Grid item></Grid>
+        <Grid item />
         <Grid item>
           <VolumeDown />
         </Grid>
         <Grid item xs={10}>
           <Slider
-            min={0}
-            max={100}
+            aria-labelledby="continuous-slider"
             defaultValue={50}
-            value={volume}
+            max={100}
+            min={0}
             onChange={(event, newValue) => {
               if (typeof newValue === "number") {
                 setVolume(newValue);
               }
             }}
+            value={volume}
             valueLabelDisplay="auto"
-            aria-labelledby="continuous-slider"
           />
         </Grid>
         <Grid item>
           <VolumeUp />
         </Grid>
-        <Grid item></Grid>
+        <Grid item />
       </Grid>
 
       <Button
-        variant="contained"
         color={playingFlag ? "default" : "primary"}
         onClick={onClickToStartAndStop}
+        variant="contained"
       >
         ホワイトノイズ{playingFlag ? "停止" : "再生"}
       </Button>
     </div>
   );
-};
+}
 
 export default ReactAudioTest;

@@ -1,27 +1,30 @@
 import React from "react";
 import { Link } from "gatsby";
-import styles from "./Recents.module.scss";
-import { usePostsList } from "../../../hooks";
 import _ from "lodash";
+import {
+  recents,
+  recentsList,
+  recentsListItem,
+  recentsListItemLink,
+  recentsListItemLinkActive,
+} from "./Recents.module.scss";
+import { usePostsList } from "../../../hooks";
 import { Edges } from "../../../types";
 
-const Recents = () => {
+function Recents() {
   const edges: Edges = usePostsList();
   return (
-    <nav className={styles["recents"]}>
+    <nav className={recents}>
       Recents
-      <ul className={styles["recents__list"]}>
+      <ul className={recentsList}>
         {edges.map((edge) => {
           const pagePath = edge.node.frontmatter.slug;
           return (
-            <li
-              className={styles["recents__list-item"]}
-              key={edge.node.frontmatter.slug}
-            >
+            <li className={recentsListItem} key={edge.node.frontmatter.slug}>
               <Link
+                activeClassName={recentsListItemLinkActive}
+                className={recentsListItemLink}
                 to={pagePath}
-                className={styles["recents__list-item-link"]}
-                activeClassName={styles["recents__list-item-link--active"]}
               >
                 {edge.node.frontmatter.title}
               </Link>
@@ -31,6 +34,6 @@ const Recents = () => {
       </ul>
     </nav>
   );
-};
+}
 
 export default Recents;

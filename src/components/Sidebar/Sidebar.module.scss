@@ -6,7 +6,7 @@
   width: 100%;
   float: right;
   background-color: $backgroundcolor-base;
-  &__inner {
+  &Inner {
     position: relative;
     padding: 25px 20px 0;
     background-color: $backgroundcolor-base;
@@ -24,7 +24,7 @@
     bottom: 0px;
     // lost-column: 1/4;
     width: 29%;
-    &__inner {
+    &Inner {
       padding: 5%;
       &::before {
         background: $color-gray-border;
@@ -62,12 +62,12 @@
 .title {
   @include margin-bottom(1);
 
-  &__item {
+  &Item {
     list-style: none;
     padding: 5%;
     margin: 10px;
 
-    &-link {
+    &Link {
       font-size: $typographic-base-font-size;
       color: $typographic-base-font-color;
       font-weight: normal;

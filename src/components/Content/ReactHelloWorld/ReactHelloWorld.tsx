@@ -1,22 +1,24 @@
 import React from "react";
 import logo from "./logo.svg";
-import styles from "./ReactHelloWorld.module.scss";
+import {
+  reactHelloWorld,
+  reactHelloWorldLeader,
+  reactHelloWorldLogo,
+} from "./ReactHelloWorld.module.scss";
 
 interface ReactHelloWorldProps {
   children?: React.ReactNode;
 }
 
-const ReactHelloWorld: React.FunctionComponent<ReactHelloWorldProps> = (
-  props
-) => {
+function ReactHelloWorld({ children }: ReactHelloWorldProps): JSX.Element {
   return (
-    <div className={styles["reactHelloWorld"]}>
-      <header className={styles["reactHelloWorld-header"]}>
-        <img src={logo} className={styles["reactHelloWorld-logo"]} alt="logo" />
-        <p>{props.children}</p>
+    <div className={reactHelloWorld}>
+      <header className={reactHelloWorldLeader}>
+        <img alt="logo" className={reactHelloWorldLogo} src={logo} />
+        <p>{children}</p>
       </header>
     </div>
   );
-};
+}
 
 export default ReactHelloWorld;
