@@ -7,7 +7,7 @@ import { store } from "./src/redux/store";
 import { theme } from "./src/styles/theme";
 import { MDXWrapRootElement } from "./mdx-root";
 
-const wrapRootElement = ({ element }) => (
+const wrapPageElement = ({ element }) => (
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <MDXWrapRootElement>{element}</MDXWrapRootElement>
@@ -15,4 +15,4 @@ const wrapRootElement = ({ element }) => (
   </ThemeProvider>
 );
 
-export default wrapRootElement;
+export default wrapPageElement;

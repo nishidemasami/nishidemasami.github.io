@@ -13,7 +13,7 @@ type Props = {
   pageContext: PageContext;
 };
 
-const CategoryTemplate = ({ data, pageContext }: Props) => {
+function CategoryTemplate({ data, pageContext }: Props): JSX.Element {
   const { title: siteTitle, subtitle: siteSubtitle } = useSiteMetadata();
 
   const {
@@ -32,20 +32,20 @@ const CategoryTemplate = ({ data, pageContext }: Props) => {
       : `${category} - ${siteTitle}`;
 
   return (
-    <Layout title={pageTitle} description={siteSubtitle}>
-      <Page title={`${category}カテゴリ`}>
+    <Layout description={siteSubtitle} title={pageTitle}>
+      <Page title={`${category}`}>
         <Feed edges={edges} />
         <Pagination
-          prevPagePath={prevPagePath}
-          nextPagePath={nextPagePath}
-          hasPrevPage={hasPrevPage}
           hasNextPage={hasNextPage}
+          hasPrevPage={hasPrevPage}
+          nextPagePath={nextPagePath}
+          prevPagePath={prevPagePath}
         />
       </Page>
       <Sidebar />
     </Layout>
   );
-};
+}
 
 export const query = graphql`
   query CategoryPage($category: String, $postsLimit: Int!, $postsOffset: Int!) {

@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import Page from "../components/Page";
 import { useSiteMetadata, useCategoriesList } from "../hooks";
 
-const CategoriesListTemplate = () => {
+function CategoriesListTemplate(): JSX.Element {
   const { title, subtitle } = useSiteMetadata();
   const categories: {
     fieldValue: string;
@@ -14,7 +14,7 @@ const CategoriesListTemplate = () => {
   }[] = useCategoriesList();
 
   return (
-    <Layout title={`Categories - ${title}`} description={subtitle}>
+    <Layout description={subtitle} title={`Categories - ${title}`}>
       <Sidebar />
       <Page title="Categories">
         <ul>
@@ -29,6 +29,6 @@ const CategoriesListTemplate = () => {
       </Page>
     </Layout>
   );
-};
+}
 
 export default CategoriesListTemplate;

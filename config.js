@@ -1,9 +1,7 @@
-"use strict";
-
 module.exports = {
   url: "https://nishidemasami.github.io/",
   pathPrefix: "/",
-  title: "コーディングハイ",
+  title: "NISHIDEMASAMI",
   subtitle:
     "個人的なブログです。有益なことや無益なことなどいろいろ書いています。",
   copyright: "© All rights reserved.",

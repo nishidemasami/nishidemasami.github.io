@@ -26,8 +26,8 @@ type Props = {
   };
 };
 
-function PostTemplate(props: Props) {
-  const { data } = props;
+function PostTemplate(props: Props): JSX.Element {
+  const { data, pageContext } = props;
   const { title: siteTitle, subtitle: siteSubtitle } = useSiteMetadata();
   const { frontmatter } = data.mdx;
   const {
@@ -45,9 +45,9 @@ function PostTemplate(props: Props) {
       title={`${postTitle} - ${siteTitle}`}
     >
       <Post
-        next={props.pageContext.next}
+        next={pageContext.next}
         post={data.mdx}
-        previous={props.pageContext.previous}
+        previous={pageContext.previous}
       />
       <Sidebar />
     </Layout>
