@@ -31,43 +31,43 @@
 
   svg:nth-child(1) {
     animation-name: sunshineRaybackgroundanimateclockwise;
-    stroke: aqua;
+    stroke: rgb(202, 255, 255);
   }
   svg:nth-child(2) {
-    stroke: deeppink;
     animation-name: sunshineRaybackgroundanimatecounterclockwise;
+    stroke: rgb(255, 201, 230);
   }
   svg:nth-child(3) {
     animation-name: sunshineRaybackgroundanimateclockwise;
-    stroke: chartreuse;
+    stroke: rgb(234, 255, 212);
   }
   svg:nth-child(4) {
     animation-name: sunshineRaybackgroundanimatecounterclockwise;
-    stroke: lightpink;
+    stroke: rgb(255, 224, 229);
   }
   svg:nth-child(5) {
     animation-name: sunshineRaybackgroundanimateclockwise;
-    stroke: lime;
+    stroke: rgb(200, 255, 200);
   }
   svg:nth-child(6) {
     animation-name: sunshineRaybackgroundanimatecounterclockwise;
-    stroke: magenta;
+    stroke: rgb(255, 213, 255);
   }
   svg:nth-child(7) {
     animation-name: sunshineRaybackgroundanimateclockwise;
-    stroke: #e7ff00;
+    stroke: #fbffda;
   }
   svg:nth-child(8) {
     animation-name: sunshineRaybackgroundanimatecounterclockwise;
-    stroke: salmon;
+    stroke: rgb(255, 220, 216);
   }
   svg:nth-child(9) {
     animation-name: sunshineRaybackgroundanimateclockwise;
-    stroke: violet;
+    stroke: rgb(255, 231, 255);
   }
   svg:nth-child(10) {
     animation-name: sunshineRaybackgroundanimatecounterclockwise;
-    stroke: yellowgreen;
+    stroke: rgb(242, 255, 215);
   }
 
   @media (prefers-reduced-motion: no-preference) {
