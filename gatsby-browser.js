@@ -4,10 +4,12 @@ import "./static/css/prismjs/theme.min.css";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { store } from "./src/redux/store";
-import { theme } from "./src/styles/theme";
-import { MDXWrapRootElement } from "./mdx-root";
+import theme from "./src/styles/theme";
+import MDXWrapRootElement from "./mdx-root";
 
-const wrapPageElement = ({ element }) => (
+export { onRenderBody } from "./gatsby/on-render-body.js";
+
+const wrapRootElement = ({ element }) => (
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <MDXWrapRootElement>{element}</MDXWrapRootElement>
@@ -15,4 +17,4 @@ const wrapPageElement = ({ element }) => (
   </ThemeProvider>
 );
 
-export default wrapPageElement;
+export { wrapRootElement };
