@@ -102,6 +102,13 @@ PERFORMANCE OF THIS SOFTWARE.
  *  Licensed under the MIT License */
 
 /**
+ * @license
+ * Latitude/longitude spherical geodesy formulae taken from
+ * http://www.movable-type.co.uk/scripts/latlong.html
+ * Licensed under CC-BY-3.0.
+ */
+
+/**
  * [js-sha256]{@link https://github.com/emn178/js-sha256}
  *
  * @version 0.9.0
