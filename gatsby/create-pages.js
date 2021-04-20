@@ -1,5 +1,3 @@
-"use strict";
-
 const path = require("path");
 const _ = require("lodash");
 const createCategoriesPages = require("./pagination/create-categories-pages.js");
@@ -50,7 +48,6 @@ const createPages = async ({ graphql, actions }) => {
   `);
 
   const { edges: pages } = PagesResult.data.allMdx;
-  console.log(pages);
   // pages.forEach((page) => {
   _.each(pages, (page) => {
     createPage({
@@ -97,7 +94,6 @@ const createPages = async ({ graphql, actions }) => {
   `);
 
   const { edges: posts } = PostsResult.data.allMdx;
-  console.log(posts);
   // posts.forEach((post) => {
   _.each(posts, (post) => {
     const pagePath = post.node.frontmatter.slug;

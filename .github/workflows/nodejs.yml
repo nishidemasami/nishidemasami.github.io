@@ -31,11 +31,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: yarn install
+        run: npm install -g yarn
+
       - name: install
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: build
-        run: npm run build
+        run: yarn build
 
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3

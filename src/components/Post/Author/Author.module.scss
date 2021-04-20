@@ -1,5 +1,5 @@
-@import '../../../assets/scss/variables';
-@import '../../../assets/scss/mixins';
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
 
 .author {
   border-top: 1px solid $color-gray-border;
@@ -9,8 +9,8 @@
   @include margin-top(1);
   @include margin-bottom(2);
 
-  &__bio {
-    &-twitter {
+  &Bio {
+    &Twitter {
       display: block;
       text-decoration: underline;
     }
@@ -22,5 +22,4 @@
     margin-left: auto;
     margin-right: auto;
   }
-
 }

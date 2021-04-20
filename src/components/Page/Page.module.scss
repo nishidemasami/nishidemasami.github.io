@@ -43,7 +43,7 @@
 @include breakpoint-xs {
   .page {
     width: 100%;
-    &__inner {
+    &Inner {
       padding: 2% 2% 0%;
     }
   }
