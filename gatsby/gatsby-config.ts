@@ -1,9 +1,8 @@
-"use strict";
+import sass from "sass";
+import siteConfig from "../config.js";
+import postCssPlugins from "../postcss-config.js";
 
-const siteConfig = require("./config.js");
-const postCssPlugins = require("./postcss-config.js");
-
-module.exports = {
+const generateConfig = ({ projectRoot }) => ({
   pathPrefix: siteConfig.pathPrefix,
   siteMetadata: {
     url: siteConfig.url,
@@ -25,21 +24,21 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: `${__dirname}/static`,
+        path: `${projectRoot}/static`,
         name: "assets",
       },
     },
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: `${__dirname}/static/media`,
+        path: `${projectRoot}/static/media`,
         name: "media",
       },
     },
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: `${__dirname}/content`,
+        path: `${projectRoot}/content`,
         name: "pages",
       },
     },
@@ -47,7 +46,7 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "css",
-        path: `${__dirname}/static/css`,
+        path: `${projectRoot}/static/css`,
       },
     },
     {
@@ -107,7 +106,7 @@ module.exports = {
     "gatsby-plugin-netlify-cms-paths",
     {
       resolve: "gatsby-plugin-graphql-codegen",
-      options: { fileName: `types/graphql-types.d.ts` },
+      options: { fileName: "types/graphql-types.d.ts" },
     },
     {
       resolve: "gatsby-plugin-mdx",
@@ -146,7 +145,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-netlify-cms",
       options: {
-        modulePath: `${__dirname}/src/cms/index.js`,
+        modulePath: `${projectRoot}/src/cms/index.js`,
       },
     },
     {
@@ -238,7 +237,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-sass",
       options: {
-        implementation: require("sass"),
+        implementation: sass,
         postCssPlugins: [...postCssPlugins],
         cssLoaderOptions: {
           camelCase: false,
@@ -256,4 +255,6 @@ module.exports = {
     "gatsby-plugin-styled-components",
     "gatsby-plugin-material-ui",
   ],
-};
+});
+
+export default generateConfig;

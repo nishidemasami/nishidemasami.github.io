@@ -9,6 +9,14 @@
     padding: 12px 20px;
     border: 1px solid #e6e6e6;
 
+    &:nth-child(2n) {
+      border: 1px solid lime;
+    }
+
+    &:nth-child(2n + 1) {
+      border: 1px solid hotpink;
+    }
+
     &:last-child {
       @include margin-bottom(0.5);
     }
