@@ -6,7 +6,7 @@
   width: 100%;
   float: right;
   background-color: $backgroundcolor-base;
-  border-left: 1px solid blue;
+  border-top: 1px solid blue;
   &Inner {
     position: relative;
     padding: 25px 20px 0;
@@ -16,6 +16,8 @@
 
 @include breakpoint-sm {
   .sidebar {
+    border-top: 0px solid blue;
+    border-left: 1px solid blue;
     height: 100%;
     display: flex;
     position: sticky;

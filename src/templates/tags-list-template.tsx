@@ -14,7 +14,7 @@ function TagsListTemplate(): JSX.Element {
   return (
     <Layout description={subtitle} title={`Tags - ${title}`}>
       <Page title="Tags">
-        <Paper>
+        <Paper style={{ border: "1px solid lime" }}>
           <ul>
             {tags.map((tag) => (
               <li key={tag.fieldValue}>

@@ -15,7 +15,7 @@ function Recents() {
   const edges: Edges = usePostsList();
   return (
     <nav className={recents}>
-      Recents
+      最新の記事
       <ul className={recentsList}>
         {edges.map((edge) => {
           const pagePath = edge.node.frontmatter.slug;

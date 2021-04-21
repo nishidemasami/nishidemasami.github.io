@@ -21,7 +21,7 @@ function Tags(): JSX.Element {
         className={tagsTitleLink}
         to="/tags/"
       >
-        Tags
+        タグ
       </Link>
       <ul className={tagsList}>
         {tags

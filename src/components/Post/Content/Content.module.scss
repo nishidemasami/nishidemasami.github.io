@@ -24,9 +24,9 @@
 
   &Body {
     background-color: $backgroundcolor-base;
-    padding: 10px;
+    margin: 10px;
     border-radius: 10px;
-    border: 1px solid #e6e6e6;
+    border: 1px solid lime;
     & figure {
       @include margin-bottom(1);
 
