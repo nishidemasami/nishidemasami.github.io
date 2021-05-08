@@ -13,8 +13,9 @@ slug: /about
 
 このブログは、Gatsby.js + TypeScript + React で作成しています。  
 jQuery レス・WordPress レスを実現していて、レスポンシブデザイン・マテリアルデザインを考慮しています。  
+スタイルシートには CSS ではなく SCSS を使い、保守や拡張しやすいモダンな設計をしています。  
 ソースコードはすべて GitHub に公開しています。  
-https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby  
+<https://github.com/nishidemasami/nishidemasami.github.io>
 WEB サイト制作依頼も受け付けています。
 
 ### 自分について
@@ -51,7 +52,7 @@ github: [nishidemasami](https://github.com/nishidemasami)
 - React
 - Gatsby.js  
   このブログも TypeScript(一部 JavaScript) + React + Gatsby.js で書いています。  
-  話は変わりますが Gatsby って検索しても整髪料しか出てこないので Gatsby.js って検索してるんですけど…
+  話は変わりますが Gatsby って検索しても整髪料しか出てこないので、いつも Gatsby.js って検索してるんですけど…
 - Java
 - Spring Framework  
   Java8 くらいから lambda 式が使えるようになって、Optional 型や Stream に型推論も…！Java もなかなか！  

@@ -3,11 +3,7 @@ import { MDXProvider } from "@mdx-js/react";
 import ReactHelloWorld from "../src/components/Content/ReactHelloWorld";
 import ReactAudioTest from "../src/components/Content/ReactAudioTest";
 
-function MDXWrapRootElement({
-  children,
-}: {
-  children: JSX.Element;
-}): JSX.Element {
+function MDXWrapRootElement({ children }: { children: unknown }): JSX.Element {
   return (
     <MDXProvider
       components={{

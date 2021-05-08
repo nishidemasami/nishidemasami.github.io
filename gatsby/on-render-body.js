@@ -1,5 +1,5 @@
 const React = require("react");
-const siteConfig = require("../config.js");
+const siteConfig = require("../config.json");
 
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 const katexStylesheet = require("!css-loader!../static/css/katex/katex.min.css");

@@ -14,4 +14,4 @@ const wrapRootElement = ({ element }) => (
   </ThemeProvider>
 );
 
-export { wrapRootElement, onRenderBody };
+export { onRenderBody, wrapRootElement };

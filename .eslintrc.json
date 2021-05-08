@@ -74,6 +74,9 @@
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
 
+    // forbid style (allow className)
+    "react/forbid-component-props": ["error", { "forbid": ["style"] }],
+
     // for prettier
     "comma-dangle": "off",
 

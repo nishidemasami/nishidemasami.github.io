@@ -1,8 +1,6 @@
-"use strict";
-
 const _ = require("lodash");
 const path = require("path");
-const siteConfig = require("../../config.js");
+const siteConfig = require("../../config.json");
 
 module.exports = async (graphql, actions) => {
   const { createPage } = actions;

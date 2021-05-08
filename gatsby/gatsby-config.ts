@@ -1,8 +1,13 @@
+import { GatsbyConfig } from "gatsby";
 import sass from "sass";
-import siteConfig from "../config.js";
-import postCssPlugins from "../postcss-config.js";
+import siteConfig from "../config.json";
+import postCssPlugins from "./postcss-config";
 
-const generateConfig = ({ projectRoot }) => ({
+const generateConfig = ({
+  projectRoot,
+}: {
+  projectRoot: string;
+}): GatsbyConfig => ({
   pathPrefix: siteConfig.pathPrefix,
   siteMetadata: {
     url: siteConfig.url,
@@ -187,6 +192,14 @@ const generateConfig = ({ projectRoot }) => ({
             changefreq: "daily",
             priority: 0.7,
           })),
+      },
+    },
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: siteConfig.url,
+        sitemap: `${siteConfig.url}sitemap.xml`,
+        policy: [{ userAgent: "*", allow: "/" }],
       },
     },
     {
