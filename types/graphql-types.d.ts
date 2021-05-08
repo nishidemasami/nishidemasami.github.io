@@ -318,6 +318,18 @@ export type SiteSiteMetadataAuthorContacts = {
   medium?: Maybe<Scalars['String']>;
 };
 
+export type SiteFunction = Node & {
+  apiRoute: Scalars['String'];
+  originalFilePath: Scalars['String'];
+  relativeCompiledFilePath: Scalars['String'];
+  absoluteCompiledFilePath: Scalars['String'];
+  matchPath?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  parent?: Maybe<Node>;
+  children: Array<Node>;
+  internal: Internal;
+};
+
 export type SitePage = Node & {
   path: Scalars['String'];
   component: Scalars['String'];
@@ -620,9 +632,9 @@ export type ImageSharpResize = {
 
 export type MdxFrontmatter = {
   title: Scalars['String'];
+  date?: Maybe<Scalars['Date']>;
   template?: Maybe<Scalars['String']>;
   draft?: Maybe<Scalars['Boolean']>;
-  date?: Maybe<Scalars['Date']>;
   socialImage?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   category?: Maybe<Scalars['String']>;
@@ -745,6 +757,10 @@ export type SitePluginPluginOptions = {
   pluginConfig?: Maybe<SitePluginPluginOptionsPluginConfig>;
   output?: Maybe<Scalars['String']>;
   createLinkInHead?: Maybe<Scalars['Boolean']>;
+  entryLimit?: Maybe<Scalars['Int']>;
+  host?: Maybe<Scalars['String']>;
+  sitemap?: Maybe<Scalars['String']>;
+  policy?: Maybe<Array<Maybe<SitePluginPluginOptionsPolicy>>>;
   short_name?: Maybe<Scalars['String']>;
   start_url?: Maybe<Scalars['String']>;
   background_color?: Maybe<Scalars['String']>;
@@ -780,6 +796,11 @@ export type SitePluginPluginOptionsFeeds = {
 
 export type SitePluginPluginOptionsPluginConfig = {
   head?: Maybe<Scalars['Boolean']>;
+};
+
+export type SitePluginPluginOptionsPolicy = {
+  userAgent?: Maybe<Scalars['String']>;
+  allow?: Maybe<Scalars['String']>;
 };
 
 export type SitePluginPluginOptionsWorkboxConfig = {
@@ -837,6 +858,8 @@ export type Query = {
   allDirectory: DirectoryConnection;
   site?: Maybe<Site>;
   allSite: SiteConnection;
+  siteFunction?: Maybe<SiteFunction>;
+  allSiteFunction: SiteFunctionConnection;
   sitePage?: Maybe<SitePage>;
   allSitePage: SitePageConnection;
   imageSharp?: Maybe<ImageSharp>;
@@ -970,6 +993,27 @@ export type QuerySiteArgs = {
 export type QueryAllSiteArgs = {
   filter?: Maybe<SiteFilterInput>;
   sort?: Maybe<SiteSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QuerySiteFunctionArgs = {
+  apiRoute?: Maybe<StringQueryOperatorInput>;
+  originalFilePath?: Maybe<StringQueryOperatorInput>;
+  relativeCompiledFilePath?: Maybe<StringQueryOperatorInput>;
+  absoluteCompiledFilePath?: Maybe<StringQueryOperatorInput>;
+  matchPath?: Maybe<StringQueryOperatorInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+};
+
+
+export type QueryAllSiteFunctionArgs = {
+  filter?: Maybe<SiteFunctionFilterInput>;
+  sort?: Maybe<SiteFunctionSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -1255,9 +1299,9 @@ export type MdxFilterInput = {
 
 export type MdxFrontmatterFilterInput = {
   title?: Maybe<StringQueryOperatorInput>;
+  date?: Maybe<DateQueryOperatorInput>;
   template?: Maybe<StringQueryOperatorInput>;
   draft?: Maybe<BooleanQueryOperatorInput>;
-  date?: Maybe<DateQueryOperatorInput>;
   socialImage?: Maybe<StringQueryOperatorInput>;
   slug?: Maybe<StringQueryOperatorInput>;
   category?: Maybe<StringQueryOperatorInput>;
@@ -1286,11 +1330,29 @@ export type FileConnection = {
   nodes: Array<File>;
   pageInfo: PageInfo;
   distinct: Array<Scalars['String']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
   group: Array<FileGroupConnection>;
 };
 
 
 export type FileConnectionDistinctArgs = {
+  field: FileFieldsEnum;
+};
+
+
+export type FileConnectionMaxArgs = {
+  field: FileFieldsEnum;
+};
+
+
+export type FileConnectionMinArgs = {
+  field: FileFieldsEnum;
+};
+
+
+export type FileConnectionSumArgs = {
   field: FileFieldsEnum;
 };
 
@@ -1497,9 +1559,9 @@ export type FileFieldsEnum =
   | 'childrenMdx___rawBody'
   | 'childrenMdx___fileAbsolutePath'
   | 'childrenMdx___frontmatter___title'
+  | 'childrenMdx___frontmatter___date'
   | 'childrenMdx___frontmatter___template'
   | 'childrenMdx___frontmatter___draft'
-  | 'childrenMdx___frontmatter___date'
   | 'childrenMdx___frontmatter___socialImage'
   | 'childrenMdx___frontmatter___slug'
   | 'childrenMdx___frontmatter___category'
@@ -1559,9 +1621,9 @@ export type FileFieldsEnum =
   | 'childMdx___rawBody'
   | 'childMdx___fileAbsolutePath'
   | 'childMdx___frontmatter___title'
+  | 'childMdx___frontmatter___date'
   | 'childMdx___frontmatter___template'
   | 'childMdx___frontmatter___draft'
-  | 'childMdx___frontmatter___date'
   | 'childMdx___frontmatter___socialImage'
   | 'childMdx___frontmatter___slug'
   | 'childMdx___frontmatter___category'
@@ -1774,11 +1836,29 @@ export type DirectoryConnection = {
   nodes: Array<Directory>;
   pageInfo: PageInfo;
   distinct: Array<Scalars['String']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
   group: Array<DirectoryGroupConnection>;
 };
 
 
 export type DirectoryConnectionDistinctArgs = {
+  field: DirectoryFieldsEnum;
+};
+
+
+export type DirectoryConnectionMaxArgs = {
+  field: DirectoryFieldsEnum;
+};
+
+
+export type DirectoryConnectionMinArgs = {
+  field: DirectoryFieldsEnum;
+};
+
+
+export type DirectoryConnectionSumArgs = {
   field: DirectoryFieldsEnum;
 };
 
@@ -2022,11 +2102,29 @@ export type SiteConnection = {
   nodes: Array<Site>;
   pageInfo: PageInfo;
   distinct: Array<Scalars['String']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
   group: Array<SiteGroupConnection>;
 };
 
 
 export type SiteConnectionDistinctArgs = {
+  field: SiteFieldsEnum;
+};
+
+
+export type SiteConnectionMaxArgs = {
+  field: SiteFieldsEnum;
+};
+
+
+export type SiteConnectionMinArgs = {
+  field: SiteFieldsEnum;
+};
+
+
+export type SiteConnectionSumArgs = {
   field: SiteFieldsEnum;
 };
 
@@ -2191,6 +2289,170 @@ export type SiteSortInput = {
   order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
+export type SiteFunctionConnection = {
+  totalCount: Scalars['Int'];
+  edges: Array<SiteFunctionEdge>;
+  nodes: Array<SiteFunction>;
+  pageInfo: PageInfo;
+  distinct: Array<Scalars['String']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
+  group: Array<SiteFunctionGroupConnection>;
+};
+
+
+export type SiteFunctionConnectionDistinctArgs = {
+  field: SiteFunctionFieldsEnum;
+};
+
+
+export type SiteFunctionConnectionMaxArgs = {
+  field: SiteFunctionFieldsEnum;
+};
+
+
+export type SiteFunctionConnectionMinArgs = {
+  field: SiteFunctionFieldsEnum;
+};
+
+
+export type SiteFunctionConnectionSumArgs = {
+  field: SiteFunctionFieldsEnum;
+};
+
+
+export type SiteFunctionConnectionGroupArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  field: SiteFunctionFieldsEnum;
+};
+
+export type SiteFunctionEdge = {
+  next?: Maybe<SiteFunction>;
+  node: SiteFunction;
+  previous?: Maybe<SiteFunction>;
+};
+
+export type SiteFunctionFieldsEnum =
+  | 'apiRoute'
+  | 'originalFilePath'
+  | 'relativeCompiledFilePath'
+  | 'absoluteCompiledFilePath'
+  | 'matchPath'
+  | 'id'
+  | 'parent___id'
+  | 'parent___parent___id'
+  | 'parent___parent___parent___id'
+  | 'parent___parent___parent___children'
+  | 'parent___parent___children'
+  | 'parent___parent___children___id'
+  | 'parent___parent___children___children'
+  | 'parent___parent___internal___content'
+  | 'parent___parent___internal___contentDigest'
+  | 'parent___parent___internal___description'
+  | 'parent___parent___internal___fieldOwners'
+  | 'parent___parent___internal___ignoreType'
+  | 'parent___parent___internal___mediaType'
+  | 'parent___parent___internal___owner'
+  | 'parent___parent___internal___type'
+  | 'parent___children'
+  | 'parent___children___id'
+  | 'parent___children___parent___id'
+  | 'parent___children___parent___children'
+  | 'parent___children___children'
+  | 'parent___children___children___id'
+  | 'parent___children___children___children'
+  | 'parent___children___internal___content'
+  | 'parent___children___internal___contentDigest'
+  | 'parent___children___internal___description'
+  | 'parent___children___internal___fieldOwners'
+  | 'parent___children___internal___ignoreType'
+  | 'parent___children___internal___mediaType'
+  | 'parent___children___internal___owner'
+  | 'parent___children___internal___type'
+  | 'parent___internal___content'
+  | 'parent___internal___contentDigest'
+  | 'parent___internal___description'
+  | 'parent___internal___fieldOwners'
+  | 'parent___internal___ignoreType'
+  | 'parent___internal___mediaType'
+  | 'parent___internal___owner'
+  | 'parent___internal___type'
+  | 'children'
+  | 'children___id'
+  | 'children___parent___id'
+  | 'children___parent___parent___id'
+  | 'children___parent___parent___children'
+  | 'children___parent___children'
+  | 'children___parent___children___id'
+  | 'children___parent___children___children'
+  | 'children___parent___internal___content'
+  | 'children___parent___internal___contentDigest'
+  | 'children___parent___internal___description'
+  | 'children___parent___internal___fieldOwners'
+  | 'children___parent___internal___ignoreType'
+  | 'children___parent___internal___mediaType'
+  | 'children___parent___internal___owner'
+  | 'children___parent___internal___type'
+  | 'children___children'
+  | 'children___children___id'
+  | 'children___children___parent___id'
+  | 'children___children___parent___children'
+  | 'children___children___children'
+  | 'children___children___children___id'
+  | 'children___children___children___children'
+  | 'children___children___internal___content'
+  | 'children___children___internal___contentDigest'
+  | 'children___children___internal___description'
+  | 'children___children___internal___fieldOwners'
+  | 'children___children___internal___ignoreType'
+  | 'children___children___internal___mediaType'
+  | 'children___children___internal___owner'
+  | 'children___children___internal___type'
+  | 'children___internal___content'
+  | 'children___internal___contentDigest'
+  | 'children___internal___description'
+  | 'children___internal___fieldOwners'
+  | 'children___internal___ignoreType'
+  | 'children___internal___mediaType'
+  | 'children___internal___owner'
+  | 'children___internal___type'
+  | 'internal___content'
+  | 'internal___contentDigest'
+  | 'internal___description'
+  | 'internal___fieldOwners'
+  | 'internal___ignoreType'
+  | 'internal___mediaType'
+  | 'internal___owner'
+  | 'internal___type';
+
+export type SiteFunctionGroupConnection = {
+  totalCount: Scalars['Int'];
+  edges: Array<SiteFunctionEdge>;
+  nodes: Array<SiteFunction>;
+  pageInfo: PageInfo;
+  field: Scalars['String'];
+  fieldValue?: Maybe<Scalars['String']>;
+};
+
+export type SiteFunctionFilterInput = {
+  apiRoute?: Maybe<StringQueryOperatorInput>;
+  originalFilePath?: Maybe<StringQueryOperatorInput>;
+  relativeCompiledFilePath?: Maybe<StringQueryOperatorInput>;
+  absoluteCompiledFilePath?: Maybe<StringQueryOperatorInput>;
+  matchPath?: Maybe<StringQueryOperatorInput>;
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+};
+
+export type SiteFunctionSortInput = {
+  fields?: Maybe<Array<Maybe<SiteFunctionFieldsEnum>>>;
+  order?: Maybe<Array<Maybe<SortOrderEnum>>>;
+};
+
 export type SitePageContextFilterInput = {
   slug?: Maybe<StringQueryOperatorInput>;
   next?: Maybe<SitePageContextNextFilterInput>;
@@ -2261,6 +2523,10 @@ export type SitePluginPluginOptionsFilterInput = {
   pluginConfig?: Maybe<SitePluginPluginOptionsPluginConfigFilterInput>;
   output?: Maybe<StringQueryOperatorInput>;
   createLinkInHead?: Maybe<BooleanQueryOperatorInput>;
+  entryLimit?: Maybe<IntQueryOperatorInput>;
+  host?: Maybe<StringQueryOperatorInput>;
+  sitemap?: Maybe<StringQueryOperatorInput>;
+  policy?: Maybe<SitePluginPluginOptionsPolicyFilterListInput>;
   short_name?: Maybe<StringQueryOperatorInput>;
   start_url?: Maybe<StringQueryOperatorInput>;
   background_color?: Maybe<StringQueryOperatorInput>;
@@ -2300,6 +2566,15 @@ export type SitePluginPluginOptionsFeedsFilterInput = {
 
 export type SitePluginPluginOptionsPluginConfigFilterInput = {
   head?: Maybe<BooleanQueryOperatorInput>;
+};
+
+export type SitePluginPluginOptionsPolicyFilterListInput = {
+  elemMatch?: Maybe<SitePluginPluginOptionsPolicyFilterInput>;
+};
+
+export type SitePluginPluginOptionsPolicyFilterInput = {
+  userAgent?: Maybe<StringQueryOperatorInput>;
+  allow?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePluginPluginOptionsWorkboxConfigFilterInput = {
@@ -2376,11 +2651,29 @@ export type SitePageConnection = {
   nodes: Array<SitePage>;
   pageInfo: PageInfo;
   distinct: Array<Scalars['String']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
   group: Array<SitePageGroupConnection>;
 };
 
 
 export type SitePageConnectionDistinctArgs = {
+  field: SitePageFieldsEnum;
+};
+
+
+export type SitePageConnectionMaxArgs = {
+  field: SitePageFieldsEnum;
+};
+
+
+export type SitePageConnectionMinArgs = {
+  field: SitePageFieldsEnum;
+};
+
+
+export type SitePageConnectionSumArgs = {
   field: SitePageFieldsEnum;
 };
 
@@ -2568,6 +2861,12 @@ export type SitePageFieldsEnum =
   | 'pluginCreator___pluginOptions___pluginConfig___head'
   | 'pluginCreator___pluginOptions___output'
   | 'pluginCreator___pluginOptions___createLinkInHead'
+  | 'pluginCreator___pluginOptions___entryLimit'
+  | 'pluginCreator___pluginOptions___host'
+  | 'pluginCreator___pluginOptions___sitemap'
+  | 'pluginCreator___pluginOptions___policy'
+  | 'pluginCreator___pluginOptions___policy___userAgent'
+  | 'pluginCreator___pluginOptions___policy___allow'
   | 'pluginCreator___pluginOptions___short_name'
   | 'pluginCreator___pluginOptions___start_url'
   | 'pluginCreator___pluginOptions___background_color'
@@ -2654,11 +2953,29 @@ export type ImageSharpConnection = {
   nodes: Array<ImageSharp>;
   pageInfo: PageInfo;
   distinct: Array<Scalars['String']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
   group: Array<ImageSharpGroupConnection>;
 };
 
 
 export type ImageSharpConnectionDistinctArgs = {
+  field: ImageSharpFieldsEnum;
+};
+
+
+export type ImageSharpConnectionMaxArgs = {
+  field: ImageSharpFieldsEnum;
+};
+
+
+export type ImageSharpConnectionMinArgs = {
+  field: ImageSharpFieldsEnum;
+};
+
+
+export type ImageSharpConnectionSumArgs = {
   field: ImageSharpFieldsEnum;
 };
 
@@ -2815,11 +3132,29 @@ export type MdxConnection = {
   nodes: Array<Mdx>;
   pageInfo: PageInfo;
   distinct: Array<Scalars['String']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
   group: Array<MdxGroupConnection>;
 };
 
 
 export type MdxConnectionDistinctArgs = {
+  field: MdxFieldsEnum;
+};
+
+
+export type MdxConnectionMaxArgs = {
+  field: MdxFieldsEnum;
+};
+
+
+export type MdxConnectionMinArgs = {
+  field: MdxFieldsEnum;
+};
+
+
+export type MdxConnectionSumArgs = {
   field: MdxFieldsEnum;
 };
 
@@ -2840,9 +3175,9 @@ export type MdxFieldsEnum =
   | 'rawBody'
   | 'fileAbsolutePath'
   | 'frontmatter___title'
+  | 'frontmatter___date'
   | 'frontmatter___template'
   | 'frontmatter___draft'
-  | 'frontmatter___date'
   | 'frontmatter___socialImage'
   | 'frontmatter___slug'
   | 'frontmatter___category'
@@ -2968,11 +3303,29 @@ export type SiteBuildMetadataConnection = {
   nodes: Array<SiteBuildMetadata>;
   pageInfo: PageInfo;
   distinct: Array<Scalars['String']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
   group: Array<SiteBuildMetadataGroupConnection>;
 };
 
 
 export type SiteBuildMetadataConnectionDistinctArgs = {
+  field: SiteBuildMetadataFieldsEnum;
+};
+
+
+export type SiteBuildMetadataConnectionMaxArgs = {
+  field: SiteBuildMetadataFieldsEnum;
+};
+
+
+export type SiteBuildMetadataConnectionMinArgs = {
+  field: SiteBuildMetadataFieldsEnum;
+};
+
+
+export type SiteBuildMetadataConnectionSumArgs = {
   field: SiteBuildMetadataFieldsEnum;
 };
 
@@ -3106,11 +3459,29 @@ export type SitePluginConnection = {
   nodes: Array<SitePlugin>;
   pageInfo: PageInfo;
   distinct: Array<Scalars['String']>;
+  max?: Maybe<Scalars['Float']>;
+  min?: Maybe<Scalars['Float']>;
+  sum?: Maybe<Scalars['Float']>;
   group: Array<SitePluginGroupConnection>;
 };
 
 
 export type SitePluginConnectionDistinctArgs = {
+  field: SitePluginFieldsEnum;
+};
+
+
+export type SitePluginConnectionMaxArgs = {
+  field: SitePluginFieldsEnum;
+};
+
+
+export type SitePluginConnectionMinArgs = {
+  field: SitePluginFieldsEnum;
+};
+
+
+export type SitePluginConnectionSumArgs = {
   field: SitePluginFieldsEnum;
 };
 
@@ -3240,6 +3611,12 @@ export type SitePluginFieldsEnum =
   | 'pluginOptions___pluginConfig___head'
   | 'pluginOptions___output'
   | 'pluginOptions___createLinkInHead'
+  | 'pluginOptions___entryLimit'
+  | 'pluginOptions___host'
+  | 'pluginOptions___sitemap'
+  | 'pluginOptions___policy'
+  | 'pluginOptions___policy___userAgent'
+  | 'pluginOptions___policy___allow'
   | 'pluginOptions___short_name'
   | 'pluginOptions___start_url'
   | 'pluginOptions___background_color'
