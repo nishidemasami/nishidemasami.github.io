@@ -162,58 +162,85 @@ const generateConfig = ({
         },
       },
     },
-    {
-      resolve: "gatsby-plugin-sitemap",
-      options: {
-        query: `
-          {
-            site {
-              siteMetadata {
-                siteUrl: url
-              }
-            }
-            allSitePage(
-              filter: {
-                path: { regex: "/^(?!/404/|/404.html|/dev-404-page/)/" }
-              }
-            ) {
-              edges {
-                node {
-                  path
-                }
-              }
-            }
-          }
-        `,
-        output: "/sitemap.xml",
-        serialize: ({ site, allSitePage }) =>
-          allSitePage.edges.map((edge) => ({
-            url: site.siteMetadata.siteUrl + edge.node.path,
-            changefreq: "daily",
-            priority: 0.7,
-          })),
-      },
-    },
-    {
-      resolve: "gatsby-plugin-robots-txt",
-      options: {
-        host: siteConfig.url,
-        sitemap: `${siteConfig.url}sitemap.xml`,
-        policy: [{ userAgent: "*", allow: "/" }],
-      },
-    },
-    {
-      resolve: "gatsby-plugin-manifest",
-      options: {
-        name: siteConfig.title,
-        short_name: siteConfig.title,
-        start_url: "/",
-        background_color: "#FFF",
-        theme_color: "#F7A046",
-        display: "standalone",
-        icon: "static/photo.jpg",
-      },
-    },
+    // // "gatsby-plugin-sitemap",
+    // {
+    //   resolve: "gatsby-plugin-sitemap",
+    //   options: {
+    //     query: `
+    //       {
+    //         allSitePage(
+    //           filter: {
+    //             path: { regex: "/^(?!/404/|/404.html|/dev-404-page/)/" }
+    //           }
+    //         ) {
+    //           edges {
+    //             node {
+    //               path
+    //             }
+    //           }
+    //         }
+    //       }
+    //     `,
+    //     output: "/sitemap.xml",
+    //     filterPages: () => true,
+    //     resolveSiteUrl: () => siteConfig.url,
+    //     resolvePages: ({ allSitePage }) => allSitePage.edges,
+    //     serialize: (data) => {
+    //       console.log(data);
+    //       return data.edges.map((edge) => ({
+    //         url: siteConfig.url + edge.node.path,
+    //         changefreq: "daily",
+    //         priority: 0.7,
+    //       }));
+    //     },
+    //   },
+    // },
+    // {
+    //   resolve: "gatsby-plugin-sitemap",
+    //   options: {
+    //     output: "/some-other-sitemap.xml",
+    //     // Exclude specific pages or groups of pages using glob parameters
+    //     // See: https://github.com/isaacs/minimatch
+    //     // The example below will exclude the single `path/to/page` and all routes beginning with `category`
+    //     exclude: ["/category/*", "/path/to/page"],
+    //     query: `
+    //     {
+    //       site {
+    //         siteMetadata {
+    //           siteUrl
+    //         }
+    //       }
+
+    //       allSitePage {
+    //         edges {
+    //           node {
+    //             path
+    //           }
+    //         }
+    //       }
+    //   }`,
+    //   },
+    // },
+    // {
+    //   resolve: "gatsby-plugin-robots-txt",
+    //   options: {
+    //     host: siteConfig.url,
+    //     sitemap: `${siteConfig.url}sitemap.xml`,
+    //     policy: [{ userAgent: "*", allow: "/" }],
+    //   },
+    // },
+    // {
+    //   resolve: "gatsby-plugin-manifest",
+    //   options: {
+    //     name: siteConfig.title,
+    //     short_name: siteConfig.title,
+    //     start_url: "/",
+    //     background_color: "#FFF",
+    //     theme_color: "#F7A046",
+    //     display: "standalone",
+    //     icon: "static/photo.jpg",
+    //   },
+    // },
     {
       resolve: "gatsby-plugin-offline",
       options: {
