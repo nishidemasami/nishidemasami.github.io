@@ -7,7 +7,7 @@ type Props = {
   postSlug: string;
 };
 
-const Comments = ({ postTitle, postSlug }: Props) => {
+function Comments({ postTitle, postSlug }: Props) {
   const { url, disqusShortname } = useSiteMetadata();
 
   if (!disqusShortname) {
@@ -16,12 +16,12 @@ const Comments = ({ postTitle, postSlug }: Props) => {
 
   return (
     <ReactDisqusComments
-      shortname={disqusShortname}
       identifier={postTitle}
+      shortname={disqusShortname}
       title={postTitle}
       url={url + postSlug}
     />
   );
-};
+}
 
 export default Comments;

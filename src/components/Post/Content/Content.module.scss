@@ -10,6 +10,12 @@
     // @include margin(1, 1);
   }
 
+  &Comments {
+    // max-width: $layout-post-width;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
   &Title {
     font-size: $typographic-base-font-size * 2;
     max-width: $layout-post-single-width;
@@ -25,6 +31,7 @@
   &Body {
     background-color: $backgroundcolor-base;
     margin: 10px;
+    padding: 10px;
     border-radius: 10px;
     border: 1px solid lime;
     & figure {

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "gatsby";
-import Comments from "./Comments";
 import Content from "./Content";
 import {
   post as postStyle,
@@ -14,7 +13,6 @@ import {
   pagination,
   paginationPrev,
   paginationNext,
-  postComments,
 } from "./Post.module.scss";
 import type { Node } from "../../types";
 import PAGINATION from "../../constants/pagination";
@@ -53,7 +51,13 @@ function Post({ post, next, previous }: Props) {
       </Link>
 
       <div className={postContent}>
-        <Content body={body} date={date} tags={tags} title={title} />
+        <Content
+          body={body}
+          date={date}
+          slug={slug}
+          tags={tags}
+          title={title}
+        />
       </div>
 
       <div className={postFooter}>
@@ -83,10 +87,6 @@ function Post({ post, next, previous }: Props) {
             </Link>
           </div>
         </div>
-      </div>
-
-      <div className={postComments}>
-        <Comments postSlug={slug} postTitle={post.frontmatter.title} />
       </div>
     </div>
   );

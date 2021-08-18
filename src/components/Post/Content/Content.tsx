@@ -1,6 +1,7 @@
 import { Paper } from "@material-ui/core";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import React from "react";
+import Comments from "../Comments";
 import Meta from "../Meta";
 import Tags from "../Tags";
 import {
@@ -8,6 +9,7 @@ import {
   contentTitle,
   contentBody,
   contentSnssharebutton,
+  contentComments,
 } from "./Content.module.scss";
 
 type Props = {
@@ -15,9 +17,10 @@ type Props = {
   title: string;
   date: string;
   tags?: string[];
+  slug: string;
 };
 
-function Content({ body, title, date, tags }: Props): JSX.Element {
+function Content({ body, title, date, tags, slug }: Props): JSX.Element {
   return (
     <div className={content}>
       <h1 className={contentTitle}>{title}</h1>
@@ -41,6 +44,10 @@ function Content({ body, title, date, tags }: Props): JSX.Element {
           />
         </a>
         {tags && <Tags tags={tags} />}
+
+        <div className={contentComments}>
+          <Comments postSlug={slug} postTitle={title} />
+        </div>
       </Paper>
     </div>
   );
