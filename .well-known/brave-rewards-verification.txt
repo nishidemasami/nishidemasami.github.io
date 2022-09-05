@@ -1,4 +1,0 @@
-This is a Brave Rewards publisher verification file.
-
-Domain: nishidemasami.github.io
-Token: 4696cbe4a5e8fbc7f007207a4d3115e7f364baa422f934a5c5f257ba64513001
