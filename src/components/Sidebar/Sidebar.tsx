@@ -9,12 +9,13 @@ import { sidebar, sidebarInner, titleItemLink } from "./Sidebar.module.scss";
 import { useSiteMetadata } from "../../hooks";
 import Tags from "./Tags/index";
 import Recents from "./Recents";
+import Amazon from "./Amazon";
 
 type Props = {
   isIndex?: boolean;
 };
 
-function Sidebar({ isIndex }: Props) {
+function Sidebar({ isIndex }: Props): JSX.Element {
   const { author, copyright, menu, title } = useSiteMetadata();
   return (
     <Paper className={sidebar}>
@@ -27,6 +28,7 @@ function Sidebar({ isIndex }: Props) {
         <Recents />
         <Tags />
         <Contacts contacts={author.contacts} />
+        <Amazon />
         <Copyright copyright={copyright} />
       </div>
     </Paper>
