@@ -42,7 +42,6 @@ function Layout({
         />
       </Helmet>
       <div className={layout}>{children}</div>
-      <Background />
     </>
   );
 }
