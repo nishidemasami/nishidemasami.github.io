@@ -20,6 +20,10 @@
     {
       "label": "このサイトについて",
       "path": "/about"
+    },
+    {
+      "label": "計算機プログラムの構造と解釈",
+      "path": "/sicp-jp-gitbook/"
     }
   ],
   "author": {
