@@ -150,7 +150,7 @@ github: [nishidemasami](https://github.com/nishidemasami)
 - ネットワークスペシャリスト ライセンス番号: 第 NW-2016-10-01567 号)
 - [情報処理安全確保支援士(RISS) 登録番号: 第 007398 号](https://riss.ipa.go.jp/r?r=007398)
 
-### 履歴書
+### 最終学歴
 
 - 大阪芸術大学 芸術学部 卒業
 
