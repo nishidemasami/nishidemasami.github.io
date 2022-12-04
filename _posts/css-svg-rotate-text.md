@@ -13,7 +13,7 @@ tags:
 
 SVGとCSSだけで文字をクルクル回したかったので自分用にメモ。
 
-<svg style="animation: spin 5s linear infinite; width:100%" viewBox="0 0 100 100">
+<svg style="animation: spin 5s linear infinite; max-width:300px" viewBox="0 0 100 100">
     <defs>
         <path id="Circle"
                 d="M 25, 50
@@ -26,7 +26,7 @@ SVGとCSSだけで文字をクルクル回したかったので自分用にメ�
 </svg>
 
 ```html
-<svg style="animation: spin 5s linear infinite" viewBox="0 0 100 100" style="width:100%">
+<svg style="animation: spin 5s linear infinite; max-width:300px" viewBox="0 0 100 100">
     <defs>
         <path id="Circle"
                 d="M 25, 50
