@@ -15,17 +15,19 @@ const Contacts = ({ contacts }: Props) => (
 		<ul className="flex flex-row flex-wrap grow-0 shrink-0 list-none p-0 mx-[-3px] my-2 justify-start">
 			{Object.keys(contacts).map((name) =>
 				!contacts[name] ? null : (
-					<a
-						className="border-0 flex text-gray-800 hover:text-gray-600"
-						href={getContactHref(name, contacts[name])}
+					<li
+						className="h-8 w-8 flex p-0 m-1 items-center content-center justify-center leading-8 rounded-full text-center border border-gray-400"
 						key={name}
-						rel="noopener noreferrer"
-						target="_blank"
 					>
-						<li className="h-8 w-8 flex p-0 m-1 items-center content-center justify-center leading-8 rounded-full text-center border border-gray-400">
+						<a
+							className="border-0 flex text-gray-800 hover:text-gray-600"
+							href={getContactHref(name, contacts[name])}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
 							<Icon name={name} icon={getIcon(name)} />
-						</li>
-					</a>
+						</a>
+					</li>
 				)
 			)}
 		</ul>
