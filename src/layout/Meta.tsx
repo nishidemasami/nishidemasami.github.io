@@ -34,6 +34,7 @@ const Meta = (props: IMetaProps) => {
 					href={`${router.basePath}/apple-touch-icon.png`}
 					key="apple"
 				/>
+				<link rel="manifest" href="/manifest.json" />
 				<link
 					rel="icon"
 					type="image/png"
