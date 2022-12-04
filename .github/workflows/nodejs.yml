@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  TZ: "Asia/Tokyo"
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
