@@ -1,0 +1,27 @@
+{
+	"name": "new-nishidemasami-github-io",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": { "VARIANT": "18-bullseye" }
+	},
+
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"wraith13.background-phi-colors",
+		"esbenp.prettier-vscode",
+		"bradlc.vscode-tailwindcss",
+		"jpoissonnier.vscode-styled-components",
+		"wraith13.bracket-lens",
+		"eamodio.gitlens"
+	],
+
+	"postCreateCommand": "npm install",
+
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"editor.formatOnSave": true
+			}
+		}
+	}
+}
