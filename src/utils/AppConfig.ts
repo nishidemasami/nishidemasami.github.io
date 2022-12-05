@@ -10,10 +10,6 @@ export const AppConfig = {
 	pagination_size: 10,
 	sidebar_links: [
 		{ label: 'このサイトについて', path: '/about/' },
-		{
-			label: '計算機プログラムの構造と解釈',
-			path: 'https://nishidemasami.github.io/sicp-jp-gitbook/',
-		},
 		// { label: 'Blog', path: '/blog/1/' },
 	],
 	contacts: {

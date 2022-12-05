@@ -44,6 +44,9 @@ jobs:
       - name: add nojekyll
         run: touch ./out/.nojekyll
 
+      - name: Move 404 page to root directory
+        run: mv ./out/404/index.html ./out/404.html
+
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
