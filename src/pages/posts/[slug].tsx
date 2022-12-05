@@ -62,7 +62,7 @@ const DisplayPost = (props: IPostProps) => (
 		<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
 			{props.tags?.map((tag) => (
 				<li
-					className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 border-gray-400 bg-white w-fit break-all"
+					className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
 					key={tag}
 				>
 					<Link href="/tag/[tag]" as={`/tag/${tag}`}>

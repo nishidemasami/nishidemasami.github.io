@@ -5,7 +5,7 @@ type IContentProps = {
 };
 
 const Content = (props: IContentProps) => (
-	<div className="content p-4 m-2 rounded-lg overflow-hidden shadow-md border-0 border-gray-400 bg-white">
+	<div className="content p-4 m-2 rounded-lg overflow-hidden shadow-md border-0 bg-white">
 		{props.children}
 
 		<style jsx>

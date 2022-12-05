@@ -18,7 +18,7 @@ const BlogGallery = (props: IBlogGalleryProps) => (
 			return (
 				<div
 					key={elt.slug}
-					className="mb-3 break-all justify-between clear-both border-b p-4 m-2 rounded-lg overflow-hidden shadow-md border border-gray-400 bg-white"
+					className="mb-3 break-all justify-between clear-both p-4 m-2 rounded-lg overflow-hidden shadow-md border-0 bg-white"
 				>
 					<Link
 						href={postFlag ? '/posts/[slug]' : `/${elt.slug}`}
