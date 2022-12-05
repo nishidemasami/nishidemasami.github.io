@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://nishidemasami.github.io
+
+# Sitemaps
+Sitemap: https://nishidemasami.github.io/sitemap.xml
