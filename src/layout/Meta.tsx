@@ -36,6 +36,12 @@ const Meta = (props: IMetaProps) => {
 				/>
 				<link rel="manifest" href="/manifest.json" />
 				<link
+					rel="alternate"
+					type="application/rss+xml"
+					title={AppConfig.title}
+					href="/rss.xml"
+				/>
+				<link
 					rel="icon"
 					type="image/png"
 					sizes="32x32"
