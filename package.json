@@ -15,7 +15,7 @@
 		"eslint": "eslint .",
 		"build-types": "tsc --noEmit --pretty",
 		"prepare": "husky install",
-		"postbuild": "next-sitemap"
+		"build-sitemap": "next-sitemap"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.10.5",

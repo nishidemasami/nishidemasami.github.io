@@ -41,6 +41,9 @@ jobs:
       - name: export
         run: npm run export
 
+      - name: build sitemap
+        run: npm run build-sitemap
+
       - name: add nojekyll
         run: touch ./out/.nojekyll
 
