@@ -4,10 +4,11 @@ date: "2022-12-02T23:02:43+0900"
 draft: false
 template: "post"
 category: "blog"
-description: "ED25519の鍵を生成する"
+description: "ED25519の鍵を生成したいこと、ありますよね。僕はあるので自分用にメモです。"
 tags:
   - "SSH"
   - "AWS"
+  - "ED25519"
 ---
 
 もう1年以上前にAWSでED25519の鍵が使えるようになっていた。  

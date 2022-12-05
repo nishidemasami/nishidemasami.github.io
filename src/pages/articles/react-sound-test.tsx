@@ -57,7 +57,7 @@ const ReactSoundTest = (props: ReactSoundTestProps) => (
 		<h1 className="text-center font-bold text-3xl text-gray-900">
 			Reactでホワイトノイズを鳴らす
 		</h1>
-		<div className="text-center text-sm mb-8">
+		<div className="text-center text-sm mb-4">
 			{format(new Date('2021-03-14T01:04:03+0900'), 'LLLL d, yyyy')}
 		</div>
 

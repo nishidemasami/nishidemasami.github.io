@@ -8,8 +8,11 @@ tags:
   - "OpenSSL"
 template: "post"
 category: "blog"
-description: "Vim で暗号化を行うには、次の方法が用意されています。:set cryptmethod=blowfishこの blowfish の他に zip や、環境によっては blowfish2 が用意されています。使えるならばセキュリティの面から考えて blowfish2 を使うべきでしょう。…"
+description: "Vimで暗号化したいと思うこと、ありますよね。僕はあるので自分用にメモです。Vim で暗号化を行うには、次の方法が用意されています。:set cryptmethod=blowfishこの blowfish の他に zip や、環境によっては blowfish2 が用意されています。使えるならばセキュリティの面から考えて blowfish2 を使うべきでしょう。…"
 ---
+
+Vimで暗号化したいと思うこと、ありますよね。  
+僕はあるので自分用にメモです。
 
 Vim で暗号化を行うには、次の方法が用意されています。
 
@@ -45,7 +48,7 @@ Vim で暗号化を行うには、次の方法が用意されています。
 とするか、もしくはコマンドラインから
 
 ```bash
-$ cat ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -
+cat ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -
 ```
 
 とします。
@@ -92,7 +95,7 @@ $ cat ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -
 ```
 
 ```bash
-$ cat <(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -
+cat <(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -
 ```
 
 ちなみに圧縮もしてみましょう。書き込みは以下の通りです。
@@ -108,7 +111,7 @@ $ cat <(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | vim -
 ```
 
 ```bash
-$ cat <(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | bzcat | vim -
+cat <(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-cbc -d | bzcat | vim -
 ```
 
 さて、最後にあとひと押しです。
@@ -134,7 +137,7 @@ Mac 等では使えませんが、「aes-256-cbc」の代わりに「aes-256-ofb
 ```
 
 ```bash
-$ cat <(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat | vim -
+cat <(echo -ne Salted__) ~/vim_enc_test_file | openssl aes-256-ofb -d | bzcat | vim -
 ```
 
 パスワードが合っているのか間違っているのすらわからないというのは、つまりあなたのパスワードを突破しようとしても、パスワード 1 つ 1 つを確認しなければならないということです。

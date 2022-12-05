@@ -2,6 +2,7 @@ import React from 'react';
 
 import { format } from 'date-fns';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import Link from 'next/link';
 
 import { Content } from '../../content/Content';
 import { Meta } from '../../layout/Meta';
@@ -54,10 +55,22 @@ const DisplayPost = (props: IPostProps) => (
 		<h1 className="text-center font-bold text-3xl text-gray-900">
 			{props.title}
 		</h1>
-		<div className="text-center text-sm mb-8">
+		<div className="text-center text-sm mb-4">
 			{format(new Date(props.date), 'LLLL d, yyyy')}
 		</div>
 
+		<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
+			{props.tags?.map((tag) => (
+				<li
+					className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 border-gray-400 bg-white w-fit break-all"
+					key={tag}
+				>
+					<Link href="/tag/[tag]" as={`/tag/${tag}`}>
+						#{tag}
+					</Link>
+				</li>
+			))}
+		</ul>
 		<Content>
 			<div
 				// eslint-disable-next-line react/no-danger

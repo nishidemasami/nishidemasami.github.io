@@ -36,7 +36,7 @@ const PaginateTags = (props: IPostProps) => (
 		}
 	>
 		<h1 className="text-center font-bold text-3xl text-gray-900">
-			＃{props.tag}
+			＃{props.tag} タグ投稿一覧
 		</h1>
 		<BlogGallery posts={props.posts} />
 	</Main>

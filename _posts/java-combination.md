@@ -5,11 +5,14 @@ socialImage: "/photo.jpg"
 draft: false
 template: "post"
 category: "blog"
-description: "Ruby では組み合わせを作成することができるArray#combinationが用意されています。これを使えば、例えば下記のように…"
+description: "JAVAで組み合わせを作成したいと思うこと、ありますよね。僕はあるので自分用にメモです。Ruby では組み合わせを作成することができるArray#combinationが用意されています。これを使えば、例えば下記のように…"
 tags:
   - "Java"
   - "Ruby"
 ---
+
+JAVAで組み合わせを作成したいと思うこと、ありますよね。  
+僕はあるので自分用にメモです。
 
 Ruby では組み合わせを作成することができる[Array#combination](https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html)が用意されています。  
 これを使えば、例えば下記のように

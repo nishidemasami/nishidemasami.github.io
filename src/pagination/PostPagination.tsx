@@ -12,7 +12,7 @@ export type IPaginationProps = {
 const PostPagination = (props: IPaginationProps) => (
 	<div className="text-sm flex justify-between">
 		{props.prevPost && (
-			<div>
+			<div className="w-1/2">
 				← 新しい投稿
 				<br />
 				<Link
@@ -33,7 +33,7 @@ const PostPagination = (props: IPaginationProps) => (
 		)}
 
 		{props.nextPost && (
-			<div className="text-right ml-auto">
+			<div className="text-right ml-auto w-1/2">
 				過去の投稿 →
 				<br />
 				<Link
