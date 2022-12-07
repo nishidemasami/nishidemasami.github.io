@@ -135,7 +135,7 @@ const ReactAudioTest: React.FunctionComponent = () => {
 			</Grid>
 
 			<Button
-				variant="contained"
+				variant="outlined"
 				color={playingFlag ? 'info' : 'primary'}
 				onClick={onClickToStartAndStop}
 			>

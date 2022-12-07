@@ -14,7 +14,7 @@ export const markdownToHtml = async (markdown: string) =>
 			.use(remarkParse)
 			.use(remarkMath)
 			.use(remarkGfm)
-			.use(remarkRehype, { allowDangerousHtml: true })
+			.use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })
 			.use(rehypePrism)
 			.use(rehypeKatex)
 			.use(rehypeStringify, { allowDangerousHtml: true })

@@ -31,13 +31,13 @@ const PaginatePosts = (props: PaginatePostsProps) => (
 		tags={props.tags}
 		meta={
 			<Meta
-				title={`投稿一覧 ${props.page}ページ目`}
-				description={`投稿一覧 ${props.page}ページ目`}
+				title={`記事一覧 ${props.page}ページ目`}
+				description={`記事一覧 ${props.page}ページ目`}
 			/>
 		}
 	>
 		<h1 className="text-center font-bold text-3xl text-gray-900">
-			{`投稿一覧 ${props.page}ページ目`}
+			{`記事一覧 ${props.page}ページ目`}
 		</h1>
 		<BlogGallery posts={props.posts} pagination={props.pagination} />
 	</Main>

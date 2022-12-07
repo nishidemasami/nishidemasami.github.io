@@ -42,6 +42,16 @@ const Main = (props: IMainProps) => (
 			</div>
 
 			<div className="text-base py-5">{props.children}</div>
+			<iframe
+				src="https://rcm-fe.amazon-adsystem.com/e/cm?o=9&p=288&l=ur1&category=amazonfresh&banner=1BJRY423M3VZNDGD6QR2&f=ifr&linkID=a397c9c3ef85b520249e0b949c3458f8&t=nishidemasami-22&tracking_id=nishidemasami-22"
+				width="320"
+				height="50"
+				scrolling="no"
+				marginWidth={0}
+				className="border-none border-0 m-auto"
+				frameBorder="0"
+				sandbox="allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation"
+			></iframe>
 		</div>
 		<div className="w-full sm:w-1/4 lg:w-[256px] float-right sm:sticky shadow-md sm:h-full sm:flex sm:top-auto sm:self-end sm:bottom-0 min-h-fit sm:min-h-screen">
 			<Sidebar recents={props.recents} tags={props.tags} />

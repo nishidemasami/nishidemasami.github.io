@@ -30,13 +30,13 @@ const PaginateTags = (props: IPostProps) => (
 		tags={props.tags}
 		meta={
 			<Meta
-				title={`＃${props.tag} タグ投稿一覧`}
-				description={`＃${props.tag} タグ投稿一覧`}
+				title={`＃${props.tag} タグ記事一覧`}
+				description={`＃${props.tag} タグ記事一覧`}
 			/>
 		}
 	>
 		<h1 className="text-center font-bold text-3xl text-gray-900">
-			＃{props.tag} タグ投稿一覧
+			＃{props.tag} タグ記事一覧
 		</h1>
 		<BlogGallery posts={props.posts} />
 	</Main>

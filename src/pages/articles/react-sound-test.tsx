@@ -6,7 +6,7 @@ template: "post"
 type: "tsx"
 draft: false
 category: "blog"
-description: "↓ React + TypeScript でホワイトノイズを鳴らしてみました ※音が鳴ります！パソコンで音を鳴らすのはかんたんなんですけどスマホはガードが固いらしくて、ユーザのなんらかの動作をトリガーとして再生しないと再生されないみたいです。なので今回は useCallback で宣言して onClick から呼びました。…"
+description: "Reactでホワイトノイズを鳴らしたいこと、ありますよね。僕はあるので自分用にメモです。"
 tags:
   - "TypeScript"
   - "React"
@@ -64,8 +64,14 @@ const ReactSoundTest = (props: ReactSoundTestProps) => (
 		<Content>
 			<div>
 				<p>
+					Reactでホワイトノイズを鳴らしたいこと、ありますよね。
+					<br />
+					僕はあるので自分用にメモです。
+				</p>
+				<p>
 					↓ React + TypeScript でホワイトノイズを鳴らしてみました
-					※音が鳴ります！
+					<br />
+					※音が鳴ります
 				</p>
 				<ReactAudioTest />
 				<p>
