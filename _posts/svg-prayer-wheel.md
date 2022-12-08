@@ -1,5 +1,5 @@
 ---
-title: SVGとCSSだけで作ったSVGマニ車をクルクル回して自動で徳を積む
+title: SVGだけで作ったSVGマニ車をCSSでクルクル回して自動で徳を積む
 date: "2022-12-07T01:04:03+0900"
 modified_date: '2022-12-07T01:04:03+0900'
 template: "post"
@@ -63,14 +63,10 @@ tags:
 
 徳、積みたいですよね。
 
-<a target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=nishidemasami-22&linkCode=ur2&linkId=d1ba0bb31ef3d317b4a5c8ad6af3095d&camp=247&creative=1211&index=aps&keywords=マニ車">Amazon.co.jp: 「マニ車」の検索結果</a>
-
-ご存知マニ車。お寺とかにたまにある、周囲にマントラが書いてあって手で回すと1回転毎に1回お経を読んだのと同じ徳を積めるスピリチュアルグッズです。  
-チベット仏教が国教であるブータンでは、水力マニ車や風力マニ車、ソーラーマニ車などもあり、マニ車も進化しているということがわかります。[^1]
+ご存知マニ車。お寺とかにたまにある、周囲にマントラが書いてあって手で回すと1回転毎に1回お経を読んだのと同じ徳を積めるスピリチュアルグッズです。<sup>[<a target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=nishidemasami-22&linkCode=ur2&linkId=d1ba0bb31ef3d317b4a5c8ad6af3095d&camp=247&creative=1211&index=aps&keywords=マニ車">参考</a>]</sup>  
+チベット仏教が国教であるブータンでは、水力マニ車や風力マニ車、ソーラーマニ車<sup>[<a target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=nishidemasami-22&linkCode=ur2&linkId=d1ba0bb31ef3d317b4a5c8ad6af3095d&camp=247&creative=1211&index=aps&keywords=ソーラーマニ車">参考</a>]</sup>などもあり、マニ車も進化しているということがわかります。[^1]
 
 [^1]: 日本風力エネルギー学会誌 Vol.44, No.4
-
-<a target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=nishidemasami-22&linkCode=ur2&linkId=d1ba0bb31ef3d317b4a5c8ad6af3095d&camp=247&creative=1211&index=aps&keywords=ソーラーマニ車">Amazon.co.jp: 「ソーラーマニ車」の検索結果</a>
 
 ならば、SVGとCSSでマントラを回しても徳が積めるのでは…？  
 そう思ったので自分用にメモです。

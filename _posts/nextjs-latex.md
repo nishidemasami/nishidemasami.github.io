@@ -31,7 +31,7 @@ x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
 
 こんな感じで書けたら便利です。
 
-今回は$\LaTeX$をウェブブラウザで表示するためのライブラリである$\KaTeX$をNext.jsで使ってみたいと思います。
+今回は$\LaTeX$をウェブブラウザで表示するためのライブラリである$\KaTeX$をNext.jsで使ってみました。<sup>[<a target="_blank" href="https://www.amazon.co.jp/React-js%EF%BC%86Next-js%E8%B6%85%E5%85%A5%E9%96%80-%E7%AC%AC2%E7%89%88-%E6%8E%8C%E7%94%B0%E6%B4%A5%E8%80%B6%E4%B9%83-ebook/dp/B08XBNGYVH?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=1304MCUGBPN1M&keywords=next.js&qid=1670505884&sprefix=next.j%2Caps%2C195&sr=8-6&linkCode=ll1&tag=nishidemasami-22&linkId=1faf1c568d048e662fff7bffcc7794e3&language=ja_JP&ref_=as_li_ss_tl">参考文献</a>]</sup>
 
 JavaScriptで動的にブラウザ上で数式を描画するのがよく見る$\KaTeX$の使い方ですが、Next.jsでSSGしている時にはビルド時に既に数式がHTMLにレンダリング済みだという挙動になるので少し仕組みが違います。  
 ブラウザとしては$\LaTeX$形式の数式をHTMLへ変換する必要がなくなり描画が高速だという点がメリットです。ブラウザがJavaScriptを無効化していても見れるのもいいですね。
