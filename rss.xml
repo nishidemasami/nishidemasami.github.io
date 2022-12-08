@@ -4,14 +4,14 @@
         <title>NISHIDEMASAMI.GITHUB.IO</title>
         <link>https://nishidemasami.github.io</link>
         <description>個人のブログです。有益なことや無益なことなどいろいろ書いています。</description>
-        <lastBuildDate>Wed, 07 Dec 2022 09:49:40 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 08 Dec 2022 13:32:54 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ja</language>
         <copyright>©NISHIDE, Masami All rights reserved.</copyright>
         <atom:link href="https://nishidemasami.github.io/feed" rel="self" type="application/rss+xml"/>
         <item>
-            <title><![CDATA[SVGとCSSだけで作ったSVGマニ車をクルクル回して自動で徳を積む]]></title>
+            <title><![CDATA[SVGだけで作ったSVGマニ車をCSSでクルクル回して自動で徳を積む]]></title>
             <link>https://nishidemasami.github.io/posts/svg-prayer-wheel</link>
             <guid>https://nishidemasami.github.io/posts/svg-prayer-wheel</guid>
             <pubDate>Tue, 06 Dec 2022 16:04:03 GMT</pubDate>
@@ -69,14 +69,10 @@
 
 徳、積みたいですよね。
 
-<a target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=nishidemasami-22&linkCode=ur2&linkId=d1ba0bb31ef3d317b4a5c8ad6af3095d&camp=247&creative=1211&index=aps&keywords=マニ車">Amazon.co.jp: 「マニ車」の検索結果</a>
-
-ご存知マニ車。お寺とかにたまにある、周囲にマントラが書いてあって手で回すと1回転毎に1回お経を読んだのと同じ徳を積めるスピリチュアルグッズです。  
-チベット仏教が国教であるブータンでは、水力マニ車や風力マニ車、ソーラーマニ車などもあり、マニ車も進化しているということがわかります。[^1]
+ご存知マニ車。お寺とかにたまにある、周囲にマントラが書いてあって手で回すと1回転毎に1回お経を読んだのと同じ徳を積めるスピリチュアルグッズです。<sup>[<a target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=nishidemasami-22&linkCode=ur2&linkId=d1ba0bb31ef3d317b4a5c8ad6af3095d&camp=247&creative=1211&index=aps&keywords=マニ車">参考</a>]</sup>  
+チベット仏教が国教であるブータンでは、水力マニ車や風力マニ車、ソーラーマニ車<sup>[<a target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=nishidemasami-22&linkCode=ur2&linkId=d1ba0bb31ef3d317b4a5c8ad6af3095d&camp=247&creative=1211&index=aps&keywords=ソーラーマニ車">参考</a>]</sup>などもあり、マニ車も進化しているということがわかります。[^1]
 
 [^1]: 日本風力エネルギー学会誌 Vol.44, No.4
-
-<a target="_blank" href="https://www.amazon.co.jp/gp/search?ie=UTF8&tag=nishidemasami-22&linkCode=ur2&linkId=d1ba0bb31ef3d317b4a5c8ad6af3095d&camp=247&creative=1211&index=aps&keywords=ソーラーマニ車">Amazon.co.jp: 「ソーラーマニ車」の検索結果</a>
 
 ならば、SVGとCSSでマントラを回しても徳が積めるのでは…？  
 そう思ったので自分用にメモです。
@@ -242,7 +238,7 @@ x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
 
 こんな感じで書けたら便利です。
 
-今回は$\LaTeX$をウェブブラウザで表示するためのライブラリである$\KaTeX$をNext.jsで使ってみたいと思います。
+今回は$\LaTeX$をウェブブラウザで表示するためのライブラリである$\KaTeX$をNext.jsで使ってみました。<sup>[<a target="_blank" href="https://www.amazon.co.jp/React-js%EF%BC%86Next-js%E8%B6%85%E5%85%A5%E9%96%80-%E7%AC%AC2%E7%89%88-%E6%8E%8C%E7%94%B0%E6%B4%A5%E8%80%B6%E4%B9%83-ebook/dp/B08XBNGYVH?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=1304MCUGBPN1M&keywords=next.js&qid=1670505884&sprefix=next.j%2Caps%2C195&sr=8-6&linkCode=ll1&tag=nishidemasami-22&linkId=1faf1c568d048e662fff7bffcc7794e3&language=ja_JP&ref_=as_li_ss_tl">参考文献</a>]</sup>
 
 JavaScriptで動的にブラウザ上で数式を描画するのがよく見る$\KaTeX$の使い方ですが、Next.jsでSSGしている時にはビルド時に既に数式がHTMLにレンダリング済みだという挙動になるので少し仕組みが違います。  
 ブラウザとしては$\LaTeX$形式の数式をHTMLへ変換する必要がなくなり描画が高速だという点がメリットです。ブラウザがJavaScriptを無効化していても見れるのもいいですね。
@@ -389,7 +385,7 @@ Next.jsでこのウェブサイトをリニューアルしました！✨
 
 T3 Stackの6つの技術のうち、フロントエンド側の以下の3つの技術をフル活用しています。
 
-* TypeScript  
+* TypeScript<sup>[<a target="_blank" href="https://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0TypeScript-%E2%80%95%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8BJavaScript%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E9%96%8B%E7%99%BA-Boris-Cherny/dp/4873119049?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=3Q7MI7KXY06BB&keywords=typescript&qid=1670505807&sprefix=typescript+%2Caps%2C224&sr=8-9&linkCode=ll1&tag=nishidemasami-22&linkId=48539012d76c58e8bc3549b5a9dc7a1f&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >参考文献</a>]</sup>  
 ほぼ全てTypeScriptで書いています。
 * Next.js  
 SSGフレームワークに使用しています。
@@ -522,7 +518,18 @@ const ReactSoundTest = (props: ReactSoundTestProps) => (
 					僕はあるので自分用にメモです。
 				</p>
 				<p>
-					↓ React + TypeScript でホワイトノイズを鳴らしてみました
+					↓ React + TypeScript でホワイトノイズを鳴らしてみました。
+					<sup>
+						[
+						<a
+							target="_blank"
+							href="https://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0TypeScript-%E2%80%95%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8BJavaScript%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E9%96%8B%E7%99%BA-Boris-Cherny/dp/4873119049?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=3Q7MI7KXY06BB&keywords=typescript&qid=1670505807&sprefix=typescript+%2Caps%2C224&sr=8-9&linkCode=ll1&tag=nishidemasami-22&linkId=48539012d76c58e8bc3549b5a9dc7a1f&language=ja_JP&ref_=as_li_ss_tl"
+							rel="noreferrer"
+						>
+							参考文献
+						</a>
+						]
+					</sup>
 					<br />
 					※音が鳴ります
 				</p>
