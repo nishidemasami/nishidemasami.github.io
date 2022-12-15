@@ -28,6 +28,9 @@ const Content = (props: IContentProps) => (
 
 				.content :global(h2) {
 					@apply text-2xl font-semibold text-gray-700 my-4;
+					font-size: 1.6em;
+					border-bottom: 1px solid #ddd;
+					padding-bottom: 0.1em;
 				}
 
 				.content :global(h3) {
