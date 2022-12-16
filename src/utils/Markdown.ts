@@ -1,5 +1,4 @@
-// @ts-ignore
-import rehypePrism from '@mapbox/rehype-prism';
+import rehypeShiki from '@leafac/rehype-shiki';
 import rehypeKatex from 'rehype-katex';
 import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
@@ -7,6 +6,7 @@ import remarkMath from 'remark-math';
 import remarkMermaid from 'remark-mermaidjs';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
+import { getHighlighter } from 'shiki';
 import { unified } from 'unified';
 
 export const markdownToHtml = async (markdown: string) =>
@@ -24,7 +24,11 @@ export const markdownToHtml = async (markdown: string) =>
 				svgo: false,
 			})
 			.use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })
-			.use(rehypePrism)
+			.use(rehypeShiki, {
+				highlighter: await getHighlighter({
+					theme: 'github-dark',
+				}),
+			})
 			.use(rehypeKatex)
 			.use(rehypeStringify, { allowDangerousHtml: true })
 			.process(markdown)
