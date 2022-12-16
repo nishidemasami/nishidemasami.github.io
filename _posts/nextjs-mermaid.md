@@ -1,10 +1,10 @@
 ---
-title: Next.jsでSSG時にRemarkでMermaidをSVGに出力する
+title: Next.jsでSSG時にRemarkでMermaidをSVGとして出力する
 date: "2022-12-08T23:04:03+0900"
 template: "post"
 draft: false
 category: "blog"
-description: Next.jsでSSG時にRemarkでMermaidをSVGに出力する
+description: Next.jsでSSG時にRemarkでMermaidをSVGにして出力してみたいと思うこと、ありますよね。僕はあるのですがネット上にあまり情報が無かったので自分用にメモです。
 tags:
   - "Mermaid"
   - "Markdown"
@@ -13,12 +13,53 @@ tags:
   - "SVG"
   - "Remark"
   - "remark-mermaidjs"
+  - "GitHub Actions"
 ---
 
 Next.jsでSSG時にRemarkでMermaidをSVGにして出力してみたいと思うこと、ありますよね。  
-僕はあるので自分用にメモです。
+僕はあるのですがネット上にあまり情報が無かったので自分用にメモです。
 
 今回は`remark-mermaidjs`を使って実装しました。
+
+このサイトではMarkdownを`unified`で扱っているので`remark-mermaidjs`を`use`します。  
+`remark-mermaidjs`はGoogle Chromeを使ってMermaidをSVGにしているらしく`executablePath`でGoogle Chromeのパスを指定しなければならないようです。  
+このサイトはGitHub Actionsでビルドしているので、ubuntuのために`/opt/google/chrome/google-chrome`を指定しました。なお、ローカル環境でも自由に動かせるように`.env`にもGoogle Chromeへのパスを書くことにしました。
+
+```typescript
+// @ts-ignore
+import rehypePrism from '@mapbox/rehype-prism';
+import rehypeKatex from 'rehype-katex';
+import rehypeStringify from 'rehype-stringify';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import remarkMermaid from 'remark-mermaidjs';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
+
+export const markdownToHtml = async (markdown: string) =>
+	(
+		await unified()
+			.use(remarkParse)
+			.use(remarkMath)
+			.use(remarkGfm)
+			.use(remarkMermaid, {
+				launchOptions: {
+					executablePath:
+						process.env.GoogleChromeExecutablePath ?? // .env
+						'/opt/google/chrome/google-chrome', // for GitHub Actions Ubuntu
+				},
+				svgo: false,
+			})
+			.use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })
+			.use(rehypePrism)
+			.use(rehypeKatex)
+			.use(rehypeStringify, { allowDangerousHtml: true })
+			.process(markdown)
+	)
+		.toString()
+		.replace(/@@baseUrl@@/g, process.env.baseUrl || '');
+```
 
 以下にサンプルを置いておきます。図がSVGになっていることがわかると思います。
 

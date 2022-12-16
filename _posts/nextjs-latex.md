@@ -55,18 +55,18 @@ import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 
 export const markdownToHtml = async (markdown: string) =>
-  (
-    await unified()
-      .use(remarkParse)
-      .use(remarkMath)
-      .use(remarkGfm)
-      .use(remarkRehype, { allowDangerousHtml: true })
-      .use(rehypePrism)
-      .use(rehypeKatex)
-      .use(rehypeStringify, { allowDangerousHtml: true })
-      .process(markdown)
-  )
-    .toString();
+	(
+		await unified()
+			.use(remarkParse)
+			.use(remarkMath)
+			.use(remarkGfm)
+			.use(remarkRehype, { allowDangerousHtml: true })
+			.use(rehypePrism)
+			.use(rehypeKatex)
+			.use(rehypeStringify, { allowDangerousHtml: true })
+			.process(markdown)
+	)
+		.toString();
 ```
 
 あとは$\KaTeX$のCSSをCDNなどから読み込めば完成です。
@@ -81,18 +81,18 @@ export const markdownToHtml = async (markdown: string) =>
 ```latex
 \gcd(x, y) =
 \begin{cases}
-  y & (x = 0)\\
-  x & (y = 0)\\
-  \gcd(y, x \bmod y) & (\text{otherwize})
+	y & (x = 0)\\
+	x & (y = 0)\\
+	\gcd(y, x \bmod y) & (\text{otherwize})
 \end{cases}
 ```
 
 $$
 \gcd(x, y) =
 \begin{cases}
-  y & (x = 0)\\
-  x & (y = 0)\\
-  \gcd(y, x \bmod y) & (\text{otherwize})
+	y & (x = 0)\\
+	x & (y = 0)\\
+	\gcd(y, x \bmod y) & (\text{otherwize})
 \end{cases}
 $$
 

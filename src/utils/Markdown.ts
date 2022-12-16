@@ -9,13 +9,6 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 
-const executablePath = {
-	production: '/opt/google/chrome/google-chrome',
-	development:
-		'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
-	test: '/opt/google/chrome/google-chrome',
-}[process.env.NODE_ENV];
-
 export const markdownToHtml = async (markdown: string) =>
 	(
 		await unified()
@@ -23,7 +16,11 @@ export const markdownToHtml = async (markdown: string) =>
 			.use(remarkMath)
 			.use(remarkGfm)
 			.use(remarkMermaid, {
-				launchOptions: { executablePath },
+				launchOptions: {
+					executablePath:
+						process.env.GoogleChromeExecutablePath ??
+						'/opt/google/chrome/google-chrome',
+				},
 				svgo: false,
 			})
 			.use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })

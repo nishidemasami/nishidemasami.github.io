@@ -8,6 +8,10 @@ const Recommend = () => (
 		<ul className="m-0 p-0 border-0 list-[circle] ml-5">
 			{[
 				{
+					slug: 'posts/nextjs-mermaid/',
+					title: 'Next.jsでSSG時にRemarkでMermaidをSVGとして出力する',
+				},
+				{
 					slug: 'posts/svg-prayer-wheel/',
 					title: 'SVGとCSSだけでマニ車をクルクル回して自動で徳を積む',
 				},
