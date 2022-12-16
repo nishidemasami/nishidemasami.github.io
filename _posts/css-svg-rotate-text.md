@@ -15,30 +15,30 @@ JavaScriptを使わずにSVGとCSSだけで文字をクルクル回したいこ�
 僕はあるので自分用にメモです。
 
 <svg style="animation: spin 5s linear infinite; max-width:300px" viewBox="0 0 100 100" >
-	<defs>
-		<path id="Circle" d="M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
-	</defs>
-	<text>
-		<textPath href="#Circle">文字がクルクル回ります。</textPath>
-	</text>
+  <defs>
+    <path id="Circle" d="M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
+  </defs>
+  <text>
+    <textPath href="#Circle">文字がクルクル回ります。</textPath>
+  </text>
 </svg>
 
 ```html
 <svg
-	style="animation: spin 5s linear infinite; max-width:300px"
-	viewBox="0 0 100 100"
+  style="animation: spin 5s linear infinite; max-width:300px"
+  viewBox="0 0 100 100"
 >
-	<defs>
-		<path
-			id="Circle"
-			d="M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0"
-		/>
-	</defs>
-	<text>
-		<textPath href="#Circle">
-			文字がクルクル回ります。
-		</textPath>
-	</text>
+  <defs>
+    <path
+      id="Circle"
+      d="M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0"
+    />
+  </defs>
+  <text>
+    <textPath href="#Circle">
+      文字がクルクル回ります。
+    </textPath>
+  </text>
 </svg>
 ```
 

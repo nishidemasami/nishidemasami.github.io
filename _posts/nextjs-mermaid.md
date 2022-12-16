@@ -38,27 +38,27 @@ import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 
 export const markdownToHtml = async (markdown: string) =>
-	(
-		await unified()
-			.use(remarkParse)
-			.use(remarkMath)
-			.use(remarkGfm)
-			.use(remarkMermaid, {
-				launchOptions: {
-					executablePath:
-						process.env.GoogleChromeExecutablePath ?? // .env
-						'/opt/google/chrome/google-chrome', // for GitHub Actions Ubuntu
-				},
-				svgo: false,
-			})
-			.use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })
-			.use(rehypePrism)
-			.use(rehypeKatex)
-			.use(rehypeStringify, { allowDangerousHtml: true })
-			.process(markdown)
-	)
-		.toString()
-		.replace(/@@baseUrl@@/g, process.env.baseUrl || '');
+  (
+    await unified()
+      .use(remarkParse)
+      .use(remarkMath)
+      .use(remarkGfm)
+      .use(remarkMermaid, {
+        launchOptions: {
+          executablePath:
+            process.env.GoogleChromeExecutablePath ?? // .env
+            '/opt/google/chrome/google-chrome', // for GitHub Actions Ubuntu
+        },
+        svgo: false,
+      })
+      .use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })
+      .use(rehypePrism)
+      .use(rehypeKatex)
+      .use(rehypeStringify, { allowDangerousHtml: true })
+      .process(markdown)
+  )
+    .toString()
+    .replace(/@@baseUrl@@/g, process.env.baseUrl || '');
 ```
 
 以下にサンプルを置いておきます。図がSVGになっていることがわかると思います。
@@ -186,29 +186,29 @@ class Class10 {
 ````markdown
 ```mermaid
 gitGraph
-		commit
-		commit
-		branch develop
-		commit
-		commit
-		commit
-		checkout main
-		commit
-		commit
+    commit
+    commit
+    branch develop
+    commit
+    commit
+    commit
+    checkout main
+    commit
+    commit
 ```
 ````
 
 ```mermaid
 gitGraph
-		commit
-		commit
-		branch develop
-		commit
-		commit
-		commit
-		checkout main
-		commit
-		commit
+    commit
+    commit
+    branch develop
+    commit
+    commit
+    commit
+    checkout main
+    commit
+    commit
 ```
 
 ## State diagram
@@ -276,27 +276,27 @@ erDiagram
 ````markdown
 ```mermaid
 journey
-	title My working day
-	section Go to work
-		Make tea: 5: Me
-		Go upstairs: 3: Me
-		Do work: 1: Me, Cat
-	section Go home
-		Go downstairs: 5: Me
-		Sit down: 3: Me
+  title My working day
+  section Go to work
+    Make tea: 5: Me
+    Go upstairs: 3: Me
+    Do work: 1: Me, Cat
+  section Go home
+    Go downstairs: 5: Me
+    Sit down: 3: Me
 ```
 ````
 
 ```mermaid
 journey
-	title My working day
-	section Go to work
-		Make tea: 5: Me
-		Go upstairs: 3: Me
-		Do work: 1: Me, Cat
-	section Go home
-		Go downstairs: 5: Me
-		Sit down: 3: Me
+  title My working day
+  section Go to work
+    Make tea: 5: Me
+    Go upstairs: 3: Me
+    Do work: 1: Me, Cat
+  section Go home
+    Go downstairs: 5: Me
+    Sit down: 3: Me
 ```
 
 ## C4 diagram
