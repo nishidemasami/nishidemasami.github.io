@@ -4,23 +4,63 @@
         <title>NISHIDEMASAMI.GITHUB.IO</title>
         <link>https://nishidemasami.github.io</link>
         <description>個人のブログです。有益なことや無益なことなどいろいろ書いています。</description>
-        <lastBuildDate>Thu, 15 Dec 2022 15:52:20 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 16 Dec 2022 10:42:46 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ja</language>
         <copyright>©NISHIDE, Masami All rights reserved.</copyright>
         <atom:link href="https://nishidemasami.github.io/feed" rel="self" type="application/rss+xml"/>
         <item>
-            <title><![CDATA[Next.jsでSSG時にRemarkでMermaidをSVGに出力する]]></title>
-            <link>https://nishidemasami.github.io/posts/mermaid-nextjs</link>
-            <guid>https://nishidemasami.github.io/posts/mermaid-nextjs</guid>
+            <title><![CDATA[Next.jsでSSG時にRemarkでMermaidをSVGとして出力する]]></title>
+            <link>https://nishidemasami.github.io/posts/nextjs-mermaid</link>
+            <guid>https://nishidemasami.github.io/posts/nextjs-mermaid</guid>
             <pubDate>Thu, 08 Dec 2022 14:04:03 GMT</pubDate>
-            <description><![CDATA[Next.jsでSSG時にRemarkでMermaidをSVGに出力する]]></description>
+            <description><![CDATA[Next.jsでSSG時にRemarkでMermaidをSVGにして出力してみたいと思うこと、ありますよね。僕はあるのですがネット上にあまり情報が無かったので自分用にメモです。]]></description>
             <content:encoded><![CDATA[
 Next.jsでSSG時にRemarkでMermaidをSVGにして出力してみたいと思うこと、ありますよね。  
-僕はあるので自分用にメモです。
+僕はあるのですがネット上にあまり情報が無かったので自分用にメモです。
 
 今回は`remark-mermaidjs`を使って実装しました。
+
+このサイトではMarkdownを`unified`で扱っているので`remark-mermaidjs`を`use`します。  
+`remark-mermaidjs`はGoogle Chromeを使ってMermaidをSVGにしているらしく`executablePath`でGoogle Chromeのパスを指定しなければならないようです。  
+このサイトはGitHub Actionsでビルドしているので、ubuntuのために`/opt/google/chrome/google-chrome`を指定しました。なお、ローカル環境でも自由に動かせるように`.env`にもGoogle Chromeへのパスを書くことにしました。
+
+```typescript
+// @ts-ignore
+import rehypePrism from '@mapbox/rehype-prism';
+import rehypeKatex from 'rehype-katex';
+import rehypeStringify from 'rehype-stringify';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import remarkMermaid from 'remark-mermaidjs';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
+
+export const markdownToHtml = async (markdown: string) =>
+	(
+		await unified()
+			.use(remarkParse)
+			.use(remarkMath)
+			.use(remarkGfm)
+			.use(remarkMermaid, {
+				launchOptions: {
+					executablePath:
+						process.env.GoogleChromeExecutablePath ?? // .env
+						'/opt/google/chrome/google-chrome', // for GitHub Actions Ubuntu
+				},
+				svgo: false,
+			})
+			.use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })
+			.use(rehypePrism)
+			.use(rehypeKatex)
+			.use(rehypeStringify, { allowDangerousHtml: true })
+			.process(markdown)
+	)
+		.toString()
+		.replace(/@@baseUrl@@/g, process.env.baseUrl || '');
+```
 
 以下にサンプルを置いておきます。図がSVGになっていることがわかると思います。
 
@@ -269,53 +309,53 @@ Mermaid記法なら簡単にグラフを書けて便利なので、どんどん�
             <description><![CDATA[徳、積みたいですよね。JavaScriptを使わずにSVGとCSSだけでマニ車をクルクル回して自動で徳を積みたいこと、ありますよね。僕はあるので自分用にメモです。]]></description>
             <content:encoded><![CDATA[
 <style>
-  #Text1{animation: spin 11s linear infinite; transform-origin: center;}
-  #Text2{animation: spin 10s linear infinite; transform-origin: center;}
-  #Text3{animation: spin 9s linear infinite; transform-origin: center;}
-  #Text4{animation: spin 8s linear infinite; transform-origin: center;}
-  #Text5{animation: spin 7s linear infinite; transform-origin: center;}
-  #Text6{animation: spin 6s linear infinite; transform-origin: center;}
-  #Text7{animation: spin 5s linear infinite; transform-origin: center;}
-  #Text8{animation: spin 4s linear infinite; transform-origin: center;}
-  #Text9{animation: spin 3s linear infinite; transform-origin: center;}
+	#Text1{animation: spin 11s linear infinite; transform-origin: center;}
+	#Text2{animation: spin 10s linear infinite; transform-origin: center;}
+	#Text3{animation: spin 9s linear infinite; transform-origin: center;}
+	#Text4{animation: spin 8s linear infinite; transform-origin: center;}
+	#Text5{animation: spin 7s linear infinite; transform-origin: center;}
+	#Text6{animation: spin 6s linear infinite; transform-origin: center;}
+	#Text7{animation: spin 5s linear infinite; transform-origin: center;}
+	#Text8{animation: spin 4s linear infinite; transform-origin: center;}
+	#Text9{animation: spin 3s linear infinite; transform-origin: center;}
 </style>
 <svg style="max-width:400px" viewBox="0 0 400 400" >
-  <defs>
-    <path id="Circle1" d="M 25, 200 a 175,175 0 1,1 350,0 a 175,175 0 1,1 -350,0" />
-    <path id="Circle2" d="M 50, 200 a 150,150 0 1,1 300,0 a 150,150 0 1,1 -300,0" />
-    <path id="Circle3" d="M 75, 200 a 125,125 0 1,1 250,0 a 125,125 0 1,1 -250,0" />
-    <path id="Circle4" d="M 100, 200 a 100,100 0 1,1 200,0 a 100,100 0 1,1 -200,0" />
-    <path id="Circle5" d="M 125, 200 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
-    <path id="Circle6" d="M 150, 200 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
-    <path id="Circle7" d="M 175, 200 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
-  </defs>
-  <text id="Text1">
-    <textPath href="#Circle1">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text2">
-    <textPath href="#Circle2">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text3">
-    <textPath href="#Circle3">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text4">
-    <textPath href="#Circle4">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text5">
-    <textPath href="#Circle5">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text6">
-    <textPath href="#Circle6">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text7">
-    <textPath href="#Circle7">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text8">
-    <textPath href="#Circle8">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text9">
-    <textPath href="#Circle9">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
+	<defs>
+		<path id="Circle1" d="M 25, 200 a 175,175 0 1,1 350,0 a 175,175 0 1,1 -350,0" />
+		<path id="Circle2" d="M 50, 200 a 150,150 0 1,1 300,0 a 150,150 0 1,1 -300,0" />
+		<path id="Circle3" d="M 75, 200 a 125,125 0 1,1 250,0 a 125,125 0 1,1 -250,0" />
+		<path id="Circle4" d="M 100, 200 a 100,100 0 1,1 200,0 a 100,100 0 1,1 -200,0" />
+		<path id="Circle5" d="M 125, 200 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+		<path id="Circle6" d="M 150, 200 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
+		<path id="Circle7" d="M 175, 200 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
+	</defs>
+	<text id="Text1">
+		<textPath href="#Circle1">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text2">
+		<textPath href="#Circle2">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text3">
+		<textPath href="#Circle3">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text4">
+		<textPath href="#Circle4">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text5">
+		<textPath href="#Circle5">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text6">
+		<textPath href="#Circle6">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text7">
+		<textPath href="#Circle7">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text8">
+		<textPath href="#Circle8">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text9">
+		<textPath href="#Circle9">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
 </svg>
 
 徳、積みたいですよね。
@@ -330,53 +370,53 @@ Mermaid記法なら簡単にグラフを書けて便利なので、どんどん�
 
 ```html
 <style>
-  #Text1{animation: spin 11s linear infinite; transform-origin: center;}
-  #Text2{animation: spin 10s linear infinite; transform-origin: center;}
-  #Text3{animation: spin 9s linear infinite; transform-origin: center;}
-  #Text4{animation: spin 8s linear infinite; transform-origin: center;}
-  #Text5{animation: spin 7s linear infinite; transform-origin: center;}
-  #Text6{animation: spin 6s linear infinite; transform-origin: center;}
-  #Text7{animation: spin 5s linear infinite; transform-origin: center;}
-  #Text8{animation: spin 4s linear infinite; transform-origin: center;}
-  #Text9{animation: spin 3s linear infinite; transform-origin: center;}
+	#Text1{animation: spin 11s linear infinite; transform-origin: center;}
+	#Text2{animation: spin 10s linear infinite; transform-origin: center;}
+	#Text3{animation: spin 9s linear infinite; transform-origin: center;}
+	#Text4{animation: spin 8s linear infinite; transform-origin: center;}
+	#Text5{animation: spin 7s linear infinite; transform-origin: center;}
+	#Text6{animation: spin 6s linear infinite; transform-origin: center;}
+	#Text7{animation: spin 5s linear infinite; transform-origin: center;}
+	#Text8{animation: spin 4s linear infinite; transform-origin: center;}
+	#Text9{animation: spin 3s linear infinite; transform-origin: center;}
 </style>
 <svg style="max-width:400px" viewBox="0 0 400 400" >
-  <defs>
-    <path id="Circle1" d="M 25, 200 a 175,175 0 1,1 350,0 a 175,175 0 1,1 -350,0" />
-    <path id="Circle2" d="M 50, 200 a 150,150 0 1,1 300,0 a 150,150 0 1,1 -300,0" />
-    <path id="Circle3" d="M 75, 200 a 125,125 0 1,1 250,0 a 125,125 0 1,1 -250,0" />
-    <path id="Circle4" d="M 100, 200 a 100,100 0 1,1 200,0 a 100,100 0 1,1 -200,0" />
-    <path id="Circle5" d="M 125, 200 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
-    <path id="Circle6" d="M 150, 200 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
-    <path id="Circle7" d="M 175, 200 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
-  </defs>
-  <text id="Text1">
-    <textPath href="#Circle1">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text2">
-    <textPath href="#Circle2">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text3">
-    <textPath href="#Circle3">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text4">
-    <textPath href="#Circle4">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text5">
-    <textPath href="#Circle5">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text6">
-    <textPath href="#Circle6">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text7">
-    <textPath href="#Circle7">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text8">
-    <textPath href="#Circle8">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
-  <text id="Text9">
-    <textPath href="#Circle9">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-  </text>
+	<defs>
+		<path id="Circle1" d="M 25, 200 a 175,175 0 1,1 350,0 a 175,175 0 1,1 -350,0" />
+		<path id="Circle2" d="M 50, 200 a 150,150 0 1,1 300,0 a 150,150 0 1,1 -300,0" />
+		<path id="Circle3" d="M 75, 200 a 125,125 0 1,1 250,0 a 125,125 0 1,1 -250,0" />
+		<path id="Circle4" d="M 100, 200 a 100,100 0 1,1 200,0 a 100,100 0 1,1 -200,0" />
+		<path id="Circle5" d="M 125, 200 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+		<path id="Circle6" d="M 150, 200 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
+		<path id="Circle7" d="M 175, 200 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
+	</defs>
+	<text id="Text1">
+		<textPath href="#Circle1">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text2">
+		<textPath href="#Circle2">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text3">
+		<textPath href="#Circle3">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text4">
+		<textPath href="#Circle4">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text5">
+		<textPath href="#Circle5">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text6">
+		<textPath href="#Circle6">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text7">
+		<textPath href="#Circle7">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text8">
+		<textPath href="#Circle8">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
+	<text id="Text9">
+		<textPath href="#Circle9">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+	</text>
 </svg>
 ```
 
@@ -387,51 +427,51 @@ Mermaid記法なら簡単にグラフを書けて便利なので、どんどん�
 
 ```xml
 <svg style="max-width:400px" viewBox="0 0 400 400" >
-  <defs>
-    <path id="Circle1" d="M 25, 200 a 175,175 0 1,1 350,0 a 175,175 0 1,1 -350,0" />
-    <path id="Circle2" d="M 50, 200 a 150,150 0 1,1 300,0 a 150,150 0 1,1 -300,0" />
-    <path id="Circle3" d="M 75, 200 a 125,125 0 1,1 250,0 a 125,125 0 1,1 -250,0" />
-    <path id="Circle4" d="M 100, 200 a 100,100 0 1,1 200,0 a 100,100 0 1,1 -200,0" />
-    <path id="Circle5" d="M 125, 200 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
-    <path id="Circle6" d="M 150, 200 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
-    <path id="Circle7" d="M 175, 200 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
-  </defs>
-  <text>
-    <textPath href="#Circle1">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="11s" repeatCount="indefinite" />
-  </text>
-  <text>
-    <textPath href="#Circle2">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="10s" repeatCount="indefinite" />
-  </text>
-  <text>
-    <textPath href="#Circle3">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="9s" repeatCount="indefinite" />
-  </text>
-  <text>
-    <textPath href="#Circle4">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="8s" repeatCount="indefinite" />
-  </text>
-  <text>
-    <textPath href="#Circle5">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="7s" repeatCount="indefinite" />
-  </text>
-  <text>
-    <textPath href="#Circle6">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="6s" repeatCount="indefinite" />
-  </text>
-  <text>
-    <textPath href="#Circle7">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="5s" repeatCount="indefinite" />
-  </text>
-  <text>
-    <textPath href="#Circle8">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="4s" repeatCount="indefinite" />
-  </text>
-  <text>
-    <textPath href="#Circle9">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
-    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="3s" repeatCount="indefinite" />
-  </text>
+	<defs>
+		<path id="Circle1" d="M 25, 200 a 175,175 0 1,1 350,0 a 175,175 0 1,1 -350,0" />
+		<path id="Circle2" d="M 50, 200 a 150,150 0 1,1 300,0 a 150,150 0 1,1 -300,0" />
+		<path id="Circle3" d="M 75, 200 a 125,125 0 1,1 250,0 a 125,125 0 1,1 -250,0" />
+		<path id="Circle4" d="M 100, 200 a 100,100 0 1,1 200,0 a 100,100 0 1,1 -200,0" />
+		<path id="Circle5" d="M 125, 200 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+		<path id="Circle6" d="M 150, 200 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
+		<path id="Circle7" d="M 175, 200 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
+	</defs>
+	<text>
+		<textPath href="#Circle1">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+		<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="11s" repeatCount="indefinite" />
+	</text>
+	<text>
+		<textPath href="#Circle2">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+		<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="10s" repeatCount="indefinite" />
+	</text>
+	<text>
+		<textPath href="#Circle3">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+		<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="9s" repeatCount="indefinite" />
+	</text>
+	<text>
+		<textPath href="#Circle4">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+		<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="8s" repeatCount="indefinite" />
+	</text>
+	<text>
+		<textPath href="#Circle5">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+		<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="7s" repeatCount="indefinite" />
+	</text>
+	<text>
+		<textPath href="#Circle6">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+		<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="6s" repeatCount="indefinite" />
+	</text>
+	<text>
+		<textPath href="#Circle7">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+		<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="5s" repeatCount="indefinite" />
+	</text>
+	<text>
+		<textPath href="#Circle8">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+		<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="4s" repeatCount="indefinite" />
+	</text>
+	<text>
+		<textPath href="#Circle9">ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ ॐ मणिपद्मे हूँ</textPath>
+		<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 200,200" to="360 200,200" dur="3s" repeatCount="indefinite" />
+	</text>
 </svg>
 ```
 
@@ -513,18 +553,18 @@ import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 
 export const markdownToHtml = async (markdown: string) =>
-  (
-    await unified()
-      .use(remarkParse)
-      .use(remarkMath)
-      .use(remarkGfm)
-      .use(remarkRehype, { allowDangerousHtml: true })
-      .use(rehypePrism)
-      .use(rehypeKatex)
-      .use(rehypeStringify, { allowDangerousHtml: true })
-      .process(markdown)
-  )
-    .toString();
+	(
+		await unified()
+			.use(remarkParse)
+			.use(remarkMath)
+			.use(remarkGfm)
+			.use(remarkRehype, { allowDangerousHtml: true })
+			.use(rehypePrism)
+			.use(rehypeKatex)
+			.use(rehypeStringify, { allowDangerousHtml: true })
+			.process(markdown)
+	)
+		.toString();
 ```
 
 あとは$\KaTeX$のCSSをCDNなどから読み込めば完成です。
@@ -539,18 +579,18 @@ export const markdownToHtml = async (markdown: string) =>
 ```latex
 \gcd(x, y) =
 \begin{cases}
-  y & (x = 0)\\
-  x & (y = 0)\\
-  \gcd(y, x \bmod y) & (\text{otherwize})
+	y & (x = 0)\\
+	x & (y = 0)\\
+	\gcd(y, x \bmod y) & (\text{otherwize})
 \end{cases}
 ```
 
 $$
 \gcd(x, y) =
 \begin{cases}
-  y & (x = 0)\\
-  x & (y = 0)\\
-  \gcd(y, x \bmod y) & (\text{otherwize})
+	y & (x = 0)\\
+	x & (y = 0)\\
+	\gcd(y, x \bmod y) & (\text{otherwize})
 \end{cases}
 $$
 
@@ -674,30 +714,30 @@ JavaScriptを使わずにSVGとCSSだけで文字をクルクル回したいこ�
 僕はあるので自分用にメモです。
 
 <svg style="animation: spin 5s linear infinite; max-width:300px" viewBox="0 0 100 100" >
-  <defs>
-    <path id="Circle" d="M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
-  </defs>
-  <text>
-    <textPath href="#Circle">文字がクルクル回ります。</textPath>
-  </text>
+	<defs>
+		<path id="Circle" d="M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
+	</defs>
+	<text>
+		<textPath href="#Circle">文字がクルクル回ります。</textPath>
+	</text>
 </svg>
 
 ```html
 <svg
-  style="animation: spin 5s linear infinite; max-width:300px"
-  viewBox="0 0 100 100"
+	style="animation: spin 5s linear infinite; max-width:300px"
+	viewBox="0 0 100 100"
 >
-  <defs>
-    <path
-      id="Circle"
-      d="M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0"
-    />
-  </defs>
-  <text>
-    <textPath href="#Circle">
-      文字がクルクル回ります。
-    </textPath>
-  </text>
+	<defs>
+		<path
+			id="Circle"
+			d="M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0"
+		/>
+	</defs>
+	<text>
+		<textPath href="#Circle">
+			文字がクルクル回ります。
+		</textPath>
+	</text>
 </svg>
 ```
 
@@ -717,7 +757,6 @@ import React from 'react';
 
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
-import dynamic from 'next/dynamic';
 
 import { ReactAudioTest } from '../../components/ReactAudioTest';
 import { Content } from '../../content/Content';
@@ -730,18 +769,168 @@ import {
 	getTags,
 	PostItems,
 } from '../../utils/Content';
+import { markdownToHtml } from '../../utils/Markdown';
 
 type ReactSoundTestProps = {
 	recents: PostItems[];
 	tags: string[];
+	sorceCodeHTML: string;
 	prevPost?: PostItems;
 	nextPost?: PostItems;
 };
 
-const ReactEmbedGist = dynamic(() => import('../../utils/CodeBlock'), {
-	loading: () => <p>loading...</p>,
-	ssr: false,
-});
+const sorceCodeMarkdown = `
+\`\`\`typescript
+import React from 'react';
+
+import { VolumeDown, VolumeUp } from '@mui/icons-material';
+import { Button, CircularProgress, Grid, Slider } from '@mui/material';
+
+// webkit用Typescript型宣言
+declare global {
+	interface Window {
+		webkitAudioContext: AudioContext;
+	}
+}
+
+const ReactAudioTest: React.FunctionComponent = () => {
+	// 音量：初期値25
+	const [volume, setVolume] = React.useState(25);
+	// 再生状態：初期値false
+	const [playingFlag, setPlayingFlag] = React.useState(false);
+	// AudioContext：初期値undefined
+	const [audioContext, setAudioContext] = React.useState<
+		AudioContext | undefined
+	>(undefined);
+	// 音源ソース：初期値undefined
+	const [source, setSourceState] = React.useState<
+		AudioBufferSourceNode | undefined
+	>(undefined);
+	// 音量調節：初期値undefined
+	const [gainState, setGainState] = React.useState<GainNode | undefined>(
+		undefined
+	);
+
+	React.useEffect(() => {
+		// 初期化
+		const newAudioContext = new (window.AudioContext ||
+			window.webkitAudioContext)();
+		setAudioContext(newAudioContext);
+		const gainNode = newAudioContext.createGain();
+		gainNode.gain.value = volume / 100;
+		setGainState(gainNode);
+
+		return () => {
+			// unmount時の後始末
+			if (source) {
+				source.buffer = null; // メモリリーク防止
+			}
+			if (newAudioContext) {
+				newAudioContext.close();
+			}
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	React.useEffect(() => {
+		// 音量変更
+		if (gainState) {
+			gainState.gain.value = volume / 100;
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [volume]);
+
+	// スマホなどでは迷惑な自動再生を防ぐ目的で
+	// ユーザの操作に伴う再生でしか音を再生できない
+	const onClickToStartAndStop = React.useCallback(() => {
+		if (audioContext && gainState) {
+			if (playingFlag) {
+				// 停止
+				if (source) {
+					source.stop();
+					source.buffer = null; // メモリリーク防止
+				}
+			} else {
+				// 再生
+				const channels = 1; // モノラル
+				const frameCount = audioContext.sampleRate * 2.0; // 2秒
+
+				const myArrayBuffer = audioContext.createBuffer(
+					channels,
+					frameCount,
+					audioContext.sampleRate
+				);
+
+				for (let channel = 0; channel < channels; channel += 1) {
+					// ホワイトノイズ生成
+					const nowBuffering = myArrayBuffer.getChannelData(channel);
+					for (let i = 0; i < frameCount; i += 1) {
+						nowBuffering[i] = Math.random() * 2 - 1;
+					}
+				}
+				const buffersource = audioContext.createBufferSource();
+				setSourceState(buffersource);
+				buffersource.buffer = myArrayBuffer;
+				buffersource.loop = true;
+				buffersource.connect(gainState).connect(audioContext.destination);
+				buffersource.start();
+			}
+			setPlayingFlag(!playingFlag);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [playingFlag, audioContext, gainState]);
+
+	if (!audioContext || !gainState) {
+		return (
+			<React.Fragment>
+				<CircularProgress />
+				loading...
+			</React.Fragment>
+		);
+	}
+
+	return (
+		<div className="text-center h-fit w-full">
+			<Grid container>
+				<Grid item></Grid>
+				<Grid item>
+					<VolumeDown />
+				</Grid>
+				<Grid item xs={10}>
+					<Slider
+						min={0}
+						max={100}
+						defaultValue={50}
+						value={volume}
+						onChange={(__, newValue) => {
+							if (typeof newValue === 'number') {
+								setVolume(newValue);
+							}
+						}}
+						valueLabelDisplay="auto"
+						aria-labelledby="continuous-slider"
+					/>
+				</Grid>
+				<Grid item>
+					<VolumeUp />
+				</Grid>
+				<Grid item></Grid>
+			</Grid>
+
+			<Button
+				variant="outlined"
+				color={playingFlag ? 'info' : 'primary'}
+				onClick={onClickToStartAndStop}
+			>
+				ホワイトノイズ{playingFlag ? '停止' : '再生'}
+			</Button>
+		</div>
+	);
+};
+
+export { ReactAudioTest };
+\`\`\`
+`;
 
 const ReactSoundTest = (props: ReactSoundTestProps) => (
 	<Main
@@ -790,7 +979,7 @@ const ReactSoundTest = (props: ReactSoundTestProps) => (
 				</p>
 				<p>なので今回は useCallback で宣言して onClick から呼びました。</p>
 				<p>↓ これが今回のコードです</p>
-				<ReactEmbedGist gist="nishidemasami/133b02b3a02869dea1a2d7d3e15ce3b6" />
+				<div dangerouslySetInnerHTML={{ __html: props.sorceCodeHTML }} />
 			</div>
 		</Content>
 
@@ -805,6 +994,7 @@ export const getStaticProps: GetStaticProps<ReactSoundTestProps> = async () => {
 		props: {
 			recents,
 			tags: getTags(),
+			sorceCodeHTML: await markdownToHtml(sorceCodeMarkdown),
 			...getPrevNextPost(__filename),
 		},
 	};
@@ -1284,10 +1474,10 @@ Vim と openssl で暗号化・復号をしようというお話でした。
             <pubDate>Sat, 26 Nov 2016 00:04:03 GMT</pubDate>
             <description><![CDATA[JAVAで組み合わせを作成したいと思うこと、ありますよね。僕はあるので自分用にメモです。Ruby では組み合わせを作成することができるArray#combinationが用意されています。これを使えば、例えば下記のように…]]></description>
             <content:encoded><![CDATA[
-JAVAで組み合わせを作成したいと思うこと、ありますよね。  
+JAVAで組み合わせを作成したいと思うこと、ありますよね。	
 僕はあるので自分用にメモです。
 
-Ruby では組み合わせを作成することができる[Array#combination](https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html)が用意されています。  
+Ruby では組み合わせを作成することができる[Array#combination](https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html)が用意されています。	
 これを使えば、例えば下記のように
 
 ```ruby
@@ -1295,25 +1485,25 @@ require 'json'
 
 jsonstr = <<JSON
 [
-  {
-    "price": 432,
-    "name": "hoge"
-  },
-  {
-    "price": 531,
-    "name": "fuga"
-  },
-  {
-    "price": 568,
-    "name": "piyo"
-  }
+	{
+		"price": 432,
+		"name": "hoge"
+	},
+	{
+		"price": 531,
+		"name": "fuga"
+	},
+	{
+		"price": 568,
+		"name": "piyo"
+	}
 ]
 JSON
 
 p JSON.load(jsonstr)
-    .combination(2)
-    .to_a
-    .select(&->x{x.reduce(&->x,y{x["price"] + y["price"]}) == 1000})
+		.combination(2)
+		.to_a
+		.select(&->x{x.reduce(&->x,y{x["price"] + y["price"]}) == 1000})
 ```
 
 こうすれば、JSON の商品リストから price の合計が 1000 になるもの(hoge と piyo)を抜き出してくれます。
@@ -1324,8 +1514,8 @@ p JSON.load(jsonstr)
 
 非常にイージー。
 
-ところが、combination は Java には無いんですよね。  
-これを Java で書きたい時、どうすればいいのか悩みました。  
+ところが、combination は Java には無いんですよね。	
+これを Java で書きたい時、どうすればいいのか悩みました。	
 今回は再帰的なやりかたでやってみました。
 
 ```java
@@ -1336,71 +1526,71 @@ p JSON.load(jsonstr)
  * @return 組み合わせのリスト
  */
 private static final <E> List<List<E>> combination(
-  final List<E> parameter,
-  final long combinationCount) {
+	final List<E> parameter,
+	final long combinationCount) {
 
-  final int parameterSize = parameter.size();
+	final int parameterSize = parameter.size();
 
-  if (parameterSize < combinationCount) {
-    throw new IllegalArgumentException("リストの要素数が組み合わせ個数より少ないです。");
-  } else if (combinationCount <= 0) {
-    throw new IllegalArgumentException("組み合わせ個数が不正です。");
-  } else if (combinationCount == 1) {
-    List<List<E>> result = new LinkedList<List<E>>();
-    parameter.forEach(x -> {
-      List<E> resultWork = new LinkedList<E>();
-      resultWork.add(x);
-      result.add(resultWork);
-    });
-    return result;
-  } else {
-    List<List<E>> result = new LinkedList<List<E>>();
-    for (int i = 0; i < parameterSize - combinationCount + 1; i++) {
-      List<List<E>> resultWork = combination(
-        parameter.subList(1 + i, parameterSize),
-        combinationCount - 1);
-      for (List<E> resultWorkForEach : resultWork) {
-        resultWorkForEach.add(0, parameter.get(i));
-      }
-      result.addAll(resultWork);
-    }
-    return result;
-  }
+	if (parameterSize < combinationCount) {
+		throw new IllegalArgumentException("リストの要素数が組み合わせ個数より少ないです。");
+	} else if (combinationCount <= 0) {
+		throw new IllegalArgumentException("組み合わせ個数が不正です。");
+	} else if (combinationCount == 1) {
+		List<List<E>> result = new LinkedList<List<E>>();
+		parameter.forEach(x -> {
+			List<E> resultWork = new LinkedList<E>();
+			resultWork.add(x);
+			result.add(resultWork);
+		});
+		return result;
+	} else {
+		List<List<E>> result = new LinkedList<List<E>>();
+		for (int i = 0; i < parameterSize - combinationCount + 1; i++) {
+			List<List<E>> resultWork = combination(
+				parameter.subList(1 + i, parameterSize),
+				combinationCount - 1);
+			for (List<E> resultWorkForEach : resultWork) {
+				resultWorkForEach.add(0, parameter.get(i));
+			}
+			result.addAll(resultWork);
+		}
+		return result;
+	}
 }
 ```
 
-LinkedList を使っているのは先頭追加があるためです。  
-ちょっと見た目がヘビーですが、使えます。  
+LinkedList を使っているのは先頭追加があるためです。	
+ちょっと見た目がヘビーですが、使えます。	
 こんな感じです。
 
 ```java
 class Item {
-  public Item(int price, String name){
-    this.price = price;
-    this.name = name;
-  }
-  int price;
-  String name;
+	public Item(int price, String name){
+		this.price = price;
+		this.name = name;
+	}
+	int price;
+	String name;
 
-  @Override
-  public String toString() {
-    return name + ":" + price + "円";
-  }
+	@Override
+	public String toString() {
+		return name + ":" + price + "円";
+	}
 }
 
 class Main {
-  public static void main(String[] args) {
-    List<Item> itemList = Arrays.asList(new Item[]{
-      new Item(432, "hoge"),
-      new Item(531, "fuga"),
-      new Item(568, "piyo"),
-      new Item(999, "meta")
-    });
+	public static void main(String[] args) {
+		List<Item> itemList = Arrays.asList(new Item[]{
+			new Item(432, "hoge"),
+			new Item(531, "fuga"),
+			new Item(568, "piyo"),
+			new Item(999, "meta")
+		});
 
-    combination(itemList,3)
-      .stream()
-      .forEach(x->{System.out.println(Arrays.toString(x.toArray()));});
-  }
+		combination(itemList,3)
+			.stream()
+			.forEach(x->{System.out.println(Arrays.toString(x.toArray()));});
+	}
 }
 ```
 
@@ -1417,9 +1607,9 @@ Ruby の例題と同じようにこうすると、
 
 ```java
 combination(itemList,2)
-  .stream()
-  .filter(x-> x.stream().map(y -> y.price).reduce((y, z)-> y + z).get() == 1000)
-  .forEach(x->{System.out.println(Arrays.toString(x.toArray()));});
+	.stream()
+	.filter(x-> x.stream().map(y -> y.price).reduce((y, z)-> y + z).get() == 1000)
+	.forEach(x->{System.out.println(Arrays.toString(x.toArray()));});
 ```
 
 こうなります。
@@ -1428,7 +1618,7 @@ combination(itemList,2)
 [hoge:432円, piyo:568円]
 ```
 
-java8 の stream なのに遅延評価が役に立たないのは、Ruby も combination を[Enumerator::Lazy](https://docs.ruby-lang.org/ja/latest/class/Enumerator=3a=3aLazy.html)で使えないのと一緒ですね。  
+java8 の stream なのに遅延評価が役に立たないのは、Ruby も combination を[Enumerator::Lazy](https://docs.ruby-lang.org/ja/latest/class/Enumerator=3a=3aLazy.html)で使えないのと一緒ですね。	
 java8 は遅延評価がデフォルトとなっているので、気軽に limit(1)などで一瞬で返ってくるつもりでいたら combination 部分が延々返ってこない…なんてことが発生しないようになのかもしれません。
 
 Ruby で使えた combination が無くて困った話でした。
