@@ -1,6 +1,6 @@
 ---
 title: "Next.jsで数式を書く"
-date: "2022-12-04T04:58:43+0900"
+date: "2022-11-26T04:58:43+0900"
 socialImage: "photo.jpg"
 draft: false
 template: "post"

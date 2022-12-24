@@ -26,7 +26,7 @@ export const markdownToHtml = async (markdown: string) =>
 			.use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })
 			.use(rehypeShiki, {
 				highlighter: await getHighlighter({
-					theme: 'github-dark',
+					theme: 'github-light',
 				}),
 			})
 			.use(rehypeKatex)

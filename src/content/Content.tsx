@@ -38,6 +38,35 @@ const Content = (props: IContentProps) => (
 					border-color: #dedede;
 					padding: 0.1rem;
 				}
+
+				.content :global(.shiki) {
+					border-radius: 0.375rem;
+					padding: 0px 4px;
+					margin: 0px 4px;
+					box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+						0 2px 4px -2px rgb(0 0 0 / 0.1);
+					overflow-x: auto;
+					font-size: smaller;
+					border-color: #d0d7de;
+					border-width: 1px;
+					border-style: solid;
+				}
+
+				.content :global(code) {
+					counter-reset: code-step-counter;
+				}
+
+				.content :global(code .line::before) {
+					display: inline-block;
+					content: counter(code-step-counter);
+					counter-increment: code-step-counter;
+					width: 2.5rem;
+					margin-right: 1rem;
+					text-align: right;
+					font-variant-numeric: slashed-zero;
+					color: #6e7781;
+					padding-right: 0.5rem;
+				}
 			`}
 		</style>
 	</div>

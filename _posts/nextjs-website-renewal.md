@@ -1,6 +1,6 @@
 ---
 title: Next.jsでこのウェブサイトをリニューアルしました！✨
-date: "2022-11-30T01:04:03+0900"
+date: "2022-11-05T01:04:03+0900"
 template: "post"
 draft: false
 category: "blog"

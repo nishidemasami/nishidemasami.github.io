@@ -1,6 +1,6 @@
 ---
 title: "GitHubのレポジトリサイズを確認する"
-date: "2022-12-01T23:02:43+0900"
+date: "2022-11-12T23:02:43+0900"
 draft: false
 template: "post"
 category: "blog"

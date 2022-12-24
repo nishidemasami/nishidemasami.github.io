@@ -1,6 +1,6 @@
 ---
 title: SVGだけで作ったSVGマニ車をCSSでクルクル回して自動で徳を積む
-date: "2022-12-07T01:04:03+0900"
+date: "2022-12-17T01:04:03+0900"
 modified_date: '2022-12-07T01:04:03+0900'
 template: "post"
 draft: false

@@ -1,6 +1,6 @@
 ---
 title: "Google ColaboratoryでGitHubのipynbファイルを開く"
-date: "2022-12-04T05:58:43+0900"
+date: "2022-12-03T05:58:43+0900"
 socialImage: "photo.jpg"
 draft: false
 template: "post"

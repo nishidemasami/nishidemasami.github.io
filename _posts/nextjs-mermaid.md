@@ -1,6 +1,6 @@
 ---
 title: Next.jsでSSG時にRemarkでMermaidをSVGとして出力する
-date: "2022-12-08T23:04:03+0900"
+date: "2022-12-18T23:04:03+0900"
 template: "post"
 draft: false
 category: "blog"
