@@ -1,7 +1,6 @@
 ---
 title: "はじめまして"
 date: "2016-07-01T04:58:43+0900"
-socialImage: "photo.jpg"
 draft: false
 template: "post"
 category: "blog"

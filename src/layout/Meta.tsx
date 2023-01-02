@@ -93,11 +93,19 @@ const Meta = (props: IMetaProps) => {
 				{props.post && (
 					<>
 						<meta property="og:type" content="article" key="og:type" />
-						<meta
-							property="og:image"
-							content={`${AppConfig.url}${router.basePath}${props.post.image}`}
-							key="og:image"
-						/>
+						{props.post.image ? (
+							<meta
+								property="og:image"
+								content={`${AppConfig.url}${router.basePath}/${props.post.image}`}
+								key="og:image"
+							/>
+						) : (
+							<meta
+								property="og:image"
+								content={`${AppConfig.url}${router.basePath}/assets/images/author.jpg`}
+								key="og:image"
+							/>
+						)}
 						<meta
 							name="twitter:card"
 							content="summary_large_image"

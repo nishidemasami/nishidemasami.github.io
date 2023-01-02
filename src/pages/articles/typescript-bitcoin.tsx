@@ -64,7 +64,7 @@ C -->|BASE32変換とチェックサム付与| E[Bech32形式ビットコイン�
 これはTypescriptでも簡単に計算できます。
 
 それを実際に書いてみたのが ↓ この今回のコードです
-\`\`\`typescript
+\`\`\`tsx
 import { randomBytes, createHash, BinaryLike } from 'crypto';
 
 import { useState, FC, useMemo, useCallback } from 'react';

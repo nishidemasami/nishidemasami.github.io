@@ -4,7 +4,6 @@ title: Gatsbyでブログをリニューアルしてみました
 date: "2021-03-06T18:04:03+0900"
 modified_date: '2021-03-16T18:04:03+0900'
 image: /assets/images/posts/random-img.jpg
-socialImage: "photo.jpg"
 template: "post"
 type: "tsx"
 draft: false
