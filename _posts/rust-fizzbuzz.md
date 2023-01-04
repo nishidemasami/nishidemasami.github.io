@@ -114,8 +114,8 @@ fn test() {
 }
 ```
 
-次はこれをRustらしく、`enum`に`std::convert::From`トレイトと`fmt::Display`トレイトを実装した書き方にします。  
-`std::convert::From`トレイトの`into()`メソッドを実装すれば`from()`メソッドが自動で実装され、`fmt::Display`トレイトの`fmt()`メソッドを実装すれば`to_string()`メソッドが自動で実装されます。
+次はこれをRustらしく、`enum`に[`std::convert::From`](https://doc.rust-lang.org/std/convert/trait.From.html)トレイトと[`fmt::Display`](https://doc.rust-lang.org/std/fmt/trait.Display.html)トレイトを実装した書き方にします。  
+[`std::convert::From`](https://doc.rust-lang.org/std/convert/trait.From.html)トレイトの[`from()`](https://doc.rust-lang.org/std/convert/trait.From.html#tymethod.from)メソッドを実装すれば[`std::convert::Into`](https://doc.rust-lang.org/std/convert/trait.Into.html)トレイトの[`into()`](https://doc.rust-lang.org/std/convert/trait.Into.html#tymethod.into)メソッドが自動で実装され、[`fmt::Display`](https://doc.rust-lang.org/std/fmt/trait.Display.html)トレイトの[`fmt()`](https://doc.rust-lang.org/std/fmt/trait.Display.html#tymethod.fmt)メソッドを実装すれば[`std::string::ToString`](https://doc.rust-lang.org/std/string/trait.ToString.html)トレイトの[`to_string()`](https://doc.rust-lang.org/std/string/trait.ToString.html#tymethod.to_string)メソッドが自動で実装されます。
 
 ```rust
 use std::fmt;
@@ -180,8 +180,8 @@ fn test() {
 }
 ```
 
-ここで、u32では4294967295が最大値なのは心もとないので拡張可能にしたいと考えると思います。  
-u32をu128にしたところで340282366920938463463374607431768211455が最大値です。  
+ここで、`u32`では`4294967295`が最大値なのは心もとないので拡張可能にしたいと考えると思います。  
+`u32`を`u128`にしたところで`340282366920938463463374607431768211455`が最大値です。  
 これでは十分ではないので、もっと抽象的な数値を扱えるようにします。
 
 fizzbuzz関数$f(x)$を定義してみます。
@@ -274,6 +274,8 @@ error[E0637]: `&` without an explicit lifetime name cannot be used here
 42 |     &T: Rem<T, Output = U> + ToString,
    |     ^ explicit lifetime name needed here
 ```
+
+つまり、`&`を使う必要があるならライフタイムを明示的に示さないといけないということです。
 
 </div>
 
@@ -409,4 +411,86 @@ fn test() {
 }
 ```
 
-以上です。
+<div class="note warn">
+
+<i class="fontawesome fa fa-exclamation-circle" style="color:#f7a535;font-size:20px;" aria-hidden="true"></i>もしここで「そうだ！FizzBuzzのenumにString型ではなくBox<dyn 'a + ToString>型で値を持たせれば、ゼロコスト抽象化の恩恵を得られてコンパイル時にさらに最適化されるのでは？」と思うかもしれませんが…
+
+```rust example-bad
+use num::Zero;
+use std::fmt;
+use std::ops::Rem;
+
+pub enum FizzBuzz<'a> {
+    Fizz,
+    Buzz,
+    FizzBuzz,
+    Number(Box<dyn 'a + ToString>),
+}
+
+impl<'a> fmt::Display for FizzBuzz<'a> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            FizzBuzz::Fizz => write!(f, "Fizz"),
+            FizzBuzz::Buzz => write!(f, "Buzz"),
+            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+            FizzBuzz::Number(x) => write!(f, "{}", x.to_string()),
+        }
+    }
+}
+
+impl<'a, T, U> From<&'a T> for FizzBuzz<'a>
+where
+    T: 'a + From<u8>,
+    &'a T: Rem<T, Output = U> + ToString,
+    U: Zero,
+{
+    fn from(x: &'a T) -> FizzBuzz<'a> {
+        let three = T::from(3);
+        match ((x % three).is_zero(), (x % T::from(5)).is_zero()) {
+            (true, true) => FizzBuzz::FizzBuzz,
+            (true, _) => FizzBuzz::Fizz,
+            (_, true) => FizzBuzz::Buzz,
+            _ => FizzBuzz::Number(Box::new(x)),
+        }
+    }
+}
+```
+
+これを以下のような利用をしようとすると…
+
+```rust example-bad
+fn main() {
+    (1..=15)
+        .map(|x| (&x).into())
+        .for_each(|x: FizzBuzz| println!("{}", x));
+}
+```
+
+以下のようなエラーメッセージが出てしまいます。
+
+```text example-bad
+error[E0515]: cannot return value referencing function parameter `x`
+ --> src\main.rs:7:18
+  |
+7 |         .map(|x| (&x).into())
+  |                  ----^^^^^^^
+  |                  |
+  |                  returns a value referencing data owned by the current function
+  |                  `x` is borrowed here
+```
+
+つまり、クロージャ外から出た後までライフタイムを必要とするような処理はできませんよ、ということです。  
+なので以下のようにすれば問題ありません。
+
+```rust
+fn main() {
+    (1..=15)
+        .for_each(|x| println!("{}", Into::<FizzBuzz>::into(&x)));
+}
+```
+
+このように、あまりに長いライフタイムを要求すると、後々取り扱いに苦労してしまうので、性能と汎用性を天秤にかけて判断するようにしましょう。
+
+</div>
+
+RustでFizzBuzzを実装してみましたという話でした。
