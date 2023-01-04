@@ -67,6 +67,28 @@ const Content = (props: IContentProps) => (
 					color: #6e7781;
 					padding-right: 0.5rem;
 				}
+
+				.content :global(.note.warn) {
+					background: #fdf9e2;
+					border-radius: 8px;
+					padding: 16px;
+					margin: 24px 0;
+				}
+
+				.content :global(.note.alert) {
+					background: #feebee;
+					border-radius: 8px;
+					padding: 16px;
+					margin: 24px 0;
+				}
+
+				.content :global(.note.warn .shiki) {
+					border-color: #f7a535;
+				}
+
+				.content :global(.note.alert .shiki) {
+					border-color: #d60a34;
+				}
 			`}
 		</style>
 	</div>

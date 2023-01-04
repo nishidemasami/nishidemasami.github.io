@@ -19,34 +19,35 @@ RustでFizzBuzzを書いてみたいと思うこと、ありますよね。
 
 ```rust
 use num::Zero;
+use std::fmt;
 use std::ops::Rem;
 
-enum FizzBuzz {
+pub enum FizzBuzz {
     Fizz,
     Buzz,
     FizzBuzz,
     Number(String),
 }
 
-impl From<FizzBuzz> for String {
-    fn from(x: FizzBuzz) -> String {
-        match x {
-            FizzBuzz::Fizz => "Fizz".to_owned(),
-            FizzBuzz::Buzz => "Buzz".to_owned(),
-            FizzBuzz::FizzBuzz => "FizzBuzz".to_owned(),
-            FizzBuzz::Number(x) => x,
+impl fmt::Display for FizzBuzz {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            FizzBuzz::Fizz => write!(f, "Fizz"),
+            FizzBuzz::Buzz => write!(f, "Buzz"),
+            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+            FizzBuzz::Number(x) => write!(f, "{}", x),
         }
     }
 }
 
 impl<T, U> From<&T> for FizzBuzz
 where
-    T: ToString,
-    for<'a> &'a T: Rem<u8, Output = U>,
+    T: From<u8>,
+    for<'a> &'a T: Rem<T, Output = U> + ToString,
     U: Zero,
 {
     fn from(x: &T) -> FizzBuzz {
-        match ((x % 3).is_zero(), (x % 5).is_zero()) {
+        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
             (true, true) => FizzBuzz::FizzBuzz,
             (true, _) => FizzBuzz::Fizz,
             (_, true) => FizzBuzz::Buzz,
@@ -75,13 +76,13 @@ fn main() {
 }
 ```
 
-しかし、Rustを使用する以上、以下のようなメリットを享受したいと思います。
+しかし、Rustを使用する以上、当然以下のようなメリットを享受したいです。
 
 * テスト可能
 * 型安全
 * ゼロコスト抽象化
 
-まず、テスト可能なようにメソッドに分けてからテストを書きます。
+そのため、まずテスト可能なようにメソッドに分けてからテストを書きます。
 
 ```rust
 fn fizzbuzz(x: u128) -> String {
@@ -113,9 +114,12 @@ fn test() {
 }
 ```
 
-次はこれをRustらしく、`enum`に`std::convert::From`トレイトを実装した書き方にします。
+次はこれをRustらしく、`enum`に`std::convert::From`トレイトと`fmt::Display`トレイトを実装した書き方にします。  
+`std::convert::From`トレイトの`into()`メソッドを実装すれば`from()`メソッドが自動で実装され、`fmt::Display`トレイトの`fmt()`メソッドを実装すれば`to_string()`メソッドが自動で実装されます。
 
 ```rust
+use std::fmt;
+
 enum FizzBuzz {
     Fizz,
     Buzz,
@@ -134,13 +138,13 @@ impl From<u32> for FizzBuzz {
     }
 }
 
-impl From<FizzBuzz> for String {
-    fn from(x: FizzBuzz) -> String {
-        match x {
-            FizzBuzz::Fizz => "Fizz".to_owned(),
-            FizzBuzz::Buzz => "Buzz".to_owned(),
-            FizzBuzz::FizzBuzz => "FizzBuzz".to_owned(),
-            FizzBuzz::Number(x) => x,
+impl fmt::Display for FizzBuzz {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            FizzBuzz::Fizz => write!(f, "Fizz"),
+            FizzBuzz::Buzz => write!(f, "Buzz"),
+            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+            FizzBuzz::Number(x) => write!(f, "{}", x),
         }
     }
 }
@@ -151,7 +155,7 @@ fn main() {
     (1..=15).map(|x| -> FizzBuzz {
         x.into()
     } ).map(|x| -> String {
-        x.into()
+        x.to_string()
     } ).for_each(|x| println!("{}", x))
 }
 
@@ -162,7 +166,7 @@ fn test() {
             x.into()
         } )
         .map(|x| -> String {
-            x.into()
+            x.to_string()
         } )
         .collect();
 
@@ -176,7 +180,7 @@ fn test() {
 }
 ```
 
-ここで、u32では4294967295が最大値なので拡張可能としたいと考えると思います。  
+ここで、u32では4294967295が最大値なのは心もとないので拡張可能にしたいと考えると思います。  
 u32をu128にしたところで340282366920938463463374607431768211455が最大値です。  
 これでは十分ではないので、もっと抽象的な数値を扱えるようにします。
 
@@ -196,7 +200,7 @@ $
 型で表すと以下のようなものです。
 
 ```rust
-T: Rem<u8, Output = U>,
+T: Rem<T, Output = U> + From<u8>,
 U: Zero,
 ```
 
@@ -205,11 +209,11 @@ U: Zero,
 ```rust
 impl<T, U> From<T> for FizzBuzz
 where
-    T: ToString + Rem<u8, Output = U> + Clone,
+    T: ToString + Rem<T, Output = U> + Clone + From<u8>,
     U: Zero,
 {
     fn from(x: T) -> FizzBuzz {
-        match ((x.clone() % 3u8).is_zero(), (x.clone() % 5).is_zero()) {
+        match ((x.clone() % T::from(3)).is_zero(), (x.clone() % T::from(5)).is_zero()) {
             (true, true) => FizzBuzz::FizzBuzz,
             (true, _) => FizzBuzz::Fizz,
             (_, true) => FizzBuzz::Buzz,
@@ -224,12 +228,12 @@ where
 ```rust
 impl<'a, T, U> From<&'a T> for FizzBuzz
 where
-    T: ToString,
-    &'a T: Rem<u8, Output = U>,
+    T: From<u8>,
+    &'a T: Rem<T, Output = U> + ToString,
     U: Zero,
 {
     fn from(x: &'a T) -> FizzBuzz {
-        match ((x % 3).is_zero(), (x % 5).is_zero()) {
+        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
             (true, true) => FizzBuzz::FizzBuzz,
             (true, _) => FizzBuzz::Fizz,
             (_, true) => FizzBuzz::Buzz,
@@ -239,17 +243,19 @@ where
 }
 ```
 
-⚠注意！：もしここで以下のようにライフタイム`'a`の記述を書かないと…⚠
+<div class="note alert">
+
+<i class="fontawesome fa fa-times-circle" style="color:#d60a34;font-size:20px;" aria-hidden="true"></i>もしここで以下のようにライフタイム`'a`の記述を書かないと…
 
 ```rust example-bad
 impl<'a, T, U> From<&'a T> for FizzBuzz
 where
-    T: ToString,
-    &T: Rem<u8, Output = U>,
+    T: From<u8>,
+    &T: Rem<T, Output = U> + ToString,
     U: Zero,
 {
     fn from(x: &'a T) -> FizzBuzz {
-        match ((x % 3).is_zero(), (x % 5).is_zero()) {
+        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
             (true, true) => FizzBuzz::FizzBuzz,
             (true, _) => FizzBuzz::Fizz,
             (_, true) => FizzBuzz::Buzz,
@@ -259,27 +265,29 @@ where
 }
 ```
 
-⚠以下のようなエラーメッセージが出てしまいます。⚠
+以下のようなエラーメッセージが出てしまいます。
 
 ```text example-bad
 error[E0637]: `&` without an explicit lifetime name cannot be used here
   --> src\main.rs:42:5
    |
-42 |     &T: Rem<u8, Output = U>,
+42 |     &T: Rem<T, Output = U> + ToString,
    |     ^ explicit lifetime name needed here
 ```
 
-ここで、ライフタイム`'a`は高階トレイト境界を用いて以下のようなシンプルな書き方をすることができます。
+</div>
+
+さらにシンプルに書くのなら、ライフタイム`'a`は高階トレイト境界を用いて以下のような書き方をすることができます。
 
 ```rust
 impl<T, U> From<&T> for FizzBuzz
 where
-    T: ToString,
-    for<'a> &'a T: Rem<u8, Output = U>,
+    T: From<u8>,
+    for<'a> &'a T: Rem<T, Output = U> + ToString,
     U: Zero,
 {
     fn from(x: &T) -> FizzBuzz {
-        match ((x % 3).is_zero(), (x % 5).is_zero()) {
+        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
             (true, true) => FizzBuzz::FizzBuzz,
             (true, _) => FizzBuzz::Fizz,
             (_, true) => FizzBuzz::Buzz,
@@ -289,10 +297,11 @@ where
 }
 ```
 
-`u128`は当然ですが`num::BigUint`もこの`T`は満たしているので、これで`u128`でも扱えないような大きな数字も以下のように扱うことができるようになりました。
+この`T`は`num::BigUint`なども満たしているので、これで`u128`でも扱えないような大きな数字も以下のように扱うことができるようになりました。
 
 ```rust
 use num::Zero;
+use std::fmt;
 use std::ops::Rem;
 
 enum FizzBuzz {
@@ -302,25 +311,25 @@ enum FizzBuzz {
     Number(String),
 }
 
-impl From<FizzBuzz> for String {
-    fn from(x: FizzBuzz) -> String {
-        match x {
-            FizzBuzz::Fizz => "Fizz".to_owned(),
-            FizzBuzz::Buzz => "Buzz".to_owned(),
-            FizzBuzz::FizzBuzz => "FizzBuzz".to_owned(),
-            FizzBuzz::Number(x) => x,
+impl fmt::Display for FizzBuzz {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            FizzBuzz::Fizz => write!(f, "Fizz"),
+            FizzBuzz::Buzz => write!(f, "Buzz"),
+            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+            FizzBuzz::Number(x) => write!(f, "{}", x),
         }
     }
 }
 
 impl<T, U> From<&T> for FizzBuzz
 where
-    T: ToString,
-    for<'a> &'a T: Rem<u8, Output = U>,
+    T: From<u8>,
+    for<'a> &'a T: Rem<T, Output = U> + ToString,
     U: Zero,
 {
     fn from(x: &T) -> FizzBuzz {
-        match ((x % 3).is_zero(), (x % 5).is_zero()) {
+        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
             (true, true) => FizzBuzz::FizzBuzz,
             (true, _) => FizzBuzz::Fizz,
             (_, true) => FizzBuzz::Buzz,
@@ -329,7 +338,7 @@ where
     }
 }
 
-// 以下はmain()用、テスト用
+// 以下はmain用・テスト用
 
 use num::{BigUint, Num};
 
@@ -340,7 +349,7 @@ fn main() {
     )
     .map(|x: BigUint| -> String {
         let fizzbuzz: FizzBuzz = (&x).into();
-        fizzbuzz.into()
+        fizzbuzz.to_string()
     })
     .for_each(|x| println!("{}", x));
 }
@@ -353,7 +362,7 @@ fn test_bigint() {
     )
     .map(|x| {
         let buffer: FizzBuzz = (&x).into();
-        let buffer: String = buffer.into();
+        let buffer: String = buffer.to_string();
         buffer.to_string()
     })
     .collect();
@@ -385,7 +394,7 @@ fn test() {
     let test_target: Vec<String> = (1..=15)
         .map(|x| {
             let buffer: FizzBuzz = (&x).into();
-            let buffer: String = buffer.into();
+            let buffer: String = buffer.to_string();
             buffer.to_string()
         })
         .collect();
