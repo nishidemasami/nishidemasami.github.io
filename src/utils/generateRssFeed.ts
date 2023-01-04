@@ -4,6 +4,7 @@ import { Feed } from 'feed';
 
 import { AppConfig } from './AppConfig';
 import { getAllPostsIncludeTSX } from './Content';
+import { markdownToHtml } from './Markdown';
 
 export const generateRssFeed = async () => {
 	const baseUrl = AppConfig.url;
@@ -24,16 +25,18 @@ export const generateRssFeed = async () => {
 
 	const posts = await getAllPostsIncludeTSX(['title', 'date', 'slug']);
 
-	posts.forEach((post) => {
-		const url = `${baseUrl}/${post.slug}`;
-		feed.addItem({
-			title: post.title,
-			description: post.description,
-			content: post.content,
-			id: url,
-			link: url,
-			date: new Date(post.date),
-		});
-	});
+	await Promise.all(
+		posts.map(async (post) => {
+			const url = `${baseUrl}/${post.slug}`;
+			feed.addItem({
+				title: post.title,
+				description: post.description,
+				content: await markdownToHtml(post.content),
+				id: url,
+				link: url,
+				date: new Date(post.date),
+			});
+		})
+	);
 	fs.writeFileSync('./public/rss.xml', feed.rss2());
 };
