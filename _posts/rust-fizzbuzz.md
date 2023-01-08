@@ -35,7 +35,7 @@ impl fmt::Display for FizzBuzz {
             FizzBuzz::Fizz => write!(f, "Fizz"),
             FizzBuzz::Buzz => write!(f, "Buzz"),
             FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
-            FizzBuzz::Number(x) => write!(f, "{}", x),
+            FizzBuzz::Number(x) => write!(f, "{x}"),
         }
     }
 }
@@ -61,7 +61,7 @@ where
 
 以下、解説です。
 
-まず、愚直にFizzBuzzを書いたら以下のようになると思います。
+まず、何も考えずにRustでFizzBuzzを書くと以下のようになると思います。
 
 ```rust
 fn main() {
@@ -70,22 +70,24 @@ fn main() {
             (true, true) => println!("FizzBuzz"),
             (true, _) => println!("Fizz"),
             (_, true) => println!("Buzz"),
-            _ => println!("{}", x),
+            _ => println!("{x}"),
         }
     })
 }
 ```
 
-しかし、Rustを使用する以上、当然以下のようなメリットを享受したいです。
+ここからスタートしてゆきます。
+
+最終的に、以下のようにすることをゴールとします。
 
 * テスト可能
-* 型安全
+* 汎用的
 * ゼロコスト抽象化
 
-そのため、まずテスト可能なようにメソッドに分けてからテストを書きます。
+まずメソッドに分けてからテストを書きます。
 
 ```rust
-fn fizzbuzz(x: u128) -> String {
+fn fizzbuzz(x: u32) -> String {
     match ((x % 3) == 0, (x % 5) == 0) {
         (true, true) => "FizzBuzz".to_string(),
         (true, _) => "Fizz".to_string(),
@@ -95,7 +97,7 @@ fn fizzbuzz(x: u128) -> String {
 }
 
 fn main() {
-    (1..=15).map(fizzbuzz).for_each(|x| println!("{}", x))
+    (1..=15).map(fizzbuzz).for_each(|x| println!("{x}"))
 }
 
 #[test]
@@ -144,19 +146,19 @@ impl fmt::Display for FizzBuzz {
             FizzBuzz::Fizz => write!(f, "Fizz"),
             FizzBuzz::Buzz => write!(f, "Buzz"),
             FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
-            FizzBuzz::Number(x) => write!(f, "{}", x),
+            FizzBuzz::Number(x) => write!(f, "{x}"),
         }
     }
 }
 
-// 以下はテスト用
+// 以下はmain・テスト用
 
 fn main() {
     (1..=15).map(|x| -> FizzBuzz {
         x.into()
     } ).map(|x| -> String {
         x.to_string()
-    } ).for_each(|x| println!("{}", x))
+    } ).for_each(|x| println!("{x}"))
 }
 
 #[test]
@@ -181,8 +183,8 @@ fn test() {
 ```
 
 ここで、`u32`では`4294967295`が最大値なのは心もとないので拡張可能にしたいと考えると思います。  
-`u32`を`u128`にしたところで`340282366920938463463374607431768211455`が最大値です。  
-これでは十分ではないので、もっと抽象的な数値を扱えるようにします。
+たとえば`u32`を`u128`にしたところで`340282366920938463463374607431768211455`が最大値です。  
+これでは十分ではないので、もっと「抽象的な数値」を扱えるようにします。
 
 fizzbuzz関数$f(x)$を定義してみます。
 
@@ -196,20 +198,21 @@ f(x) =
 \end{cases}
 $
 
-冷静になって見てみると、$x$に対する操作は「3で割る」「5で割る」「割った結果を0と比較する」しかしていないことしかわかります。  
+定義を冷静になって見てみると、$x$に対する操作は「3で割る」「5で割る」「割った結果を0と比較する」「文字列に変換する」しかしていないことしかわかります。  
 型で表すと以下のようなものです。
 
 ```rust
-T: Rem<T, Output = U> + From<u8>,
+T: Rem<T, Output = U> + From<u8> + ToString,
 U: Zero,
 ```
 
-つまり、先述の`from`は以下のように書けるのです。
+つまり、`u8`で割ることができて0と比較できて文字列に変換できる値なら、どんな値でもFizzBuzzをすることができるのです。  
+Cloneも合わせて先述の`from`は以下のように書けるのです。
 
 ```rust
 impl<T, U> From<T> for FizzBuzz
 where
-    T: ToString + Rem<T, Output = U> + Clone + From<u8>,
+    T: Rem<T, Output = U> + Clone + From<u8> + ToString,
     U: Zero,
 {
     fn from(x: T) -> FizzBuzz {
@@ -223,7 +226,7 @@ where
 }
 ```
 
-ただ、`.clone()`を何度もするのは躊躇われますし、所有権も必要としておらず借用で十分なので借用にすると、以下のようになります。
+`.clone()`を何度もするのはパフォーマンス上の観点から躊躇われますし、処理上特に所有権も必要としておらず借用で十分なので借用に修正すると、以下のようになります。
 
 ```rust
 impl<'a, T, U> From<&'a T> for FizzBuzz
@@ -275,11 +278,11 @@ error[E0637]: `&` without an explicit lifetime name cannot be used here
    |     ^ explicit lifetime name needed here
 ```
 
-つまり、`&`を使う必要があるならライフタイムを明示的に示さないといけないということです。
+where句で`&`を使う必要があるならライフタイムを明示的に示さないといけないのです。
 
 </div>
 
-さらにシンプルに書くのなら、ライフタイム`'a`は高階トレイト境界を用いて以下のような書き方をすることができます。
+シンプルに書くのなら、ライフタイム`'a`は高階トレイト境界を用いて以下のような書き方をすることができます。
 
 ```rust
 impl<T, U> From<&T> for FizzBuzz
@@ -299,7 +302,9 @@ where
 }
 ```
 
-この`T`は`num::BigUint`なども満たしているので、これで`u128`でも扱えないような大きな数字も以下のように扱うことができるようになりました。
+これで完成です。
+
+`num::BigUint`などもこの`T`を満たすので、これで`u128`でも扱えないような大きな数字も以下のような感じで扱うことができるようになりました。
 
 ```rust
 use num::Zero;
@@ -319,7 +324,7 @@ impl fmt::Display for FizzBuzz {
             FizzBuzz::Fizz => write!(f, "Fizz"),
             FizzBuzz::Buzz => write!(f, "Buzz"),
             FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
-            FizzBuzz::Number(x) => write!(f, "{}", x),
+            FizzBuzz::Number(x) => write!(f, "{x}"),
         }
     }
 }
@@ -340,7 +345,7 @@ where
     }
 }
 
-// 以下はmain用・テスト用
+// 以下はmain・テスト用
 
 use num::{BigUint, Num};
 
@@ -353,7 +358,7 @@ fn main() {
         let fizzbuzz: FizzBuzz = (&x).into();
         fizzbuzz.to_string()
     })
-    .for_each(|x| println!("{}", x));
+    .for_each(|x| println!("{x}"));
 }
 
 #[test]
@@ -413,7 +418,7 @@ fn test() {
 
 <div class="note warn">
 
-<i class="fontawesome fa fa-exclamation-circle" style="color:#f7a535;font-size:20px;" aria-hidden="true"></i>もしここで「そうだ！FizzBuzzのenumにString型ではなくBox<dyn 'a + ToString>型で値を持たせれば、ゼロコスト抽象化の恩恵を得られてコンパイル時にさらに最適化されるのでは？」と思うかもしれませんが…
+<i class="fontawesome fa fa-exclamation-circle" style="color:#f7a535;font-size:20px;" aria-hidden="true"></i> ここで「そうだ！FizzBuzzのenumにString型ではなく`Box<dyn 'a + ToString>`型で動的な型の値を持たせればゼロコスト抽象化の恩恵も得られながらよりコンパイル時に最適化されるのでは？」と思うかもしれませんが…
 
 ```rust example-bad
 use num::Zero;
@@ -433,7 +438,7 @@ impl<'a> fmt::Display for FizzBuzz<'a> {
             FizzBuzz::Fizz => write!(f, "Fizz"),
             FizzBuzz::Buzz => write!(f, "Buzz"),
             FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
-            FizzBuzz::Number(x) => write!(f, "{}", x.to_string()),
+            FizzBuzz::Number(x) => write!(f, "{x}"),
         }
     }
 }
@@ -456,7 +461,9 @@ where
 }
 ```
 
-これを以下のような利用をしようとすると…
+しかし、実際にはBoxによるメモリ操作や動的ディスパッチによるオーバーヘッドもありますし、最終的に`to_string()`で文字列を生成しているのには変わりありませんから、メリットはあまりありません。
+
+また、これを以下のような利用をしようとすると…
 
 ```rust example-bad
 fn main() {
@@ -479,8 +486,8 @@ error[E0515]: cannot return value referencing function parameter `x`
   |                  `x` is borrowed here
 ```
 
-つまり、クロージャ外から出た後までライフタイムを必要とするような処理はできませんよ、ということです。  
-なので以下のようにすれば問題ありません。
+クロージャ外から出た後までライフタイムを必要とするような処理はできないということです。  
+これは、以下のようにクロージャ内で変数のライフタイムが尽きた後に参照しないように修正しなければなりません。
 
 ```rust
 fn main() {
@@ -489,7 +496,51 @@ fn main() {
 }
 ```
 
-このように、あまりに長いライフタイムを要求すると、後々取り扱いに苦労してしまうので、性能と汎用性を天秤にかけて判断するようにしましょう。
+もしくは所有権を要求してしまうという手もあります。所有権を得た後はライフタイムが伸びるのでこれは問題ありません。
+
+```rust
+use num::Zero;
+use std::fmt::{Display, Formatter, Result};
+use std::ops::Rem;
+
+enum FizzBuzz {
+    Fizz,
+    Buzz,
+    FizzBuzz,
+    Number(Box<dyn Display>),
+}
+
+impl Display for FizzBuzz {
+    fn fmt(&self, f: &mut Formatter) -> Result {
+        match self {
+            FizzBuzz::Fizz => write!(f, "Fizz"),
+            FizzBuzz::Buzz => write!(f, "Buzz"),
+            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+            FizzBuzz::Number(x) => write!(f, "{x}"),
+        }
+    }
+}
+
+impl<T, U> From<T> for FizzBuzz
+where
+    for<'a> T: 'a + Display + From<u8>,
+    for<'a> &'a T: Rem<T, Output = U>,
+    U: Zero,
+{
+    fn from(x: T) -> FizzBuzz {
+        match ((&x % T::from(3)).is_zero(), (&x % T::from(5)).is_zero()) {
+            (true, true) => FizzBuzz::FizzBuzz,
+            (true, _) => FizzBuzz::Fizz,
+            (_, true) => FizzBuzz::Buzz,
+            _ => FizzBuzz::Number(Box::new(x)),
+        }
+    }
+}
+```
+
+以上のように書けますが、どちらにせよBoxによるメモリ操作や動的ディスパッチによるオーバーヘッドがあることには変わりありません。
+
+このように、長いライフタイムを要求すると、後々取り扱いに苦労してしまうので、パフォーマンスや汎用性を天秤にかけて判断するようにしましょう。
 
 </div>
 
