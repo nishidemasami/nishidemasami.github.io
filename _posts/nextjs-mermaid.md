@@ -12,7 +12,6 @@ tags:
   - "SSG"
   - "SVG"
   - "Remark"
-  - "remark-mermaidjs"
   - "GitHub Actions"
 ---
 

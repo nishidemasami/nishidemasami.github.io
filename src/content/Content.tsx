@@ -39,6 +39,29 @@ const Content = (props: IContentProps) => (
 					padding: 0.1rem;
 				}
 
+				.content :global(.preshiki) {
+					font-size: 0.85rem;
+					color: #24292f;
+					border-radius: 0.375rem 0.375rem 0 0;
+					border-color: #d0d7de #d0d7de white #d0d7de;
+					border-width: 1px 1px 0px 1px;
+					border-style: solid;
+					width: auto;
+					padding: 8px 8px 8px 16px;
+					margin: 8px 4px 0px 4px;
+					background-color: #f6f8fa;
+				}
+
+				.content :global(.preshiki.alert) {
+					border-color: #d60a34 #d60a34 white #d60a34;
+					background-color: #feebee;
+				}
+
+				.content :global(.preshiki.warn) {
+					border-color: #f7a535 #f7a535 white #f7a535;
+					background-color: #fdf9e2;
+				}
+
 				.content :global(.shiki) {
 					border-radius: 0.375rem;
 					padding: 0px 4px;
@@ -50,6 +73,12 @@ const Content = (props: IContentProps) => (
 					border-color: #d0d7de;
 					border-width: 1px;
 					border-style: solid;
+				}
+
+				.content :global(.preshiki + .shiki) {
+					border-radius: 0 0 0.375rem 0.375rem;
+					padding: 4px;
+					width: auto;
 				}
 
 				.content :global(code) {

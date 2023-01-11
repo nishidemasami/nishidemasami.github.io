@@ -63,6 +63,8 @@ where
 
 まず、何も考えずにRustでFizzBuzzを書くと以下のようになると思います。
 
+<div class="preshiki">main.rs</div>
+
 ```rust
 fn main() {
     (1..=15).for_each(|x| {
@@ -76,6 +78,17 @@ fn main() {
 }
 ```
 
+<div class="preshiki">Cargo.toml</div>
+
+```toml
+[package]
+name = "fizzbuzz"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+```
+
 ここからスタートしてゆきます。
 
 最終的に、以下のようにすることをゴールとします。
@@ -85,6 +98,8 @@ fn main() {
 * ゼロコスト抽象化
 
 まずメソッドに分けてからテストを書きます。
+
+<div class="preshiki">main.rs</div>
 
 ```rust
 fn fizzbuzz(x: u32) -> String {
@@ -117,12 +132,15 @@ fn test() {
 ```
 
 次はこれをRustらしく、`enum`に[`std::convert::From`](https://doc.rust-lang.org/std/convert/trait.From.html)トレイトと[`fmt::Display`](https://doc.rust-lang.org/std/fmt/trait.Display.html)トレイトを実装した書き方にします。  
-[`std::convert::From`](https://doc.rust-lang.org/std/convert/trait.From.html)トレイトの[`from()`](https://doc.rust-lang.org/std/convert/trait.From.html#tymethod.from)メソッドを実装すれば[`std::convert::Into`](https://doc.rust-lang.org/std/convert/trait.Into.html)トレイトの[`into()`](https://doc.rust-lang.org/std/convert/trait.Into.html#tymethod.into)メソッドが自動で実装され、[`fmt::Display`](https://doc.rust-lang.org/std/fmt/trait.Display.html)トレイトの[`fmt()`](https://doc.rust-lang.org/std/fmt/trait.Display.html#tymethod.fmt)メソッドを実装すれば[`std::string::ToString`](https://doc.rust-lang.org/std/string/trait.ToString.html)トレイトの[`to_string()`](https://doc.rust-lang.org/std/string/trait.ToString.html#tymethod.to_string)メソッドが自動で実装されます。
+[`std::convert::From`](https://doc.rust-lang.org/std/convert/trait.From.html)トレイトの[`from()`](https://doc.rust-lang.org/std/convert/trait.From.html#tymethod.from)メソッドを実装すれば[`std::convert::Into`](https://doc.rust-lang.org/std/convert/trait.Into.html)トレイトの[`into()`](https://doc.rust-lang.org/std/convert/trait.Into.html#tymethod.into)メソッドが自動で実装され、[`fmt::Display`](https://doc.rust-lang.org/std/fmt/trait.Display.html)トレイトの[`fmt()`](https://doc.rust-lang.org/std/fmt/trait.Display.html#tymethod.fmt)メソッドを実装すれば[`std::string::ToString`](https://doc.rust-lang.org/std/string/trait.ToString.html)トレイトの[`to_string()`](https://doc.rust-lang.org/std/string/trait.ToString.html#tymethod.to_string)メソッドが自動で実装されます。  
+ついでにファイルも分けます。
+
+<div class="preshiki">src/fizzbuzz.rs</div>
 
 ```rust
 use std::fmt;
 
-enum FizzBuzz {
+pub enum FizzBuzz {
     Fizz,
     Buzz,
     FizzBuzz,
@@ -150,9 +168,11 @@ impl fmt::Display for FizzBuzz {
         }
     }
 }
+```
 
-// 以下はmain・テスト用
+<div class="preshiki">src/main.rs</div>
 
+```rust
 fn main() {
     (1..=15).map(|x| -> FizzBuzz {
         x.into()
@@ -182,8 +202,8 @@ fn test() {
 }
 ```
 
-ここで、`u32`では`4294967295`が最大値なのは心もとないので拡張可能にしたいと考えると思います。  
-たとえば`u32`を`u128`にしたところで`340282366920938463463374607431768211455`が最大値です。  
+さて、`u32`では`4294967295`が最大値なのは心もとないので拡張可能にしたいと考えると思います。  
+しかし、たとえ`u32`を`u128`にしたところで`340282366920938463463374607431768211455`が最大値です。  
 これでは十分ではないので、もっと「抽象的な数値」を扱えるようにします。
 
 fizzbuzz関数$f(x)$を定義してみます。
@@ -198,7 +218,7 @@ f(x) =
 \end{cases}
 $
 
-定義を冷静になって見てみると、$x$に対する操作は「3で割る」「5で割る」「割った結果を0と比較する」「文字列に変換する」しかしていないことしかわかります。  
+ここで定義を冷静になって見てみると、$x$に対する操作は「3で割る」「5で割る」「割った結果を0と比較する」「文字列に変換する」しかしていないことしかわかります。  
 型で表すと以下のようなものです。
 
 ```rust
@@ -226,7 +246,7 @@ where
 }
 ```
 
-`.clone()`を何度もするのはパフォーマンス上の観点から躊躇われますし、処理上特に所有権も必要としておらず借用で十分なので借用に修正すると、以下のようになります。
+`.clone()`を何度もするのはパフォーマンス上の観点から躊躇われますし処理上特に所有権も必要としておらず借用で十分なのでこれを借用に修正すると以下のようになります。
 
 ```rust
 impl<'a, T, U> From<&'a T> for FizzBuzz
@@ -304,14 +324,16 @@ where
 
 これで完成です。
 
-`num::BigUint`などもこの`T`を満たすので、これで`u128`でも扱えないような大きな数字も以下のような感じで扱うことができるようになりました。
+`num::BigUint`などもこの`T`を満たすので、これで`u128`でも扱えないような大きな数字も以下のように扱うことができるようになりました。
+
+<div class="preshiki">src/fizzbuzz.rs</div>
 
 ```rust
 use num::Zero;
 use std::fmt;
 use std::ops::Rem;
 
-enum FizzBuzz {
+pub enum FizzBuzz {
     Fizz,
     Buzz,
     FizzBuzz,
@@ -344,9 +366,14 @@ where
         }
     }
 }
+```
 
-// 以下はmain・テスト用
+<div class="preshiki">src/main.rs</div>
 
+```rust
+mod fizzbuzz;
+
+use fizzbuzz::FizzBuzz;
 use num::{BigUint, Num};
 
 fn main() {
@@ -414,6 +441,19 @@ fn test() {
         ]
     );
 }
+```
+
+<div class="preshiki">Cargo.toml</div>
+
+```toml
+[package]
+name = "fizzbuzz"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+num = "0.4.0"
+num-iter = "0.1.43"
 ```
 
 <div class="note warn">
@@ -503,7 +543,7 @@ use num::Zero;
 use std::fmt::{Display, Formatter, Result};
 use std::ops::Rem;
 
-enum FizzBuzz {
+pub enum FizzBuzz {
     Fizz,
     Buzz,
     FizzBuzz,

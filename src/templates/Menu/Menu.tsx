@@ -10,7 +10,7 @@ type Props = {
 };
 
 const Menu = ({ menu }: Props) => (
-	<nav className="my-6">
+	<nav className="my-2 py-1">
 		<ul className="list-none p-0 m-0 ">
 			{menu.map((item) => (
 				<li className="p-0 mx-0 my-2" key={item.path}>

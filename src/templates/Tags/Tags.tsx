@@ -7,7 +7,7 @@ type ITagPostsProps = {
 };
 
 const Tags = (props: ITagPostsProps) => (
-	<nav className="my-6 border-t border-t-slate-200 relative">
+	<nav className="my-2 py-1 border-t border-t-slate-200 relative">
 		タグ
 		<ul className="m-0 p-0 border-0 list-[circle] ml-5">
 			{Array.from(new Set(props.tags))

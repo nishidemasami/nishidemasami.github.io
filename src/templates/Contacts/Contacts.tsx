@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Contacts = ({ contacts }: Props) => (
-	<div className="my-6 border-t border-[#dedede]">
+	<div className="my-2 py-1 border-t border-[#dedede]">
 		<ul className="flex flex-row flex-wrap grow-0 shrink-0 list-none p-0 mx-[-3px] my-2 justify-start">
 			{Object.keys(contacts).map((name) =>
 				!contacts[name] ? null : (

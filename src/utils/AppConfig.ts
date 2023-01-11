@@ -30,4 +30,16 @@ export const AppConfig = {
 		soundcloud: '',
 		medium: '',
 	},
+	amazon_affiliate_books: [
+		{
+			imgSrc: 'https://m.media-amazon.com/images/I/51vjj+osAgL._SL160_.jpg',
+			title: 'プログラミングTypeScript...',
+			url: 'https://www.amazon.co.jp/dp/4873119049?&linkCode=ll1&tag=nishidemasami-22&linkId=269abe7d00fb75538542192fd6ea40b4&language=ja_JP&ref_=as_li_ss_tl',
+		},
+		{
+			imgSrc: 'https://m.media-amazon.com/images/I/51M44jPsASL._SL160_.jpg',
+			title: 'プログラミングRust 第2版',
+			url: 'https://www.amazon.co.jp/dp/4873119782?&linkCode=ll1&tag=nishidemasami-22&linkId=e2ff2c051967cc737eca98a12c4de66d&language=ja_JP&ref_=as_li_ss_tl',
+		},
+	],
 };
