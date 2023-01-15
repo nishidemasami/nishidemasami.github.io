@@ -19,21 +19,29 @@ GitHub ActionsでCI/CDをしています。
 ソースコードはすべてGitHubに公開していますので見てみて下さい。  
 <https://github.com/nishidemasami/nishidemasami.github.io>
 
+<div
+	style="float: right;margin: 5px;padding: 5px;width: 50%;border: 1px solid #c8ccd1;"
+>
+	<img
+		srcset="/assets/images/autheorsphoto1.webp"
+		src="https://lh3.googleusercontent.com/YbDcEwRnlZKH8aNdZjLE8niWF0pmZc2pqmjAHATb6fZfKBtoAF8j-JKz9u4LwWYCrliHBvDOScLGS4yCIT_SgTLdfp46CXJuKXUu1aVfMFJn8UO6Q-Ld-VgpGiV1QeRgJXcm_cL1nNQaWj3YSBUsbF9OoqY3Qz18WaPQq4GPR0ThQAS2Ka26X1KPyIsRqrZIBdN9IMHBlB65Rik7ISJrqAHb-nH2nC9OEiJd1oONhuVEdrWOe7Qa394MPX7S0uZRyPM4k1CUNwM-pehOokUdROgiUu_pQjMzPnnrSfFsLKog_ninHDxzeuod8k4hCCykRR56dJbU5TkMbWs1x2gAp2Kml5a_D7BhkMiZMi9FM2dYH3d3Ox89pwfqK7tv3C7q2JKQ2IwQ0b9P41phl5dw8u45dXAt8iZOuBbOGkZ12Xh0dwBoD_pMBgHyqf48fDy-BPD4-jqnjDKDg7qFM6rg1c3lxQdunhk1hnAAQR2l6W6pPRrVy7JkYi7qepM6td-v6feO6ssTOOVBJ-W4OEH1meT19yv-q_5RIrQaKgOHjpKUxhTWdgZjtDcUlNG2g2GMNl9GjoRjY4_JPwtlBqt3RJVHsqUi7Drr3etTHoUxV9443qrWlowElxFUP0gUb2JKUgwkyVjxdTuOnjzTy5zinpXyGvyvgdutuf1IovJ8m1kP9WOE1KkwseSMiKnLcp-LnBy63cDvt2rn-Y8D0N3KKUin5hXtNiq2KawZK5zb8fRrPPwa=w2902-h2176-no"
+		alt="著者近影：天龍寺、庭園にて"
+	/>
+	<div
+		style="font-size: 0.75rem;
+		width: 100%;
+		text-align: center;"
+	>
+		著者近影：天龍寺、庭園にて
+	</div>
+</div>
+
 ### 自分について
 
 - 西出 正美
 - 男
 - 芸術系 SE
 - 昭和 62 年生まれ
-
-### 著者近影
-
-<img
-	src="https://lh3.googleusercontent.com/YbDcEwRnlZKH8aNdZjLE8niWF0pmZc2pqmjAHATb6fZfKBtoAF8j-JKz9u4LwWYCrliHBvDOScLGS4yCIT_SgTLdfp46CXJuKXUu1aVfMFJn8UO6Q-Ld-VgpGiV1QeRgJXcm_cL1nNQaWj3YSBUsbF9OoqY3Qz18WaPQq4GPR0ThQAS2Ka26X1KPyIsRqrZIBdN9IMHBlB65Rik7ISJrqAHb-nH2nC9OEiJd1oONhuVEdrWOe7Qa394MPX7S0uZRyPM4k1CUNwM-pehOokUdROgiUu_pQjMzPnnrSfFsLKog_ninHDxzeuod8k4hCCykRR56dJbU5TkMbWs1x2gAp2Kml5a_D7BhkMiZMi9FM2dYH3d3Ox89pwfqK7tv3C7q2JKQ2IwQ0b9P41phl5dw8u45dXAt8iZOuBbOGkZ12Xh0dwBoD_pMBgHyqf48fDy-BPD4-jqnjDKDg7qFM6rg1c3lxQdunhk1hnAAQR2l6W6pPRrVy7JkYi7qepM6td-v6feO6ssTOOVBJ-W4OEH1meT19yv-q_5RIrQaKgOHjpKUxhTWdgZjtDcUlNG2g2GMNl9GjoRjY4_JPwtlBqt3RJVHsqUi7Drr3etTHoUxV9443qrWlowElxFUP0gUb2JKUgwkyVjxdTuOnjzTy5zinpXyGvyvgdutuf1IovJ8m1kP9WOE1KkwseSMiKnLcp-LnBy63cDvt2rn-Y8D0N3KKUin5hXtNiq2KawZK5zb8fRrPPwa=w2902-h2176-no"
-	alt="天龍寺、庭園にて"
-	title="著者近影"
-/>
-天龍寺、庭園にて
 
 ### 連絡先
 
