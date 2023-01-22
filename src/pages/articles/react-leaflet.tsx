@@ -13,6 +13,7 @@ tags:
   - "OpenStreetMap"
   - "国土地理院地図"
   - "leaflet"
+  - "Next.js"
 ---
 */
 
@@ -22,6 +23,7 @@ import { CircularProgress } from '@mui/material';
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 import { Content } from '../../content/Content';
 import { Meta } from '../../layout/Meta';
@@ -44,25 +46,45 @@ type ReactSoundTestProps = {
 	nextPost?: PostItems;
 };
 
-const firstArticle = `
-ReactとTypeScriptで国土地理院地図やOpenStreetMapを表示したいこと、ありますよね。  
+const firstArticle = `ReactとTypeScriptで国土地理院地図やOpenStreetMapを表示したいこと、ありますよね。  
 僕はあるので自分用にメモです。<sup>[<a target="_blank" href="https://www.amazon.co.jp/dp/4873119049?&linkCode=ll1&tag=nishidemasami-22&linkId=269abe7d00fb75538542192fd6ea40b4&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >参考文献</a>]</sup>
+
+Google Mapsが2018年の7月頃に有料になってからかなり経ちました。  
+いまさらGoogle Mapsの代わりを探している人はいないと思いますが、あれから色々とWebの事情も変わったので自分用にメモの意味も込めて書いています。
+
+「画像タイル地図」を公開しているWebサービスはたくさんあります。  
+ですが無料で自由に使えるものは意外と少なく、国土地理院やOpenStreetMapは貴重な選択肢の一つだと思います。  
+(「画像タイル地図」ではなく「ベクトルタイル地図」も国土地理院は(実験的に)提供しているので次の記事で説明します。)
+
+### 国土地理院地図
 
 国土交通省国土地理院地図は利用規約を守る限り自由に使えます。  
 利用規約は以下です。  
 国土地理院コンテンツ利用規約 国土地理院:<https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html>
 
+### OpenStreetMap
+
 OpenStreetMapもODbLライセンスに従って自由に使えます。ODbLライセンスの詳細は以下の通りです。  
 OpenStreetMap 著作権とライセンス:<https://www.openstreetmap.org/copyright/ja>  
 OpenStreetMapは英語と日本語を併記している版と現地の言語(日本は日本語)を表示する版があるみたいでした。
 
-なので、この3つの地図を表示してみたいと思います。
+今回は、この3つの地図を表示してみたいと思います。
 
-地図描画にはLeafletを使用します。(Leafletの他にもDeck.glも使えるので次の記事で説明します。)
+地図描画にはLeafletを使用します。(Leafletの他にもDeck.glも使えるので「ベクトルタイル地図」と合わせて次の記事で説明します。)
 
-ただ地図を表示するだけだとつまらないので、東海道五十三次の場所をピンで表示して、セレクトボックスで選択したらその場所に動くようにしてみます。
+ライブラリとしては現在最新の\`leaflet@1.9.3\`と\`react-leaflet@4.2.0\`、それからTypeScript用の型定義として\`@types/leaflet\`を利用しています。  
+※react-leafletはバージョンが4にメジャーバージョンアップされてからまだ1年経っておらず、ネット上にも少し前まではv3のreact-leafletの情報ばかりでしたが、最近はv4の情報も少しずつ増えてきています。
 
-実際に動かしてみたのが ↓ これです。
+必要なnpm installは以下の通りです。TypeScript用にleafletの型定義が公開されています。react-leafletは最初から型定義が含まれています。
+
+\`\`\`bash
+npm install leaflet react-leaflet
+npm install -D @types/leaflet
+\`\`\`
+
+以上で準備は完了ですが、ただ地図を表示するだけだとつまらないので、東海道五十三次の場所をピンで表示して、セレクトボックスで選択したらその場所に動くようにしてみます。
+
+実際に実装してみたのが ↓ これです。
 `;
 
 const secondArticle = `
@@ -246,6 +268,23 @@ const LeafletDemo = (): JSX.Element => {
 
 export default LeafletDemo;
 \`\`\`
+
+なお、Next.jsでSSGでLeafletを含むページを静的に生成しようとすると
+\`\`\`
+ReferenceError: window is not defined
+\`\`\`
+というエラーが出てしまうので、Dynamic Importで
+\`\`\`tsx
+const LeafletDemoComponent = React.useMemo(
+	() =>
+		dynamic(() => import('../../components/Leaflet/LeafletDemo'), {
+			loading: () => <CircularProgress className="w-full" />,
+			ssr: false,
+		}),
+	[]
+);
+\`\`\`
+というコンポーネントを1つ挟んでブラウザへのレンダリング時に動的インポートさせて表示させるようにしました。
 `;
 
 const ReactLeafletTest = (props: ReactSoundTestProps) => {
@@ -274,6 +313,25 @@ const ReactLeafletTest = (props: ReactSoundTestProps) => {
 			<div className="text-center text-sm mb-4">
 				{format(new Date('2023-01-21T01:04:03+0900'), 'LLLL d, yyyy')}
 			</div>
+			<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
+				{[
+					'TypeScript',
+					'React',
+					'OpenStreetMap',
+					'国土地理院地図',
+					'leaflet',
+					'Next.js',
+				].map((tag) => (
+					<li
+						className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
+						key={tag}
+					>
+						<Link href="/tag/[tag]" as={`/tag/${tag}`}>
+							#{tag}
+						</Link>
+					</li>
+				))}
+			</ul>
 
 			<Content>
 				<div>

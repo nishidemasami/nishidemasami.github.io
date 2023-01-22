@@ -18,6 +18,7 @@ import React from 'react';
 
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 
 import { TypescriptBitcoin } from '../../components/TypescriptBitcoin';
 import { Content } from '../../content/Content';
@@ -229,6 +230,18 @@ const ReactSoundTest = (props: ReactSoundTestProps) => (
 		<div className="text-center text-sm mb-4">
 			{format(new Date('2022-12-10T01:04:03+0900'), 'LLLL d, yyyy')}
 		</div>
+		<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
+			{['TypeScript', 'React', 'Bitcoin'].map((tag) => (
+				<li
+					className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
+					key={tag}
+				>
+					<Link href="/tag/[tag]" as={`/tag/${tag}`}>
+						#{tag}
+					</Link>
+				</li>
+			))}
+		</ul>
 
 		<Content>
 			<div>

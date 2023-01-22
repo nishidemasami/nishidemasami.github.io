@@ -13,7 +13,7 @@ tags:
   - "JavaScript"
   - "TypeScript"
   - "React"
-  - "Gatsby"
+  - "Gatsby.js"
 ---
 */
 
@@ -60,7 +60,7 @@ const About = (props: AboutProps) => (
 			{format(new Date('2021-03-06T18:04:03+0900'), 'LLLL d, yyyy')}
 		</div>
 		<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
-			{['JavaScript', 'TypeScript', 'React', 'Gatsby'].map((tag) => (
+			{['JavaScript', 'TypeScript', 'React', 'Gatsby.js'].map((tag) => (
 				<li
 					className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
 					key={tag}
