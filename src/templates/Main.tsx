@@ -2,10 +2,10 @@ import React, { ReactNode } from 'react';
 
 import Link from 'next/link';
 
+import { Sidebar } from './SideBar';
 import { Navbar } from '../navigation/Navbar';
 import { AppConfig } from '../utils/AppConfig';
 import { PostItems } from '../utils/Content';
-import { Sidebar } from './SideBar';
 
 type IMainProps = {
 	recents: PostItems[];

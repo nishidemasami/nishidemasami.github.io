@@ -2,8 +2,6 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { AppConfig } from '../utils/AppConfig';
-import { PostItems } from '../utils/Content';
 import { Amazon } from './Amazon/Amazon';
 import { Author } from './Author/Author';
 import Contacts from './Contacts/Contacts';
@@ -12,6 +10,8 @@ import { Menu } from './Menu/Menu';
 import { Recents } from './Recents/Recents';
 import { Recommend } from './Recommend/Recommend';
 import { Tags } from './Tags/Tags';
+import { AppConfig } from '../utils/AppConfig';
+import { PostItems } from '../utils/Content';
 
 type SidebarProps = {
 	recents: PostItems[];
