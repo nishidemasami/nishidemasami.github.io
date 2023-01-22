@@ -35,7 +35,10 @@ export function getPostSlugs() {
 		);
 		const fileContents = fs.readFileSync(fullPath, 'utf8');
 		const { data } = matter(fileContents.replace(/\/\*\*\r?\n/u, ''));
-		return Boolean(data.date) && !(data?.draft ?? true);
+		return (
+			Boolean(data.date) &&
+			(process.env.NODE_ENV !== 'production' || !data?.draft)
+		);
 	});
 }
 
