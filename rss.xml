@@ -4,7 +4,7 @@
         <title>NISHIDEMASAMI.GITHUB.IO</title>
         <link>https://nishidemasami.github.io</link>
         <description>個人のブログです。有益なことや無益なことなどいろいろ書いています。</description>
-        <lastBuildDate>Sun, 22 Jan 2023 16:13:39 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 23 Jan 2023 12:29:11 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>ja</language>
@@ -490,928 +490,6 @@ Cloneも合わせて先述の<code>from</code>は以下のように書けるの�
 <p>RustでFizzBuzzを実装してみましたという話でした。</p>]]></content:encoded>
         </item>
         <item>
-            <title><![CDATA[Typescriptでビットコインアドレスを生成する]]></title>
-            <link>https://nishidemasami.github.io/articles/typescript-bitcoin</link>
-            <guid>https://nishidemasami.github.io/articles/typescript-bitcoin</guid>
-            <pubDate>Fri, 23 Dec 2022 16:04:03 GMT</pubDate>
-            <description><![CDATA[Typescriptでビットコインアドレスを生成したいこと、ありますよね。僕はあるので自分用にメモです。]]></description>
-            <content:encoded><![CDATA[<p>*/</p>
-<p>import React from 'react';</p>
-<p>import { format } from 'date-fns';
-import { GetStaticProps } from 'next';
-import Link from 'next/link';</p>
-<p>import { TypescriptBitcoin } from '../../components/TypescriptBitcoin';
-import { Content } from '../../content/Content';
-import { Meta } from '../../layout/Meta';
-import { PostPagination } from '../../pagination/PostPagination';
-import { Main } from '../../templates/Main';
-import {
-getPrevNextPost,
-getRecentPosts,
-getTags,
-PostItems,
-} from '../../utils/Content';
-import { markdownToHtml } from '../../utils/Markdown';</p>
-<p>type ReactSoundTestProps = {
-recents: PostItems[];
-tags: string[];
-firstArticle: string;
-secondArticle: string;
-prevPost?: PostItems;
-nextPost?: PostItems;
-};</p>
-<p>const firstArticle = `
-Typescriptでビットコインアドレスを生成したいこと、ありますよね。<br>
-僕はあるので自分用にメモです。<sup>[<a target="_blank" href="https://www.amazon.co.jp/%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%83%81%E3%82%A7%E3%83%BC%E3%83%B3%E5%AE%9F%E8%B7%B5%E5%85%A5%E9%96%80-%E3%83%93%E3%83%83%E3%83%88%E3%82%B3%E3%82%A4%E3%83%B3%E3%81%8B%E3%82%89%E3%82%A4%E3%83%BC%E3%82%B5%E3%83%AA%E3%82%A2%E3%83%A0%E3%80%81DApp%E9%96%8B%E7%99%BA%E3%81%BE%E3%81%A7-Bikramaditya-Singhal/dp/4274225372?_encoding=UTF8&qid=1671896601&sr=8-1&linkCode=ll1&tag=nishidemasami-22&linkId=b026b2c2bd3729a8fe4c35dda528a7bb&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >参考文献</a>]</sup></p>
-<p>👇このボタンをクリックするとビットコインアドレスを生成します。
-`;</p>
-<p>const secondArticle = `
-ビットコインのアドレスは、32バイトの秘密鍵を以下のようにしてビットコインアドレスに変換します。</p>
-<p>```mermaid
-flowchart TD</p>
-<p>A[32バイトの秘密鍵] -->|secp256k1| B(公開鍵)
-A -->|base58変換とチェックサム付与| F[WIF形式秘密鍵]
-B --> C{ビットコインアドレス形式}
-C -->|BASE58変換とチェックサム付与| D[P2PKH形式ビットコインアドレス]
-C -->|BASE32変換とチェックサム付与| E[Bech32形式ビットコインアドレス]
-```</p>
-<p>これはTypescriptでも簡単に計算できます。</p>
-<p>それを実際に書いてみたのが ↓ この今回のコードです
-```tsx
-import { randomBytes, createHash, BinaryLike } from 'crypto';</p>
-<p>import { useState, FC, useMemo, useCallback } from 'react';</p>
-<p>import { Button, TextField } from '@mui/material';
-import { bech32 } from 'bech32';
-import { encode } from 'bs58';
-import RIPEMD160 from 'ripemd160';
-import { publicKeyCreate, privateKeyVerify } from 'secp256k1';</p>
-<p>/** 16進数の文字列かどうかチェックする正規表現 */
-const check32BytesHex = /^[0-9a-fA-F]{64}$/;</p>
-<p>/** 16進数の文字列をUint8Arrayに変換する */
-const hexToUint8Array = (hex: string): Uint8Array => Buffer.from(hex, 'hex');</p>
-<p>/** Bufferを16進数の文字列に変換する */
-const bufferToHex = (data: Buffer): string => data.toString('hex');</p>
-<p>/** sha256でハッシュする */
-const sha256 = (data: BinaryLike): Buffer =>
-createHash('sha256').update(data).digest();</p>
-<p>/** ripemd160でハッシュする */
-const ripemd160 = (data: BinaryLike): Buffer =>
-new RIPEMD160().update(data).digest();</p>
-<p>/** BASE58チェックサム生成 */
-const calcBase58Checksum = (data: BinaryLike): Buffer =>
-sha256(sha256(data)).subarray(0, 4);</p>
-<p>/** BASE58変換＋チェックサム */
-const base58WithChecksum = (data: Uint8Array): string =>
-encode([...data, ...calcBase58Checksum(data)]);</p>
-<p>/** ビットコインアドレス(BASE58(P2PKH)形式)生成 */
-const genBitcoinAddressP2PKH = (publicKey: Uint8Array): string =>
-base58WithChecksum(Uint8Array.from([0x00, ...ripemd160(sha256(publicKey))]));</p>
-<p>/** BASE32変換＋チェックサム */
-const bech32WithChecksum = (data: Uint8Array) =>
-bech32.encode('bc', [0x00, ...bech32.toWords(data)]);</p>
-<p>/** ビットコインアドレス(BASE32(Bech32)形式)生成 */
-const genBitcoinAddressBECH32 = (publicKey: Uint8Array): string =>
-bech32WithChecksum(ripemd160(sha256(publicKey)));</p>
-<p>/** 秘密鍵(WIF形式)生成 */
-const genWif = (privateKey: Uint8Array): string =>
-base58WithChecksum(Uint8Array.from([0x80, ...privateKey]));</p>
-<p>const TypescriptBitcoin: FC = () => {
-// 秘密鍵(32バイトの16進数)
-const [hexPrivateKey, setHexPrivateKey] = useState(
-bufferToHex(randomBytes(32))
-);</p>
-<p>/** 秘密鍵(32バイト) */
-const privateKey: Uint8Array | string = useMemo(() => {
-if (!check32BytesHex.test(hexPrivateKey))
-return '秘密鍵が32バイトの16進数ではない';
-return hexToUint8Array(hexPrivateKey);
-}, [hexPrivateKey]);</p>
-<p>/** 公開鍵 */
-const publicKey: Uint8Array | string = useMemo(() => {
-if (typeof privateKey === 'string') return privateKey;
-if (!privateKeyVerify(privateKey)) return '秘密鍵が不適切';
-return publicKeyCreate(privateKey, false);
-}, [privateKey]);</p>
-<p>/** ビットコインアドレス(BASE32(Bech32)形式) */
-const bitcoinAddressBECH32 = useMemo(() => {
-if (typeof privateKey === 'string') return privateKey;
-if (typeof publicKey === 'string') return publicKey;
-return genBitcoinAddressBECH32(publicKey);
-}, [privateKey, publicKey]);</p>
-<p>/** ビットコインアドレス(BASE58(P2PKH)形式) */
-const bitcoinAddressP2PKH = useMemo(() => {
-if (typeof privateKey === 'string') return privateKey;
-if (typeof publicKey === 'string') return publicKey;
-return genBitcoinAddressP2PKH(publicKey);
-}, [privateKey, publicKey]);</p>
-<p>/** 秘密鍵をランダムに生成 */
-const genRamdamKey = useCallback(
-() => setHexPrivateKey(bufferToHex(randomBytes(32))),
-[]
-);</p>
-<p>/** 秘密鍵(WIF形式) */
-const wif = useMemo(
-() => genWif(hexToUint8Array(hexPrivateKey)),
-[hexPrivateKey]
-);</p>
-<p>return (
-&#x3C;>
-<Button onClick={genRamdamKey} variant="outlined">
-秘密鍵をランダムに生成
-</Button>
-&#x3C;TextField
-error={!check32BytesHex.test(hexPrivateKey)}
-fullWidth
-label="秘密鍵(32バイトの16進数)"
-margin="dense"
-value={hexPrivateKey}
-onChange={(e) => {
-setHexPrivateKey(e.currentTarget.value);
-}}
-/>
-&#x3C;TextField
-fullWidth
-label="秘密鍵(WIF形式)"
-margin="dense"
-value={wif}
-InputProps={{
-readOnly: true,
-}}
-/>
-&#x3C;TextField
-fullWidth
-label="ビットコインアドレス(BASE58(P2PKH)形式)"
-margin="dense"
-InputProps={{
-readOnly: true,
-}}
-value={bitcoinAddressP2PKH}
-/>
-&#x3C;TextField
-fullWidth
-label="ビットコインアドレス(BASE32(Bech32)形式)"
-margin="dense"
-InputProps={{
-readOnly: true,
-}}
-value={bitcoinAddressBECH32}
-/>
-&#x3C;/>
-);
-};</p>
-<p>export { TypescriptBitcoin };
-```
-`;</p>
-<p>const ReactSoundTest = (props: ReactSoundTestProps) => (
-&#x3C;Main
-recents={props.recents}
-tags={props.tags}
-meta={
-<Meta
- 			title="Typescriptでビットコインアドレスを生成する"
- 			description="Typescriptでビットコインアドレスを生成したいこと、ありますよね。僕はあるので自分用にメモです。"
- 		/>
-}
->
-<h1 className="text-center font-bold text-3xl text-gray-900">
-Typescriptでビットコインアドレスを生成する
-</h1>
-<div className="text-center text-sm mb-4">
-{format(new Date('2022-12-10T01:04:03+0900'), 'LLLL d, yyyy')}
-</div>
-<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
-{['TypeScript', 'React', 'Bitcoin'].map((tag) => (
-<li
- 				className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
- 				key={tag}
- 			>
-&#x3C;Link href="/tag/[tag]" as={<code>/tag/${tag}</code>}>
-#{tag}
-</Link>
-</li>
-))}
-</ul></p>
-<pre><code>	&#x3C;Content>
-		&#x3C;div>
-			&#x3C;div dangerouslySetInnerHTML={{ __html: props.firstArticle }} />
-			&#x3C;TypescriptBitcoin />
-			&#x3C;div dangerouslySetInnerHTML={{ __html: props.secondArticle }} />
-		&#x3C;/div>
-	&#x3C;/Content>
-
-	&#x3C;PostPagination nextPost={props.nextPost} prevPost={props.prevPost} />
-&#x3C;/Main>
-</code></pre>
-<p>);</p>
-<p>export const getStaticProps: GetStaticProps<ReactSoundTestProps> = async () => {
-const recents = getRecentPosts(['title', 'date', 'slug']);</p>
-<pre><code>return {
-	props: {
-		recents,
-		tags: getTags(),
-		firstArticle: await markdownToHtml(firstArticle),
-		secondArticle: await markdownToHtml(secondArticle),
-		...getPrevNextPost(__filename),
-	},
-};
-</code></pre>
-<p>};</p>
-<p>export default ReactSoundTest;</p>]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[Reactで国土地理院地図やOpenStreetMapを表示する]]></title>
-            <link>https://nishidemasami.github.io/articles/react-leaflet</link>
-            <guid>https://nishidemasami.github.io/articles/react-leaflet</guid>
-            <pubDate>Fri, 20 Jan 2023 16:04:03 GMT</pubDate>
-            <description><![CDATA[ReactとTypeScriptで国土地理院地図やOpenStreetMapを表示したいこと、ありますよね。僕はあるので自分用にメモです。]]></description>
-            <content:encoded><![CDATA[<p>*/</p>
-<p>import React from 'react';</p>
-<p>import { CircularProgress } from '@mui/material';
-import { format } from 'date-fns';
-import { GetStaticProps } from 'next';
-import dynamic from 'next/dynamic';
-import Link from 'next/link';</p>
-<p>import { Content } from '../../content/Content';
-import { Meta } from '../../layout/Meta';
-import { PostPagination } from '../../pagination/PostPagination';
-import { Main } from '../../templates/Main';
-import {
-getPrevNextPost,
-getRecentPosts,
-getTags,
-PostItems,
-} from '../../utils/Content';
-import { markdownToHtml } from '../../utils/Markdown';</p>
-<p>type ReactSoundTestProps = {
-recents: PostItems[];
-tags: string[];
-firstArticle: string;
-secondArticle: string;
-prevPost?: PostItems;
-nextPost?: PostItems;
-};</p>
-<p>const firstArticle = `ReactとTypeScriptで国土地理院地図やOpenStreetMapを表示したいこと、ありますよね。<br>
-僕はあるので自分用にメモです。<sup>[<a target="_blank" href="https://www.amazon.co.jp/dp/4873119049?&linkCode=ll1&tag=nishidemasami-22&linkId=269abe7d00fb75538542192fd6ea40b4&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >参考文献</a>]</sup></p>
-<p>Google Mapsが2018年の7月頃に有料になってからかなり経ちました。<br>
-いまさらGoogle Mapsの代わりを探している人はいないと思いますが、あれから色々とWebの事情も変わったので自分用にメモの意味も込めて書いています。</p>
-<p>「画像タイル地図」を公開しているWebサービスはたくさんあります。<br>
-ですが無料で自由に使えるものは意外と少なく、国土地理院やOpenStreetMapは貴重な選択肢の一つだと思います。<br>
-(「画像タイル地図」ではなく「ベクトルタイル地図」も国土地理院は(実験的に)提供しているので次の記事で説明します。)</p>
-<h3>国土地理院地図</h3>
-<p>国土交通省国土地理院地図は利用規約を守る限り自由に使えます。<br>
-利用規約は以下です。<br>
-国土地理院コンテンツ利用規約 国土地理院:<a href="https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html">https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html</a></p>
-<h3>OpenStreetMap</h3>
-<p>OpenStreetMapもODbLライセンスに従って自由に使えます。ODbLライセンスの詳細は以下の通りです。<br>
-OpenStreetMap 著作権とライセンス:<a href="https://www.openstreetmap.org/copyright/ja">https://www.openstreetmap.org/copyright/ja</a><br>
-OpenStreetMapは英語と日本語を併記している版と現地の言語(日本は日本語)を表示する版があるみたいでした。</p>
-<p>今回は、この3つの地図を表示してみたいと思います。</p>
-<p>地図描画にはLeafletを使用します。(Leafletの他にもDeck.glも使えるので「ベクトルタイル地図」と合わせて次の記事で説明します。)</p>
-<p>ライブラリとしては現在最新の`leaflet@1.9.3`と`react-leaflet@4.2.0`、それからTypeScript用の型定義として`@types/leaflet`を利用しています。<br>
-※react-leafletはバージョンが4にメジャーバージョンアップされてからまだ1年経っておらず、ネット上にも少し前まではv3のreact-leafletの情報ばかりでしたが、最近はv4の情報も少しずつ増えてきています。</p>
-<p>必要なnpm installは以下の通りです。TypeScript用にleafletの型定義が公開されています。react-leafletは最初から型定義が含まれています。</p>
-<p>```bash
-npm install leaflet react-leaflet
-npm install -D @types/leaflet
-```</p>
-<p>以上で準備は完了ですが、ただ地図を表示するだけだとつまらないので、東海道五十三次の場所をピンで表示して、セレクトボックスで選択したらその場所に動くようにしてみます。</p>
-<p>実際に実装してみたのが ↓ これです。
-`;</p>
-<p>const secondArticle = `</p>
-<p>書いたのが ↓ この今回のコードです。
-```tsx
-import React from 'react';</p>
-<p>import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { LatLngExpression, Icon } from 'leaflet';
-import PinIcon from 'leaflet/dist/images/marker-icon.png';
-import { TileLayer, MapContainer, Marker, Popup, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';</p>
-<p>const merkerIcon = new Icon({
-iconUrl: PinIcon.src,
-iconAnchor: [13, 41],
-});</p>
-<p>const maps = [
-{
-name: 'OpenStreetMap',
-url: 'https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png',
-attribution:
-'Daten von <a href="https://www.openstreetmap.org/">OpenStreetMap</a> - Veröffentlicht unter <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a>',
-},
-{
-name: '国土地理院地図',
-url: '<a href="https://cyberjapandata.gsi.go.jp/xyz/std/%7Bz%7D/%7Bx%7D/%7By%7D.png">https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png</a>',
-attribution:
-'<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル</a>',
-},
-{
-name: 'OpenStreetMap(日本語版)',
-url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-attribution:
-'© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-},
-];
-const places: {
-name: string;
-latlng: LatLngExpression;
-}[] = [
-{ name: '日本橋', latlng: [35.6836111111111, 139.774444444444] },
-{ name: '品川宿', latlng: [35.6219444444444, 139.739166666667] },
-{ name: '川崎宿', latlng: [35.5355555555556, 139.707777777778] },
-{ name: '神奈川宿', latlng: [35.4727777777778, 139.632277777778] },
-{ name: '保ヶ谷宿', latlng: [35.4440277777778, 139.595555555556] },
-{ name: '戸塚宿', latlng: [35.3950277777778, 139.529861111111] },
-{ name: '藤沢宿', latlng: [35.3456666666667, 139.486305555556] },
-{ name: '平塚宿', latlng: [35.3272777777778, 139.337805555556] },
-{ name: '大磯宿', latlng: [35.309, 139.315305555556] },
-{ name: '小田原宿', latlng: [35.2487222222222, 139.161027777778] },
-{ name: '箱根宿', latlng: [35.1904166666667, 139.026361111111] },
-{ name: '三島宿', latlng: [35.11925, 138.914472222222] },
-{ name: '沼津宿', latlng: [35.1001111111111, 138.857416666667] },
-{ name: '原宿', latlng: [35.1255277777778, 138.797333333333] },
-{ name: '吉原宿', latlng: [35.1627777777778, 138.685638888889] },
-{ name: '蒲原宿', latlng: [35.1199722222222, 138.605472222222] },
-{ name: '由比宿', latlng: [35.1076111111111, 138.567472222222] },
-{ name: '興津宿', latlng: [35.0498333333333, 138.519555555556] },
-{ name: '江尻宿', latlng: [35.0198888888889, 138.480861111111] },
-{ name: '府中宿', latlng: [34.9749166666667, 138.387638888889] },
-{ name: '鞠子宿', latlng: [34.9494166666667, 138.342444444444] },
-{ name: '岡部宿', latlng: [34.9188333333333, 138.282666666667] },
-{ name: '藤枝宿', latlng: [34.8698055555556, 138.252722222222] },
-{ name: '島田宿', latlng: [34.8328055555556, 138.175861111111] },
-{ name: '金谷宿', latlng: [34.8228611111111, 138.129277777778] },
-{ name: '日坂宿', latlng: [34.8041388888889, 138.075361111111] },
-{ name: '掛川宿', latlng: [34.7729166666667, 138.015888888889] },
-{ name: '袋井宿', latlng: [34.7474722222222, 137.923222222222] },
-{ name: '見附宿', latlng: [34.7268055555556, 137.857027777778] },
-{ name: '浜松宿', latlng: [34.7051111111111, 137.731916666667] },
-{ name: '舞阪宿', latlng: [34.6843888888889, 137.608944444444] },
-{ name: '新居宿', latlng: [34.6941388888889, 137.560777777778] },
-{ name: '白須賀宿', latlng: [34.6885555555556, 137.500833333333] },
-{ name: '二川宿', latlng: [34.7230555555556, 137.464527777778] },
-{ name: '吉田宿', latlng: [34.7666388888889, 137.389722222222] },
-{ name: '御油宿', latlng: [34.8448888888889, 137.317333333333] },
-{ name: '赤坂宿', latlng: [34.8557222222222, 137.308222222222] },
-{ name: '藤川宿', latlng: [34.9110555555556, 137.222194444444] },
-{ name: '岡崎宿', latlng: [34.9579166666667, 137.169194444444] },
-{ name: '池鯉鮒宿', latlng: [35.0081111111111, 137.040944444444] },
-{ name: '鳴海宿', latlng: [35.0796666666667, 136.949805555556] },
-{ name: '宮宿', latlng: [35.1204166666667, 136.906722222222] },
-{ name: '桑名宿', latlng: [35.0687222222222, 136.6955] },
-{ name: '四日市宿', latlng: [34.9695277777778, 136.625277777778] },
-{ name: '石薬師宿', latlng: [34.9043333333333, 136.548] },
-{ name: '庄野宿', latlng: [34.8833888888889, 136.524833333333] },
-{ name: '亀山宿', latlng: [34.8543055555556, 136.454111111111] },
-{ name: '関宿', latlng: [34.8524722222222, 136.392083333333] },
-{ name: '坂下宿', latlng: [34.8885555555556, 136.354083333333] },
-{ name: '土山宿', latlng: [34.9344166666667, 136.283833333333] },
-{ name: '水口宿', latlng: [34.9655555555556, 136.1835] },
-{ name: '石部宿', latlng: [35.0100555555556, 136.054638888889] },
-{ name: '草津宿', latlng: [35.0174444444444, 135.960638888889] },
-{ name: '大津宿', latlng: [35.0059722222222, 135.861416666667] },
-{ name: '三条大橋', latlng: [35.0103333333333, 135.774361111111] },
-];</p>
-<p>const MapController: React.FC&#x3C;{ center?: LatLngExpression }> = ({ center }) => {
-const map = useMap();
-React.useEffect(() => {
-if (center) {
-map.setView(center, 13, { animate: true });
-}
-}, [center, map]);
-return null;
-};</p>
-<p>const LeafletDemo = (): JSX.Element => {
-const [center, setCenter] = React.useState<LatLngExpression>();
-const [mapName, setMapName] = React.useState(maps[0].name);
-const [placeName, setPlaceName] = React.useState(places[0].name);
-const selectedMap = React.useMemo(
-() => maps.find((value) => value.name === mapName)!,
-[mapName]
-);</p>
-<pre><code>return (
-	&#x3C;>
-		&#x3C;FormControl margin="normal">
-			&#x3C;InputLabel>地図選択&#x3C;/InputLabel>
-			&#x3C;Select
-				value={mapName}
-				label="地図選択"
-				onChange={(event) => {
-					setMapName(event.target.value);
-				}}
-			>
-				{maps.map(({ name }) => (
-					&#x3C;MenuItem key={name} value={name}>
-						{name}
-					&#x3C;/MenuItem>
-				))}
-			&#x3C;/Select>
-		&#x3C;/FormControl>
-		&#x3C;FormControl margin="normal">
-			&#x3C;InputLabel>場所選択&#x3C;/InputLabel>
-			&#x3C;Select
-				value={placeName}
-				label="場所選択"
-				onChange={(event) => {
-					const selected = places.find(
-						(value) => value.name === event.target.value
-					);
-					if (selected) {
-						setPlaceName(selected.name);
-						setCenter(selected.latlng);
-					}
-				}}
-			>
-				{places.map(({ name }) => (
-					&#x3C;MenuItem key={name} value={name}>
-						{name}
-					&#x3C;/MenuItem>
-				))}
-			&#x3C;/Select>
-		&#x3C;/FormControl>
-		&#x3C;MapContainer
-			center={[35.0585904, 137.5191176]}
-			zoom={7}
-			maxZoom={18}
-			scrollWheelZoom={true}
-			style={{ height: 400, width: '100%' }}
-		>
-			&#x3C;MapController center={center} />
-			&#x3C;TileLayer
-				attribution={selectedMap.attribution}
-				url={selectedMap.url}
-			/>
-			{places.map((place) => (
-				&#x3C;Marker key={place.name} position={place.latlng} icon={merkerIcon}>
-					&#x3C;Popup>{place.name}&#x3C;/Popup>
-				&#x3C;/Marker>
-			))}
-		&#x3C;/MapContainer>
-	&#x3C;/>
-);
-</code></pre>
-<p>};</p>
-<p>export default LeafletDemo;
-```</p>
-<p>なお、Next.jsでSSGでLeafletを含むページを静的に生成しようとすると
-```
-ReferenceError: window is not defined
-```
-というエラーが出てしまうので、Dynamic Importで
-```tsx
-const LeafletDemoComponent = React.useMemo(
-() =>
-dynamic(() => import('../../components/Leaflet/LeafletDemo'), {
-loading: () => <CircularProgress className="w-full" />,
-ssr: false,
-}),
-[]
-);
-```
-というコンポーネントを1つ挟んでブラウザへのレンダリング時に動的インポートさせて表示させるようにしました。
-`;</p>
-<p>const ReactLeafletTest = (props: ReactSoundTestProps) => {
-const LeafletDemoComponent = React.useMemo(
-() =>
-dynamic(() => import('../../components/Leaflet/LeafletDemo'), {
-loading: () => <CircularProgress className="w-full" />,
-ssr: false,
-}),
-[]
-);
-return (
-&#x3C;Main
-recents={props.recents}
-tags={props.tags}
-meta={
-<Meta
- 				title="Reactで国土地理院地図やOpenStreetMapを表示する"
- 				description="ReactとTypeScriptで国土地理院地図やOpenStreetMapを表示したいこと、ありますよね。僕はあるので自分用にメモです。"
- 			/>
-}
->
-<h1 className="text-center font-bold text-3xl text-gray-900">
-Reactで国土地理院地図やOpenStreetMapを表示する
-</h1>
-<div className="text-center text-sm mb-4">
-{format(new Date('2023-01-21T01:04:03+0900'), 'LLLL d, yyyy')}
-</div>
-<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
-{[
-'TypeScript',
-'React',
-'OpenStreetMap',
-'国土地理院地図',
-'leaflet',
-'Next.js',
-].map((tag) => (
-<li
- 					className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
- 					key={tag}
- 				>
-&#x3C;Link href="/tag/[tag]" as={<code>/tag/${tag}</code>}>
-#{tag}
-</Link>
-</li>
-))}
-</ul></p>
-<pre><code>		&#x3C;Content>
-			&#x3C;div>
-				&#x3C;div dangerouslySetInnerHTML={{ __html: props.firstArticle }} />
-				&#x3C;LeafletDemoComponent />
-				&#x3C;div dangerouslySetInnerHTML={{ __html: props.secondArticle }} />
-			&#x3C;/div>
-		&#x3C;/Content>
-
-		&#x3C;PostPagination nextPost={props.nextPost} prevPost={props.prevPost} />
-	&#x3C;/Main>
-);
-</code></pre>
-<p>};</p>
-<p>export const getStaticProps: GetStaticProps<ReactSoundTestProps> = async () => {
-const recents = getRecentPosts(['title', 'date', 'slug']);</p>
-<pre><code>return {
-	props: {
-		recents,
-		tags: getTags(),
-		firstArticle: await markdownToHtml(firstArticle),
-		secondArticle: await markdownToHtml(secondArticle),
-		...getPrevNextPost(__filename),
-	},
-};
-</code></pre>
-<p>};</p>
-<p>export default ReactLeafletTest;</p>]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[ED25519の鍵を生成する]]></title>
-            <link>https://nishidemasami.github.io/posts/gen_ed25519_key</link>
-            <guid>https://nishidemasami.github.io/posts/gen_ed25519_key</guid>
-            <pubDate>Sat, 19 Nov 2022 14:02:43 GMT</pubDate>
-            <description><![CDATA[ED25519の鍵を生成したいこと、ありますよね。僕はあるので自分用にメモです。]]></description>
-            <content:encoded><![CDATA[<p>もう1年以上前にAWSでED25519の鍵が使えるようになっていた。<br>
-当然のようにGitHubでも使える。<br>
-どんどんED25519を使えない環境もかなり減ってきていて、ED25519の鍵を作る機会も増えてきた。</p>
-<p>なのに、ED25519の鍵の作り方をいつもググって調べるので自分用にメモ。</p>
-<p><code>ssh-keygen -t ed25519</code><br>
-で作成できる。</p>
-<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">$ ssh -V</span></span>
-<span class="line"><span style="color: #24292F">OpenSSH_8.9p1 Ubuntu-3, OpenSSL 3.0.2 15 Mar 2022</span></span>
-<span class="line"><span style="color: #24292F">$ ssh-keygen -t ed25519</span></span>
-<span class="line"><span style="color: #24292F">Generating public/private ed25519 key pair.</span></span>
-<span class="line"><span style="color: #24292F">Enter file </span><span style="color: #CF222E">in</span><span style="color: #24292F"> which to save the key (/home/nishidemasami/.ssh/id_ed25519):</span></span>
-<span class="line"><span style="color: #24292F">Enter passphrase (empty </span><span style="color: #CF222E">for</span><span style="color: #24292F"> no passphrase):</span></span>
-<span class="line"><span style="color: #24292F">Enter same passphrase again:</span></span>
-<span class="line"><span style="color: #24292F">Your identification has been saved </span><span style="color: #CF222E">in</span><span style="color: #24292F"> /home/nishidemasami/.ssh/id_ed25519</span></span>
-<span class="line"><span style="color: #24292F">Your public key has been saved </span><span style="color: #CF222E">in</span><span style="color: #24292F"> /home/nishidemasami/.ssh/id_ed25519.pub</span></span>
-<span class="line"><span style="color: #24292F">The key fingerprint is:</span></span>
-<span class="line"><span style="color: #24292F">SHA256:mObF7QvcCUg1/JQb9aF6hc2R6GCuu7UpYipZ03J6Xtw nishidemasami@desktop-nishidemasami</span></span>
-<span class="line"><span style="color: #24292F">The key</span><span style="color: #0A3069">'s randomart image is:</span></span>
-<span class="line"><span style="color: #0A3069">+--[ED25519 256]--+</span></span>
-<span class="line"><span style="color: #0A3069">|       .o  o..o. |</span></span>
-<span class="line"><span style="color: #0A3069">|       ...* .*.o |</span></span>
-<span class="line"><span style="color: #0A3069">|      .  = =o =  |</span></span>
-<span class="line"><span style="color: #0A3069">|     . = .+...   |</span></span>
-<span class="line"><span style="color: #0A3069">|     .= S.o .    |</span></span>
-<span class="line"><span style="color: #0A3069">|    +oo+.= o     |</span></span>
-<span class="line"><span style="color: #0A3069">|   o =. =.E      |</span></span>
-<span class="line"><span style="color: #0A3069">|  o . +.oo +     |</span></span>
-<span class="line"><span style="color: #0A3069">|   ..=...o+      |</span></span>
-<span class="line"><span style="color: #0A3069">+----[SHA256]-----+</span></span></code></pre>
-<p>参考
-<a href="https://aws.amazon.com/jp/about-aws/whats-new/2021/08/amazon-ec2-customers-ed25519-keys-authentication/">https://aws.amazon.com/jp/about-aws/whats-new/2021/08/amazon-ec2-customers-ed25519-keys-authentication/</a></p>]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[Google ColaboratoryでGitHubのipynbファイルを開く]]></title>
-            <link>https://nishidemasami.github.io/posts/google-colab-github</link>
-            <guid>https://nishidemasami.github.io/posts/google-colab-github</guid>
-            <pubDate>Fri, 02 Dec 2022 20:58:43 GMT</pubDate>
-            <description><![CDATA[Google ColaboratoryでGitHubのipynbファイルを開いてみたいと思うこと、ありますよね。僕はあるので自分用にメモです。]]></description>
-            <content:encoded><![CDATA[<p>Google ColaboratoryでGitHubのファイルを開いてみたいと思うこと、ありますよね。<br>
-僕はあるので自分用にメモです。</p>
-<p>と言っても簡単で、GitHubでパブリックのリポジトリにファイルをコミットするだけです。</p>
-<p><a href="https://github.com/nishidemasami/google-colab-tutorial/blob/main/ubuntu-command/useful_tools.ipynb">https://github.com/nishidemasami/google-colab-tutorial/blob/main/ubuntu-command/useful_tools.ipynb</a></p>
-<p>このようなパスにコミットしたとしたら、</p>
-<p><a href="https://colab.research.google.com/github/nishidemasami/google-colab-tutorial/blob/main/ubuntu-command/useful_tools.ipynb">https://colab.research.google.com/github/nishidemasami/google-colab-tutorial/blob/main/ubuntu-command/useful_tools.ipynb</a></p>
-<p>こうやってGoogle Colaboratoryで開くことができます。</p>
-<p>簡単！</p>]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[Next.jsでこのウェブサイトをリニューアルしました！✨]]></title>
-            <link>https://nishidemasami.github.io/posts/nextjs-website-renewal</link>
-            <guid>https://nishidemasami.github.io/posts/nextjs-website-renewal</guid>
-            <pubDate>Fri, 04 Nov 2022 16:04:03 GMT</pubDate>
-            <description><![CDATA[Next.jsでこのウェブサイトをリニューアルしました！✨]]></description>
-            <content:encoded><![CDATA[<p>Next.jsでこのウェブサイトをリニューアルしました！✨</p>
-<p>T3 Stackの6つの技術のうち、フロントエンド側の以下の3つの技術をフル活用しています。</p>
-<ul>
-<li>TypeScript<sup>[<a target="_blank" href="https://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0TypeScript-%E2%80%95%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8BJavaScript%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E9%96%8B%E7%99%BA-Boris-Cherny/dp/4873119049?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=3Q7MI7KXY06BB&keywords=typescript&qid=1670505807&sprefix=typescript+%2Caps%2C224&sr=8-9&linkCode=ll1&tag=nishidemasami-22&linkId=48539012d76c58e8bc3549b5a9dc7a1f&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >参考文献</a>]</sup><br>
-ほぼ全てTypeScriptで書いています。</li>
-<li>Next.js<br>
-SSGフレームワークに使用しています。</li>
-<li>Tailwind CSS<br>
-スタイルを書くのに使用しています。CSSもSCSSもstyled-componentsもどうしても必要な箇所を除けば使っていません。</li>
-</ul>
-<p>また、リニューアル後も引き続きGitHub ActionsでCI/CDを継続しています。</p>
-<p>今のところこのウェブサイトはNext.jsになる前には、</p>
-<p>Hexo<br>
-🔽<br>
-Gatsby.js<br>
-🔽<br>
-Next.js</p>
-<p>という偏移を経ています。</p>
-<p>Hexoは純粋な時代の古き良きSSGでした。しかしパフォーマンスを追い求めると限界がありました。<br>
-Gatsby.jsは <em>Blazing fast🔥</em> ではあったもののちょっとカスタマイズしようとするとすぐgatsby-pluginが必要になりました。<br>
-その点Next.jsは、何もかも自分でコントロールできるような確かな手触りを感じています。<br>
-それにNext.jsも十分速い。とにかくウェブサイトのなにをクリックしても速いです。普通の使い方をするならGatsby.jsと違いがわからないほど速いです。</p>
-<p>Next.jsをもっと良く知るためにも、引き続きこのウェブサイトでいろいろなことをやってみようと思っています。</p>]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[GitHubのレポジトリサイズを確認する]]></title>
-            <link>https://nishidemasami.github.io/posts/check_github_repository_size</link>
-            <guid>https://nishidemasami.github.io/posts/check_github_repository_size</guid>
-            <pubDate>Sat, 12 Nov 2022 14:02:43 GMT</pubDate>
-            <description><![CDATA[GitHubのレポジトリサイズを確認する]]></description>
-            <content:encoded><![CDATA[<p>リポジトリのサイズがいつも気になるので自分用にメモ。</p>
-<p><code>https://api.github.com/repos/アカウント名/リポジトリ名</code><br>
-にアクセスするとjsonで詳細が取得できる。<br>
-その<code>size</code>にKB単位でサイズが入っている。</p>
-<p>たとえば<code>github.com:nishidemasami/nishidemasami.github.io.git</code>の場合、<br>
-<a href="https://api.github.com/repos/nishidemasami/nishidemasami.github.io">https://api.github.com/repos/nishidemasami/nishidemasami.github.io</a><br>
-このURLで取得できる。</p>]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[Gatsbyでブログをリニューアルしてみました]]></title>
-            <link>https://nishidemasami.github.io/articles/blog-remake-with-gatsby</link>
-            <guid>https://nishidemasami.github.io/articles/blog-remake-with-gatsby</guid>
-            <pubDate>Sat, 06 Mar 2021 09:04:03 GMT</pubDate>
-            <description><![CDATA[このブログをリニューアルしてみました。このブログのソースはここ ↓ で公開しています。https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby見てみた感じどうですか？すごくないですか！？…]]></description>
-            <content:encoded><![CDATA[<p>*/</p>
-<p>import React from 'react';</p>
-<p>import { format } from 'date-fns';
-import { GetStaticProps } from 'next';
-import Link from 'next/link';</p>
-<p>import ReactHelloWorld from '../../components/ReactHelloWorld/ReactHelloWorld';
-import { Content } from '../../content/Content';
-import { Meta } from '../../layout/Meta';
-import { PostPagination } from '../../pagination/PostPagination';
-import { Main } from '../../templates/Main';
-import {
-getPrevNextPost,
-getRecentPosts,
-getTags,
-PostItems,
-} from '../../utils/Content';</p>
-<p>type AboutProps = {
-recents: PostItems[];
-tags: string[];
-prevPost?: PostItems;
-nextPost?: PostItems;
-};</p>
-<p>const About = (props: AboutProps) => (
-&#x3C;Main
-recents={props.recents}
-tags={props.tags}
-meta={
-<Meta
- 			title="Gatsbyでブログをリニューアルしてみました"
- 			description="Gatsbyでブログをリニューアルしてみました"
- 		/>
-}
->
-<h1 className="text-center font-bold text-3xl text-gray-900">
-Gatsbyでブログをリニューアルしてみました
-</h1>
-<div className="text-center text-sm mb-4">
-{format(new Date('2021-03-06T18:04:03+0900'), 'LLLL d, yyyy')}
-</div>
-<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
-{['JavaScript', 'TypeScript', 'React', 'Gatsby.js'].map((tag) => (
-<li
- 				className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
- 				key={tag}
- 			>
-&#x3C;Link href="/tag/[tag]" as={<code>/tag/${tag}</code>}>
-#{tag}
-</Link>
-</li>
-))}
-</ul>
-<Content>
-<div>
-<p>
-このブログをリニューアルしてみました。
-ちなみにこのブログのソースはここ ↓ で公開しています。
-<a href="https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby">
-<a href="https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby">https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby</a>
-</a>
-</p>
-<p>作ってみた感じ、すごくいいと思います！</p>
-<ul>
-<li>React が動いている・生で React が書ける</li>
-<li>
-ページ間の遷移の速度が速い(React の仮想 DOM 操作に由来している)
-</li>
-<li>
-ちょっとがんばれば Typescript でも書ける(使用する Gatsby
-のテンプレートによっては最初から Typescript を使っているらしい)
-</li>
-<li>
-Gatsby が静的にページを作ってくれているので Javascript
-をオフにしてても見れる
-</li>
-</ul></p>
-<pre><code>			&#x3C;ReactHelloWorld>
-				こんな感じで普通にReact が&#x3C;br />
-				Typescript で書けて動きます！✨
-			&#x3C;/ReactHelloWorld>
-			&#x3C;p>
-				Gatsby は、HEXO や Hugo、Jekyll
-				みたいに静的ジェネレータなので、こうやって Github Pages
-				にも乗せられるので便利！ AWS S3 とかに乗せればスケールしますし！✨
-			&#x3C;/p>
-			&#x3C;p>
-				あと、ページを高速化するための細かなテクニックを最初から使ってくれています。
-			&#x3C;/p>
-			&#x3C;ul>
-				&#x3C;li>静的プレレンダリング・静的プリフェッチ(速い)&#x3C;/li>
-				&#x3C;li>
-					いわゆる PRPL パターンに準拠する PWA サポート
-					&#x3C;br />
-					&#x3C;strong>
-						&#x3C;em>Push &#x3C;/em>
-					&#x3C;/strong>
-					critical resources for the initial URL route using
-					&#x3C;code>&#x26;lt;link preload&#x26;gt;&#x3C;/code> and HTTP/2.
-					&#x3C;br />
-					&#x3C;strong>
-						&#x3C;em>Render &#x3C;/em>
-					&#x3C;/strong>
-					initial route.
-					&#x3C;br />
-					&#x3C;strong>
-						&#x3C;em>Pre-cache &#x3C;/em>
-					&#x3C;/strong>
-					remaining routes.
-					&#x3C;br />
-					&#x3C;strong>
-						&#x3C;em>Lazy-load &#x3C;/em>
-					&#x3C;/strong>
-					and create remaining routes on demand.
-					&#x3C;br />
-					&#x3C;a href="https://www.gatsbyjs.com/docs/prpl-pattern/">
-						https://www.gatsbyjs.com/docs/prpl-pattern/
-					&#x3C;/a>
-				&#x3C;/li>
-				&#x3C;li>
-					GraphQL(ビルド時には json
-					になっている)によるデータアクセスや画面遷移(これまた速い)
-				&#x3C;/li>
-			&#x3C;/ul>
-			&#x3C;p>
-				Gatsby で Markdown ファイルとかいい感じにしてくれますし、普通に React
-				の仮想 DOM による高速化の恩恵も受けることできてます！
-				かなりいい感じになってると思います！✨
-			&#x3C;/p>
-		&#x3C;/div>
-	&#x3C;/Content>
-
-	&#x3C;PostPagination nextPost={props.nextPost} prevPost={props.prevPost} />
-&#x3C;/Main>
-</code></pre>
-<p>);</p>
-<p>export const getStaticProps: GetStaticProps<AboutProps> = async () => ({
-props: {
-recents: getRecentPosts(['title', 'date', 'slug']),
-tags: getTags(),
-...getPrevNextPost(__filename),
-},
-});</p>
-<p>export default About;</p>]]></content:encoded>
-        </item>
-        <item>
-            <title><![CDATA[JAVAで組み合わせ]]></title>
-            <link>https://nishidemasami.github.io/posts/java-combination</link>
-            <guid>https://nishidemasami.github.io/posts/java-combination</guid>
-            <pubDate>Sat, 26 Nov 2016 00:04:03 GMT</pubDate>
-            <description><![CDATA[JAVAで組み合わせを作成したいと思うこと、ありますよね。僕はあるので自分用にメモです。Ruby では組み合わせを作成することができるArray#combinationが用意されています。これを使えば、例えば下記のように…]]></description>
-            <content:encoded><![CDATA[<p>JAVAで組み合わせを作成したいと思うこと、ありますよね。<br>
-僕はあるので自分用にメモです。</p>
-<p>Ruby では組み合わせを作成することができる<a href="https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html">Array#combination</a>が用意されています。<br>
-これを使えば、例えば下記のように</p>
-<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #CF222E">require</span><span style="color: #24292F"> </span><span style="color: #0A3069">'json'</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #24292F">jsonstr </span><span style="color: #0A3069">= &#x3C;&#x3C;JSON</span></span>
-<span class="line"><span style="color: #0A3069">[</span></span>
-<span class="line"><span style="color: #0A3069">  {</span></span>
-<span class="line"><span style="color: #0A3069">    "price": 432,</span></span>
-<span class="line"><span style="color: #0A3069">    "name": "hoge"</span></span>
-<span class="line"><span style="color: #0A3069">  },</span></span>
-<span class="line"><span style="color: #0A3069">  {</span></span>
-<span class="line"><span style="color: #0A3069">    "price": 531,</span></span>
-<span class="line"><span style="color: #0A3069">    "name": "fuga"</span></span>
-<span class="line"><span style="color: #0A3069">  },</span></span>
-<span class="line"><span style="color: #0A3069">  {</span></span>
-<span class="line"><span style="color: #0A3069">    "price": 568,</span></span>
-<span class="line"><span style="color: #0A3069">    "name": "piyo"</span></span>
-<span class="line"><span style="color: #0A3069">  }</span></span>
-<span class="line"><span style="color: #0A3069">]</span></span>
-<span class="line"><span style="color: #0A3069">JSON</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #0550AE">p</span><span style="color: #24292F"> </span><span style="color: #0550AE">JSON</span><span style="color: #24292F">.</span><span style="color: #0550AE">load</span><span style="color: #24292F">(jsonstr)</span></span>
-<span class="line"><span style="color: #24292F">    .combination(</span><span style="color: #0550AE">2</span><span style="color: #24292F">)</span></span>
-<span class="line"><span style="color: #24292F">    .to_a</span></span>
-<span class="line"><span style="color: #24292F">    .</span><span style="color: #0550AE">select</span><span style="color: #24292F">(</span><span style="color: #CF222E">&#x26;</span><span style="color: #0550AE">-></span><span style="color: #24292F">x{x.reduce(</span><span style="color: #CF222E">&#x26;</span><span style="color: #0550AE">-></span><span style="color: #24292F">x,y{x[</span><span style="color: #0A3069">"price"</span><span style="color: #24292F">] </span><span style="color: #CF222E">+</span><span style="color: #24292F"> y[</span><span style="color: #0A3069">"price"</span><span style="color: #24292F">]}) </span><span style="color: #CF222E">==</span><span style="color: #24292F"> </span><span style="color: #0550AE">1000</span><span style="color: #24292F">})</span></span></code></pre>
-<p>こうすれば、JSON の商品リストから price の合計が 1000 になるもの(hoge と piyo)を抜き出してくれます。</p>
-<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">[[{</span><span style="color: #0A3069">"price"</span><span style="color: #24292F">=></span><span style="color: #0550AE">432</span><span style="color: #24292F">, </span><span style="color: #0A3069">"name"</span><span style="color: #24292F">=></span><span style="color: #0A3069">"hoge"</span><span style="color: #24292F">}, {</span><span style="color: #0A3069">"price"</span><span style="color: #24292F">=></span><span style="color: #0550AE">568</span><span style="color: #24292F">, </span><span style="color: #0A3069">"name"</span><span style="color: #24292F">=></span><span style="color: #0A3069">"piyo"</span><span style="color: #24292F">}]]</span></span></code></pre>
-<p>非常にイージー。</p>
-<p>ところが、combination は Java には無いんですよね。<br>
-これを Java で書きたい時、どうすればいいのか悩みました。<br>
-今回は再帰的なやりかたでやってみました。</p>
-<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span><span style="color: #24292F"> 組み合わせを返す</span></span>
-<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span></span>
-<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span><span style="color: #24292F"> @</span><span style="color: #CF222E">param</span><span style="color: #24292F"> parameter 組み合わせを作成するリスト</span></span>
-<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span><span style="color: #24292F"> @</span><span style="color: #CF222E">param</span><span style="color: #24292F"> combinationCount 組み合わせの個数</span></span>
-<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span><span style="color: #24292F"> @</span><span style="color: #CF222E">return</span><span style="color: #24292F"> 組み合わせのリスト</span></span>
-<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*/</span></span>
-<span class="line"><span style="color: #CF222E">private</span><span style="color: #24292F"> </span><span style="color: #CF222E">static</span><span style="color: #24292F"> </span><span style="color: #CF222E">final</span><span style="color: #24292F"> </span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F">E</span><span style="color: #CF222E">></span><span style="color: #24292F"> List</span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F">List</span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F">E</span><span style="color: #CF222E">>></span><span style="color: #24292F"> </span><span style="color: #8250DF">combination</span><span style="color: #24292F">(</span></span>
-<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">final</span><span style="color: #24292F"> List</span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F">E</span><span style="color: #CF222E">></span><span style="color: #24292F"> parameter,</span></span>
-<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">final</span><span style="color: #24292F"> </span><span style="color: #CF222E">long</span><span style="color: #24292F"> combinationCount) {</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">final</span><span style="color: #24292F"> </span><span style="color: #CF222E">int</span><span style="color: #953800"> </span><span style="color: #24292F">parameterSize</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> parameter.</span><span style="color: #8250DF">size</span><span style="color: #24292F">();</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">if</span><span style="color: #24292F"> (parameterSize </span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F"> combinationCount) {</span></span>
-<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">throw</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">IllegalArgumentException</span><span style="color: #24292F">(</span><span style="color: #0A3069">"リストの要素数が組み合わせ個数より少ないです。"</span><span style="color: #24292F">);</span></span>
-<span class="line"><span style="color: #24292F">  } </span><span style="color: #CF222E">else</span><span style="color: #24292F"> </span><span style="color: #CF222E">if</span><span style="color: #24292F"> (combinationCount </span><span style="color: #CF222E">&#x3C;=</span><span style="color: #24292F"> </span><span style="color: #0550AE">0</span><span style="color: #24292F">) {</span></span>
-<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">throw</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">IllegalArgumentException</span><span style="color: #24292F">(</span><span style="color: #0A3069">"組み合わせ個数が不正です。"</span><span style="color: #24292F">);</span></span>
-<span class="line"><span style="color: #24292F">  } </span><span style="color: #CF222E">else</span><span style="color: #24292F"> </span><span style="color: #CF222E">if</span><span style="color: #24292F"> (combinationCount </span><span style="color: #CF222E">==</span><span style="color: #24292F"> </span><span style="color: #0550AE">1</span><span style="color: #24292F">) {</span></span>
-<span class="line"><span style="color: #24292F">    List</span><span style="color: #953800">&#x3C;</span><span style="color: #24292F">List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">>> </span><span style="color: #24292F">result</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> LinkedList&#x3C;List&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #24292F">>>();</span></span>
-<span class="line"><span style="color: #24292F">    parameter.</span><span style="color: #8250DF">forEach</span><span style="color: #24292F">(x </span><span style="color: #CF222E">-></span><span style="color: #24292F"> {</span></span>
-<span class="line"><span style="color: #24292F">      List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">> </span><span style="color: #24292F">resultWork</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> LinkedList&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #24292F">>();</span></span>
-<span class="line"><span style="color: #24292F">      resultWork.</span><span style="color: #8250DF">add</span><span style="color: #24292F">(x);</span></span>
-<span class="line"><span style="color: #24292F">      result.</span><span style="color: #8250DF">add</span><span style="color: #24292F">(resultWork);</span></span>
-<span class="line"><span style="color: #24292F">    });</span></span>
-<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">return</span><span style="color: #24292F"> result;</span></span>
-<span class="line"><span style="color: #24292F">  } </span><span style="color: #CF222E">else</span><span style="color: #24292F"> {</span></span>
-<span class="line"><span style="color: #24292F">    List</span><span style="color: #953800">&#x3C;</span><span style="color: #24292F">List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">>> </span><span style="color: #24292F">result</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> LinkedList&#x3C;List&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #24292F">>>();</span></span>
-<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">for</span><span style="color: #24292F"> (</span><span style="color: #CF222E">int</span><span style="color: #953800"> </span><span style="color: #24292F">i</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #0550AE">0</span><span style="color: #24292F">; i </span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F"> parameterSize </span><span style="color: #CF222E">-</span><span style="color: #24292F"> combinationCount </span><span style="color: #CF222E">+</span><span style="color: #24292F"> </span><span style="color: #0550AE">1</span><span style="color: #24292F">; i</span><span style="color: #CF222E">++</span><span style="color: #24292F">) {</span></span>
-<span class="line"><span style="color: #24292F">      List</span><span style="color: #953800">&#x3C;</span><span style="color: #24292F">List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">>> </span><span style="color: #24292F">resultWork</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #8250DF">combination</span><span style="color: #24292F">(</span></span>
-<span class="line"><span style="color: #24292F">        parameter.</span><span style="color: #8250DF">subList</span><span style="color: #24292F">(</span><span style="color: #0550AE">1</span><span style="color: #24292F"> </span><span style="color: #CF222E">+</span><span style="color: #24292F"> i, parameterSize),</span></span>
-<span class="line"><span style="color: #24292F">        combinationCount </span><span style="color: #CF222E">-</span><span style="color: #24292F"> </span><span style="color: #0550AE">1</span><span style="color: #24292F">);</span></span>
-<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">for</span><span style="color: #24292F"> (List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">> </span><span style="color: #24292F">resultWorkForEach</span><span style="color: #953800"> </span><span style="color: #CF222E">:</span><span style="color: #24292F"> resultWork) {</span></span>
-<span class="line"><span style="color: #24292F">        resultWorkForEach.</span><span style="color: #8250DF">add</span><span style="color: #24292F">(</span><span style="color: #0550AE">0</span><span style="color: #24292F">, parameter.</span><span style="color: #8250DF">get</span><span style="color: #24292F">(i));</span></span>
-<span class="line"><span style="color: #24292F">      }</span></span>
-<span class="line"><span style="color: #24292F">      result.</span><span style="color: #8250DF">addAll</span><span style="color: #24292F">(resultWork);</span></span>
-<span class="line"><span style="color: #24292F">    }</span></span>
-<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">return</span><span style="color: #24292F"> result;</span></span>
-<span class="line"><span style="color: #24292F">  }</span></span>
-<span class="line"><span style="color: #24292F">}</span></span></code></pre>
-<p>LinkedList を使っているのは先頭追加があるためです。<br>
-ちょっと見た目がヘビーですが、使えます。<br>
-こんな感じです。</p>
-<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #CF222E">class</span><span style="color: #24292F"> </span><span style="color: #953800">Item</span><span style="color: #24292F"> {</span></span>
-<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">public</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #CF222E">int</span><span style="color: #24292F"> </span><span style="color: #953800">price</span><span style="color: #24292F">, String </span><span style="color: #953800">name</span><span style="color: #24292F">){</span></span>
-<span class="line"><span style="color: #24292F">    </span><span style="color: #0550AE">this</span><span style="color: #24292F">.price </span><span style="color: #CF222E">=</span><span style="color: #24292F"> price;</span></span>
-<span class="line"><span style="color: #24292F">    </span><span style="color: #0550AE">this</span><span style="color: #24292F">.name </span><span style="color: #CF222E">=</span><span style="color: #24292F"> name;</span></span>
-<span class="line"><span style="color: #24292F">  }</span></span>
-<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">int</span><span style="color: #953800"> </span><span style="color: #24292F">price;</span></span>
-<span class="line"><span style="color: #24292F">  String</span><span style="color: #953800"> </span><span style="color: #24292F">name;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #24292F">  @</span><span style="color: #CF222E">Override</span></span>
-<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">public</span><span style="color: #24292F"> String </span><span style="color: #8250DF">toString</span><span style="color: #24292F">() {</span></span>
-<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">return</span><span style="color: #24292F"> name </span><span style="color: #CF222E">+</span><span style="color: #24292F"> </span><span style="color: #0A3069">":"</span><span style="color: #24292F"> </span><span style="color: #CF222E">+</span><span style="color: #24292F"> price </span><span style="color: #CF222E">+</span><span style="color: #24292F"> </span><span style="color: #0A3069">"円"</span><span style="color: #24292F">;</span></span>
-<span class="line"><span style="color: #24292F">  }</span></span>
-<span class="line"><span style="color: #24292F">}</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #CF222E">class</span><span style="color: #24292F"> </span><span style="color: #953800">Main</span><span style="color: #24292F"> {</span></span>
-<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">public</span><span style="color: #24292F"> </span><span style="color: #CF222E">static</span><span style="color: #24292F"> </span><span style="color: #CF222E">void</span><span style="color: #24292F"> </span><span style="color: #8250DF">main</span><span style="color: #24292F">(</span><span style="color: #CF222E">String</span><span style="color: #24292F">[] </span><span style="color: #953800">args</span><span style="color: #24292F">) {</span></span>
-<span class="line"><span style="color: #24292F">    List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">Item</span><span style="color: #953800">> </span><span style="color: #24292F">itemList</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> Arrays.</span><span style="color: #8250DF">asList</span><span style="color: #24292F">(</span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #CF222E">Item</span><span style="color: #24292F">[]{</span></span>
-<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #0550AE">432</span><span style="color: #24292F">, </span><span style="color: #0A3069">"hoge"</span><span style="color: #24292F">),</span></span>
-<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #0550AE">531</span><span style="color: #24292F">, </span><span style="color: #0A3069">"fuga"</span><span style="color: #24292F">),</span></span>
-<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #0550AE">568</span><span style="color: #24292F">, </span><span style="color: #0A3069">"piyo"</span><span style="color: #24292F">),</span></span>
-<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #0550AE">999</span><span style="color: #24292F">, </span><span style="color: #0A3069">"meta"</span><span style="color: #24292F">)</span></span>
-<span class="line"><span style="color: #24292F">    });</span></span>
-<span class="line"></span>
-<span class="line"><span style="color: #24292F">    </span><span style="color: #8250DF">combination</span><span style="color: #24292F">(itemList,</span><span style="color: #0550AE">3</span><span style="color: #24292F">)</span></span>
-<span class="line"><span style="color: #24292F">      .</span><span style="color: #8250DF">stream</span><span style="color: #24292F">()</span></span>
-<span class="line"><span style="color: #24292F">      .</span><span style="color: #8250DF">forEach</span><span style="color: #24292F">(x</span><span style="color: #CF222E">-></span><span style="color: #24292F">{System.out.</span><span style="color: #8250DF">println</span><span style="color: #24292F">(Arrays.</span><span style="color: #8250DF">toString</span><span style="color: #24292F">(x.</span><span style="color: #8250DF">toArray</span><span style="color: #24292F">()));});</span></span>
-<span class="line"><span style="color: #24292F">  }</span></span>
-<span class="line"><span style="color: #24292F">}</span></span></code></pre>
-<p>こうなります。</p>
-<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">hoge:</span><span style="color: #0550AE">432</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">fuga:</span><span style="color: #0550AE">531</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">piyo:</span><span style="color: #0550AE">568</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span>
-<span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">hoge:</span><span style="color: #0550AE">432</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">fuga:</span><span style="color: #0550AE">531</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">meta:</span><span style="color: #0550AE">999</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span>
-<span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">hoge:</span><span style="color: #0550AE">432</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">piyo:</span><span style="color: #0550AE">568</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">meta:</span><span style="color: #0550AE">999</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span>
-<span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">fuga:</span><span style="color: #0550AE">531</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">piyo:</span><span style="color: #0550AE">568</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">meta:</span><span style="color: #0550AE">999</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span></code></pre>
-<p>Ruby の例題と同じようにこうすると、</p>
-<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #8250DF">combination</span><span style="color: #24292F">(itemList,</span><span style="color: #0550AE">2</span><span style="color: #24292F">)</span></span>
-<span class="line"><span style="color: #24292F">  .</span><span style="color: #8250DF">stream</span><span style="color: #24292F">()</span></span>
-<span class="line"><span style="color: #24292F">  .</span><span style="color: #8250DF">filter</span><span style="color: #24292F">(x</span><span style="color: #CF222E">-></span><span style="color: #24292F"> x.</span><span style="color: #8250DF">stream</span><span style="color: #24292F">().</span><span style="color: #8250DF">map</span><span style="color: #24292F">(y </span><span style="color: #CF222E">-></span><span style="color: #24292F"> y.price).</span><span style="color: #8250DF">reduce</span><span style="color: #24292F">((y, z)</span><span style="color: #CF222E">-></span><span style="color: #24292F"> y </span><span style="color: #CF222E">+</span><span style="color: #24292F"> z).</span><span style="color: #8250DF">get</span><span style="color: #24292F">() </span><span style="color: #CF222E">==</span><span style="color: #24292F"> </span><span style="color: #0550AE">1000</span><span style="color: #24292F">)</span></span>
-<span class="line"><span style="color: #24292F">  .</span><span style="color: #8250DF">forEach</span><span style="color: #24292F">(x</span><span style="color: #CF222E">-></span><span style="color: #24292F">{System.out.</span><span style="color: #8250DF">println</span><span style="color: #24292F">(Arrays.</span><span style="color: #8250DF">toString</span><span style="color: #24292F">(x.</span><span style="color: #8250DF">toArray</span><span style="color: #24292F">()));});</span></span></code></pre>
-<p>こうなります。</p>
-<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">hoge:</span><span style="color: #0550AE">432</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">piyo:</span><span style="color: #0550AE">568</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span></code></pre>
-<p>java8 の stream なのに遅延評価が役に立たないのは、Ruby も combination を<a href="https://docs.ruby-lang.org/ja/latest/class/Enumerator=3a=3aLazy.html">Enumerator::Lazy</a>で使えないのと一緒ですね。<br>
-java8 は遅延評価がデフォルトとなっているので、気軽に limit(1)などで一瞬で返ってくるつもりでいたら combination 部分が延々返ってこない…なんてことが発生しないようになのかもしれません。</p>
-<p>Ruby で使えた combination が無くて困った話でした。</p>]]></content:encoded>
-        </item>
-        <item>
             <title><![CDATA[SVGだけで作ったSVGマニ車をCSSでクルクル回して自動で徳を積む]]></title>
             <link>https://nishidemasami.github.io/posts/svg-prayer-wheel</link>
             <guid>https://nishidemasami.github.io/posts/svg-prayer-wheel</guid>
@@ -1627,6 +705,58 @@ java8 は遅延評価がデフォルトとなっているので、気軽に limi
 </li>
 </ol>
 </section>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[GitHubのレポジトリサイズを確認する]]></title>
+            <link>https://nishidemasami.github.io/posts/check_github_repository_size</link>
+            <guid>https://nishidemasami.github.io/posts/check_github_repository_size</guid>
+            <pubDate>Sat, 12 Nov 2022 14:02:43 GMT</pubDate>
+            <description><![CDATA[GitHubのレポジトリサイズを確認する]]></description>
+            <content:encoded><![CDATA[<p>リポジトリのサイズがいつも気になるので自分用にメモ。</p>
+<p><code>https://api.github.com/repos/アカウント名/リポジトリ名</code><br>
+にアクセスするとjsonで詳細が取得できる。<br>
+その<code>size</code>にKB単位でサイズが入っている。</p>
+<p>たとえば<code>github.com:nishidemasami/nishidemasami.github.io.git</code>の場合、<br>
+<a href="https://api.github.com/repos/nishidemasami/nishidemasami.github.io">https://api.github.com/repos/nishidemasami/nishidemasami.github.io</a><br>
+このURLで取得できる。</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[ED25519の鍵を生成する]]></title>
+            <link>https://nishidemasami.github.io/posts/gen_ed25519_key</link>
+            <guid>https://nishidemasami.github.io/posts/gen_ed25519_key</guid>
+            <pubDate>Sat, 19 Nov 2022 14:02:43 GMT</pubDate>
+            <description><![CDATA[ED25519の鍵を生成したいこと、ありますよね。僕はあるので自分用にメモです。]]></description>
+            <content:encoded><![CDATA[<p>もう1年以上前にAWSでED25519の鍵が使えるようになっていた。<br>
+当然のようにGitHubでも使える。<br>
+どんどんED25519を使えない環境もかなり減ってきていて、ED25519の鍵を作る機会も増えてきた。</p>
+<p>なのに、ED25519の鍵の作り方をいつもググって調べるので自分用にメモ。</p>
+<p><code>ssh-keygen -t ed25519</code><br>
+で作成できる。</p>
+<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">$ ssh -V</span></span>
+<span class="line"><span style="color: #24292F">OpenSSH_8.9p1 Ubuntu-3, OpenSSL 3.0.2 15 Mar 2022</span></span>
+<span class="line"><span style="color: #24292F">$ ssh-keygen -t ed25519</span></span>
+<span class="line"><span style="color: #24292F">Generating public/private ed25519 key pair.</span></span>
+<span class="line"><span style="color: #24292F">Enter file </span><span style="color: #CF222E">in</span><span style="color: #24292F"> which to save the key (/home/nishidemasami/.ssh/id_ed25519):</span></span>
+<span class="line"><span style="color: #24292F">Enter passphrase (empty </span><span style="color: #CF222E">for</span><span style="color: #24292F"> no passphrase):</span></span>
+<span class="line"><span style="color: #24292F">Enter same passphrase again:</span></span>
+<span class="line"><span style="color: #24292F">Your identification has been saved </span><span style="color: #CF222E">in</span><span style="color: #24292F"> /home/nishidemasami/.ssh/id_ed25519</span></span>
+<span class="line"><span style="color: #24292F">Your public key has been saved </span><span style="color: #CF222E">in</span><span style="color: #24292F"> /home/nishidemasami/.ssh/id_ed25519.pub</span></span>
+<span class="line"><span style="color: #24292F">The key fingerprint is:</span></span>
+<span class="line"><span style="color: #24292F">SHA256:mObF7QvcCUg1/JQb9aF6hc2R6GCuu7UpYipZ03J6Xtw nishidemasami@desktop-nishidemasami</span></span>
+<span class="line"><span style="color: #24292F">The key</span><span style="color: #0A3069">'s randomart image is:</span></span>
+<span class="line"><span style="color: #0A3069">+--[ED25519 256]--+</span></span>
+<span class="line"><span style="color: #0A3069">|       .o  o..o. |</span></span>
+<span class="line"><span style="color: #0A3069">|       ...* .*.o |</span></span>
+<span class="line"><span style="color: #0A3069">|      .  = =o =  |</span></span>
+<span class="line"><span style="color: #0A3069">|     . = .+...   |</span></span>
+<span class="line"><span style="color: #0A3069">|     .= S.o .    |</span></span>
+<span class="line"><span style="color: #0A3069">|    +oo+.= o     |</span></span>
+<span class="line"><span style="color: #0A3069">|   o =. =.E      |</span></span>
+<span class="line"><span style="color: #0A3069">|  o . +.oo +     |</span></span>
+<span class="line"><span style="color: #0A3069">|   ..=...o+      |</span></span>
+<span class="line"><span style="color: #0A3069">+----[SHA256]-----+</span></span></code></pre>
+<p>参考
+<a href="https://aws.amazon.com/jp/about-aws/whats-new/2021/08/amazon-ec2-customers-ed25519-keys-authentication/">https://aws.amazon.com/jp/about-aws/whats-new/2021/08/amazon-ec2-customers-ed25519-keys-authentication/</a></p>]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[Reactでホワイトノイズを鳴らす]]></title>
@@ -1988,6 +1118,374 @@ Mac 等では使えませんが、「aes-256-cbc」の代わりに「aes-256-ofb
 みなさんもぜひやってみて下さい。</p>]]></content:encoded>
         </item>
         <item>
+            <title><![CDATA[JAVAで組み合わせ]]></title>
+            <link>https://nishidemasami.github.io/posts/java-combination</link>
+            <guid>https://nishidemasami.github.io/posts/java-combination</guid>
+            <pubDate>Sat, 26 Nov 2016 00:04:03 GMT</pubDate>
+            <description><![CDATA[JAVAで組み合わせを作成したいと思うこと、ありますよね。僕はあるので自分用にメモです。Ruby では組み合わせを作成することができるArray#combinationが用意されています。これを使えば、例えば下記のように…]]></description>
+            <content:encoded><![CDATA[<p>JAVAで組み合わせを作成したいと思うこと、ありますよね。<br>
+僕はあるので自分用にメモです。</p>
+<p>Ruby では組み合わせを作成することができる<a href="https://docs.ruby-lang.org/ja/latest/method/Array/i/combination.html">Array#combination</a>が用意されています。<br>
+これを使えば、例えば下記のように</p>
+<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #CF222E">require</span><span style="color: #24292F"> </span><span style="color: #0A3069">'json'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #24292F">jsonstr </span><span style="color: #0A3069">= &#x3C;&#x3C;JSON</span></span>
+<span class="line"><span style="color: #0A3069">[</span></span>
+<span class="line"><span style="color: #0A3069">  {</span></span>
+<span class="line"><span style="color: #0A3069">    "price": 432,</span></span>
+<span class="line"><span style="color: #0A3069">    "name": "hoge"</span></span>
+<span class="line"><span style="color: #0A3069">  },</span></span>
+<span class="line"><span style="color: #0A3069">  {</span></span>
+<span class="line"><span style="color: #0A3069">    "price": 531,</span></span>
+<span class="line"><span style="color: #0A3069">    "name": "fuga"</span></span>
+<span class="line"><span style="color: #0A3069">  },</span></span>
+<span class="line"><span style="color: #0A3069">  {</span></span>
+<span class="line"><span style="color: #0A3069">    "price": 568,</span></span>
+<span class="line"><span style="color: #0A3069">    "name": "piyo"</span></span>
+<span class="line"><span style="color: #0A3069">  }</span></span>
+<span class="line"><span style="color: #0A3069">]</span></span>
+<span class="line"><span style="color: #0A3069">JSON</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #0550AE">p</span><span style="color: #24292F"> </span><span style="color: #0550AE">JSON</span><span style="color: #24292F">.</span><span style="color: #0550AE">load</span><span style="color: #24292F">(jsonstr)</span></span>
+<span class="line"><span style="color: #24292F">    .combination(</span><span style="color: #0550AE">2</span><span style="color: #24292F">)</span></span>
+<span class="line"><span style="color: #24292F">    .to_a</span></span>
+<span class="line"><span style="color: #24292F">    .</span><span style="color: #0550AE">select</span><span style="color: #24292F">(</span><span style="color: #CF222E">&#x26;</span><span style="color: #0550AE">-></span><span style="color: #24292F">x{x.reduce(</span><span style="color: #CF222E">&#x26;</span><span style="color: #0550AE">-></span><span style="color: #24292F">x,y{x[</span><span style="color: #0A3069">"price"</span><span style="color: #24292F">] </span><span style="color: #CF222E">+</span><span style="color: #24292F"> y[</span><span style="color: #0A3069">"price"</span><span style="color: #24292F">]}) </span><span style="color: #CF222E">==</span><span style="color: #24292F"> </span><span style="color: #0550AE">1000</span><span style="color: #24292F">})</span></span></code></pre>
+<p>こうすれば、JSON の商品リストから price の合計が 1000 になるもの(hoge と piyo)を抜き出してくれます。</p>
+<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">[[{</span><span style="color: #0A3069">"price"</span><span style="color: #24292F">=></span><span style="color: #0550AE">432</span><span style="color: #24292F">, </span><span style="color: #0A3069">"name"</span><span style="color: #24292F">=></span><span style="color: #0A3069">"hoge"</span><span style="color: #24292F">}, {</span><span style="color: #0A3069">"price"</span><span style="color: #24292F">=></span><span style="color: #0550AE">568</span><span style="color: #24292F">, </span><span style="color: #0A3069">"name"</span><span style="color: #24292F">=></span><span style="color: #0A3069">"piyo"</span><span style="color: #24292F">}]]</span></span></code></pre>
+<p>非常にイージー。</p>
+<p>ところが、combination は Java には無いんですよね。<br>
+これを Java で書きたい時、どうすればいいのか悩みました。<br>
+今回は再帰的なやりかたでやってみました。</p>
+<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span><span style="color: #24292F"> 組み合わせを返す</span></span>
+<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span></span>
+<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span><span style="color: #24292F"> @</span><span style="color: #CF222E">param</span><span style="color: #24292F"> parameter 組み合わせを作成するリスト</span></span>
+<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span><span style="color: #24292F"> @</span><span style="color: #CF222E">param</span><span style="color: #24292F"> combinationCount 組み合わせの個数</span></span>
+<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*</span><span style="color: #24292F"> @</span><span style="color: #CF222E">return</span><span style="color: #24292F"> 組み合わせのリスト</span></span>
+<span class="line"><span style="color: #24292F"> </span><span style="color: #CF222E">*/</span></span>
+<span class="line"><span style="color: #CF222E">private</span><span style="color: #24292F"> </span><span style="color: #CF222E">static</span><span style="color: #24292F"> </span><span style="color: #CF222E">final</span><span style="color: #24292F"> </span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F">E</span><span style="color: #CF222E">></span><span style="color: #24292F"> List</span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F">List</span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F">E</span><span style="color: #CF222E">>></span><span style="color: #24292F"> </span><span style="color: #8250DF">combination</span><span style="color: #24292F">(</span></span>
+<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">final</span><span style="color: #24292F"> List</span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F">E</span><span style="color: #CF222E">></span><span style="color: #24292F"> parameter,</span></span>
+<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">final</span><span style="color: #24292F"> </span><span style="color: #CF222E">long</span><span style="color: #24292F"> combinationCount) {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">final</span><span style="color: #24292F"> </span><span style="color: #CF222E">int</span><span style="color: #953800"> </span><span style="color: #24292F">parameterSize</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> parameter.</span><span style="color: #8250DF">size</span><span style="color: #24292F">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">if</span><span style="color: #24292F"> (parameterSize </span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F"> combinationCount) {</span></span>
+<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">throw</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">IllegalArgumentException</span><span style="color: #24292F">(</span><span style="color: #0A3069">"リストの要素数が組み合わせ個数より少ないです。"</span><span style="color: #24292F">);</span></span>
+<span class="line"><span style="color: #24292F">  } </span><span style="color: #CF222E">else</span><span style="color: #24292F"> </span><span style="color: #CF222E">if</span><span style="color: #24292F"> (combinationCount </span><span style="color: #CF222E">&#x3C;=</span><span style="color: #24292F"> </span><span style="color: #0550AE">0</span><span style="color: #24292F">) {</span></span>
+<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">throw</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">IllegalArgumentException</span><span style="color: #24292F">(</span><span style="color: #0A3069">"組み合わせ個数が不正です。"</span><span style="color: #24292F">);</span></span>
+<span class="line"><span style="color: #24292F">  } </span><span style="color: #CF222E">else</span><span style="color: #24292F"> </span><span style="color: #CF222E">if</span><span style="color: #24292F"> (combinationCount </span><span style="color: #CF222E">==</span><span style="color: #24292F"> </span><span style="color: #0550AE">1</span><span style="color: #24292F">) {</span></span>
+<span class="line"><span style="color: #24292F">    List</span><span style="color: #953800">&#x3C;</span><span style="color: #24292F">List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">>> </span><span style="color: #24292F">result</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> LinkedList&#x3C;List&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #24292F">>>();</span></span>
+<span class="line"><span style="color: #24292F">    parameter.</span><span style="color: #8250DF">forEach</span><span style="color: #24292F">(x </span><span style="color: #CF222E">-></span><span style="color: #24292F"> {</span></span>
+<span class="line"><span style="color: #24292F">      List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">> </span><span style="color: #24292F">resultWork</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> LinkedList&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #24292F">>();</span></span>
+<span class="line"><span style="color: #24292F">      resultWork.</span><span style="color: #8250DF">add</span><span style="color: #24292F">(x);</span></span>
+<span class="line"><span style="color: #24292F">      result.</span><span style="color: #8250DF">add</span><span style="color: #24292F">(resultWork);</span></span>
+<span class="line"><span style="color: #24292F">    });</span></span>
+<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">return</span><span style="color: #24292F"> result;</span></span>
+<span class="line"><span style="color: #24292F">  } </span><span style="color: #CF222E">else</span><span style="color: #24292F"> {</span></span>
+<span class="line"><span style="color: #24292F">    List</span><span style="color: #953800">&#x3C;</span><span style="color: #24292F">List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">>> </span><span style="color: #24292F">result</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #CF222E">new</span><span style="color: #24292F"> LinkedList&#x3C;List&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #24292F">>>();</span></span>
+<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">for</span><span style="color: #24292F"> (</span><span style="color: #CF222E">int</span><span style="color: #953800"> </span><span style="color: #24292F">i</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #0550AE">0</span><span style="color: #24292F">; i </span><span style="color: #CF222E">&#x3C;</span><span style="color: #24292F"> parameterSize </span><span style="color: #CF222E">-</span><span style="color: #24292F"> combinationCount </span><span style="color: #CF222E">+</span><span style="color: #24292F"> </span><span style="color: #0550AE">1</span><span style="color: #24292F">; i</span><span style="color: #CF222E">++</span><span style="color: #24292F">) {</span></span>
+<span class="line"><span style="color: #24292F">      List</span><span style="color: #953800">&#x3C;</span><span style="color: #24292F">List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">>> </span><span style="color: #24292F">resultWork</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> </span><span style="color: #8250DF">combination</span><span style="color: #24292F">(</span></span>
+<span class="line"><span style="color: #24292F">        parameter.</span><span style="color: #8250DF">subList</span><span style="color: #24292F">(</span><span style="color: #0550AE">1</span><span style="color: #24292F"> </span><span style="color: #CF222E">+</span><span style="color: #24292F"> i, parameterSize),</span></span>
+<span class="line"><span style="color: #24292F">        combinationCount </span><span style="color: #CF222E">-</span><span style="color: #24292F"> </span><span style="color: #0550AE">1</span><span style="color: #24292F">);</span></span>
+<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">for</span><span style="color: #24292F"> (List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">E</span><span style="color: #953800">> </span><span style="color: #24292F">resultWorkForEach</span><span style="color: #953800"> </span><span style="color: #CF222E">:</span><span style="color: #24292F"> resultWork) {</span></span>
+<span class="line"><span style="color: #24292F">        resultWorkForEach.</span><span style="color: #8250DF">add</span><span style="color: #24292F">(</span><span style="color: #0550AE">0</span><span style="color: #24292F">, parameter.</span><span style="color: #8250DF">get</span><span style="color: #24292F">(i));</span></span>
+<span class="line"><span style="color: #24292F">      }</span></span>
+<span class="line"><span style="color: #24292F">      result.</span><span style="color: #8250DF">addAll</span><span style="color: #24292F">(resultWork);</span></span>
+<span class="line"><span style="color: #24292F">    }</span></span>
+<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">return</span><span style="color: #24292F"> result;</span></span>
+<span class="line"><span style="color: #24292F">  }</span></span>
+<span class="line"><span style="color: #24292F">}</span></span></code></pre>
+<p>LinkedList を使っているのは先頭追加があるためです。<br>
+ちょっと見た目がヘビーですが、使えます。<br>
+こんな感じです。</p>
+<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #CF222E">class</span><span style="color: #24292F"> </span><span style="color: #953800">Item</span><span style="color: #24292F"> {</span></span>
+<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">public</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #CF222E">int</span><span style="color: #24292F"> </span><span style="color: #953800">price</span><span style="color: #24292F">, String </span><span style="color: #953800">name</span><span style="color: #24292F">){</span></span>
+<span class="line"><span style="color: #24292F">    </span><span style="color: #0550AE">this</span><span style="color: #24292F">.price </span><span style="color: #CF222E">=</span><span style="color: #24292F"> price;</span></span>
+<span class="line"><span style="color: #24292F">    </span><span style="color: #0550AE">this</span><span style="color: #24292F">.name </span><span style="color: #CF222E">=</span><span style="color: #24292F"> name;</span></span>
+<span class="line"><span style="color: #24292F">  }</span></span>
+<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">int</span><span style="color: #953800"> </span><span style="color: #24292F">price;</span></span>
+<span class="line"><span style="color: #24292F">  String</span><span style="color: #953800"> </span><span style="color: #24292F">name;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #24292F">  @</span><span style="color: #CF222E">Override</span></span>
+<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">public</span><span style="color: #24292F"> String </span><span style="color: #8250DF">toString</span><span style="color: #24292F">() {</span></span>
+<span class="line"><span style="color: #24292F">    </span><span style="color: #CF222E">return</span><span style="color: #24292F"> name </span><span style="color: #CF222E">+</span><span style="color: #24292F"> </span><span style="color: #0A3069">":"</span><span style="color: #24292F"> </span><span style="color: #CF222E">+</span><span style="color: #24292F"> price </span><span style="color: #CF222E">+</span><span style="color: #24292F"> </span><span style="color: #0A3069">"円"</span><span style="color: #24292F">;</span></span>
+<span class="line"><span style="color: #24292F">  }</span></span>
+<span class="line"><span style="color: #24292F">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #CF222E">class</span><span style="color: #24292F"> </span><span style="color: #953800">Main</span><span style="color: #24292F"> {</span></span>
+<span class="line"><span style="color: #24292F">  </span><span style="color: #CF222E">public</span><span style="color: #24292F"> </span><span style="color: #CF222E">static</span><span style="color: #24292F"> </span><span style="color: #CF222E">void</span><span style="color: #24292F"> </span><span style="color: #8250DF">main</span><span style="color: #24292F">(</span><span style="color: #CF222E">String</span><span style="color: #24292F">[] </span><span style="color: #953800">args</span><span style="color: #24292F">) {</span></span>
+<span class="line"><span style="color: #24292F">    List</span><span style="color: #953800">&#x3C;</span><span style="color: #CF222E">Item</span><span style="color: #953800">> </span><span style="color: #24292F">itemList</span><span style="color: #953800"> </span><span style="color: #CF222E">=</span><span style="color: #24292F"> Arrays.</span><span style="color: #8250DF">asList</span><span style="color: #24292F">(</span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #CF222E">Item</span><span style="color: #24292F">[]{</span></span>
+<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #0550AE">432</span><span style="color: #24292F">, </span><span style="color: #0A3069">"hoge"</span><span style="color: #24292F">),</span></span>
+<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #0550AE">531</span><span style="color: #24292F">, </span><span style="color: #0A3069">"fuga"</span><span style="color: #24292F">),</span></span>
+<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #0550AE">568</span><span style="color: #24292F">, </span><span style="color: #0A3069">"piyo"</span><span style="color: #24292F">),</span></span>
+<span class="line"><span style="color: #24292F">      </span><span style="color: #CF222E">new</span><span style="color: #24292F"> </span><span style="color: #8250DF">Item</span><span style="color: #24292F">(</span><span style="color: #0550AE">999</span><span style="color: #24292F">, </span><span style="color: #0A3069">"meta"</span><span style="color: #24292F">)</span></span>
+<span class="line"><span style="color: #24292F">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #24292F">    </span><span style="color: #8250DF">combination</span><span style="color: #24292F">(itemList,</span><span style="color: #0550AE">3</span><span style="color: #24292F">)</span></span>
+<span class="line"><span style="color: #24292F">      .</span><span style="color: #8250DF">stream</span><span style="color: #24292F">()</span></span>
+<span class="line"><span style="color: #24292F">      .</span><span style="color: #8250DF">forEach</span><span style="color: #24292F">(x</span><span style="color: #CF222E">-></span><span style="color: #24292F">{System.out.</span><span style="color: #8250DF">println</span><span style="color: #24292F">(Arrays.</span><span style="color: #8250DF">toString</span><span style="color: #24292F">(x.</span><span style="color: #8250DF">toArray</span><span style="color: #24292F">()));});</span></span>
+<span class="line"><span style="color: #24292F">  }</span></span>
+<span class="line"><span style="color: #24292F">}</span></span></code></pre>
+<p>こうなります。</p>
+<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">hoge:</span><span style="color: #0550AE">432</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">fuga:</span><span style="color: #0550AE">531</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">piyo:</span><span style="color: #0550AE">568</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span>
+<span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">hoge:</span><span style="color: #0550AE">432</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">fuga:</span><span style="color: #0550AE">531</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">meta:</span><span style="color: #0550AE">999</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span>
+<span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">hoge:</span><span style="color: #0550AE">432</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">piyo:</span><span style="color: #0550AE">568</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">meta:</span><span style="color: #0550AE">999</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span>
+<span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">fuga:</span><span style="color: #0550AE">531</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">piyo:</span><span style="color: #0550AE">568</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">meta:</span><span style="color: #0550AE">999</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span></code></pre>
+<p>Ruby の例題と同じようにこうすると、</p>
+<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #8250DF">combination</span><span style="color: #24292F">(itemList,</span><span style="color: #0550AE">2</span><span style="color: #24292F">)</span></span>
+<span class="line"><span style="color: #24292F">  .</span><span style="color: #8250DF">stream</span><span style="color: #24292F">()</span></span>
+<span class="line"><span style="color: #24292F">  .</span><span style="color: #8250DF">filter</span><span style="color: #24292F">(x</span><span style="color: #CF222E">-></span><span style="color: #24292F"> x.</span><span style="color: #8250DF">stream</span><span style="color: #24292F">().</span><span style="color: #8250DF">map</span><span style="color: #24292F">(y </span><span style="color: #CF222E">-></span><span style="color: #24292F"> y.price).</span><span style="color: #8250DF">reduce</span><span style="color: #24292F">((y, z)</span><span style="color: #CF222E">-></span><span style="color: #24292F"> y </span><span style="color: #CF222E">+</span><span style="color: #24292F"> z).</span><span style="color: #8250DF">get</span><span style="color: #24292F">() </span><span style="color: #CF222E">==</span><span style="color: #24292F"> </span><span style="color: #0550AE">1000</span><span style="color: #24292F">)</span></span>
+<span class="line"><span style="color: #24292F">  .</span><span style="color: #8250DF">forEach</span><span style="color: #24292F">(x</span><span style="color: #CF222E">-></span><span style="color: #24292F">{System.out.</span><span style="color: #8250DF">println</span><span style="color: #24292F">(Arrays.</span><span style="color: #8250DF">toString</span><span style="color: #24292F">(x.</span><span style="color: #8250DF">toArray</span><span style="color: #24292F">()));});</span></span></code></pre>
+<p>こうなります。</p>
+<pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">[</span><span style="color: #82071E">hoge:</span><span style="color: #0550AE">432</span><span style="color: #82071E">円</span><span style="color: #24292F">, </span><span style="color: #82071E">piyo:</span><span style="color: #0550AE">568</span><span style="color: #82071E">円</span><span style="color: #24292F">]</span></span></code></pre>
+<p>java8 の stream なのに遅延評価が役に立たないのは、Ruby も combination を<a href="https://docs.ruby-lang.org/ja/latest/class/Enumerator=3a=3aLazy.html">Enumerator::Lazy</a>で使えないのと一緒ですね。<br>
+java8 は遅延評価がデフォルトとなっているので、気軽に limit(1)などで一瞬で返ってくるつもりでいたら combination 部分が延々返ってこない…なんてことが発生しないようになのかもしれません。</p>
+<p>Ruby で使えた combination が無くて困った話でした。</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Google ColaboratoryでGitHubのipynbファイルを開く]]></title>
+            <link>https://nishidemasami.github.io/posts/google-colab-github</link>
+            <guid>https://nishidemasami.github.io/posts/google-colab-github</guid>
+            <pubDate>Fri, 02 Dec 2022 20:58:43 GMT</pubDate>
+            <description><![CDATA[Google ColaboratoryでGitHubのipynbファイルを開いてみたいと思うこと、ありますよね。僕はあるので自分用にメモです。]]></description>
+            <content:encoded><![CDATA[<p>Google ColaboratoryでGitHubのファイルを開いてみたいと思うこと、ありますよね。<br>
+僕はあるので自分用にメモです。</p>
+<p>と言っても簡単で、GitHubでパブリックのリポジトリにファイルをコミットするだけです。</p>
+<p><a href="https://github.com/nishidemasami/google-colab-tutorial/blob/main/ubuntu-command/useful_tools.ipynb">https://github.com/nishidemasami/google-colab-tutorial/blob/main/ubuntu-command/useful_tools.ipynb</a></p>
+<p>このようなパスにコミットしたとしたら、</p>
+<p><a href="https://colab.research.google.com/github/nishidemasami/google-colab-tutorial/blob/main/ubuntu-command/useful_tools.ipynb">https://colab.research.google.com/github/nishidemasami/google-colab-tutorial/blob/main/ubuntu-command/useful_tools.ipynb</a></p>
+<p>こうやってGoogle Colaboratoryで開くことができます。</p>
+<p>簡単！</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Typescriptでビットコインアドレスを生成する]]></title>
+            <link>https://nishidemasami.github.io/articles/typescript-bitcoin</link>
+            <guid>https://nishidemasami.github.io/articles/typescript-bitcoin</guid>
+            <pubDate>Fri, 23 Dec 2022 16:04:03 GMT</pubDate>
+            <description><![CDATA[Typescriptでビットコインアドレスを生成したいこと、ありますよね。僕はあるので自分用にメモです。]]></description>
+            <content:encoded><![CDATA[<p>*/</p>
+<p>import React from 'react';</p>
+<p>import { format } from 'date-fns';
+import { GetStaticProps } from 'next';
+import Link from 'next/link';</p>
+<p>import { TypescriptBitcoin } from '../../components/TypescriptBitcoin';
+import { Content } from '../../content/Content';
+import { Meta } from '../../layout/Meta';
+import { PostPagination } from '../../pagination/PostPagination';
+import { Main } from '../../templates/Main';
+import {
+getPrevNextPost,
+getRecentPosts,
+getTags,
+PostItems,
+} from '../../utils/Content';
+import { markdownToHtml } from '../../utils/Markdown';</p>
+<p>type ReactSoundTestProps = {
+recents: PostItems[];
+tags: string[];
+firstArticle: string;
+secondArticle: string;
+prevPost?: PostItems;
+nextPost?: PostItems;
+};</p>
+<p>const firstArticle = `
+Typescriptでビットコインアドレスを生成したいこと、ありますよね。<br>
+僕はあるので自分用にメモです。<sup>[<a target="_blank" href="https://www.amazon.co.jp/%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%83%81%E3%82%A7%E3%83%BC%E3%83%B3%E5%AE%9F%E8%B7%B5%E5%85%A5%E9%96%80-%E3%83%93%E3%83%83%E3%83%88%E3%82%B3%E3%82%A4%E3%83%B3%E3%81%8B%E3%82%89%E3%82%A4%E3%83%BC%E3%82%B5%E3%83%AA%E3%82%A2%E3%83%A0%E3%80%81DApp%E9%96%8B%E7%99%BA%E3%81%BE%E3%81%A7-Bikramaditya-Singhal/dp/4274225372?_encoding=UTF8&qid=1671896601&sr=8-1&linkCode=ll1&tag=nishidemasami-22&linkId=b026b2c2bd3729a8fe4c35dda528a7bb&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >参考文献</a>]</sup></p>
+<p>👇このボタンをクリックするとビットコインアドレスを生成します。
+`;</p>
+<p>const secondArticle = `
+ビットコインのアドレスは、32バイトの秘密鍵を以下のようにしてビットコインアドレスに変換します。</p>
+<p>```mermaid
+flowchart TD</p>
+<p>A[32バイトの秘密鍵] -->|secp256k1| B(公開鍵)
+A -->|base58変換とチェックサム付与| F[WIF形式秘密鍵]
+B --> C{ビットコインアドレス形式}
+C -->|BASE58変換とチェックサム付与| D[P2PKH形式ビットコインアドレス]
+C -->|BASE32変換とチェックサム付与| E[Bech32形式ビットコインアドレス]
+```</p>
+<p>これはTypescriptでも簡単に計算できます。</p>
+<p>それを実際に書いてみたのが ↓ この今回のコードです
+```tsx
+import { randomBytes, createHash, BinaryLike } from 'crypto';</p>
+<p>import { useState, FC, useMemo, useCallback } from 'react';</p>
+<p>import { Button, TextField } from '@mui/material';
+import { bech32 } from 'bech32';
+import { encode } from 'bs58';
+import RIPEMD160 from 'ripemd160';
+import { publicKeyCreate, privateKeyVerify } from 'secp256k1';</p>
+<p>/** 16進数の文字列かどうかチェックする正規表現 */
+const check32BytesHex = /^[0-9a-fA-F]{64}$/;</p>
+<p>/** 16進数の文字列をUint8Arrayに変換する */
+const hexToUint8Array = (hex: string): Uint8Array => Buffer.from(hex, 'hex');</p>
+<p>/** Bufferを16進数の文字列に変換する */
+const bufferToHex = (data: Buffer): string => data.toString('hex');</p>
+<p>/** sha256でハッシュする */
+const sha256 = (data: BinaryLike): Buffer =>
+createHash('sha256').update(data).digest();</p>
+<p>/** ripemd160でハッシュする */
+const ripemd160 = (data: BinaryLike): Buffer =>
+new RIPEMD160().update(data).digest();</p>
+<p>/** BASE58チェックサム生成 */
+const calcBase58Checksum = (data: BinaryLike): Buffer =>
+sha256(sha256(data)).subarray(0, 4);</p>
+<p>/** BASE58変換＋チェックサム */
+const base58WithChecksum = (data: Uint8Array): string =>
+encode([...data, ...calcBase58Checksum(data)]);</p>
+<p>/** ビットコインアドレス(BASE58(P2PKH)形式)生成 */
+const genBitcoinAddressP2PKH = (publicKey: Uint8Array): string =>
+base58WithChecksum(Uint8Array.from([0x00, ...ripemd160(sha256(publicKey))]));</p>
+<p>/** BASE32変換＋チェックサム */
+const bech32WithChecksum = (data: Uint8Array) =>
+bech32.encode('bc', [0x00, ...bech32.toWords(data)]);</p>
+<p>/** ビットコインアドレス(BASE32(Bech32)形式)生成 */
+const genBitcoinAddressBECH32 = (publicKey: Uint8Array): string =>
+bech32WithChecksum(ripemd160(sha256(publicKey)));</p>
+<p>/** 秘密鍵(WIF形式)生成 */
+const genWif = (privateKey: Uint8Array): string =>
+base58WithChecksum(Uint8Array.from([0x80, ...privateKey]));</p>
+<p>const TypescriptBitcoin: FC = () => {
+// 秘密鍵(32バイトの16進数)
+const [hexPrivateKey, setHexPrivateKey] = useState(
+bufferToHex(randomBytes(32))
+);</p>
+<p>/** 秘密鍵(32バイト) */
+const privateKey: Uint8Array | string = useMemo(() => {
+if (!check32BytesHex.test(hexPrivateKey))
+return '秘密鍵が32バイトの16進数ではない';
+return hexToUint8Array(hexPrivateKey);
+}, [hexPrivateKey]);</p>
+<p>/** 公開鍵 */
+const publicKey: Uint8Array | string = useMemo(() => {
+if (typeof privateKey === 'string') return privateKey;
+if (!privateKeyVerify(privateKey)) return '秘密鍵が不適切';
+return publicKeyCreate(privateKey, false);
+}, [privateKey]);</p>
+<p>/** ビットコインアドレス(BASE32(Bech32)形式) */
+const bitcoinAddressBECH32 = useMemo(() => {
+if (typeof privateKey === 'string') return privateKey;
+if (typeof publicKey === 'string') return publicKey;
+return genBitcoinAddressBECH32(publicKey);
+}, [privateKey, publicKey]);</p>
+<p>/** ビットコインアドレス(BASE58(P2PKH)形式) */
+const bitcoinAddressP2PKH = useMemo(() => {
+if (typeof privateKey === 'string') return privateKey;
+if (typeof publicKey === 'string') return publicKey;
+return genBitcoinAddressP2PKH(publicKey);
+}, [privateKey, publicKey]);</p>
+<p>/** 秘密鍵をランダムに生成 */
+const genRamdamKey = useCallback(
+() => setHexPrivateKey(bufferToHex(randomBytes(32))),
+[]
+);</p>
+<p>/** 秘密鍵(WIF形式) */
+const wif = useMemo(
+() => genWif(hexToUint8Array(hexPrivateKey)),
+[hexPrivateKey]
+);</p>
+<p>return (
+&#x3C;>
+<Button onClick={genRamdamKey} variant="outlined">
+秘密鍵をランダムに生成
+</Button>
+&#x3C;TextField
+error={!check32BytesHex.test(hexPrivateKey)}
+fullWidth
+label="秘密鍵(32バイトの16進数)"
+margin="dense"
+value={hexPrivateKey}
+onChange={(e) => {
+setHexPrivateKey(e.currentTarget.value);
+}}
+/>
+&#x3C;TextField
+fullWidth
+label="秘密鍵(WIF形式)"
+margin="dense"
+value={wif}
+InputProps={{
+readOnly: true,
+}}
+/>
+&#x3C;TextField
+fullWidth
+label="ビットコインアドレス(BASE58(P2PKH)形式)"
+margin="dense"
+InputProps={{
+readOnly: true,
+}}
+value={bitcoinAddressP2PKH}
+/>
+&#x3C;TextField
+fullWidth
+label="ビットコインアドレス(BASE32(Bech32)形式)"
+margin="dense"
+InputProps={{
+readOnly: true,
+}}
+value={bitcoinAddressBECH32}
+/>
+&#x3C;/>
+);
+};</p>
+<p>export { TypescriptBitcoin };
+```
+`;</p>
+<p>const ReactSoundTest = (props: ReactSoundTestProps) => (
+&#x3C;Main
+recents={props.recents}
+tags={props.tags}
+meta={
+<Meta
+ 			title="Typescriptでビットコインアドレスを生成する"
+ 			description="Typescriptでビットコインアドレスを生成したいこと、ありますよね。僕はあるので自分用にメモです。"
+ 		/>
+}
+>
+<h1 className="text-center font-bold text-3xl text-gray-900">
+Typescriptでビットコインアドレスを生成する
+</h1>
+<div className="text-center text-sm mb-4">
+{format(new Date('2022-12-10T01:04:03+0900'), 'LLLL d, yyyy')}
+</div>
+<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
+{['TypeScript', 'React', 'Bitcoin'].map((tag) => (
+<li
+ 				className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
+ 				key={tag}
+ 			>
+&#x3C;Link href="/tag/[tag]" as={<code>/tag/${tag}</code>}>
+#{tag}
+</Link>
+</li>
+))}
+</ul></p>
+<pre><code>	&#x3C;Content>
+		&#x3C;div>
+			&#x3C;div dangerouslySetInnerHTML={{ __html: props.firstArticle }} />
+			&#x3C;TypescriptBitcoin />
+			&#x3C;div dangerouslySetInnerHTML={{ __html: props.secondArticle }} />
+		&#x3C;/div>
+	&#x3C;/Content>
+
+	&#x3C;PostPagination nextPost={props.nextPost} prevPost={props.prevPost} />
+&#x3C;/Main>
+</code></pre>
+<p>);</p>
+<p>export const getStaticProps: GetStaticProps<ReactSoundTestProps> = async () => {
+const recents = getRecentPosts(['title', 'date', 'slug']);</p>
+<pre><code>return {
+	props: {
+		recents,
+		tags: getTags(),
+		firstArticle: await markdownToHtml(firstArticle),
+		secondArticle: await markdownToHtml(secondArticle),
+		...getPrevNextPost(__filename),
+	},
+};
+</code></pre>
+<p>};</p>
+<p>export default ReactSoundTest;</p>]]></content:encoded>
+        </item>
+        <item>
             <title><![CDATA[Next.jsで数式を書く]]></title>
             <link>https://nishidemasami.github.io/posts/nextjs-latex</link>
             <guid>https://nishidemasami.github.io/posts/nextjs-latex</guid>
@@ -2062,6 +1560,36 @@ M834 80h400000v40h-400000z"></path></svg></span></span></span><span class="vlist
 実際にNext.jsで動いているコードは👆ここから確認してください。</p>]]></content:encoded>
         </item>
         <item>
+            <title><![CDATA[Next.jsでこのウェブサイトをリニューアルしました！✨]]></title>
+            <link>https://nishidemasami.github.io/posts/nextjs-website-renewal</link>
+            <guid>https://nishidemasami.github.io/posts/nextjs-website-renewal</guid>
+            <pubDate>Fri, 04 Nov 2022 16:04:03 GMT</pubDate>
+            <description><![CDATA[Next.jsでこのウェブサイトをリニューアルしました！✨]]></description>
+            <content:encoded><![CDATA[<p>Next.jsでこのウェブサイトをリニューアルしました！✨</p>
+<p>T3 Stackの6つの技術のうち、フロントエンド側の以下の3つの技術をフル活用しています。</p>
+<ul>
+<li>TypeScript<sup>[<a target="_blank" href="https://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0TypeScript-%E2%80%95%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8BJavaScript%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E9%96%8B%E7%99%BA-Boris-Cherny/dp/4873119049?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=3Q7MI7KXY06BB&keywords=typescript&qid=1670505807&sprefix=typescript+%2Caps%2C224&sr=8-9&linkCode=ll1&tag=nishidemasami-22&linkId=48539012d76c58e8bc3549b5a9dc7a1f&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >参考文献</a>]</sup><br>
+ほぼ全てTypeScriptで書いています。</li>
+<li>Next.js<br>
+SSGフレームワークに使用しています。</li>
+<li>Tailwind CSS<br>
+スタイルを書くのに使用しています。CSSもSCSSもstyled-componentsもどうしても必要な箇所を除けば使っていません。</li>
+</ul>
+<p>また、リニューアル後も引き続きGitHub ActionsでCI/CDを継続しています。</p>
+<p>今のところこのウェブサイトはNext.jsになる前には、</p>
+<p>Hexo<br>
+🔽<br>
+Gatsby.js<br>
+🔽<br>
+Next.js</p>
+<p>という偏移を経ています。</p>
+<p>Hexoは純粋な時代の古き良きSSGでした。しかしパフォーマンスを追い求めると限界がありました。<br>
+Gatsby.jsは <em>Blazing fast🔥</em> ではあったもののちょっとカスタマイズしようとするとすぐgatsby-pluginが必要になりました。<br>
+その点Next.jsは、何もかも自分でコントロールできるような確かな手触りを感じています。<br>
+それにNext.jsも十分速い。とにかくウェブサイトのなにをクリックしても速いです。普通の使い方をするならGatsby.jsと違いがわからないほど速いです。</p>
+<p>Next.jsをもっと良く知るためにも、引き続きこのウェブサイトでいろいろなことをやってみようと思っています。</p>]]></content:encoded>
+        </item>
+        <item>
             <title><![CDATA[SVGとCSSだけで文字をクルクル回す]]></title>
             <link>https://nishidemasami.github.io/posts/css-svg-rotate-text</link>
             <guid>https://nishidemasami.github.io/posts/css-svg-rotate-text</guid>
@@ -2097,14 +1625,477 @@ M834 80h400000v40h-400000z"></path></svg></span></span></span><span class="vlist
 これだけでクルクル回ったので楽しかったです。</p>]]></content:encoded>
         </item>
         <item>
-            <title><![CDATA[はじめまして]]></title>
-            <link>https://nishidemasami.github.io/posts/hello-world</link>
-            <guid>https://nishidemasami.github.io/posts/hello-world</guid>
-            <pubDate>Thu, 30 Jun 2016 19:58:43 GMT</pubDate>
-            <description><![CDATA[はじめての投稿です。]]></description>
-            <content:encoded><![CDATA[<p>はじめての投稿です。
-これから、なにか有益なことや無益なことを書いてゆこうと思います。
-よろしくお願いします。</p>]]></content:encoded>
+            <title><![CDATA[Reactで国土地理院地図やOpenStreetMapを表示する]]></title>
+            <link>https://nishidemasami.github.io/articles/react-leaflet</link>
+            <guid>https://nishidemasami.github.io/articles/react-leaflet</guid>
+            <pubDate>Fri, 20 Jan 2023 16:04:03 GMT</pubDate>
+            <description><![CDATA[ReactとTypeScriptで国土地理院地図やOpenStreetMapを表示したいこと、ありますよね。僕はあるので自分用にメモです。]]></description>
+            <content:encoded><![CDATA[<p>*/</p>
+<p>import React from 'react';</p>
+<p>import { CircularProgress } from '@mui/material';
+import { format } from 'date-fns';
+import { GetStaticProps } from 'next';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';</p>
+<p>import { Content } from '../../content/Content';
+import { Meta } from '../../layout/Meta';
+import { PostPagination } from '../../pagination/PostPagination';
+import { Main } from '../../templates/Main';
+import {
+getPrevNextPost,
+getRecentPosts,
+getTags,
+PostItems,
+} from '../../utils/Content';
+import { markdownToHtml } from '../../utils/Markdown';</p>
+<p>type ReactSoundTestProps = {
+recents: PostItems[];
+tags: string[];
+firstArticle: string;
+secondArticle: string;
+prevPost?: PostItems;
+nextPost?: PostItems;
+};</p>
+<p>const firstArticle = `ReactとTypeScriptで国土地理院地図やOpenStreetMapを表示したいこと、ありますよね。<br>
+僕はあるので自分用にメモです。<sup>[<a target="_blank" href="https://www.amazon.co.jp/dp/4873119049?&linkCode=ll1&tag=nishidemasami-22&linkId=269abe7d00fb75538542192fd6ea40b4&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >参考文献</a>]</sup></p>
+<p>Google Mapsが2018年の7月頃に有料になってからかなり経ちました。<br>
+いまさらGoogle Mapsの代わりを探している人はいないと思いますが、あれから色々とWebの事情も変わったので自分用にメモの意味も込めて書いています。</p>
+<p>「画像タイル地図」を公開しているWebサービスはたくさんあります。<br>
+ですが無料で自由に使えるものは意外と少なく、国土地理院やOpenStreetMapは貴重な選択肢の一つだと思います。<br>
+(「画像タイル地図」ではなく「ベクトルタイル地図」も国土地理院は(実験的に)提供しているので次の記事で説明します。)</p>
+<h3>国土地理院地図</h3>
+<p>国土交通省国土地理院地図は利用規約を守る限り自由に使えます。<br>
+利用規約は以下です。<br>
+国土地理院コンテンツ利用規約 国土地理院:<a href="https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html">https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html</a></p>
+<h3>OpenStreetMap</h3>
+<p>OpenStreetMapもODbLライセンスに従って自由に使えます。ODbLライセンスの詳細は以下の通りです。<br>
+OpenStreetMap 著作権とライセンス:<a href="https://www.openstreetmap.org/copyright/ja">https://www.openstreetmap.org/copyright/ja</a><br>
+OpenStreetMapは英語と日本語を併記している版と現地の言語(日本は日本語)を表示する版があるみたいでした。</p>
+<p>今回は、この3つの地図を表示してみたいと思います。</p>
+<p>地図描画にはLeafletを使用します。(Leafletの他にもDeck.glも使えるので「ベクトルタイル地図」と合わせて次の記事で説明します。)</p>
+<p>ライブラリとしては現在最新の`leaflet@1.9.3`と`react-leaflet@4.2.0`、それからTypeScript用の型定義として`@types/leaflet@1.9.0`を利用しています。<br>
+※react-leafletはバージョンがv4にメジャーバージョンアップされてからまだ1年も経っておらず、ネット上にもv3の情報ばかりですが最近v4の情報も少しずつ増えてきています。僕もこのことに困っていたので後の参考になるようにこの記事を書いています。</p>
+<p>必要なnpm installは以下の通りです。TypeScript用にleafletの型定義が公開されています。react-leafletは最初から型定義が含まれています。</p>
+<p>```bash
+npm install leaflet react-leaflet
+npm install -D @types/leaflet
+```</p>
+<p>以上で実装のための説明は終了ですが、ただ地図を表示するだけだとつまらないので今回は東海道五十三次の場所をピンで表示して、セレクトボックスで選択したらその場所に動くようにしてみます。<br>
+そのための`@mui/material`も入れています。</p>
+<p>実際に実装してみたのが ↓ これです。
+`;</p>
+<p>const secondArticle = `</p>
+<p>書いたのが ↓ この今回のコードです。
+```tsx
+import React from 'react';</p>
+<p>import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { LatLngExpression, Icon } from 'leaflet';
+import PinIcon from 'leaflet/dist/images/marker-icon.png';
+import { TileLayer, MapContainer, Marker, Popup, useMap } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';</p>
+<p>const merkerIcon = new Icon({
+iconUrl: PinIcon.src,
+iconAnchor: [13, 41],
+});</p>
+<p>const maps = [
+{
+name: 'OpenStreetMap',
+url: 'https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png',
+attribution:
+'Daten von <a href="https://www.openstreetmap.org/">OpenStreetMap</a> - Veröffentlicht unter <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a>',
+},
+{
+name: '国土地理院地図',
+url: '<a href="https://cyberjapandata.gsi.go.jp/xyz/std/%7Bz%7D/%7Bx%7D/%7By%7D.png">https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png</a>',
+attribution:
+'<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル</a>',
+},
+{
+name: 'OpenStreetMap(日本語版)',
+url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+attribution:
+'© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+},
+];
+const places: {
+name: string;
+latlng: LatLngExpression;
+}[] = [
+{ name: '日本橋', latlng: [35.6836111111111, 139.774444444444] },
+{ name: '品川宿', latlng: [35.6219444444444, 139.739166666667] },
+{ name: '川崎宿', latlng: [35.5355555555556, 139.707777777778] },
+{ name: '神奈川宿', latlng: [35.4727777777778, 139.632277777778] },
+{ name: '保ヶ谷宿', latlng: [35.4440277777778, 139.595555555556] },
+{ name: '戸塚宿', latlng: [35.3950277777778, 139.529861111111] },
+{ name: '藤沢宿', latlng: [35.3456666666667, 139.486305555556] },
+{ name: '平塚宿', latlng: [35.3272777777778, 139.337805555556] },
+{ name: '大磯宿', latlng: [35.309, 139.315305555556] },
+{ name: '小田原宿', latlng: [35.2487222222222, 139.161027777778] },
+{ name: '箱根宿', latlng: [35.1904166666667, 139.026361111111] },
+{ name: '三島宿', latlng: [35.11925, 138.914472222222] },
+{ name: '沼津宿', latlng: [35.1001111111111, 138.857416666667] },
+{ name: '原宿', latlng: [35.1255277777778, 138.797333333333] },
+{ name: '吉原宿', latlng: [35.1627777777778, 138.685638888889] },
+{ name: '蒲原宿', latlng: [35.1199722222222, 138.605472222222] },
+{ name: '由比宿', latlng: [35.1076111111111, 138.567472222222] },
+{ name: '興津宿', latlng: [35.0498333333333, 138.519555555556] },
+{ name: '江尻宿', latlng: [35.0198888888889, 138.480861111111] },
+{ name: '府中宿', latlng: [34.9749166666667, 138.387638888889] },
+{ name: '鞠子宿', latlng: [34.9494166666667, 138.342444444444] },
+{ name: '岡部宿', latlng: [34.9188333333333, 138.282666666667] },
+{ name: '藤枝宿', latlng: [34.8698055555556, 138.252722222222] },
+{ name: '島田宿', latlng: [34.8328055555556, 138.175861111111] },
+{ name: '金谷宿', latlng: [34.8228611111111, 138.129277777778] },
+{ name: '日坂宿', latlng: [34.8041388888889, 138.075361111111] },
+{ name: '掛川宿', latlng: [34.7729166666667, 138.015888888889] },
+{ name: '袋井宿', latlng: [34.7474722222222, 137.923222222222] },
+{ name: '見附宿', latlng: [34.7268055555556, 137.857027777778] },
+{ name: '浜松宿', latlng: [34.7051111111111, 137.731916666667] },
+{ name: '舞阪宿', latlng: [34.6843888888889, 137.608944444444] },
+{ name: '新居宿', latlng: [34.6941388888889, 137.560777777778] },
+{ name: '白須賀宿', latlng: [34.6885555555556, 137.500833333333] },
+{ name: '二川宿', latlng: [34.7230555555556, 137.464527777778] },
+{ name: '吉田宿', latlng: [34.7666388888889, 137.389722222222] },
+{ name: '御油宿', latlng: [34.8448888888889, 137.317333333333] },
+{ name: '赤坂宿', latlng: [34.8557222222222, 137.308222222222] },
+{ name: '藤川宿', latlng: [34.9110555555556, 137.222194444444] },
+{ name: '岡崎宿', latlng: [34.9579166666667, 137.169194444444] },
+{ name: '池鯉鮒宿', latlng: [35.0081111111111, 137.040944444444] },
+{ name: '鳴海宿', latlng: [35.0796666666667, 136.949805555556] },
+{ name: '宮宿', latlng: [35.1204166666667, 136.906722222222] },
+{ name: '桑名宿', latlng: [35.0687222222222, 136.6955] },
+{ name: '四日市宿', latlng: [34.9695277777778, 136.625277777778] },
+{ name: '石薬師宿', latlng: [34.9043333333333, 136.548] },
+{ name: '庄野宿', latlng: [34.8833888888889, 136.524833333333] },
+{ name: '亀山宿', latlng: [34.8543055555556, 136.454111111111] },
+{ name: '関宿', latlng: [34.8524722222222, 136.392083333333] },
+{ name: '坂下宿', latlng: [34.8885555555556, 136.354083333333] },
+{ name: '土山宿', latlng: [34.9344166666667, 136.283833333333] },
+{ name: '水口宿', latlng: [34.9655555555556, 136.1835] },
+{ name: '石部宿', latlng: [35.0100555555556, 136.054638888889] },
+{ name: '草津宿', latlng: [35.0174444444444, 135.960638888889] },
+{ name: '大津宿', latlng: [35.0059722222222, 135.861416666667] },
+{ name: '三条大橋', latlng: [35.0103333333333, 135.774361111111] },
+];</p>
+<p>const MapController: React.FC&#x3C;{ center?: LatLngExpression }> = ({ center }) => {
+const map = useMap();
+React.useEffect(() => {
+if (center) {
+map.setView(center, 13, { animate: true });
+}
+}, [center, map]);
+return null;
+};</p>
+<p>const LeafletDemo = (): JSX.Element => {
+const [center, setCenter] = React.useState<LatLngExpression>();
+const [mapName, setMapName] = React.useState(maps[0].name);
+const [placeName, setPlaceName] = React.useState(places[0].name);
+const selectedMap = React.useMemo(
+() => maps.find((value) => value.name === mapName)!,
+[mapName]
+);</p>
+<pre><code>return (
+	&#x3C;>
+		&#x3C;FormControl margin="normal">
+			&#x3C;InputLabel>地図選択&#x3C;/InputLabel>
+			&#x3C;Select
+				value={mapName}
+				label="地図選択"
+				onChange={(event) => {
+					setMapName(event.target.value);
+				}}
+			>
+				{maps.map(({ name }) => (
+					&#x3C;MenuItem key={name} value={name}>
+						{name}
+					&#x3C;/MenuItem>
+				))}
+			&#x3C;/Select>
+		&#x3C;/FormControl>
+		&#x3C;FormControl margin="normal">
+			&#x3C;InputLabel>場所選択&#x3C;/InputLabel>
+			&#x3C;Select
+				value={placeName}
+				label="場所選択"
+				onChange={(event) => {
+					const selected = places.find(
+						(value) => value.name === event.target.value
+					);
+					if (selected) {
+						setPlaceName(selected.name);
+						setCenter(selected.latlng);
+					}
+				}}
+			>
+				{places.map(({ name }) => (
+					&#x3C;MenuItem key={name} value={name}>
+						{name}
+					&#x3C;/MenuItem>
+				))}
+			&#x3C;/Select>
+		&#x3C;/FormControl>
+		&#x3C;MapContainer
+			center={[35.0585904, 137.5191176]}
+			zoom={7}
+			maxZoom={18}
+			scrollWheelZoom={true}
+			style={{ height: 400, width: '100%' }}
+		>
+			&#x3C;MapController center={center} />
+			&#x3C;TileLayer
+				attribution={selectedMap.attribution}
+				url={selectedMap.url}
+			/>
+			{places.map((place) => (
+				&#x3C;Marker key={place.name} position={place.latlng} icon={merkerIcon}>
+					&#x3C;Popup>{place.name}&#x3C;/Popup>
+				&#x3C;/Marker>
+			))}
+		&#x3C;/MapContainer>
+	&#x3C;/>
+);
+</code></pre>
+<p>};</p>
+<p>export default LeafletDemo;
+```</p>
+<p>なお、Next.jsでSSGでLeafletを含むページを静的に生成しようとすると
+```
+ReferenceError: window is not defined
+```
+というエラーが出てしまうので、Dynamic Importで
+```tsx
+const LeafletDemoComponent = React.useMemo(
+() =>
+dynamic(() => import('../../components/Leaflet/LeafletDemo'), {
+loading: () => <CircularProgress className="w-full" />,
+ssr: false,
+}),
+[]
+);
+```
+というコンポーネントを1つ挟んでブラウザへのレンダリング時に動的インポートさせて表示させるようにしました。
+`;</p>
+<p>const ReactLeafletTest = (props: ReactSoundTestProps) => {
+const LeafletDemoComponent = React.useMemo(
+() =>
+dynamic(() => import('../../components/Leaflet/LeafletDemo'), {
+loading: () => <CircularProgress className="w-full" />,
+ssr: false,
+}),
+[]
+);
+return (
+&#x3C;Main
+recents={props.recents}
+tags={props.tags}
+meta={
+<Meta
+ 				title="Reactで国土地理院地図やOpenStreetMapを表示する"
+ 				description="ReactとTypeScriptで国土地理院地図やOpenStreetMapを表示したいこと、ありますよね。僕はあるので自分用にメモです。"
+ 			/>
+}
+>
+<h1 className="text-center font-bold text-3xl text-gray-900">
+Reactで国土地理院地図やOpenStreetMapを表示する
+</h1>
+<div className="text-center text-sm mb-4">
+{format(new Date('2023-01-21T01:04:03+0900'), 'LLLL d, yyyy')}
+</div>
+<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
+{[
+'TypeScript',
+'React',
+'OpenStreetMap',
+'国土地理院地図',
+'leaflet',
+'Next.js',
+].map((tag) => (
+<li
+ 					className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
+ 					key={tag}
+ 				>
+&#x3C;Link href="/tag/[tag]" as={<code>/tag/${tag}</code>}>
+#{tag}
+</Link>
+</li>
+))}
+</ul></p>
+<pre><code>		&#x3C;Content>
+			&#x3C;div>
+				&#x3C;div dangerouslySetInnerHTML={{ __html: props.firstArticle }} />
+				&#x3C;LeafletDemoComponent />
+				&#x3C;div dangerouslySetInnerHTML={{ __html: props.secondArticle }} />
+			&#x3C;/div>
+		&#x3C;/Content>
+
+		&#x3C;PostPagination nextPost={props.nextPost} prevPost={props.prevPost} />
+	&#x3C;/Main>
+);
+</code></pre>
+<p>};</p>
+<p>export const getStaticProps: GetStaticProps<ReactSoundTestProps> = async () => {
+const recents = getRecentPosts(['title', 'date', 'slug']);</p>
+<pre><code>return {
+	props: {
+		recents,
+		tags: getTags(),
+		firstArticle: await markdownToHtml(firstArticle),
+		secondArticle: await markdownToHtml(secondArticle),
+		...getPrevNextPost(__filename),
+	},
+};
+</code></pre>
+<p>};</p>
+<p>export default ReactLeafletTest;</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Gatsbyでブログをリニューアルしてみました]]></title>
+            <link>https://nishidemasami.github.io/articles/blog-remake-with-gatsby</link>
+            <guid>https://nishidemasami.github.io/articles/blog-remake-with-gatsby</guid>
+            <pubDate>Sat, 06 Mar 2021 09:04:03 GMT</pubDate>
+            <description><![CDATA[このブログをリニューアルしてみました。このブログのソースはここ ↓ で公開しています。https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby見てみた感じどうですか？すごくないですか！？…]]></description>
+            <content:encoded><![CDATA[<p>*/</p>
+<p>import React from 'react';</p>
+<p>import { format } from 'date-fns';
+import { GetStaticProps } from 'next';
+import Link from 'next/link';</p>
+<p>import ReactHelloWorld from '../../components/ReactHelloWorld/ReactHelloWorld';
+import { Content } from '../../content/Content';
+import { Meta } from '../../layout/Meta';
+import { PostPagination } from '../../pagination/PostPagination';
+import { Main } from '../../templates/Main';
+import {
+getPrevNextPost,
+getRecentPosts,
+getTags,
+PostItems,
+} from '../../utils/Content';</p>
+<p>type AboutProps = {
+recents: PostItems[];
+tags: string[];
+prevPost?: PostItems;
+nextPost?: PostItems;
+};</p>
+<p>const About = (props: AboutProps) => (
+&#x3C;Main
+recents={props.recents}
+tags={props.tags}
+meta={
+<Meta
+ 			title="Gatsbyでブログをリニューアルしてみました"
+ 			description="Gatsbyでブログをリニューアルしてみました"
+ 		/>
+}
+>
+<h1 className="text-center font-bold text-3xl text-gray-900">
+Gatsbyでブログをリニューアルしてみました
+</h1>
+<div className="text-center text-sm mb-4">
+{format(new Date('2021-03-06T18:04:03+0900'), 'LLLL d, yyyy')}
+</div>
+<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
+{['JavaScript', 'TypeScript', 'React', 'Gatsby.js'].map((tag) => (
+<li
+ 				className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
+ 				key={tag}
+ 			>
+&#x3C;Link href="/tag/[tag]" as={<code>/tag/${tag}</code>}>
+#{tag}
+</Link>
+</li>
+))}
+</ul>
+<Content>
+<div>
+<p>
+このブログをリニューアルしてみました。
+ちなみにこのブログのソースはここ ↓ で公開しています。
+<a href="https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby">
+<a href="https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby">https://github.com/nishidemasami/nishidemasami.github.io/tree/gatsby</a>
+</a>
+</p>
+<p>作ってみた感じ、すごくいいと思います！</p>
+<ul>
+<li>React が動いている・生で React が書ける</li>
+<li>
+ページ間の遷移の速度が速い(React の仮想 DOM 操作に由来している)
+</li>
+<li>
+ちょっとがんばれば Typescript でも書ける(使用する Gatsby
+のテンプレートによっては最初から Typescript を使っているらしい)
+</li>
+<li>
+Gatsby が静的にページを作ってくれているので Javascript
+をオフにしてても見れる
+</li>
+</ul></p>
+<pre><code>			&#x3C;ReactHelloWorld>
+				こんな感じで普通にReact が&#x3C;br />
+				Typescript で書けて動きます！✨
+			&#x3C;/ReactHelloWorld>
+			&#x3C;p>
+				Gatsby は、HEXO や Hugo、Jekyll
+				みたいに静的ジェネレータなので、こうやって Github Pages
+				にも乗せられるので便利！ AWS S3 とかに乗せればスケールしますし！✨
+			&#x3C;/p>
+			&#x3C;p>
+				あと、ページを高速化するための細かなテクニックを最初から使ってくれています。
+			&#x3C;/p>
+			&#x3C;ul>
+				&#x3C;li>静的プレレンダリング・静的プリフェッチ(速い)&#x3C;/li>
+				&#x3C;li>
+					いわゆる PRPL パターンに準拠する PWA サポート
+					&#x3C;br />
+					&#x3C;strong>
+						&#x3C;em>Push &#x3C;/em>
+					&#x3C;/strong>
+					critical resources for the initial URL route using
+					&#x3C;code>&#x26;lt;link preload&#x26;gt;&#x3C;/code> and HTTP/2.
+					&#x3C;br />
+					&#x3C;strong>
+						&#x3C;em>Render &#x3C;/em>
+					&#x3C;/strong>
+					initial route.
+					&#x3C;br />
+					&#x3C;strong>
+						&#x3C;em>Pre-cache &#x3C;/em>
+					&#x3C;/strong>
+					remaining routes.
+					&#x3C;br />
+					&#x3C;strong>
+						&#x3C;em>Lazy-load &#x3C;/em>
+					&#x3C;/strong>
+					and create remaining routes on demand.
+					&#x3C;br />
+					&#x3C;a href="https://www.gatsbyjs.com/docs/prpl-pattern/">
+						https://www.gatsbyjs.com/docs/prpl-pattern/
+					&#x3C;/a>
+				&#x3C;/li>
+				&#x3C;li>
+					GraphQL(ビルド時には json
+					になっている)によるデータアクセスや画面遷移(これまた速い)
+				&#x3C;/li>
+			&#x3C;/ul>
+			&#x3C;p>
+				Gatsby で Markdown ファイルとかいい感じにしてくれますし、普通に React
+				の仮想 DOM による高速化の恩恵も受けることできてます！
+				かなりいい感じになってると思います！✨
+			&#x3C;/p>
+		&#x3C;/div>
+	&#x3C;/Content>
+
+	&#x3C;PostPagination nextPost={props.nextPost} prevPost={props.prevPost} />
+&#x3C;/Main>
+</code></pre>
+<p>);</p>
+<p>export const getStaticProps: GetStaticProps<AboutProps> = async () => ({
+props: {
+recents: getRecentPosts(['title', 'date', 'slug']),
+tags: getTags(),
+...getPrevNextPost(__filename),
+},
+});</p>
+<p>export default About;</p>]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[ネットワークスペシャリスト合格体験記]]></title>
@@ -2210,6 +2201,16 @@ ESTABLISHED してないんですから、今時 NAPT やファイアーウォ�
 <p>ネットワークスペシャリストに合格したという話でした！</p>]]></content:encoded>
         </item>
         <item>
+            <title><![CDATA[はじめまして]]></title>
+            <link>https://nishidemasami.github.io/posts/hello-world</link>
+            <guid>https://nishidemasami.github.io/posts/hello-world</guid>
+            <pubDate>Thu, 30 Jun 2016 19:58:43 GMT</pubDate>
+            <description><![CDATA[はじめての投稿です。]]></description>
+            <content:encoded><![CDATA[<p>はじめての投稿です。
+これから、なにか有益なことや無益なことを書いてゆこうと思います。
+よろしくお願いします。</p>]]></content:encoded>
+        </item>
+        <item>
             <title><![CDATA[Next.jsでSSG時にRemarkでMermaidをSVGとして出力する]]></title>
             <link>https://nishidemasami.github.io/posts/nextjs-mermaid</link>
             <guid>https://nishidemasami.github.io/posts/nextjs-mermaid</guid>
@@ -2289,7 +2290,7 @@ ESTABLISHED してないんですから、今時 NAPT やファイアーウォ�
 <span class="line"><span style="color: #24292F">    Parallel 3   :         des5, after des3, 1d</span></span>
 <span class="line"><span style="color: #24292F">    Parallel 4   :         des6, after des4, 1d</span></span>
 <span class="line"><span style="color: #24292F">```</span></span></code></pre>
-<p><svg aria-roledescription="gantt" style="max-width: 784px;" viewBox="0 0 784 244" xmlns="http://www.w3.org/2000/svg" width="100%" id="remark-mermaid-2"><style>#remark-mermaid-2{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#remark-mermaid-2 .error-icon{fill:#552222;}#remark-mermaid-2 .error-text{fill:#552222;stroke:#552222;}#remark-mermaid-2 .edge-thickness-normal{stroke-width:2px;}#remark-mermaid-2 .edge-thickness-thick{stroke-width:3.5px;}#remark-mermaid-2 .edge-pattern-solid{stroke-dasharray:0;}#remark-mermaid-2 .edge-pattern-dashed{stroke-dasharray:3;}#remark-mermaid-2 .edge-pattern-dotted{stroke-dasharray:2;}#remark-mermaid-2 .marker{fill:#333333;stroke:#333333;}#remark-mermaid-2 .marker.cross{stroke:#333333;}#remark-mermaid-2 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#remark-mermaid-2 .mermaid-main-font{font-family:"trebuchet ms",verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 .exclude-range{fill:#eeeeee;}#remark-mermaid-2 .section{stroke:none;opacity:0.2;}#remark-mermaid-2 .section0{fill:rgba(102, 102, 255, 0.49);}#remark-mermaid-2 .section2{fill:#fff400;}#remark-mermaid-2 .section1,#remark-mermaid-2 .section3{fill:white;opacity:0.2;}#remark-mermaid-2 .sectionTitle0{fill:#333;}#remark-mermaid-2 .sectionTitle1{fill:#333;}#remark-mermaid-2 .sectionTitle2{fill:#333;}#remark-mermaid-2 .sectionTitle3{fill:#333;}#remark-mermaid-2 .sectionTitle{text-anchor:start;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 .grid .tick{stroke:lightgrey;opacity:0.8;shape-rendering:crispEdges;}#remark-mermaid-2 .grid .tick text{font-family:"trebuchet ms",verdana,arial,sans-serif;fill:#333;}#remark-mermaid-2 .grid path{stroke-width:0;}#remark-mermaid-2 .today{fill:none;stroke:red;stroke-width:2px;}#remark-mermaid-2 .task{stroke-width:2;}#remark-mermaid-2 .taskText{text-anchor:middle;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 .taskTextOutsideRight{fill:black;text-anchor:start;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 .taskTextOutsideLeft{fill:black;text-anchor:end;}#remark-mermaid-2 .task.clickable{cursor:pointer;}#remark-mermaid-2 .taskText.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#remark-mermaid-2 .taskTextOutsideLeft.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#remark-mermaid-2 .taskTextOutsideRight.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#remark-mermaid-2 .taskText0,#remark-mermaid-2 .taskText1,#remark-mermaid-2 .taskText2,#remark-mermaid-2 .taskText3{fill:white;}#remark-mermaid-2 .task0,#remark-mermaid-2 .task1,#remark-mermaid-2 .task2,#remark-mermaid-2 .task3{fill:#8a90dd;stroke:#534fbc;}#remark-mermaid-2 .taskTextOutside0,#remark-mermaid-2 .taskTextOutside2{fill:black;}#remark-mermaid-2 .taskTextOutside1,#remark-mermaid-2 .taskTextOutside3{fill:black;}#remark-mermaid-2 .active0,#remark-mermaid-2 .active1,#remark-mermaid-2 .active2,#remark-mermaid-2 .active3{fill:#bfc7ff;stroke:#534fbc;}#remark-mermaid-2 .activeText0,#remark-mermaid-2 .activeText1,#remark-mermaid-2 .activeText2,#remark-mermaid-2 .activeText3{fill:black!important;}#remark-mermaid-2 .done0,#remark-mermaid-2 .done1,#remark-mermaid-2 .done2,#remark-mermaid-2 .done3{stroke:grey;fill:lightgrey;stroke-width:2;}#remark-mermaid-2 .doneText0,#remark-mermaid-2 .doneText1,#remark-mermaid-2 .doneText2,#remark-mermaid-2 .doneText3{fill:black!important;}#remark-mermaid-2 .crit0,#remark-mermaid-2 .crit1,#remark-mermaid-2 .crit2,#remark-mermaid-2 .crit3{stroke:#ff8888;fill:red;stroke-width:2;}#remark-mermaid-2 .activeCrit0,#remark-mermaid-2 .activeCrit1,#remark-mermaid-2 .activeCrit2,#remark-mermaid-2 .activeCrit3{stroke:#ff8888;fill:#bfc7ff;stroke-width:2;}#remark-mermaid-2 .doneCrit0,#remark-mermaid-2 .doneCrit1,#remark-mermaid-2 .doneCrit2,#remark-mermaid-2 .doneCrit3{stroke:#ff8888;fill:lightgrey;stroke-width:2;cursor:pointer;shape-rendering:crispEdges;}#remark-mermaid-2 .milestone{transform:rotate(45deg) scale(0.8,0.8);}#remark-mermaid-2 .milestoneText{font-style:italic;}#remark-mermaid-2 .doneCritText0,#remark-mermaid-2 .doneCritText1,#remark-mermaid-2 .doneCritText2,#remark-mermaid-2 .doneCritText3{fill:black!important;}#remark-mermaid-2 .activeCritText0,#remark-mermaid-2 .activeCritText1,#remark-mermaid-2 .activeCritText2,#remark-mermaid-2 .activeCritText3{fill:black!important;}#remark-mermaid-2 .titleText{text-anchor:middle;font-size:18px;fill:#333;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><g></g><g text-anchor="middle" font-family="sans-serif" font-size="10" fill="none" transform="translate(75, 194)" class="grid"><path d="M0.5,-159V0.5H634.5V-159" stroke="currentColor" class="domain"></path><g transform="translate(0.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-06</text></g><g transform="translate(79.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-06</text></g><g transform="translate(159.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-07</text></g><g transform="translate(238.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-07</text></g><g transform="translate(317.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-08</text></g><g transform="translate(396.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-08</text></g><g transform="translate(476.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-09</text></g><g transform="translate(555.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-09</text></g><g transform="translate(634.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-10</text></g></g><g><rect class="section section0" height="24" width="746.5" y="48" x="0"></rect><rect class="section section0" height="24" width="746.5" y="72" x="0"></rect><rect class="section section0" height="24" width="746.5" y="96" x="0"></rect><rect class="section section0" height="24" width="746.5" y="120" x="0"></rect><rect class="section section0" height="24" width="746.5" y="144" x="0"></rect><rect class="section section0" height="24" width="746.5" y="168" x="0"></rect></g><g><rect class="task done0" transform-origin="233.5px 60px" height="20" width="317" y="50" x="75" ry="3" rx="3" id="des1"></rect><rect class="task active0" transform-origin="471.5px 84px" height="20" width="475" y="74" x="234" ry="3" rx="3" id="des2"></rect><rect class="task task0" transform-origin="471.5px 108px" height="20" width="159" y="98" x="392" ry="3" rx="3" id="des3"></rect><rect class="task task0" transform-origin="471.5px 132px" height="20" width="159" y="122" x="392" ry="3" rx="3" id="des4"></rect><rect class="task task0" transform-origin="630px 156px" height="20" width="158" y="146" x="551" ry="3" rx="3" id="des5"></rect><rect class="task task0" transform-origin="630px 180px" height="20" width="158" y="170" x="551" ry="3" rx="3" id="des6"></rect><text class="taskText taskText0 doneText0 width-53.203125" y="63.5" x="233.5" font-size="11" id="des1-text">Completed </text><text class="taskText taskText0 activeText0 width-29.96875" y="87.5" x="471.5" font-size="11" id="des2-text">Active        </text><text class="taskText taskText0 width-45.859375" y="111.5" x="471.5" font-size="11" id="des3-text">Parallel 1   </text><text class="taskText taskText0 width-45.859375" y="135.5" x="471.5" font-size="11" id="des4-text">Parallel 2   </text><text class="taskText taskText0 width-45.859375" y="159.5" x="630" font-size="11" id="des5-text">Parallel 3   </text><text class="taskText taskText0 width-45.859375" y="183.5" x="630" font-size="11" id="des6-text">Parallel 4   </text></g><g><text class="sectionTitle sectionTitle0" font-size="11" y="122" x="10" dy="0em"><tspan x="10" alignment-baseline="central">Section</tspan></text></g><g class="today"><line class="today" y2="219" y1="25" x2="523767" x1="523767"></line></g><text class="titleText" y="25" x="392"></text></svg></p>
+<p><svg aria-roledescription="gantt" style="max-width: 784px;" viewBox="0 0 784 244" xmlns="http://www.w3.org/2000/svg" width="100%" id="remark-mermaid-2"><style>#remark-mermaid-2{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#remark-mermaid-2 .error-icon{fill:#552222;}#remark-mermaid-2 .error-text{fill:#552222;stroke:#552222;}#remark-mermaid-2 .edge-thickness-normal{stroke-width:2px;}#remark-mermaid-2 .edge-thickness-thick{stroke-width:3.5px;}#remark-mermaid-2 .edge-pattern-solid{stroke-dasharray:0;}#remark-mermaid-2 .edge-pattern-dashed{stroke-dasharray:3;}#remark-mermaid-2 .edge-pattern-dotted{stroke-dasharray:2;}#remark-mermaid-2 .marker{fill:#333333;stroke:#333333;}#remark-mermaid-2 .marker.cross{stroke:#333333;}#remark-mermaid-2 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#remark-mermaid-2 .mermaid-main-font{font-family:"trebuchet ms",verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 .exclude-range{fill:#eeeeee;}#remark-mermaid-2 .section{stroke:none;opacity:0.2;}#remark-mermaid-2 .section0{fill:rgba(102, 102, 255, 0.49);}#remark-mermaid-2 .section2{fill:#fff400;}#remark-mermaid-2 .section1,#remark-mermaid-2 .section3{fill:white;opacity:0.2;}#remark-mermaid-2 .sectionTitle0{fill:#333;}#remark-mermaid-2 .sectionTitle1{fill:#333;}#remark-mermaid-2 .sectionTitle2{fill:#333;}#remark-mermaid-2 .sectionTitle3{fill:#333;}#remark-mermaid-2 .sectionTitle{text-anchor:start;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 .grid .tick{stroke:lightgrey;opacity:0.8;shape-rendering:crispEdges;}#remark-mermaid-2 .grid .tick text{font-family:"trebuchet ms",verdana,arial,sans-serif;fill:#333;}#remark-mermaid-2 .grid path{stroke-width:0;}#remark-mermaid-2 .today{fill:none;stroke:red;stroke-width:2px;}#remark-mermaid-2 .task{stroke-width:2;}#remark-mermaid-2 .taskText{text-anchor:middle;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 .taskTextOutsideRight{fill:black;text-anchor:start;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 .taskTextOutsideLeft{fill:black;text-anchor:end;}#remark-mermaid-2 .task.clickable{cursor:pointer;}#remark-mermaid-2 .taskText.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#remark-mermaid-2 .taskTextOutsideLeft.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#remark-mermaid-2 .taskTextOutsideRight.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#remark-mermaid-2 .taskText0,#remark-mermaid-2 .taskText1,#remark-mermaid-2 .taskText2,#remark-mermaid-2 .taskText3{fill:white;}#remark-mermaid-2 .task0,#remark-mermaid-2 .task1,#remark-mermaid-2 .task2,#remark-mermaid-2 .task3{fill:#8a90dd;stroke:#534fbc;}#remark-mermaid-2 .taskTextOutside0,#remark-mermaid-2 .taskTextOutside2{fill:black;}#remark-mermaid-2 .taskTextOutside1,#remark-mermaid-2 .taskTextOutside3{fill:black;}#remark-mermaid-2 .active0,#remark-mermaid-2 .active1,#remark-mermaid-2 .active2,#remark-mermaid-2 .active3{fill:#bfc7ff;stroke:#534fbc;}#remark-mermaid-2 .activeText0,#remark-mermaid-2 .activeText1,#remark-mermaid-2 .activeText2,#remark-mermaid-2 .activeText3{fill:black!important;}#remark-mermaid-2 .done0,#remark-mermaid-2 .done1,#remark-mermaid-2 .done2,#remark-mermaid-2 .done3{stroke:grey;fill:lightgrey;stroke-width:2;}#remark-mermaid-2 .doneText0,#remark-mermaid-2 .doneText1,#remark-mermaid-2 .doneText2,#remark-mermaid-2 .doneText3{fill:black!important;}#remark-mermaid-2 .crit0,#remark-mermaid-2 .crit1,#remark-mermaid-2 .crit2,#remark-mermaid-2 .crit3{stroke:#ff8888;fill:red;stroke-width:2;}#remark-mermaid-2 .activeCrit0,#remark-mermaid-2 .activeCrit1,#remark-mermaid-2 .activeCrit2,#remark-mermaid-2 .activeCrit3{stroke:#ff8888;fill:#bfc7ff;stroke-width:2;}#remark-mermaid-2 .doneCrit0,#remark-mermaid-2 .doneCrit1,#remark-mermaid-2 .doneCrit2,#remark-mermaid-2 .doneCrit3{stroke:#ff8888;fill:lightgrey;stroke-width:2;cursor:pointer;shape-rendering:crispEdges;}#remark-mermaid-2 .milestone{transform:rotate(45deg) scale(0.8,0.8);}#remark-mermaid-2 .milestoneText{font-style:italic;}#remark-mermaid-2 .doneCritText0,#remark-mermaid-2 .doneCritText1,#remark-mermaid-2 .doneCritText2,#remark-mermaid-2 .doneCritText3{fill:black!important;}#remark-mermaid-2 .activeCritText0,#remark-mermaid-2 .activeCritText1,#remark-mermaid-2 .activeCritText2,#remark-mermaid-2 .activeCritText3{fill:black!important;}#remark-mermaid-2 .titleText{text-anchor:middle;font-size:18px;fill:#333;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-2 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><g></g><g text-anchor="middle" font-family="sans-serif" font-size="10" fill="none" transform="translate(75, 194)" class="grid"><path d="M0.5,-159V0.5H634.5V-159" stroke="currentColor" class="domain"></path><g transform="translate(0.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-06</text></g><g transform="translate(79.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-06</text></g><g transform="translate(159.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-07</text></g><g transform="translate(238.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-07</text></g><g transform="translate(317.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-08</text></g><g transform="translate(396.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-08</text></g><g transform="translate(476.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-09</text></g><g transform="translate(555.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-09</text></g><g transform="translate(634.5,0)" opacity="1" class="tick"><line y2="-159" stroke="currentColor"></line><text style="text-anchor: middle;" font-size="10" stroke="none" dy="1em" y="3" fill="#000">2014-01-10</text></g></g><g><rect class="section section0" height="24" width="746.5" y="48" x="0"></rect><rect class="section section0" height="24" width="746.5" y="72" x="0"></rect><rect class="section section0" height="24" width="746.5" y="96" x="0"></rect><rect class="section section0" height="24" width="746.5" y="120" x="0"></rect><rect class="section section0" height="24" width="746.5" y="144" x="0"></rect><rect class="section section0" height="24" width="746.5" y="168" x="0"></rect></g><g><rect class="task done0" transform-origin="233.5px 60px" height="20" width="317" y="50" x="75" ry="3" rx="3" id="des1"></rect><rect class="task active0" transform-origin="471.5px 84px" height="20" width="475" y="74" x="234" ry="3" rx="3" id="des2"></rect><rect class="task task0" transform-origin="471.5px 108px" height="20" width="159" y="98" x="392" ry="3" rx="3" id="des3"></rect><rect class="task task0" transform-origin="471.5px 132px" height="20" width="159" y="122" x="392" ry="3" rx="3" id="des4"></rect><rect class="task task0" transform-origin="630px 156px" height="20" width="158" y="146" x="551" ry="3" rx="3" id="des5"></rect><rect class="task task0" transform-origin="630px 180px" height="20" width="158" y="170" x="551" ry="3" rx="3" id="des6"></rect><text class="taskText taskText0 doneText0 width-53.203125" y="63.5" x="233.5" font-size="11" id="des1-text">Completed </text><text class="taskText taskText0 activeText0 width-29.96875" y="87.5" x="471.5" font-size="11" id="des2-text">Active        </text><text class="taskText taskText0 width-45.859375" y="111.5" x="471.5" font-size="11" id="des3-text">Parallel 1   </text><text class="taskText taskText0 width-45.859375" y="135.5" x="471.5" font-size="11" id="des4-text">Parallel 2   </text><text class="taskText taskText0 width-45.859375" y="159.5" x="630" font-size="11" id="des5-text">Parallel 3   </text><text class="taskText taskText0 width-45.859375" y="183.5" x="630" font-size="11" id="des6-text">Parallel 4   </text></g><g><text class="sectionTitle sectionTitle0" font-size="11" y="122" x="10" dy="0em"><tspan x="10" alignment-baseline="central">Section</tspan></text></g><g class="today"><line class="today" y2="219" y1="25" x2="523901" x1="523901"></line></g><text class="titleText" y="25" x="392"></text></svg></p>
 <h2>Class diagram</h2>
 <pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">```mermaid</span></span>
 <span class="line"><span style="color: #24292F">classDiagram</span></span>
@@ -2323,7 +2324,7 @@ ESTABLISHED してないんですから、今時 NAPT やファイアーウォ�
 <span class="line"><span style="color: #24292F">    commit</span></span>
 <span class="line"><span style="color: #24292F">    commit</span></span>
 <span class="line"><span style="color: #24292F">```</span></span></code></pre>
-<p><svg aria-roledescription="gitGraph" viewBox="-117.1484375 -18 475.1484375 173.9670867919922" height="173.9670867919922" xmlns="http://www.w3.org/2000/svg" width="475.1484375" id="remark-mermaid-4"><style>#remark-mermaid-4{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#remark-mermaid-4 .error-icon{fill:#552222;}#remark-mermaid-4 .error-text{fill:#552222;stroke:#552222;}#remark-mermaid-4 .edge-thickness-normal{stroke-width:2px;}#remark-mermaid-4 .edge-thickness-thick{stroke-width:3.5px;}#remark-mermaid-4 .edge-pattern-solid{stroke-dasharray:0;}#remark-mermaid-4 .edge-pattern-dashed{stroke-dasharray:3;}#remark-mermaid-4 .edge-pattern-dotted{stroke-dasharray:2;}#remark-mermaid-4 .marker{fill:#333333;stroke:#333333;}#remark-mermaid-4 .marker.cross{stroke:#333333;}#remark-mermaid-4 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#remark-mermaid-4 .commit-id,#remark-mermaid-4 .commit-msg,#remark-mermaid-4 .branch-label{fill:lightgrey;color:lightgrey;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-4 .branch-label0{fill:#ffffff;}#remark-mermaid-4 .commit0{stroke:hsl(240, 100%, 46.2745098039%);fill:hsl(240, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight0{stroke:hsl(60, 100%, 3.7254901961%);fill:hsl(60, 100%, 3.7254901961%);}#remark-mermaid-4 .label0{fill:hsl(240, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow0{stroke:hsl(240, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label1{fill:black;}#remark-mermaid-4 .commit1{stroke:hsl(60, 100%, 43.5294117647%);fill:hsl(60, 100%, 43.5294117647%);}#remark-mermaid-4 .commit-highlight1{stroke:rgb(0, 0, 160.5);fill:rgb(0, 0, 160.5);}#remark-mermaid-4 .label1{fill:hsl(60, 100%, 43.5294117647%);}#remark-mermaid-4 .arrow1{stroke:hsl(60, 100%, 43.5294117647%);}#remark-mermaid-4 .branch-label2{fill:black;}#remark-mermaid-4 .commit2{stroke:hsl(80, 100%, 46.2745098039%);fill:hsl(80, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight2{stroke:rgb(48.8333333334, 0, 146.5000000001);fill:rgb(48.8333333334, 0, 146.5000000001);}#remark-mermaid-4 .label2{fill:hsl(80, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow2{stroke:hsl(80, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label3{fill:#ffffff;}#remark-mermaid-4 .commit3{stroke:hsl(210, 100%, 46.2745098039%);fill:hsl(210, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight3{stroke:rgb(146.5000000001, 73.2500000001, 0);fill:rgb(146.5000000001, 73.2500000001, 0);}#remark-mermaid-4 .label3{fill:hsl(210, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow3{stroke:hsl(210, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label4{fill:black;}#remark-mermaid-4 .commit4{stroke:hsl(180, 100%, 46.2745098039%);fill:hsl(180, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight4{stroke:rgb(146.5000000001, 0, 0);fill:rgb(146.5000000001, 0, 0);}#remark-mermaid-4 .label4{fill:hsl(180, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow4{stroke:hsl(180, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label5{fill:black;}#remark-mermaid-4 .commit5{stroke:hsl(150, 100%, 46.2745098039%);fill:hsl(150, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight5{stroke:rgb(146.5000000001, 0, 73.2500000001);fill:rgb(146.5000000001, 0, 73.2500000001);}#remark-mermaid-4 .label5{fill:hsl(150, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow5{stroke:hsl(150, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label6{fill:black;}#remark-mermaid-4 .commit6{stroke:hsl(300, 100%, 46.2745098039%);fill:hsl(300, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight6{stroke:rgb(0, 146.5000000001, 0);fill:rgb(0, 146.5000000001, 0);}#remark-mermaid-4 .label6{fill:hsl(300, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow6{stroke:hsl(300, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label7{fill:black;}#remark-mermaid-4 .commit7{stroke:hsl(0, 100%, 46.2745098039%);fill:hsl(0, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight7{stroke:rgb(0, 146.5000000001, 146.5000000001);fill:rgb(0, 146.5000000001, 146.5000000001);}#remark-mermaid-4 .label7{fill:hsl(0, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow7{stroke:hsl(0, 100%, 46.2745098039%);}#remark-mermaid-4 .branch{stroke-width:1;stroke:#333333;stroke-dasharray:2;}#remark-mermaid-4 .commit-label{font-size:10px;fill:#000021;}#remark-mermaid-4 .commit-label-bkg{font-size:10px;fill:#ffffde;opacity:0.5;}#remark-mermaid-4 .tag-label{font-size:10px;fill:#131300;}#remark-mermaid-4 .tag-label-bkg{fill:#ECECFF;stroke:hsl(240, 60%, 86.2745098039%);}#remark-mermaid-4 .tag-hole{fill:#333;}#remark-mermaid-4 .commit-merge{stroke:#ECECFF;fill:#ECECFF;}#remark-mermaid-4 .commit-reverse{stroke:#ECECFF;fill:#ECECFF;stroke-width:3;}#remark-mermaid-4 .commit-highlight-inner{stroke:#ECECFF;fill:#ECECFF;}#remark-mermaid-4 .arrow{stroke-width:8;stroke-linecap:round;fill:none;}#remark-mermaid-4 .gitTitleText{text-anchor:middle;font-size:18px;fill:#333;}:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><g class="commit-bullets"></g><g class="commit-labels"></g><g><line class="branch branch0" y2="0" x2="350" y1="0" x1="0"></line><rect transform="translate(-19, -8.5)" height="21" width="52.6875" y="-0.5" x="-68.6875" ry="4" rx="4" class="branchLabelBkg label0"></rect><g class="branchLabel"><g transform="translate(-78.6875, -9.5)" class="label branch-label0"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">main</tspan></text></g></g><line class="branch branch1" y2="90" x2="350" y1="90" x1="0"></line><rect transform="translate(-19, 81.5)" height="21" width="74.1484375" y="-0.5" x="-90.1484375" ry="4" rx="4" class="branchLabelBkg label1"></rect><g class="branchLabel"><g transform="translate(-100.1484375, 80.5)" class="label branch-label1"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">develop</tspan></text></g></g></g><g class="commit-arrows"><path class="arrow arrow0" d="M 10 0 L 10 0  10 0 L 60 0"></path><path class="arrow arrow1" d="M 60 0 L 60 70 A 20 20, 0, 0, 0, 80 90 L 110 90"></path><path class="arrow arrow1" d="M 110 90 L 110 90  110 90 L 160 90"></path><path class="arrow arrow1" d="M 160 90 L 160 90  160 90 L 210 90"></path><path class="arrow arrow0" d="M 60 0 L 60 0  60 0 L 260 0"></path><path class="arrow arrow0" d="M 260 0 L 260 0  260 0 L 310 0"></path></g><g class="commit-bullets"><circle class="commit 0-edf248a commit0" r="10" cy="0" cx="10"></circle><circle class="commit 1-1508b3c commit0" r="10" cy="0" cx="60"></circle><circle class="commit 2-17cf3c1 commit1" r="10" cy="90" cx="110"></circle><circle class="commit 3-61907a4 commit1" r="10" cy="90" cx="160"></circle><circle class="commit 4-2532037 commit1" r="10" cy="90" cx="210"></circle><circle class="commit 5-65a5018 commit0" r="10" cy="0" cx="260"></circle><circle class="commit 6-98241c2 commit0" r="10" cy="0" cx="310"></circle></g><g class="commit-labels"><g transform="translate(-28.581464843750002, 25.46236328125) rotate(-45, 0, 0)"><rect height="15" width="49.4775390625" y="13.5" x="-14.73876953125" class="commit-label-bkg"></rect><text class="commit-label" y="25" x="-12.73876953125">0-edf248a</text></g><g transform="translate(-29.2609375, 26.0703125) rotate(-45, 50, 0)"><rect height="15" width="51.265625" y="13.5" x="34.3671875" class="commit-label-bkg"></rect><text class="commit-label" y="25" x="36.3671875">1-1508b3c</text></g><g transform="translate(-28.154707031250002, 25.08052734375) rotate(-45, 100, 90)"><rect height="15" width="48.3544921875" y="103.5" x="85.82275390625" class="commit-label-bkg"></rect><text class="commit-label" y="115" x="87.82275390625">2-17cf3c1</text></g><g transform="translate(-29.639082031250002, 26.40865234375) rotate(-45, 150, 90)"><rect height="15" width="52.2607421875" y="103.5" x="133.86962890625" class="commit-label-bkg"></rect><text class="commit-label" y="115" x="135.86962890625">3-61907a4</text></g><g transform="translate(-29.639082031250002, 26.40865234375) rotate(-45, 200, 90)"><rect height="15" width="52.2607421875" y="103.5" x="183.86962890625" class="commit-label-bkg"></rect><text class="commit-label" y="115" x="185.86962890625">4-2532037</text></g><g transform="translate(-29.639082031250002, 26.40865234375) rotate(-45, 250, 0)"><rect height="15" width="52.2607421875" y="13.5" x="233.86962890625" class="commit-label-bkg"></rect><text class="commit-label" y="25" x="235.86962890625">5-65a5018</text></g><g transform="translate(-29.425703125000002, 26.217734375) rotate(-45, 300, 0)"><rect height="15" width="51.69921875" y="13.5" x="284.150390625" class="commit-label-bkg"></rect><text class="commit-label" y="25" x="286.150390625">6-98241c2</text></g></g></svg></p>
+<p><svg aria-roledescription="gitGraph" viewBox="-117.1484375 -18 475.1484375 173.57765197753906" height="173.57765197753906" xmlns="http://www.w3.org/2000/svg" width="475.1484375" id="remark-mermaid-4"><style>#remark-mermaid-4{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#remark-mermaid-4 .error-icon{fill:#552222;}#remark-mermaid-4 .error-text{fill:#552222;stroke:#552222;}#remark-mermaid-4 .edge-thickness-normal{stroke-width:2px;}#remark-mermaid-4 .edge-thickness-thick{stroke-width:3.5px;}#remark-mermaid-4 .edge-pattern-solid{stroke-dasharray:0;}#remark-mermaid-4 .edge-pattern-dashed{stroke-dasharray:3;}#remark-mermaid-4 .edge-pattern-dotted{stroke-dasharray:2;}#remark-mermaid-4 .marker{fill:#333333;stroke:#333333;}#remark-mermaid-4 .marker.cross{stroke:#333333;}#remark-mermaid-4 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#remark-mermaid-4 .commit-id,#remark-mermaid-4 .commit-msg,#remark-mermaid-4 .branch-label{fill:lightgrey;color:lightgrey;font-family:'trebuchet ms',verdana,arial,sans-serif;font-family:var(--mermaid-font-family);}#remark-mermaid-4 .branch-label0{fill:#ffffff;}#remark-mermaid-4 .commit0{stroke:hsl(240, 100%, 46.2745098039%);fill:hsl(240, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight0{stroke:hsl(60, 100%, 3.7254901961%);fill:hsl(60, 100%, 3.7254901961%);}#remark-mermaid-4 .label0{fill:hsl(240, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow0{stroke:hsl(240, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label1{fill:black;}#remark-mermaid-4 .commit1{stroke:hsl(60, 100%, 43.5294117647%);fill:hsl(60, 100%, 43.5294117647%);}#remark-mermaid-4 .commit-highlight1{stroke:rgb(0, 0, 160.5);fill:rgb(0, 0, 160.5);}#remark-mermaid-4 .label1{fill:hsl(60, 100%, 43.5294117647%);}#remark-mermaid-4 .arrow1{stroke:hsl(60, 100%, 43.5294117647%);}#remark-mermaid-4 .branch-label2{fill:black;}#remark-mermaid-4 .commit2{stroke:hsl(80, 100%, 46.2745098039%);fill:hsl(80, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight2{stroke:rgb(48.8333333334, 0, 146.5000000001);fill:rgb(48.8333333334, 0, 146.5000000001);}#remark-mermaid-4 .label2{fill:hsl(80, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow2{stroke:hsl(80, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label3{fill:#ffffff;}#remark-mermaid-4 .commit3{stroke:hsl(210, 100%, 46.2745098039%);fill:hsl(210, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight3{stroke:rgb(146.5000000001, 73.2500000001, 0);fill:rgb(146.5000000001, 73.2500000001, 0);}#remark-mermaid-4 .label3{fill:hsl(210, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow3{stroke:hsl(210, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label4{fill:black;}#remark-mermaid-4 .commit4{stroke:hsl(180, 100%, 46.2745098039%);fill:hsl(180, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight4{stroke:rgb(146.5000000001, 0, 0);fill:rgb(146.5000000001, 0, 0);}#remark-mermaid-4 .label4{fill:hsl(180, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow4{stroke:hsl(180, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label5{fill:black;}#remark-mermaid-4 .commit5{stroke:hsl(150, 100%, 46.2745098039%);fill:hsl(150, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight5{stroke:rgb(146.5000000001, 0, 73.2500000001);fill:rgb(146.5000000001, 0, 73.2500000001);}#remark-mermaid-4 .label5{fill:hsl(150, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow5{stroke:hsl(150, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label6{fill:black;}#remark-mermaid-4 .commit6{stroke:hsl(300, 100%, 46.2745098039%);fill:hsl(300, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight6{stroke:rgb(0, 146.5000000001, 0);fill:rgb(0, 146.5000000001, 0);}#remark-mermaid-4 .label6{fill:hsl(300, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow6{stroke:hsl(300, 100%, 46.2745098039%);}#remark-mermaid-4 .branch-label7{fill:black;}#remark-mermaid-4 .commit7{stroke:hsl(0, 100%, 46.2745098039%);fill:hsl(0, 100%, 46.2745098039%);}#remark-mermaid-4 .commit-highlight7{stroke:rgb(0, 146.5000000001, 146.5000000001);fill:rgb(0, 146.5000000001, 146.5000000001);}#remark-mermaid-4 .label7{fill:hsl(0, 100%, 46.2745098039%);}#remark-mermaid-4 .arrow7{stroke:hsl(0, 100%, 46.2745098039%);}#remark-mermaid-4 .branch{stroke-width:1;stroke:#333333;stroke-dasharray:2;}#remark-mermaid-4 .commit-label{font-size:10px;fill:#000021;}#remark-mermaid-4 .commit-label-bkg{font-size:10px;fill:#ffffde;opacity:0.5;}#remark-mermaid-4 .tag-label{font-size:10px;fill:#131300;}#remark-mermaid-4 .tag-label-bkg{fill:#ECECFF;stroke:hsl(240, 60%, 86.2745098039%);}#remark-mermaid-4 .tag-hole{fill:#333;}#remark-mermaid-4 .commit-merge{stroke:#ECECFF;fill:#ECECFF;}#remark-mermaid-4 .commit-reverse{stroke:#ECECFF;fill:#ECECFF;stroke-width:3;}#remark-mermaid-4 .commit-highlight-inner{stroke:#ECECFF;fill:#ECECFF;}#remark-mermaid-4 .arrow{stroke-width:8;stroke-linecap:round;fill:none;}#remark-mermaid-4 .gitTitleText{text-anchor:middle;font-size:18px;fill:#333;}:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><g class="commit-bullets"></g><g class="commit-labels"></g><g><line class="branch branch0" y2="0" x2="350" y1="0" x1="0"></line><rect transform="translate(-19, -8.5)" height="21" width="52.6875" y="-0.5" x="-68.6875" ry="4" rx="4" class="branchLabelBkg label0"></rect><g class="branchLabel"><g transform="translate(-78.6875, -9.5)" class="label branch-label0"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">main</tspan></text></g></g><line class="branch branch1" y2="90" x2="350" y1="90" x1="0"></line><rect transform="translate(-19, 81.5)" height="21" width="74.1484375" y="-0.5" x="-90.1484375" ry="4" rx="4" class="branchLabelBkg label1"></rect><g class="branchLabel"><g transform="translate(-100.1484375, 80.5)" class="label branch-label1"><text><tspan class="row" x="0" dy="1em" xml:space="preserve">develop</tspan></text></g></g></g><g class="commit-arrows"><path class="arrow arrow0" d="M 10 0 L 10 0  10 0 L 60 0"></path><path class="arrow arrow1" d="M 60 0 L 60 70 A 20 20, 0, 0, 0, 80 90 L 110 90"></path><path class="arrow arrow1" d="M 110 90 L 110 90  110 90 L 160 90"></path><path class="arrow arrow1" d="M 160 90 L 160 90  160 90 L 210 90"></path><path class="arrow arrow0" d="M 60 0 L 60 0  60 0 L 260 0"></path><path class="arrow arrow0" d="M 260 0 L 260 0  260 0 L 310 0"></path></g><g class="commit-bullets"><circle class="commit 0-9898612 commit0" r="10" cy="0" cx="10"></circle><circle class="commit 1-a0fd11f commit0" r="10" cy="0" cx="60"></circle><circle class="commit 2-f5d98d5 commit1" r="10" cy="90" cx="110"></circle><circle class="commit 3-969fb4c commit1" r="10" cy="90" cx="160"></circle><circle class="commit 4-6c7de66 commit1" r="10" cy="90" cx="210"></circle><circle class="commit 5-12f5d51 commit0" r="10" cy="0" cx="260"></circle><circle class="commit 6-d8e9b99 commit0" r="10" cy="0" cx="310"></circle></g><g class="commit-labels"><g transform="translate(-29.639082031250002, 26.40865234375) rotate(-45, 0, 0)"><rect height="15" width="52.2607421875" y="13.5" x="-16.13037109375" class="commit-label-bkg"></rect><text class="commit-label" y="25" x="-14.13037109375">0-9898612</text></g><g transform="translate(-27.44146484375, 24.442363281250003) rotate(-45, 50, 0)"><rect height="15" width="46.4775390625" y="13.5" x="36.76123046875" class="commit-label-bkg"></rect><text class="commit-label" y="25" x="38.76123046875">1-a0fd11f</text></g><g transform="translate(-28.581464843750002, 25.46236328125) rotate(-45, 100, 90)"><rect height="15" width="49.4775390625" y="103.5" x="85.26123046875" class="commit-label-bkg"></rect><text class="commit-label" y="115" x="87.26123046875">2-f5d98d5</text></g><g transform="translate(-28.2040625, 25.1246875) rotate(-45, 150, 90)"><rect height="15" width="48.484375" y="103.5" x="135.7578125" class="commit-label-bkg"></rect><text class="commit-label" y="115" x="137.7578125">3-969fb4c</text></g><g transform="translate(-29.425703125000002, 26.217734375) rotate(-45, 200, 90)"><rect height="15" width="51.69921875" y="103.5" x="184.150390625" class="commit-label-bkg"></rect><text class="commit-label" y="115" x="186.150390625">4-6c7de66</text></g><g transform="translate(-28.581464843750002, 25.46236328125) rotate(-45, 250, 0)"><rect height="15" width="49.4775390625" y="13.5" x="235.26123046875" class="commit-label-bkg"></rect><text class="commit-label" y="25" x="237.26123046875">5-12f5d51</text></g><g transform="translate(-29.639082031250002, 26.40865234375) rotate(-45, 300, 0)"><rect height="15" width="52.2607421875" y="13.5" x="283.86962890625" class="commit-label-bkg"></rect><text class="commit-label" y="25" x="285.86962890625">6-d8e9b99</text></g></g></svg></p>
 <h2>State diagram</h2>
 <pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">```mermaid</span></span>
 <span class="line"><span style="color: #24292F">stateDiagram-v2</span></span>
@@ -2350,7 +2351,7 @@ ESTABLISHED してないんですから、今時 NAPT やファイアーウォ�
 <span class="line"><span style="color: #24292F">    ORDER ||--|{ LINE-ITEM : contains</span></span>
 <span class="line"><span style="color: #24292F">    CUSTOMER }|..|{ DELIVERY-ADDRESS : uses</span></span>
 <span class="line"><span style="color: #24292F">```</span></span></code></pre>
-<p><svg aria-roledescription="er" viewBox="0 0 390.046875 465" style="max-width: 390.046875px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="remark-mermaid-7"><style>#remark-mermaid-7{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#remark-mermaid-7 .error-icon{fill:#552222;}#remark-mermaid-7 .error-text{fill:#552222;stroke:#552222;}#remark-mermaid-7 .edge-thickness-normal{stroke-width:2px;}#remark-mermaid-7 .edge-thickness-thick{stroke-width:3.5px;}#remark-mermaid-7 .edge-pattern-solid{stroke-dasharray:0;}#remark-mermaid-7 .edge-pattern-dashed{stroke-dasharray:3;}#remark-mermaid-7 .edge-pattern-dotted{stroke-dasharray:2;}#remark-mermaid-7 .marker{fill:#333333;stroke:#333333;}#remark-mermaid-7 .marker.cross{stroke:#333333;}#remark-mermaid-7 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#remark-mermaid-7 .entityBox{fill:#ECECFF;stroke:#9370DB;}#remark-mermaid-7 .attributeBoxOdd{fill:#ffffff;stroke:#9370DB;}#remark-mermaid-7 .attributeBoxEven{fill:#f2f2f2;stroke:#9370DB;}#remark-mermaid-7 .relationshipLabelBox{fill:hsl(80, 100%, 96.2745098039%);opacity:0.7;background-color:hsl(80, 100%, 96.2745098039%);}#remark-mermaid-7 .relationshipLabelBox rect{opacity:0.5;}#remark-mermaid-7 .relationshipLine{stroke:#333333;}#remark-mermaid-7 .entityTitleText{text-anchor:middle;font-size:18px;fill:#333;}#remark-mermaid-7 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><defs><marker orient="auto" markerHeight="18" markerWidth="18" refY="9" refX="0" id="ONLY_ONE_START"><path d="M9,0 L9,18 M15,0 L15,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="18" markerWidth="18" refY="9" refX="18" id="ONLY_ONE_END"><path d="M3,0 L3,18 M9,0 L9,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="18" markerWidth="30" refY="9" refX="0" id="ZERO_OR_ONE_START"><circle r="6" cy="9" cx="21" fill="white" stroke="gray"></circle><path d="M9,0 L9,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="18" markerWidth="30" refY="9" refX="30" id="ZERO_OR_ONE_END"><circle r="6" cy="9" cx="9" fill="white" stroke="gray"></circle><path d="M21,0 L21,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="36" markerWidth="45" refY="18" refX="18" id="ONE_OR_MORE_START"><path d="M0,18 Q 18,0 36,18 Q 18,36 0,18 M42,9 L42,27" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="36" markerWidth="45" refY="18" refX="27" id="ONE_OR_MORE_END"><path d="M3,9 L3,27 M9,18 Q27,0 45,18 Q27,36 9,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="36" markerWidth="57" refY="18" refX="18" id="ZERO_OR_MORE_START"><circle r="6" cy="18" cx="48" fill="white" stroke="gray"></circle><path d="M0,18 Q18,0 36,18 Q18,36 0,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="36" markerWidth="57" refY="18" refX="39" id="ZERO_OR_MORE_END"><circle r="6" cy="18" cx="9" fill="white" stroke="gray"></circle><path d="M21,18 Q39,0 57,18 Q39,36 21,18" fill="none" stroke="gray"></path></marker></defs><path style="stroke: gray; fill: none;" marker-start="url(#ONLY_ONE_START)" marker-end="url(#ZERO_OR_MORE_END)" d="M134.29241071428572,95L123.57700892857144,103.33333333333333C112.86160714285715,111.66666666666667,91.43080357142857,128.33333333333334,80.71540178571429,145C70,161.66666666666666,70,178.33333333333334,70,186.66666666666666L70,195" class="er relationshipLine"></path><path style="stroke: gray; fill: none;" marker-start="url(#ONLY_ONE_START)" marker-end="url(#ONE_OR_MORE_END)" d="M70,270L70,278.3333333333333C70,286.6666666666667,70,303.3333333333333,70,320C70,336.6666666666667,70,353.3333333333333,70,361.6666666666667L70,370" class="er relationshipLine"></path><path style="stroke: gray; fill: none;" marker-start="url(#ONE_OR_MORE_START)" marker-end="url(#ONE_OR_MORE_END)" stroke-dasharray="8 8" d="M230.73102678571428,95L241.44642857142856,103.33333333333333C252.16183035714286,111.66666666666667,273.5926339285714,128.33333333333334,284.3080357142857,145C295.0234375,161.66666666666666,295.0234375,178.33333333333334,295.0234375,186.66666666666666L295.0234375,195" class="er relationshipLine"></path><g transform="translate(132.51171875,20 )" id="entity-CUSTOMER-c942360a-c075-48de-b917-bdee8193df3a"><rect height="75" width="100" y="0" x="0" class="er entityBox"></rect><text style="dominant-baseline: middle; text-anchor: middle; font-size: 12px;" transform="translate(50,37.5)" y="0" x="0" id="text-entity-CUSTOMER-c942360a-c075-48de-b917-bdee8193df3a" class="er entityLabel">CUSTOMER</text></g><g transform="translate(20,195 )" id="entity-ORDER-da3b552b-1efd-4ad8-a003-349e8c32c0bd"><rect height="75" width="100" y="0" x="0" class="er entityBox"></rect><text style="dominant-baseline: middle; text-anchor: middle; font-size: 12px;" transform="translate(50,37.5)" y="0" x="0" id="text-entity-ORDER-da3b552b-1efd-4ad8-a003-349e8c32c0bd" class="er entityLabel">ORDER</text></g><g transform="translate(20,370 )" id="entity-LINEITEM-e179e159-d8c4-4445-a38d-39ef42f1497c"><rect height="75" width="100" y="0" x="0" class="er entityBox"></rect><text style="dominant-baseline: middle; text-anchor: middle; font-size: 12px;" transform="translate(50,37.5)" y="0" x="0" id="text-entity-LINEITEM-e179e159-d8c4-4445-a38d-39ef42f1497c" class="er entityLabel">LINE-ITEM</text></g><g transform="translate(220,195 )" id="entity-DELIVERYADDRESS-2c211522-8a72-4c9d-a0a8-1d46bce3a7d8"><rect height="75" width="150.046875" y="0" x="0" class="er entityBox"></rect><text style="dominant-baseline: middle; text-anchor: middle; font-size: 12px;" transform="translate(75.0234375,37.5)" y="0" x="0" id="text-entity-DELIVERYADDRESS-2c211522-8a72-4c9d-a0a8-1d46bce3a7d8" class="er entityLabel">DELIVERY-ADDRESS</text></g><rect height="14" width="34.6875" y="129.34690856933594" x="69.82301330566406" class="er relationshipLabelBox"></rect><text style="text-anchor: middle; dominant-baseline: middle; font-size: 12px;" y="136.34690856933594" x="87.16676330566406" id="rel1" class="er relationshipLabel">places</text><rect height="14" width="44.703125" y="313" x="47.6484375" class="er relationshipLabelBox"></rect><text style="text-anchor: middle; dominant-baseline: middle; font-size: 12px;" y="320" x="70" id="rel2" class="er relationshipLabel">contains</text><rect height="14" width="25.359375" y="129.34703063964844" x="265.1768798828125" class="er relationshipLabelBox"></rect><text style="text-anchor: middle; dominant-baseline: middle; font-size: 12px;" y="136.34703063964844" x="277.8565673828125" id="rel3" class="er relationshipLabel">uses</text></svg></p>
+<p><svg aria-roledescription="er" viewBox="0 0 390.046875 465" style="max-width: 390.046875px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="remark-mermaid-7"><style>#remark-mermaid-7{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}#remark-mermaid-7 .error-icon{fill:#552222;}#remark-mermaid-7 .error-text{fill:#552222;stroke:#552222;}#remark-mermaid-7 .edge-thickness-normal{stroke-width:2px;}#remark-mermaid-7 .edge-thickness-thick{stroke-width:3.5px;}#remark-mermaid-7 .edge-pattern-solid{stroke-dasharray:0;}#remark-mermaid-7 .edge-pattern-dashed{stroke-dasharray:3;}#remark-mermaid-7 .edge-pattern-dotted{stroke-dasharray:2;}#remark-mermaid-7 .marker{fill:#333333;stroke:#333333;}#remark-mermaid-7 .marker.cross{stroke:#333333;}#remark-mermaid-7 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#remark-mermaid-7 .entityBox{fill:#ECECFF;stroke:#9370DB;}#remark-mermaid-7 .attributeBoxOdd{fill:#ffffff;stroke:#9370DB;}#remark-mermaid-7 .attributeBoxEven{fill:#f2f2f2;stroke:#9370DB;}#remark-mermaid-7 .relationshipLabelBox{fill:hsl(80, 100%, 96.2745098039%);opacity:0.7;background-color:hsl(80, 100%, 96.2745098039%);}#remark-mermaid-7 .relationshipLabelBox rect{opacity:0.5;}#remark-mermaid-7 .relationshipLine{stroke:#333333;}#remark-mermaid-7 .entityTitleText{text-anchor:middle;font-size:18px;fill:#333;}#remark-mermaid-7 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><defs><marker orient="auto" markerHeight="18" markerWidth="18" refY="9" refX="0" id="ONLY_ONE_START"><path d="M9,0 L9,18 M15,0 L15,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="18" markerWidth="18" refY="9" refX="18" id="ONLY_ONE_END"><path d="M3,0 L3,18 M9,0 L9,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="18" markerWidth="30" refY="9" refX="0" id="ZERO_OR_ONE_START"><circle r="6" cy="9" cx="21" fill="white" stroke="gray"></circle><path d="M9,0 L9,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="18" markerWidth="30" refY="9" refX="30" id="ZERO_OR_ONE_END"><circle r="6" cy="9" cx="9" fill="white" stroke="gray"></circle><path d="M21,0 L21,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="36" markerWidth="45" refY="18" refX="18" id="ONE_OR_MORE_START"><path d="M0,18 Q 18,0 36,18 Q 18,36 0,18 M42,9 L42,27" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="36" markerWidth="45" refY="18" refX="27" id="ONE_OR_MORE_END"><path d="M3,9 L3,27 M9,18 Q27,0 45,18 Q27,36 9,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="36" markerWidth="57" refY="18" refX="18" id="ZERO_OR_MORE_START"><circle r="6" cy="18" cx="48" fill="white" stroke="gray"></circle><path d="M0,18 Q18,0 36,18 Q18,36 0,18" fill="none" stroke="gray"></path></marker></defs><defs><marker orient="auto" markerHeight="36" markerWidth="57" refY="18" refX="39" id="ZERO_OR_MORE_END"><circle r="6" cy="18" cx="9" fill="white" stroke="gray"></circle><path d="M21,18 Q39,0 57,18 Q39,36 21,18" fill="none" stroke="gray"></path></marker></defs><path style="stroke: gray; fill: none;" marker-start="url(#ONLY_ONE_START)" marker-end="url(#ZERO_OR_MORE_END)" d="M134.29241071428572,95L123.57700892857144,103.33333333333333C112.86160714285715,111.66666666666667,91.43080357142857,128.33333333333334,80.71540178571429,145C70,161.66666666666666,70,178.33333333333334,70,186.66666666666666L70,195" class="er relationshipLine"></path><path style="stroke: gray; fill: none;" marker-start="url(#ONLY_ONE_START)" marker-end="url(#ONE_OR_MORE_END)" d="M70,270L70,278.3333333333333C70,286.6666666666667,70,303.3333333333333,70,320C70,336.6666666666667,70,353.3333333333333,70,361.6666666666667L70,370" class="er relationshipLine"></path><path style="stroke: gray; fill: none;" marker-start="url(#ONE_OR_MORE_START)" marker-end="url(#ONE_OR_MORE_END)" stroke-dasharray="8 8" d="M230.73102678571428,95L241.44642857142856,103.33333333333333C252.16183035714286,111.66666666666667,273.5926339285714,128.33333333333334,284.3080357142857,145C295.0234375,161.66666666666666,295.0234375,178.33333333333334,295.0234375,186.66666666666666L295.0234375,195" class="er relationshipLine"></path><g transform="translate(132.51171875,20 )" id="entity-CUSTOMER-2ecbfc9c-0fc2-4c60-88de-bcfb47b58f9a"><rect height="75" width="100" y="0" x="0" class="er entityBox"></rect><text style="dominant-baseline: middle; text-anchor: middle; font-size: 12px;" transform="translate(50,37.5)" y="0" x="0" id="text-entity-CUSTOMER-2ecbfc9c-0fc2-4c60-88de-bcfb47b58f9a" class="er entityLabel">CUSTOMER</text></g><g transform="translate(20,195 )" id="entity-ORDER-cfa1210d-58a4-4b4a-b441-af76ca688e06"><rect height="75" width="100" y="0" x="0" class="er entityBox"></rect><text style="dominant-baseline: middle; text-anchor: middle; font-size: 12px;" transform="translate(50,37.5)" y="0" x="0" id="text-entity-ORDER-cfa1210d-58a4-4b4a-b441-af76ca688e06" class="er entityLabel">ORDER</text></g><g transform="translate(20,370 )" id="entity-LINEITEM-e9e965e0-b5d4-4571-b51a-055a9323b0bb"><rect height="75" width="100" y="0" x="0" class="er entityBox"></rect><text style="dominant-baseline: middle; text-anchor: middle; font-size: 12px;" transform="translate(50,37.5)" y="0" x="0" id="text-entity-LINEITEM-e9e965e0-b5d4-4571-b51a-055a9323b0bb" class="er entityLabel">LINE-ITEM</text></g><g transform="translate(220,195 )" id="entity-DELIVERYADDRESS-74b0dd97-e46f-4810-b621-6cba431e801c"><rect height="75" width="150.046875" y="0" x="0" class="er entityBox"></rect><text style="dominant-baseline: middle; text-anchor: middle; font-size: 12px;" transform="translate(75.0234375,37.5)" y="0" x="0" id="text-entity-DELIVERYADDRESS-74b0dd97-e46f-4810-b621-6cba431e801c" class="er entityLabel">DELIVERY-ADDRESS</text></g><rect height="14" width="34.6875" y="129.34690856933594" x="69.82301330566406" class="er relationshipLabelBox"></rect><text style="text-anchor: middle; dominant-baseline: middle; font-size: 12px;" y="136.34690856933594" x="87.16676330566406" id="rel1" class="er relationshipLabel">places</text><rect height="14" width="44.703125" y="313" x="47.6484375" class="er relationshipLabelBox"></rect><text style="text-anchor: middle; dominant-baseline: middle; font-size: 12px;" y="320" x="70" id="rel2" class="er relationshipLabel">contains</text><rect height="14" width="25.359375" y="129.34703063964844" x="265.1768798828125" class="er relationshipLabelBox"></rect><text style="text-anchor: middle; dominant-baseline: middle; font-size: 12px;" y="136.34703063964844" x="277.8565673828125" id="rel3" class="er relationshipLabel">uses</text></svg></p>
 <h2>User Journey diagram</h2>
 <pre class="shiki" style="background-color: #ffffff"><code><span class="line"><span style="color: #24292F">```mermaid</span></span>
 <span class="line"><span style="color: #24292F">journey</span></span>
