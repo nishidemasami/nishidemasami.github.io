@@ -8,6 +8,18 @@ const Recommend = () => (
 		<ul className="m-0 p-0 border-0 list-[circle] ml-5">
 			{[
 				{
+					slug: 'articles/react-leaflet/',
+					title: 'Reactで国土地理院地図やOpenStreetMapを表示する',
+				},
+				{
+					slug: 'posts/rust-fizzbuzz/',
+					title: 'RustでFizzBuzzを書く',
+				},
+				{
+					slug: 'articles/typescript-bitcoin/',
+					title: 'Typescriptでビットコインアドレスを生成する',
+				},
+				{
 					slug: 'posts/nextjs-mermaid/',
 					title: 'Next.jsでSSG時にRemarkでMermaidをSVGとして出力する',
 				},
