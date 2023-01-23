@@ -48,7 +48,7 @@
 		"remark-rehype": "^10.1.0",
 		"ripemd160": "^2.0.2",
 		"secp256k1": "^5.0.0",
-		"shiki": "^0.12.1",
+		"shiki": "^0.11.1",
 		"styled-jsx-plugin-postcss": "^4.0.1",
 		"unified": "^10.1.2"
 	},
