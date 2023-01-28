@@ -36,9 +36,7 @@ const PaginatePosts = (props: PaginatePostsProps) => (
 			/>
 		}
 	>
-		<h1 className="text-center font-bold text-3xl text-gray-900">
-			{`記事一覧 ${props.page}ページ目`}
-		</h1>
+		<h1 className="content-title">{`記事一覧 ${props.page}ページ目`}</h1>
 		<BlogGallery posts={props.posts} pagination={props.pagination} />
 	</Main>
 );

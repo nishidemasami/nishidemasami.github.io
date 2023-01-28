@@ -52,9 +52,7 @@ const DisplayPost = (props: IPostProps) => (
 			/>
 		}
 	>
-		<h1 className="text-center font-bold text-3xl text-gray-900">
-			{props.title}
-		</h1>
+		<h1 className="content-title">{props.title}</h1>
 		<div className="text-center text-sm mb-4">
 			{format(new Date(props.date), 'LLLL d, yyyy')}
 		</div>

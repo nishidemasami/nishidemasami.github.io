@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AppProps } from 'next/app';
 
-import '../styles/main.css';
+import '../styles/main.scss';
 import '../styles/katex.min.css';
 
 const MyApp = ({ Component, pageProps }: AppProps) => (

@@ -214,9 +214,7 @@ const About = (props: AboutProps) => (
 			/>
 		}
 	>
-		<h1 className="text-center font-bold text-3xl text-gray-900">
-			このウェブサイトについて
-		</h1>
+		<h1 className="content-title">このウェブサイトについて</h1>
 		<Content>
 			<div dangerouslySetInnerHTML={{ __html: props.contentHTML }} />
 		</Content>

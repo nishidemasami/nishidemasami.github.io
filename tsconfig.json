@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"module": "esnext",
+		"module": "CommonJS",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"removeComments": true,
@@ -18,7 +18,7 @@
 		"allowUnreachableCode": false,
 		"noFallthroughCasesInSwitch": true,
 
-		"target": "es2015",
+		"target": "ESNext",
 		"outDir": "out",
 		"declaration": true,
 		"sourceMap": true,

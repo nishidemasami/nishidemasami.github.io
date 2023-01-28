@@ -15,7 +15,7 @@ type IMainProps = {
 };
 
 const Main = (props: IMainProps) => (
-	<div className="antialiased w-full text-gray-700 md:px-0 sm:flex min-h-screen">
+	<div className="antialiased w-full text-black md:px-0 sm:flex min-h-screen">
 		{props.meta}
 
 		<div className="mx-auto float-left px-3 w-full sm:w-3/4 lg:w-[calc(100vw-256px)] bg-slate-100 min-h-fit sm:min-h-screen">

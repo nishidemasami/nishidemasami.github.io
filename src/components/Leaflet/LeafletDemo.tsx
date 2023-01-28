@@ -12,6 +12,14 @@ const merkerIcon = new Icon({
 });
 
 const maps = [
+	// Geofabrik: commercial, registration required
+	// See: https://www.geofabrik.de/maps/tiles.html
+	// {
+	// 	name: 'Geofabrik(English)',
+	// 	url: 'https://{s}.tile.geofabrik.de/{z}/{x}/{y}.png',
+	// 	attribution:
+	// 		'© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+	// },
 	{
 		name: 'OpenStreetMap',
 		url: 'https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png',
@@ -29,6 +37,24 @@ const maps = [
 		url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 		attribution:
 			'© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+	},
+	{
+		name: 'Stamen Maps(Terrain)',
+		url: '//stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg',
+		attribution:
+			'© Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a>.',
+	},
+	{
+		name: 'Stamen Maps(Toner)',
+		url: '//stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
+		attribution:
+			'© Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a>.',
+	},
+	{
+		name: 'OpenTopoMap',
+		url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+		attribution:
+			'© <a href="http://osm.org/copyright">OpenStreetMap</a> contributions, <a href="http://viewfinderpanoramas.org/">SRTM</a> | map style: © <a href="https://opentopomap.org/#map=15/35.68374/139.75330">OpenTopoMap</a>',
 	},
 	// {
 	// 	name: '国土地理院地図(文字なし)',
@@ -143,7 +169,7 @@ const MapController: React.FC<{ center?: LatLngExpression }> = ({ center }) => {
 const LeafletDemo = (): JSX.Element => {
 	const [center, setCenter] = React.useState<LatLngExpression>();
 	const [mapName, setMapName] = React.useState(maps[0].name);
-	const [placeName, setPlaceName] = React.useState(places[0].name);
+	const [placeName, setPlaceName] = React.useState('');
 	const selectedMap = React.useMemo(
 		() => maps.find((value) => value.name === mapName)!,
 		[mapName]
@@ -170,6 +196,7 @@ const LeafletDemo = (): JSX.Element => {
 			<FormControl margin="normal">
 				<InputLabel>場所選択</InputLabel>
 				<Select
+					className="w-28"
 					value={placeName}
 					label="場所選択"
 					onChange={(event) => {

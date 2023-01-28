@@ -1,0 +1,118 @@
+@tailwind base;
+
+@layer base {
+	a {
+		@apply text-blue-700;
+	}
+	a:hover {
+		@apply underline;
+	}
+}
+
+@tailwind components;
+
+@tailwind utilities;
+
+@layer utilities {
+	.content-title {
+		@apply border-slate-600 before:bg-slate-600 after:bg-slate-600 relative p-3 border-solid border-y-4 text-center font-bold text-3xl before:left-2 after:right-2 before:content-[''] before:absolute before:top-[-10px] before:w-1 before:h-[calc(100%+20px)] after:content-[''] after:absolute after:top-[-10px] after:w-1 after:h-[calc(100%+20px)]
+	}
+
+	.markdown-content {
+		h2 {
+			font-size: 1.6em;
+			border-bottom: 1px solid #ddd;
+			padding-bottom: 0.1em;
+		}
+		li {
+			list-style: circle;
+		}
+		ul {
+			padding-inline-start: 40px;
+		}
+		blockquote {
+			font-style: italic;
+			padding: 0;
+			text-align: center;
+			font-size: smaller;
+		}
+		p code {
+			background-color: #fafafa;
+			font-style: italic;
+			border-width: 1px;
+			border-color: #dedede;
+			padding: 0.1rem;
+		}
+		.preshiki {
+			font-size: 0.85rem;
+			color: #24292f;
+			border-radius: 0.375rem 0.375rem 0 0;
+			border-color: #d0d7de #d0d7de white #d0d7de;
+			border-width: 1px 1px 0px 1px;
+			border-style: solid;
+			width: auto;
+			padding: 8px 8px 8px 16px;
+			margin: 8px 4px 0px 4px;
+			background-color: #f6f8fa;
+			&.alert {
+				border-color: #d60a34 #d60a34 white #d60a34;
+				background-color: #feebee;
+			}
+			&.warn {
+				border-color: #f7a535 #f7a535 white #f7a535;
+				background-color: #fdf9e2;
+			}
+			+.shiki {
+				border-radius: 0 0 0.375rem 0.375rem;
+				padding: 4px;
+				width: auto;
+			}
+		}
+		.shiki {
+			border-radius: 0.375rem;
+			padding: 0px 4px;
+			margin: 0px 4px;
+			box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+				0 2px 4px -2px rgb(0 0 0 / 0.1);
+			overflow-x: auto;
+			font-size: smaller;
+			border-color: #d0d7de;
+			border-width: 1px;
+			border-style: solid;
+		}
+		code {
+			counter-reset: code-step-counter;
+			.line::before {
+				display: inline-block;
+				content: counter(code-step-counter);
+				counter-increment: code-step-counter;
+				width: 2.5rem;
+				margin-right: 1rem;
+				text-align: right;
+				font-variant-numeric: slashed-zero;
+				color: #6e7781;
+				padding-right: 0.5rem;
+			}
+		}
+		.note {
+			&.warn {
+			background: #fdf9e2;
+			border-radius: 8px;
+			padding: 16px;
+			margin: 24px 0;
+				.shiki {
+					border-color: #f7a535;
+				}
+			}
+			&.alert {
+				background: #feebee;
+				border-radius: 8px;
+				padding: 16px;
+				margin: 24px 0;
+				.shiki {
+					border-color: #d60a34;
+				}
+			}
+		}
+	}
+}

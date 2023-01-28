@@ -23,37 +23,37 @@ use std::fmt;
 use std::ops::Rem;
 
 pub enum FizzBuzz {
-    Fizz,
-    Buzz,
-    FizzBuzz,
-    Number(String),
+  Fizz,
+  Buzz,
+  FizzBuzz,
+  Number(String),
 }
 
 impl fmt::Display for FizzBuzz {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            FizzBuzz::Fizz => write!(f, "Fizz"),
-            FizzBuzz::Buzz => write!(f, "Buzz"),
-            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
-            FizzBuzz::Number(x) => write!(f, "{x}"),
-        }
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    match self {
+      FizzBuzz::Fizz => write!(f, "Fizz"),
+      FizzBuzz::Buzz => write!(f, "Buzz"),
+      FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+      FizzBuzz::Number(x) => write!(f, "{x}"),
     }
+  }
 }
 
 impl<T, U> From<&T> for FizzBuzz
 where
-    T: From<u8>,
-    for<'a> &'a T: Rem<T, Output = U> + ToString,
-    U: Zero,
+  T: From<u8>,
+  for<'a> &'a T: Rem<T, Output = U> + ToString,
+  U: Zero,
 {
-    fn from(x: &T) -> FizzBuzz {
-        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
-            (true, true) => FizzBuzz::FizzBuzz,
-            (true, _) => FizzBuzz::Fizz,
-            (_, true) => FizzBuzz::Buzz,
-            _ => FizzBuzz::Number(x.to_string()),
-        }
+  fn from(x: &T) -> FizzBuzz {
+    match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
+      (true, true) => FizzBuzz::FizzBuzz,
+      (true, _) => FizzBuzz::Fizz,
+      (_, true) => FizzBuzz::Buzz,
+      _ => FizzBuzz::Number(x.to_string()),
     }
+  }
 }
 ```
 
@@ -67,14 +67,14 @@ where
 
 ```rust
 fn main() {
-    (1..=15).for_each(|x| {
-        match ((x % 3) == 0, (x % 5) == 0) {
-            (true, true) => println!("FizzBuzz"),
-            (true, _) => println!("Fizz"),
-            (_, true) => println!("Buzz"),
-            _ => println!("{x}"),
-        }
-    })
+  (1..=15).for_each(|x| {
+    match ((x % 3) == 0, (x % 5) == 0) {
+      (true, true) => println!("FizzBuzz"),
+      (true, _) => println!("Fizz"),
+      (_, true) => println!("Buzz"),
+      _ => println!("{x}"),
+    }
+  })
 }
 ```
 
@@ -103,31 +103,31 @@ edition = "2021"
 
 ```rust
 fn fizzbuzz(x: u32) -> String {
-    match ((x % 3) == 0, (x % 5) == 0) {
-        (true, true) => "FizzBuzz".to_string(),
-        (true, _) => "Fizz".to_string(),
-        (_, true) => "Buzz".to_string(),
-        _ => x.to_string(),
-    }
+  match ((x % 3) == 0, (x % 5) == 0) {
+    (true, true) => "FizzBuzz".to_string(),
+    (true, _) => "Fizz".to_string(),
+    (_, true) => "Buzz".to_string(),
+    _ => x.to_string(),
+  }
 }
 
 fn main() {
-    (1..=15).map(fizzbuzz).for_each(|x| println!("{x}"))
+  (1..=15).map(fizzbuzz).for_each(|x| println!("{x}"))
 }
 
 #[test]
 fn test() {
-    let test_target: Vec<String> = (1..=15)
-        .map(fizzbuzz)
-        .collect();
+  let test_target: Vec<String> = (1..=15)
+    .map(fizzbuzz)
+    .collect();
 
-    assert_eq!(
-        test_target,
-        vec![
-            "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13",
-            "14", "FizzBuzz",
-        ]
-    );
+  assert_eq!(
+    test_target,
+    vec![
+      "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13",
+      "14", "FizzBuzz",
+    ]
+  );
 }
 ```
 
@@ -141,32 +141,32 @@ fn test() {
 use std::fmt;
 
 pub enum FizzBuzz {
-    Fizz,
-    Buzz,
-    FizzBuzz,
-    Number(String),
+  Fizz,
+  Buzz,
+  FizzBuzz,
+  Number(String),
 }
 
 impl From<u32> for FizzBuzz {
-    fn from(x: u32) -> FizzBuzz {
-        match ((x % 3) == 0, (x % 5) == 0) {
-            (true, true) => FizzBuzz::FizzBuzz,
-            (true, _) => FizzBuzz::Fizz,
-            (_, true) => FizzBuzz::Buzz,
-            _ => FizzBuzz::Number(x.to_string()),
-        }
+  fn from(x: u32) -> FizzBuzz {
+    match ((x % 3) == 0, (x % 5) == 0) {
+      (true, true) => FizzBuzz::FizzBuzz,
+      (true, _) => FizzBuzz::Fizz,
+      (_, true) => FizzBuzz::Buzz,
+      _ => FizzBuzz::Number(x.to_string()),
     }
+  }
 }
 
 impl fmt::Display for FizzBuzz {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            FizzBuzz::Fizz => write!(f, "Fizz"),
-            FizzBuzz::Buzz => write!(f, "Buzz"),
-            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
-            FizzBuzz::Number(x) => write!(f, "{x}"),
-        }
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    match self {
+      FizzBuzz::Fizz => write!(f, "Fizz"),
+      FizzBuzz::Buzz => write!(f, "Buzz"),
+      FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+      FizzBuzz::Number(x) => write!(f, "{x}"),
     }
+  }
 }
 ```
 
@@ -174,31 +174,31 @@ impl fmt::Display for FizzBuzz {
 
 ```rust
 fn main() {
-    (1..=15).map(|x| -> FizzBuzz {
-        x.into()
-    } ).map(|x| -> String {
-        x.to_string()
-    } ).for_each(|x| println!("{x}"))
+  (1..=15).map(|x| -> FizzBuzz {
+    x.into()
+  } ).map(|x| -> String {
+    x.to_string()
+  } ).for_each(|x| println!("{x}"))
 }
 
 #[test]
 fn test() {
-    let test_target: Vec<String> = (1..=15)
-        .map(|x| -> FizzBuzz {
-            x.into()
-        } )
-        .map(|x| -> String {
-            x.to_string()
-        } )
-        .collect();
+  let test_target: Vec<String> = (1..=15)
+    .map(|x| -> FizzBuzz {
+      x.into()
+    } )
+    .map(|x| -> String {
+      x.to_string()
+    } )
+    .collect();
 
-    assert_eq!(
-        test_target,
-        vec![
-            "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13",
-            "14", "FizzBuzz",
-        ]
-    );
+  assert_eq!(
+    test_target,
+    vec![
+      "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13",
+      "14", "FizzBuzz",
+    ]
+  );
 }
 ```
 
@@ -232,17 +232,17 @@ Cloneも合わせて先述の`from`は以下のように書けるのです。
 ```rust
 impl<T, U> From<T> for FizzBuzz
 where
-    T: Rem<T, Output = U> + Clone + From<u8> + ToString,
-    U: Zero,
+  T: Rem<T, Output = U> + Clone + From<u8> + ToString,
+  U: Zero,
 {
-    fn from(x: T) -> FizzBuzz {
-        match ((x.clone() % T::from(3)).is_zero(), (x.clone() % T::from(5)).is_zero()) {
-            (true, true) => FizzBuzz::FizzBuzz,
-            (true, _) => FizzBuzz::Fizz,
-            (_, true) => FizzBuzz::Buzz,
-            _ => FizzBuzz::Number(x.to_string()),
-        }
+  fn from(x: T) -> FizzBuzz {
+    match ((x.clone() % T::from(3)).is_zero(), (x.clone() % T::from(5)).is_zero()) {
+      (true, true) => FizzBuzz::FizzBuzz,
+      (true, _) => FizzBuzz::Fizz,
+      (_, true) => FizzBuzz::Buzz,
+      _ => FizzBuzz::Number(x.to_string()),
     }
+  }
 }
 ```
 
@@ -251,18 +251,18 @@ where
 ```rust
 impl<'a, T, U> From<&'a T> for FizzBuzz
 where
-    T: From<u8>,
-    &'a T: Rem<T, Output = U> + ToString,
-    U: Zero,
+  T: From<u8>,
+  &'a T: Rem<T, Output = U> + ToString,
+  U: Zero,
 {
-    fn from(x: &'a T) -> FizzBuzz {
-        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
-            (true, true) => FizzBuzz::FizzBuzz,
-            (true, _) => FizzBuzz::Fizz,
-            (_, true) => FizzBuzz::Buzz,
-            _ => FizzBuzz::Number(x.to_string()),
-        }
+  fn from(x: &'a T) -> FizzBuzz {
+    match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
+      (true, true) => FizzBuzz::FizzBuzz,
+      (true, _) => FizzBuzz::Fizz,
+      (_, true) => FizzBuzz::Buzz,
+      _ => FizzBuzz::Number(x.to_string()),
     }
+  }
 }
 ```
 
@@ -273,18 +273,18 @@ where
 ```rust example-bad
 impl<'a, T, U> From<&'a T> for FizzBuzz
 where
-    T: From<u8>,
-    &T: Rem<T, Output = U> + ToString,
-    U: Zero,
+  T: From<u8>,
+  &T: Rem<T, Output = U> + ToString,
+  U: Zero,
 {
-    fn from(x: &'a T) -> FizzBuzz {
-        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
-            (true, true) => FizzBuzz::FizzBuzz,
-            (true, _) => FizzBuzz::Fizz,
-            (_, true) => FizzBuzz::Buzz,
-            _ => FizzBuzz::Number(x.to_string()),
-        }
+  fn from(x: &'a T) -> FizzBuzz {
+    match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
+      (true, true) => FizzBuzz::FizzBuzz,
+      (true, _) => FizzBuzz::Fizz,
+      (_, true) => FizzBuzz::Buzz,
+      _ => FizzBuzz::Number(x.to_string()),
     }
+  }
 }
 ```
 
@@ -294,8 +294,8 @@ where
 error[E0637]: `&` without an explicit lifetime name cannot be used here
   --> src\main.rs:42:5
    |
-42 |     &T: Rem<T, Output = U> + ToString,
-   |     ^ explicit lifetime name needed here
+42 |   &T: Rem<T, Output = U> + ToString,
+   |   ^ explicit lifetime name needed here
 ```
 
 where句で`&`を使う必要があるならライフタイムを明示的に示さないといけないのです。
@@ -307,18 +307,18 @@ where句で`&`を使う必要があるならライフタイムを明示的に示
 ```rust
 impl<T, U> From<&T> for FizzBuzz
 where
-    T: From<u8>,
-    for<'a> &'a T: Rem<T, Output = U> + ToString,
-    U: Zero,
+  T: From<u8>,
+  for<'a> &'a T: Rem<T, Output = U> + ToString,
+  U: Zero,
 {
-    fn from(x: &T) -> FizzBuzz {
-        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
-            (true, true) => FizzBuzz::FizzBuzz,
-            (true, _) => FizzBuzz::Fizz,
-            (_, true) => FizzBuzz::Buzz,
-            _ => FizzBuzz::Number(x.to_string()),
-        }
+  fn from(x: &T) -> FizzBuzz {
+    match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
+      (true, true) => FizzBuzz::FizzBuzz,
+      (true, _) => FizzBuzz::Fizz,
+      (_, true) => FizzBuzz::Buzz,
+      _ => FizzBuzz::Number(x.to_string()),
     }
+  }
 }
 ```
 
@@ -334,37 +334,37 @@ use std::fmt;
 use std::ops::Rem;
 
 pub enum FizzBuzz {
-    Fizz,
-    Buzz,
-    FizzBuzz,
-    Number(String),
+  Fizz,
+  Buzz,
+  FizzBuzz,
+  Number(String),
 }
 
 impl fmt::Display for FizzBuzz {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            FizzBuzz::Fizz => write!(f, "Fizz"),
-            FizzBuzz::Buzz => write!(f, "Buzz"),
-            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
-            FizzBuzz::Number(x) => write!(f, "{x}"),
-        }
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    match self {
+      FizzBuzz::Fizz => write!(f, "Fizz"),
+      FizzBuzz::Buzz => write!(f, "Buzz"),
+      FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+      FizzBuzz::Number(x) => write!(f, "{x}"),
     }
+  }
 }
 
 impl<T, U> From<&T> for FizzBuzz
 where
-    T: From<u8>,
-    for<'a> &'a T: Rem<T, Output = U> + ToString,
-    U: Zero,
+  T: From<u8>,
+  for<'a> &'a T: Rem<T, Output = U> + ToString,
+  U: Zero,
 {
-    fn from(x: &T) -> FizzBuzz {
-        match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
-            (true, true) => FizzBuzz::FizzBuzz,
-            (true, _) => FizzBuzz::Fizz,
-            (_, true) => FizzBuzz::Buzz,
-            _ => FizzBuzz::Number(x.to_string()),
-        }
+  fn from(x: &T) -> FizzBuzz {
+    match ((x % T::from(3)).is_zero(), (x % T::from(5)).is_zero()) {
+      (true, true) => FizzBuzz::FizzBuzz,
+      (true, _) => FizzBuzz::Fizz,
+      (_, true) => FizzBuzz::Buzz,
+      _ => FizzBuzz::Number(x.to_string()),
     }
+  }
 }
 ```
 
@@ -377,69 +377,69 @@ use fizzbuzz::FizzBuzz;
 use num::{BigUint, Num};
 
 fn main() {
-    num_iter::range_inclusive(
-        BigUint::from_str_radix("340282366920938463463374607431768211471", 10).unwrap(),
-        BigUint::from_str_radix("340282366920938463463374607431768211485", 10).unwrap(),
-    )
-    .map(|x: BigUint| -> String {
-        let fizzbuzz: FizzBuzz = (&x).into();
-        fizzbuzz.to_string()
-    })
-    .for_each(|x| println!("{x}"));
+  num_iter::range_inclusive(
+    BigUint::from_str_radix("340282366920938463463374607431768211471", 10).unwrap(),
+    BigUint::from_str_radix("340282366920938463463374607431768211485", 10).unwrap(),
+  )
+  .map(|x: BigUint| -> String {
+    let fizzbuzz: FizzBuzz = (&x).into();
+    fizzbuzz.to_string()
+  })
+  .for_each(|x| println!("{x}"));
 }
 
 #[test]
 fn test_bigint() {
-    let test_target: Vec<String> = num_iter::range_inclusive(
-        BigUint::from_str_radix("340282366920938463463374607431768211471", 10).unwrap(),
-        BigUint::from_str_radix("340282366920938463463374607431768211485", 10).unwrap(),
-    )
-    .map(|x| {
-        let buffer: FizzBuzz = (&x).into();
-        let buffer: String = buffer.to_string();
-        buffer.to_string()
-    })
-    .collect();
+  let test_target: Vec<String> = num_iter::range_inclusive(
+    BigUint::from_str_radix("340282366920938463463374607431768211471", 10).unwrap(),
+    BigUint::from_str_radix("340282366920938463463374607431768211485", 10).unwrap(),
+  )
+  .map(|x| {
+    let buffer: FizzBuzz = (&x).into();
+    let buffer: String = buffer.to_string();
+    buffer.to_string()
+  })
+  .collect();
 
-    assert_eq!(
-        test_target,
-        vec![
-            "340282366920938463463374607431768211471",
-            "340282366920938463463374607431768211472",
-            "Fizz",
-            "340282366920938463463374607431768211474",
-            "Buzz",
-            "Fizz",
-            "340282366920938463463374607431768211477",
-            "340282366920938463463374607431768211478",
-            "Fizz",
-            "Buzz",
-            "340282366920938463463374607431768211481",
-            "Fizz",
-            "340282366920938463463374607431768211483",
-            "340282366920938463463374607431768211484",
-            "FizzBuzz",
-        ]
-    );
+  assert_eq!(
+    test_target,
+    vec![
+      "340282366920938463463374607431768211471",
+      "340282366920938463463374607431768211472",
+      "Fizz",
+      "340282366920938463463374607431768211474",
+      "Buzz",
+      "Fizz",
+      "340282366920938463463374607431768211477",
+      "340282366920938463463374607431768211478",
+      "Fizz",
+      "Buzz",
+      "340282366920938463463374607431768211481",
+      "Fizz",
+      "340282366920938463463374607431768211483",
+      "340282366920938463463374607431768211484",
+      "FizzBuzz",
+    ]
+  );
 }
 
 #[test]
 fn test() {
-    let test_target: Vec<String> = (1..=15)
-        .map(|x| {
-            let buffer: FizzBuzz = (&x).into();
-            let buffer: String = buffer.to_string();
-            buffer.to_string()
-        })
-        .collect();
+  let test_target: Vec<String> = (1..=15)
+    .map(|x| {
+      let buffer: FizzBuzz = (&x).into();
+      let buffer: String = buffer.to_string();
+      buffer.to_string()
+    })
+    .collect();
 
-    assert_eq!(
-        test_target,
-        vec![
-            "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13",
-            "14", "FizzBuzz",
-        ]
-    );
+  assert_eq!(
+    test_target,
+    vec![
+      "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13",
+      "14", "FizzBuzz",
+    ]
+  );
 }
 ```
 
@@ -466,38 +466,38 @@ use std::fmt;
 use std::ops::Rem;
 
 pub enum FizzBuzz<'a> {
-    Fizz,
-    Buzz,
-    FizzBuzz,
-    Number(Box<dyn 'a + ToString>),
+  Fizz,
+  Buzz,
+  FizzBuzz,
+  Number(Box<dyn 'a + ToString>),
 }
 
 impl<'a> fmt::Display for FizzBuzz<'a> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            FizzBuzz::Fizz => write!(f, "Fizz"),
-            FizzBuzz::Buzz => write!(f, "Buzz"),
-            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
-            FizzBuzz::Number(x) => write!(f, "{x}"),
-        }
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    match self {
+      FizzBuzz::Fizz => write!(f, "Fizz"),
+      FizzBuzz::Buzz => write!(f, "Buzz"),
+      FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+      FizzBuzz::Number(x) => write!(f, "{x}"),
     }
+  }
 }
 
 impl<'a, T, U> From<&'a T> for FizzBuzz<'a>
 where
-    T: 'a + From<u8>,
-    &'a T: Rem<T, Output = U> + ToString,
-    U: Zero,
+  T: 'a + From<u8>,
+  &'a T: Rem<T, Output = U> + ToString,
+  U: Zero,
 {
-    fn from(x: &'a T) -> FizzBuzz<'a> {
-        let three = T::from(3);
-        match ((x % three).is_zero(), (x % T::from(5)).is_zero()) {
-            (true, true) => FizzBuzz::FizzBuzz,
-            (true, _) => FizzBuzz::Fizz,
-            (_, true) => FizzBuzz::Buzz,
-            _ => FizzBuzz::Number(Box::new(x)),
-        }
+  fn from(x: &'a T) -> FizzBuzz<'a> {
+    let three = T::from(3);
+    match ((x % three).is_zero(), (x % T::from(5)).is_zero()) {
+      (true, true) => FizzBuzz::FizzBuzz,
+      (true, _) => FizzBuzz::Fizz,
+      (_, true) => FizzBuzz::Buzz,
+      _ => FizzBuzz::Number(Box::new(x)),
     }
+  }
 }
 ```
 
@@ -507,9 +507,9 @@ where
 
 ```rust example-bad
 fn main() {
-    (1..=15)
-        .map(|x| (&x).into())
-        .for_each(|x: FizzBuzz| println!("{}", x));
+  (1..=15)
+    .map(|x| (&x).into())
+    .for_each(|x: FizzBuzz| println!("{}", x));
 }
 ```
 
@@ -519,11 +519,11 @@ fn main() {
 error[E0515]: cannot return value referencing function parameter `x`
  --> src\main.rs:7:18
   |
-7 |         .map(|x| (&x).into())
-  |                  ----^^^^^^^
-  |                  |
-  |                  returns a value referencing data owned by the current function
-  |                  `x` is borrowed here
+7 | .map(|x| (&x).into())
+  |          ----^^^^^^^
+  |          |
+  |          returns a value referencing data owned by the current function
+  |          `x` is borrowed here
 ```
 
 クロージャ外から出た後までライフタイムを必要とするような処理はできないということです。  
@@ -531,8 +531,8 @@ error[E0515]: cannot return value referencing function parameter `x`
 
 ```rust
 fn main() {
-    (1..=15)
-        .for_each(|x| println!("{}", Into::<FizzBuzz>::into(&x)));
+  (1..=15)
+    .for_each(|x| println!("{}", Into::<FizzBuzz>::into(&x)));
 }
 ```
 
@@ -544,37 +544,37 @@ use std::fmt::{Display, Formatter, Result};
 use std::ops::Rem;
 
 pub enum FizzBuzz {
-    Fizz,
-    Buzz,
-    FizzBuzz,
-    Number(Box<dyn Display>),
+  Fizz,
+  Buzz,
+  FizzBuzz,
+  Number(Box<dyn Display>),
 }
 
 impl Display for FizzBuzz {
-    fn fmt(&self, f: &mut Formatter) -> Result {
-        match self {
-            FizzBuzz::Fizz => write!(f, "Fizz"),
-            FizzBuzz::Buzz => write!(f, "Buzz"),
-            FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
-            FizzBuzz::Number(x) => write!(f, "{x}"),
-        }
+  fn fmt(&self, f: &mut Formatter) -> Result {
+    match self {
+      FizzBuzz::Fizz => write!(f, "Fizz"),
+      FizzBuzz::Buzz => write!(f, "Buzz"),
+      FizzBuzz::FizzBuzz => write!(f, "FizzBuzz"),
+      FizzBuzz::Number(x) => write!(f, "{x}"),
     }
+  }
 }
 
 impl<T, U> From<T> for FizzBuzz
 where
-    for<'a> T: 'a + Display + From<u8>,
-    for<'a> &'a T: Rem<T, Output = U>,
-    U: Zero,
+  for<'a> T: 'a + Display + From<u8>,
+  for<'a> &'a T: Rem<T, Output = U>,
+  U: Zero,
 {
-    fn from(x: T) -> FizzBuzz {
-        match ((&x % T::from(3)).is_zero(), (&x % T::from(5)).is_zero()) {
-            (true, true) => FizzBuzz::FizzBuzz,
-            (true, _) => FizzBuzz::Fizz,
-            (_, true) => FizzBuzz::Buzz,
-            _ => FizzBuzz::Number(Box::new(x)),
-        }
+  fn from(x: T) -> FizzBuzz {
+    match ((&x % T::from(3)).is_zero(), (&x % T::from(5)).is_zero()) {
+      (true, true) => FizzBuzz::FizzBuzz,
+      (true, _) => FizzBuzz::Fizz,
+      (_, true) => FizzBuzz::Buzz,
+      _ => FizzBuzz::Number(Box::new(x)),
     }
+  }
 }
 ```
 

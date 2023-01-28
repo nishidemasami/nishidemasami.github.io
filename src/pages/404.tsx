@@ -19,9 +19,7 @@ const About = (props: AboutProps) => (
 		meta={<Meta title="404 not found" description="404 not found page" />}
 	>
 		<Content>
-			<h1 className="text-center font-bold text-3xl text-gray-900">
-				404 not found
-			</h1>
+			<h1 className="content-title">404 not found</h1>
 		</Content>
 	</Main>
 );

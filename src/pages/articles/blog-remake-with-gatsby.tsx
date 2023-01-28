@@ -53,9 +53,7 @@ const About = (props: AboutProps) => (
 			/>
 		}
 	>
-		<h1 className="text-center font-bold text-3xl text-gray-900">
-			Gatsbyでブログをリニューアルしてみました
-		</h1>
+		<h1 className="content-title">Gatsbyでブログをリニューアルしてみました</h1>
 		<div className="text-center text-sm mb-4">
 			{format(new Date('2021-03-06T18:04:03+0900'), 'LLLL d, yyyy')}
 		</div>
