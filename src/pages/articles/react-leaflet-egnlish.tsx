@@ -70,9 +70,8 @@ const firstArticle = `Next.jsとReactとTypeScriptで地図に地名を英字表
 `;
 
 const secondArticle = `
-先述の通り、都道府県名から河川名まで一緒くたに表示されているので見にくいですが、無事に表示することができました！
-
-流石に有料のGeofabrik EnglishやGoogle Mapsなどには負けますが、一応見ることはできます。
+先述の通り、都道府県名から河川名まで一緒くたに表示されているので見にくいですが、無事に表示することができました！  
+用途に合わせてもう少しチューニングしてゆけば、もっと見やすくなると思います。
 
 これが ↓ この今回のコードです。
 \`\`\`tsx
@@ -247,7 +246,7 @@ const ReactLeafletTest = (props: ReactSoundTestProps) => {
 			}
 		>
 			<h1 className="content-title">Reactで地図上に地名を英語で表示する</h1>
-			<div className="text-center text-sm mb-4">
+			<div className="content-date">
 				{format(new Date('2023-01-28T12:00:00+0900'), 'LLLL d, yyyy')}
 			</div>
 			<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">

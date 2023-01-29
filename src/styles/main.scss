@@ -2,10 +2,7 @@
 
 @layer base {
 	a {
-		@apply text-blue-700;
-	}
-	a:hover {
-		@apply underline;
+		@apply text-blue-700 hover:underline;
 	}
 }
 
@@ -15,7 +12,10 @@
 
 @layer utilities {
 	.content-title {
-		@apply border-slate-600 before:bg-slate-600 after:bg-slate-600 relative p-3 border-solid border-y-4 text-center font-bold text-3xl before:left-2 after:right-2 before:content-[''] before:absolute before:top-[-10px] before:w-1 before:h-[calc(100%+20px)] after:content-[''] after:absolute after:top-[-10px] after:w-1 after:h-[calc(100%+20px)]
+		@apply text-slate-700 relative text-center font-bold text-3xl m-6 mt-0 p-1 border-solid border-4 border-slate-600 rounded-2xl bg-white after:border-transparent after:border-t-white after:border-0 after:border-t-[14px] after:border-r-[14px] after:border-solid after:content-[''] after:absolute after:right-[54px] after:bottom-[-14px] after:w-0 after:h-0 before:border-transparent before:border-t-slate-600 before:border-0 before:border-t-[24px] before:border-r-[24px] before:border-solid before:content-[''] before:absolute before:right-[48px] before:bottom-[-24px] before:w-0 before:h-0;
+	}
+	.content-date {
+		@apply text-center text-sm mt-[-14px];
 	}
 
 	.markdown-content {

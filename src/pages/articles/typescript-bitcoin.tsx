@@ -227,7 +227,7 @@ const ReactSoundTest = (props: ReactSoundTestProps) => (
 		<h1 className="content-title">
 			Typescriptでビットコインアドレスを生成する
 		</h1>
-		<div className="text-center text-sm mb-4">
+		<div className="content-date">
 			{format(new Date('2022-12-10T01:04:03+0900'), 'LLLL d, yyyy')}
 		</div>
 		<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
