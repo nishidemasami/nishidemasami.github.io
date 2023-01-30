@@ -55,7 +55,7 @@ const firstArticle = `Next.jsとReactとTypeScriptで地図に地名を英字表
 [ベクトルタイルとその提供実験について 国土地理院](https://maps.gsi.go.jp/development/vt.html)  
 地名を多言語で表記するためのデータも公開してくれています。
 [国土地理院地図 多言語表記の地図 国土地理院](https://www.gsi.go.jp/kihonjohochousa/multilingual.html)  
-また、実験的仕様も[PDF](https://www.gsi.go.jp/common/000212661.pdf)で見られます。
+仕様も[PDF](https://www.gsi.go.jp/common/000212661.pdf)で見られます。
 
 このデータも、国土地理院の地図と同様に、国土交通省国土地理院地図は利用規約を守る限り自由に使えます。  
 利用規約は以下の通りです。  

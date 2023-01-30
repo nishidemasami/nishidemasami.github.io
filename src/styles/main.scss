@@ -12,23 +12,38 @@
 
 @layer utilities {
 	.content-title {
-		@apply text-slate-700 relative text-center font-bold text-3xl m-6 mt-0 p-1 border-solid border-4 border-slate-600 rounded-2xl bg-white after:border-transparent after:border-t-white after:border-0 after:border-t-[14px] after:border-r-[14px] after:border-solid after:content-[''] after:absolute after:right-[54px] after:bottom-[-14px] after:w-0 after:h-0 before:border-transparent before:border-t-slate-600 before:border-0 before:border-t-[24px] before:border-r-[24px] before:border-solid before:content-[''] before:absolute before:right-[48px] before:bottom-[-24px] before:w-0 before:h-0;
+		@apply px-8 pt-1 bg-left-bottom bg-no-repeat bg-[length:50px] bg-[url('/assets/svgs/lambda.svg')] text-gray-800 relative text-center font-bold text-3xl m-0 mb-6 p-1 border-solid border-4 border-slate-600 rounded-2xl bg-white after:border-transparent after:border-t-white after:border-0 after:border-t-[14px] after:border-r-[14px] after:border-solid after:content-[''] after:absolute after:right-[54px] after:bottom-[-14px] after:w-0 after:h-0 before:border-transparent before:border-t-slate-600 before:border-0 before:border-t-[24px] before:border-r-[24px] before:border-solid before:content-[''] before:absolute before:right-[48px] before:bottom-[-24px] before:w-0 before:h-0;
 	}
 	.content-date {
 		@apply text-center text-sm mt-[-14px];
 	}
+	.photo-space {
+		@apply float-right m-0 p-2 w-1/2 bg-white;
+	}
+	.photo-space-detail {
+		@apply text-center w-full text-xs;
+	}
 
 	.markdown-content {
+		@apply break-words p-4 m-2 rounded-lg overflow-hidden shadow-md border-0 bg-white;
+
 		h2 {
-			font-size: 1.6em;
-			border-bottom: 1px solid #ddd;
-			padding-bottom: 0.1em;
+			@apply mt-16 mb-8 text-3xl font-bold py-2 pl-16 bg-left-top bg-no-repeat bg-[length:60px] bg-[url('/assets/svgs/lambda.svg')];
+		}
+		h3 {
+			@apply text-xl font-semibold border-l-4 border-b border-gray-700 border-solid pl-1 my-4;
+		}
+		h4 {
+			@apply border-l-2 border-slate-600 border-solid pl-1;
 		}
 		li {
-			list-style: circle;
+			@apply list-[circle];
 		}
 		ul {
-			padding-inline-start: 40px;
+			@apply my-6 ml-10;
+		}
+		p {
+			@apply my-6;
 		}
 		blockquote {
 			font-style: italic;
