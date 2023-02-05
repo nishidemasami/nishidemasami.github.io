@@ -12,7 +12,7 @@ tags:
   - "React"
   - "OpenStreetMap"
   - "国土地理院地図"
-  - "leaflet"
+  - "Leaflet"
   - "Next.js"
 ---
 */

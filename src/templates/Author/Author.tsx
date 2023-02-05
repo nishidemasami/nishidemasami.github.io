@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Link from 'next/link';
 
 import { AppConfig } from '../../utils/AppConfig';
@@ -9,7 +7,7 @@ const Author = () => {
 	return (
 		<div>
 			<p className="text-zinc-800 text-xs my-2">{description}</p>
-			<Link href="/about/">
+			<Link href="/portfolio/">
 				<img
 					src="/assets/images/author.jpg"
 					className="inline-block m-0 rounded-full bg-clip-padding object-cover"

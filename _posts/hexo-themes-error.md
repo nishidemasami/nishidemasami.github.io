@@ -7,7 +7,7 @@ template: "post"
 category: "blog"
 description: "このブログはHexoにて構築し、GitHub Pagesにて公開しています。先日、テーマを変更した際にテーマが正しく反映されず困ったので、今どうやって動いているかを覚え書きしておきます。…"
 tags:
-  - "hexo"
+  - "Hexo"
 ---
 
 このブログは[Hexo](https://hexo.io/)にて構築し、[GitHub Pages](https://pages.github.com/)にて公開しています。

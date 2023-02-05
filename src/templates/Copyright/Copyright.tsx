@@ -5,7 +5,7 @@ type Props = {
 };
 
 const Copyright = ({ copyright }: Props) => (
-	<div className="text-xs text-[#b6b6b6]">{copyright}</div>
+	<div className="text-xs text-gray-700">{copyright}</div>
 );
 
 export { Copyright };

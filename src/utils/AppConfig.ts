@@ -6,10 +6,11 @@ export const AppConfig = {
 	url: 'https://nishidemasami.github.io',
 	locale: 'ja',
 	author: 'NISHIDE, Masami',
-	copyright: '©NISHIDE, Masami All rights reserved.',
+	copyright: '©NISHIDE, Masami Some Rights Reserved',
 	pagination_size: 10,
 	sidebar_links: [
 		{ label: 'このサイトについて', path: '/about/' },
+		{ label: 'ポートフォリオ', path: '/portfolio/' },
 		// { label: 'Blog', path: '/blog/1/' },
 	],
 	contacts: {
