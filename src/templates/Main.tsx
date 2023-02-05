@@ -34,6 +34,9 @@ const Main = (props: IMainProps) => (
 						<li className="mr-6">
 							<Link href="/about/">About</Link>
 						</li>
+						<li className="mr-6">
+							<Link href="/portfolio/">Portfolio</Link>
+						</li>
 						{/* <li className="mr-6">
 							<Link href="/blog/1/">Blog</Link>
 						</li> */}
