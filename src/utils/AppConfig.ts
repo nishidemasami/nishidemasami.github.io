@@ -11,6 +11,7 @@ export const AppConfig = {
 	sidebar_links: [
 		{ label: 'このサイトについて', path: '/about/' },
 		{ label: 'ポートフォリオ', path: '/portfolio/' },
+		{ label: '連絡フォーム', path: '/contact/' },
 		// { label: 'Blog', path: '/blog/1/' },
 	],
 	contacts: {
