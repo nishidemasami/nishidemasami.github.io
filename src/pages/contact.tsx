@@ -6,6 +6,7 @@ import {
 	Checkbox,
 	CircularProgress,
 	Dialog,
+	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
@@ -20,13 +21,10 @@ import { Main } from '../templates/Main';
 import { getRecentPosts, getTags, PostItems } from '../utils/Content';
 import { markdownToHtml } from '../utils/Markdown';
 
-const emailValidator =
-	/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-
 const contentMarkdown = String.raw`
 ### 連絡フォーム
 
-営業メールや愚痴などなんでも送っていただいて構いませんが、その場合返信しないことがあります。
+営業メールや日頃の愚痴など、なんでも送っていただいて構いませんが、その場合返信しないことがあります。
 `;
 
 type AboutProps = {
@@ -89,11 +87,15 @@ const About = (props: AboutProps) => {
 					value={email}
 					disabled={progress || Boolean(success)}
 					type="email"
+					FormHelperTextProps={{
+						sx: { marginTop: '0!important', marginBottom: '0!important' },
+					}}
 					onChange={(e) => {
-						setErrorEmail(!emailValidator.test(e.target.value));
+						setErrorEmail(!e.target.value);
 						setEmail(e.target.value);
 					}}
-					label="メールアドレス"
+					label="連絡先"
+					helperText="メールアドレスやSNSアカウントなど"
 				/>
 				<TextField
 					margin="dense"
@@ -120,7 +122,7 @@ const About = (props: AboutProps) => {
 						let errorEmailWork = false;
 						let errorNameWork = false;
 						let errorBodyWork = false;
-						if (!emailValidator.test(email)) {
+						if (!email) {
 							errorEmailWork = true;
 							setErrorEmail(true);
 						}
@@ -138,7 +140,7 @@ const About = (props: AboutProps) => {
 						setProgress(true);
 
 						const response = await fetch(
-							'https://floral-bonus-3ff8.nishidemasami.workers.dev/',
+							'https://contact-form.workers.nishide-office.com/',
 							{
 								method: 'POST',
 								cache: 'no-cache',
@@ -164,14 +166,15 @@ const About = (props: AboutProps) => {
 					}}
 				/>
 				<Link
-					className="my-2 text-base"
+					className="text-base align-middle my-2"
 					component="button"
-					variant="body2"
 					onClick={() => setOpen(true)}
 				>
 					利用規約
 				</Link>
-				に同意する
+				<span className="text-base .text-zinc-900 no-underline align-middle">
+					に同意する
+				</span>
 				<Dialog
 					open={open}
 					onClose={() => setOpen(false)}
@@ -181,16 +184,28 @@ const About = (props: AboutProps) => {
 					<DialogTitle id="alert-dialog-title">利用規約</DialogTitle>
 					<DialogContent>
 						<DialogContentText id="alert-dialog-description">
-							送信された情報はセキュリティ規格に関する国際規格であるISO/27001に準拠しているサービス(AWS、Google、CloudFlareなど)のみを利用し、万全のセキュリティ体制により適切に取り扱いますが、この送信フォームを利用した結果何かしらの損害が発生しても、直接損害か間接損害か否か、予見できたか否かを問わず、一切の責任を負いません。
+							送信された情報はセキュリティ規格に関する国際規格であるISO/27001に準拠しているサービス(AWS、CloudFlare、GitLab、Slack、GitHub
+							Actionsなど)のみを利用し、万全のセキュリティ体制により適切に取り扱いますが、このサービスを利用したことに起因して何かしらの損害が発生しても、直接損害か間接損害か否か、予見できたか否かを問わず、一切の責任を負いません。
 							<br />
-							スパムフィルタによるフィルタリングをしており、スパムでなくても送信された内容がスパムと誤判定されて届かないことがあります。
+							送信された内容は、このウェブサイトの運営のため、日本語ドキュメントによる技術的知見の普及のため、および送信者との連絡のためにのみ使用します。
 							<br />
-							IPアドレスなどの送信元情報も送信された情報と共に保存しており、違法性がある場合、法令に基づく場合、または内容がとても面白い場合、情報を警察などの捜査機関や行政機関、報道機関、ウェブサイトやSNS等に情報を公開することがあります。
+							送信された内容は、職務上守秘義務を負う情報とはみなされません。
+							<br />
+							送信された内容によって、いかなる契約も成立することはありません。
+							<br />
+							IPアドレスなどの送信元情報も送信された情報と共に保存しており、違法性がある場合または法令に基づく場合に限り、情報を警察などの捜査機関や行政機関に情報を公開することがあります。
+							<br />
+							スパムフィルタによるフィルタリングをしており、スパムでなくても送信された内容がスパムと誤判定されて届かないことがあります。また、届いたお問い合わせに対して必ず返信することを約束するものではありません。
 							<br />
 							以上についてご了承下さい。
 							<br />
 						</DialogContentText>
 					</DialogContent>
+					<DialogActions>
+						<Button onClick={() => setOpen(false)} variant="outlined">
+							閉じる
+						</Button>
+					</DialogActions>
 				</Dialog>
 				<Dialog
 					open={success === false}
@@ -204,6 +219,11 @@ const About = (props: AboutProps) => {
 							送信に失敗しました。しばらく経ってからやりなおしてください。
 						</DialogContentText>
 					</DialogContent>
+					<DialogActions>
+						<Button onClick={() => setSuccess(undefined)} variant="outlined">
+							閉じる
+						</Button>
+					</DialogActions>
 				</Dialog>
 			</Content>
 		</Main>

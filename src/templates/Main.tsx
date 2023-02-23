@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import Link from 'next/link';
 
@@ -28,14 +28,17 @@ const Main = (props: IMainProps) => (
 				</div>
 				<div>
 					<Navbar>
-						<li className="mr-6">
+						<li className="mr-5">
 							<Link href="/">Home</Link>
 						</li>
-						<li className="mr-6">
+						<li className="mr-5">
 							<Link href="/about/">About</Link>
 						</li>
-						<li className="mr-6">
+						<li className="mr-5">
 							<Link href="/portfolio/">Portfolio</Link>
+						</li>
+						<li className="mr-5">
+							<Link href="/contact/">Contact</Link>
 						</li>
 						{/* <li className="mr-6">
 							<Link href="/blog/1/">Blog</Link>
