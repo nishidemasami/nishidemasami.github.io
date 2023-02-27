@@ -150,7 +150,7 @@ const About = (props: AboutProps) => {
 								referrerPolicy: 'no-referrer',
 								body: JSON.stringify({ email, body, name }),
 							}
-						);
+						).catch(() => ({ ok: false }));
 						setProgress(false);
 						setSuccess(response.ok);
 					}}
@@ -185,7 +185,8 @@ const About = (props: AboutProps) => {
 					<DialogContent>
 						<DialogContentText id="alert-dialog-description">
 							送信された情報はセキュリティ規格に関する国際規格であるISO/27001に準拠しているサービス(AWS、CloudFlare、GitLab、Slack、GitHub
-							Actionsなど)のみを利用し、万全のセキュリティ体制により適切に取り扱いますが、このサービスを利用したことに起因して何かしらの損害が発生しても、直接損害か間接損害か否か、予見できたか否かを問わず、一切の責任を負いません。
+							Actions、Google Cloud
+							Platformなど)のみを利用し、万全のセキュリティ体制により適切に取り扱いますが、このサービスを利用したことに起因して何かしらの損害が発生しても、直接損害か間接損害か否か、予見できたか否かを問わず、一切の責任を負いません。
 							<br />
 							送信された内容は、このウェブサイトの運営のため、日本語ドキュメントによる技術的知見の普及のため、および送信者との連絡のためにのみ使用します。
 							<br />
