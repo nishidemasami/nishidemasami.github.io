@@ -24,7 +24,9 @@ import { markdownToHtml } from '../utils/Markdown';
 const contentMarkdown = String.raw`
 ### 連絡フォーム
 
-営業メールや日頃の愚痴など、なんでも送っていただいて構いませんが、その場合返信しないことがあります。
+お問い合わせや連絡だけでなく、ご意見・ご要望などもお待ちしています。
+
+また、営業メールや日頃の愚痴など、なんでも送っていただいて構いませんが、その場合返信しないことがあります。
 `;
 
 type AboutProps = {
