@@ -32,7 +32,10 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
-      - name: install
+      - name: install graphviz
+        run: sudo apt install graphviz
+
+      - name: npm install
         run: npm install --frozen-lockfile
 
       - name: build
