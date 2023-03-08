@@ -1,12 +1,12 @@
 {
 	"theme_color": "#8f4701",
 	"background_color": "#8f4701",
-	"display": "browser",
+	"display": "standalone",
 	"scope": "/",
 	"start_url": "/",
 	"name": "NISHIDEMASAMI.GITHUB.IO",
-	"short_name": "pwa",
-	"description": "NISHIDEMASAMI.GITHUB.IO PWA",
+	"short_name": "NISHIDEMASAMI.GITHUB.IO",
+	"description": "NISHIDEMASAMI.GITHUB.IO is a knowledge sharing website.",
 	"icons": [
 		{
 			"src": "/icon-192x192.png",

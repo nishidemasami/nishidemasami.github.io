@@ -6,6 +6,7 @@ import remarkMath from 'remark-math';
 import remarkMermaid from 'remark-mermaidjs';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
+import remarkPlantUML from 'remark-sync-plantuml';
 import { getHighlighter } from 'shiki';
 import { unified } from 'unified';
 
@@ -15,6 +16,7 @@ export const markdownToHtml = async (markdown: string) =>
 			.use(remarkParse)
 			.use(remarkMath)
 			.use(remarkGfm)
+			.use(remarkPlantUML)
 			.use(remarkMermaid, {
 				launchOptions: {
 					executablePath:
