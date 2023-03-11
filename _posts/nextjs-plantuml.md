@@ -64,8 +64,7 @@ export const markdownToHtml = async (markdown: string) =>
 			.use(rehypeStringify, { allowDangerousHtml: true })
 			.process(markdown)
 	)
-		.toString()
-		.replace(/@@baseUrl@@/g, process.env.baseUrl || '');
+		.toString();
 
 ```
 
@@ -112,15 +111,15 @@ skinparam rectangle {
 'skinparam handwritten true
 sprite Callout_1 <svg width="18" height="18"><circle cx="9" cy="9" r="9" fill="black" /><text x="5" y="13" fill="#FFFFFF" font-size="12">1</text></svg>
 
-rectangle "$UserIMG()\nUser" as user
+rectangle "$UserIMG()\nユーザー" as user
 AWSCloudGroup(cloud){
 	RegionGroup(region) {
 		S3BucketGroup(s3) {
-			rectangle "$MultimediaIMG()\n\tvideo\t" as video
-			rectangle "$TapestorageIMG()\n\taudio\t" as audio
-			rectangle "$DocumentsIMG()\n\ttranscript\t" as transcript
+			rectangle "$MultimediaIMG()\n\t動画\t" as video
+			rectangle "$TapestorageIMG()\n\t音声\t" as audio
+			rectangle "$DocumentsIMG()\n\tテキスト\t" as transcript
 
-			user -r-> video: <$Callout_1>\lupload
+			user -r-> video: <$Callout_1>\lアップロード
 			video -r-> audio
 			audio -r-> transcript
 		}
@@ -139,7 +138,7 @@ AWSCloudGroup(cloud){
 			rectangle "$LambdaLambdaFunctionIMG()\nextract audio" as sfw1
 			rectangle "$LambdaLambdaFunctionIMG()\ntranscribe audio" as sfw2
 
-			e1 -r-> sfw1: Start\nExecution
+			e1 -r-> sfw1: 起動
 			sfw1 -r-> sfw2
 			sfw1 -u-> mediaconvert
 			sfw2 -u-> transcribe
@@ -185,15 +184,15 @@ skinparam rectangle {
 'skinparam handwritten true
 sprite Callout_1 <svg width="18" height="18"><circle cx="9" cy="9" r="9" fill="black" /><text x="5" y="13" fill="#FFFFFF" font-size="12">1</text></svg>
 
-rectangle "$UserIMG()\nUser" as user
+rectangle "$UserIMG()\nユーザー" as user
 AWSCloudGroup(cloud){
 	RegionGroup(region) {
 		S3BucketGroup(s3) {
-			rectangle "$MultimediaIMG()\n\tvideo\t" as video
-			rectangle "$TapestorageIMG()\n\taudio\t" as audio
-			rectangle "$DocumentsIMG()\n\ttranscript\t" as transcript
+			rectangle "$MultimediaIMG()\n\t動画\t" as video
+			rectangle "$TapestorageIMG()\n\t音声\t" as audio
+			rectangle "$DocumentsIMG()\n\tテキスト\t" as transcript
 
-			user -r-> video: <$Callout_1>\lupload
+			user -r-> video: <$Callout_1>\lアップロード
 			video -r-> audio
 			audio -r-> transcript
 		}
@@ -212,7 +211,7 @@ AWSCloudGroup(cloud){
 			rectangle "$LambdaLambdaFunctionIMG()\nextract audio" as sfw1
 			rectangle "$LambdaLambdaFunctionIMG()\ntranscribe audio" as sfw2
 
-			e1 -r-> sfw1: Start\nExecution
+			e1 -r-> sfw1: 起動
 			sfw1 -r-> sfw2
 			sfw1 -u-> mediaconvert
 			sfw2 -u-> transcribe
@@ -222,7 +221,11 @@ AWSCloudGroup(cloud){
 @enduml
 ```
 
-## シーケンス図
+## 他のUML図
+
+PlantUMLで書ける他のUML図の例も紹介しておきます。
+
+### シーケンス図
 
 ````markdown
 ```plantuml
@@ -272,7 +275,7 @@ deactivate A
 @enduml
 ```
 
-## ユースケース図
+### ユースケース図
 
 ````markdown
 ```plantuml
@@ -298,7 +301,7 @@ User --> (Use the application) : A small label
 @enduml
 ```
 
-## クラス図
+### クラス図
 
 ````markdown
 ```plantuml
@@ -334,7 +337,7 @@ class Enrollment {
 @enduml
 ```
 
-## アクティビティ図
+### アクティビティ図
 
 ````markdown
 ```plantuml
@@ -376,7 +379,7 @@ stop
 @enduml
 ```
 
-## コンポーネント図
+### コンポーネント図
 
 ````markdown
 ```plantuml
@@ -452,7 +455,7 @@ database "MySql" {
 @enduml
 ```
 
-## マインドマップ図
+### マインドマップ図
 
 ````markdown
 ```plantuml
@@ -488,7 +491,7 @@ skinparam svgDimensionStyle false
 @endmindmap
 ```
 
-## 状態図
+### 状態図
 
 ````markdown
 ```plantuml
@@ -540,7 +543,7 @@ State3 --> [*] : Aborted
 @enduml
 ```
 
-## オブジェクト図
+### オブジェクト図
 
 ````markdown
 ```plantuml
@@ -614,7 +617,7 @@ task.4 --> task.5 : Label 4
 @enduml
 ```
 
-## ネットワーク図
+### ネットワーク図
 
 ````markdown
 ```plantuml
@@ -670,7 +673,7 @@ nwdiag {
 @enduml
 ```
 
-## ガントチャート図
+### ガントチャート図
 
 ````markdown
 ```plantuml
