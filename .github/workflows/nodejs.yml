@@ -39,7 +39,7 @@ jobs:
         run: sudo apt-get update -y
 
       - name: install graphviz language-pack-ja
-        run: sudo apt-get install graphviz language-pack-ja fonts-noto-cjk fonts-not fonts-noto-cjk-extra -y
+        run: sudo apt-get install graphviz language-pack-ja fonts-noto-cjk fonts-noto-cjk-extra -y
 
       - name: npm install
         run: npm install --frozen-lockfile
