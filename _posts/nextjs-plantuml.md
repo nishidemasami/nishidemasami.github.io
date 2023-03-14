@@ -79,6 +79,7 @@ AWSが<https://github.com/awslabs/aws-icons-for-plantuml>で公開しているAW
 ```plantuml
 @startuml
 skinparam svgDimensionStyle false
+skinparam defaultFontName Noto Sans CJK JP Black Regular
 
 'Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 'SPDX-License-Identifier: MIT (For details, see https://github.com/awslabs/aws-icons-for-plantuml/blob/master/LICENSE)
@@ -152,6 +153,7 @@ AWSCloudGroup(cloud){
 ```plantuml
 @startuml
 skinparam svgDimensionStyle false
+skinparam defaultFontName Noto Sans CJK JP Black Regular
 
 'Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 'SPDX-License-Identifier: MIT (For details, see https://github.com/awslabs/aws-icons-for-plantuml/blob/master/LICENSE)

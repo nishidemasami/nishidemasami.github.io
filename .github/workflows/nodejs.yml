@@ -10,6 +10,9 @@ on:
 
 env:
   TZ: "Asia/Tokyo"
+  LANGUAGE: "ja_JP"
+  LANG: "ja_JP.UTF-8"
+  LC_ALL: "ja_JP.UTF-8"
 
 jobs:
   build-deploy:
@@ -33,10 +36,10 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: apt update
-        run: sudo apt update -y
+        run: sudo apt-get update -y
 
       - name: install graphviz language-pack-ja
-        run: sudo apt install graphviz language-pack-ja -y
+        run: sudo apt-get install graphviz language-pack-ja fonts-noto-cjk fonts-not fonts-noto-cjk-extra -y
 
       - name: npm install
         run: npm install --frozen-lockfile
