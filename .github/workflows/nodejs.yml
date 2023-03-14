@@ -32,8 +32,11 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
-      - name: install graphviz
-        run: sudo apt install graphviz
+      - name: apt update
+        run: sudo apt update -y
+
+      - name: install graphviz language-pack-ja
+        run: sudo apt install graphviz language-pack-ja -y
 
       - name: npm install
         run: npm install --frozen-lockfile

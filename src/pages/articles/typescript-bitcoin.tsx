@@ -55,11 +55,11 @@ const secondArticle = `
 \`\`\`mermaid
 flowchart TD
 
-A[32byte Seacret Key] -->|secp256k1| B(Public Key)
-A -->|base58 Encoding and Checksum| F[WIF Private Key]
-B --> C{Bitcoin Address}
-C -->|Base58 Encoding and Checksum| D[P2PKH Wallet Address]
-C -->|BASE32 Encoding and Checksum| E[Bech32 Wallet Address]
+A[32バイトの秘密鍵] -->|secp256k1| B(公開鍵)
+A -->|base58変換とチェックサム付与| F[WIF形式秘密鍵]
+B --> C{ビットコインアドレス形式}
+C -->|BASE58変換とチェックサム付与| D[P2PKH形式ビットコインアドレス]
+C -->|BASE32変換とチェックサム付与| E[Bech32形式ビットコインアドレス]
 \`\`\`
 
 これはTypescriptでも簡単に計算できます。
