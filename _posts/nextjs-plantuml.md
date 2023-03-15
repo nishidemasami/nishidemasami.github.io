@@ -78,9 +78,6 @@ AWSが<https://github.com/awslabs/aws-icons-for-plantuml>で公開しているAW
 ````markdown
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
-skinparam defaultFontName Noto Sans CJK JP Black Regular
-
 'Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 'SPDX-License-Identifier: MIT (For details, see https://github.com/awslabs/aws-icons-for-plantuml/blob/master/LICENSE)
 
@@ -109,7 +106,6 @@ skinparam rectangle {
 		BackgroundColor AWS_BG_COLOR
 		BorderColor transparent
 }
-'skinparam handwritten true
 sprite Callout_1 <svg width="18" height="18"><circle cx="9" cy="9" r="9" fill="black" /><text x="5" y="13" fill="#FFFFFF" font-size="12">1</text></svg>
 
 rectangle "$UserIMG()\nユーザー" as user
@@ -152,9 +148,6 @@ AWSCloudGroup(cloud){
 
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
-skinparam defaultFontName Noto Sans CJK JP Black Regular
-
 'Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 'SPDX-License-Identifier: MIT (For details, see https://github.com/awslabs/aws-icons-for-plantuml/blob/master/LICENSE)
 
@@ -183,7 +176,6 @@ skinparam rectangle {
 		BackgroundColor AWS_BG_COLOR
 		BorderColor transparent
 }
-'skinparam handwritten true
 sprite Callout_1 <svg width="18" height="18"><circle cx="9" cy="9" r="9" fill="black" /><text x="5" y="13" fill="#FFFFFF" font-size="12">1</text></svg>
 
 rectangle "$UserIMG()\nユーザー" as user
@@ -232,7 +224,6 @@ PlantUMLで書ける他のUML図の例も紹介しておきます。
 ````markdown
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 participant User
 
 User -> A: DoWork
@@ -256,7 +247,6 @@ deactivate A
 
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 participant User
 
 User -> A: DoWork
@@ -282,7 +272,6 @@ deactivate A
 ````markdown
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 User -> (Start)
 User --> (Use the application) : A small label
 
@@ -294,7 +283,6 @@ User --> (Use the application) : A small label
 
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 User -> (Start)
 User --> (Use the application) : A small label
 
@@ -308,7 +296,6 @@ User --> (Use the application) : A small label
 ````markdown
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 class Student {
   Name
 }
@@ -325,7 +312,6 @@ class Enrollment {
 
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 class Student {
   Name
 }
@@ -344,7 +330,6 @@ class Enrollment {
 ````markdown
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 start
 repeat
   :Test something;
@@ -364,7 +349,6 @@ stop
 
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 start
 repeat
   :Test something;
@@ -386,7 +370,6 @@ stop
 ````markdown
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 
 package "Some Group" {
   HTTP - [First Component]
@@ -423,7 +406,6 @@ database "MySql" {
 
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 
 package "Some Group" {
   HTTP - [First Component]
@@ -462,7 +444,6 @@ database "MySql" {
 ````markdown
 ```plantuml
 @startmindmap
-skinparam svgDimensionStyle false
 + root node
 ++ some first level node
 +++_ second level node
@@ -479,7 +460,6 @@ skinparam svgDimensionStyle false
 
 ```plantuml
 @startmindmap
-skinparam svgDimensionStyle false
 + root node
 ++ some first level node
 +++_ second level node
@@ -498,7 +478,6 @@ skinparam svgDimensionStyle false
 ````markdown
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 scale 600 width
 
 [*] -> State1
@@ -523,7 +502,6 @@ State3 --> [*] : Aborted
 
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 scale 600 width
 
 [*] -> State1
@@ -550,7 +528,6 @@ State3 --> [*] : Aborted
 ````markdown
 ```plantuml
 @startuml PERT
-skinparam svgDimensionStyle false
 left to right direction
 ' Horizontal lines: -->, <--, <-->
 ' Vertical lines: ->, <-, <->
@@ -586,7 +563,6 @@ task.4 --> task.5 : Label 4
 
 ```plantuml
 @startuml PERT
-skinparam svgDimensionStyle false
 left to right direction
 ' Horizontal lines: -->, <--, <-->
 ' Vertical lines: ->, <-, <->
@@ -624,7 +600,6 @@ task.4 --> task.5 : Label 4
 ````markdown
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 !include <office/Servers/application_server>
 !include <office/Servers/database_server>
 
@@ -651,7 +626,6 @@ nwdiag {
 
 ```plantuml
 @startuml
-skinparam svgDimensionStyle false
 !include <office/Servers/application_server>
 !include <office/Servers/database_server>
 
@@ -680,7 +654,6 @@ nwdiag {
 ````markdown
 ```plantuml
 @startgantt
-skinparam svgDimensionStyle false
 <style>
 ganttDiagram {
 	task {
@@ -765,7 +738,6 @@ end note
 
 ```plantuml
 @startgantt
-skinparam svgDimensionStyle false
 <style>
 ganttDiagram {
 	task {
