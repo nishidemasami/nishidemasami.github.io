@@ -130,11 +130,10 @@
 			}
 		}
 		.plantuml {
-			@apply my-4;
-			overflow: auto;
-			svg {
-				background: transparent;
-			}
+			@apply my-4 max-w-full w-fit overflow-auto shadow-md border-slate-300 border-solid border rounded-md;
+		}
+		.mermaid {
+			@apply my-0 max-w-full w-fit overflow-auto shadow-md border-slate-300 border-solid border rounded-md;
 		}
 	}
 }

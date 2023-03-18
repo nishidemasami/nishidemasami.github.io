@@ -24,5 +24,7 @@
 	"[javascript][typescript][javascriptreact][typescriptreact]": {
 		"editor.formatOnSave": true,
 		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
-	}
+	},
+	"typescript.tsdk": "node_modules\\typescript\\lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true
 }

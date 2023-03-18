@@ -8,7 +8,46 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import remarkPlantUML from 'remark-sync-plantuml';
 import { getHighlighter } from 'shiki';
-import { unified } from 'unified';
+import { unified, Plugin } from 'unified';
+import type { Node, Parent } from 'unist';
+import { visit } from 'unist-util-visit';
+
+const addDivMermaidPlugin: Plugin = () => {
+	return (tree: Node, _file) => {
+		visit(
+			tree,
+			(node: unknown) =>
+				typeof node === 'object' &&
+				node !== null &&
+				'type' in node &&
+				node.type === 'code' &&
+				'lang' in node &&
+				node.lang === 'mermaid',
+			(node: Node, index: number | null, parent?: Parent) => {
+				if (parent && index) {
+					const newHTML = {
+						type: 'paragraph',
+						children: [
+							{
+								type: 'html',
+								value: '<div class="mermaid">',
+							},
+							node,
+							{
+								type: 'html',
+								value: '</div>',
+							},
+						],
+					};
+					// eslint-disable-next-line no-param-reassign
+					parent.children[index] = newHTML;
+				}
+			}
+		);
+	};
+};
+
+const mermaidOption = { useMaxWidth: false };
 
 export const markdownToHtml = async (markdown: string) =>
 	(
@@ -17,6 +56,7 @@ export const markdownToHtml = async (markdown: string) =>
 			.use(remarkMath)
 			.use(remarkGfm)
 			.use(remarkPlantUML)
+			.use(addDivMermaidPlugin)
 			.use(remarkMermaid, {
 				launchOptions: {
 					executablePath:
@@ -24,6 +64,21 @@ export const markdownToHtml = async (markdown: string) =>
 						'/opt/google/chrome/google-chrome',
 				},
 				svgo: false,
+				mermaidOptions: {
+					flowchart: mermaidOption,
+					sequence: mermaidOption,
+					gantt: mermaidOption,
+					journey: mermaidOption,
+					timeline: mermaidOption,
+					class: mermaidOption,
+					state: mermaidOption,
+					er: mermaidOption,
+					pie: mermaidOption,
+					requirement: mermaidOption,
+					// mindmap: mermaidOption,
+					gitGraph: mermaidOption,
+					c4: mermaidOption,
+				},
 			})
 			.use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })
 			.use(rehypeShiki, {
