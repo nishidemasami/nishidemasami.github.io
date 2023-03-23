@@ -16,14 +16,9 @@ const addDivMermaidPlugin: Plugin = () => {
 	return (tree: Node, _file) => {
 		visit(
 			tree,
-			(node: unknown) =>
-				typeof node === 'object' &&
-				node !== null &&
-				'type' in node &&
-				node.type === 'code' &&
-				'lang' in node &&
-				node.lang === 'mermaid',
-			(node: Node, index: number | null, parent?: Parent) => {
+			(node) =>
+				node.type === 'code' && 'lang' in node && node.lang === 'mermaid',
+			(node, index, parent?: Parent) => {
 				if (parent && index) {
 					const newHTML = {
 						type: 'paragraph',

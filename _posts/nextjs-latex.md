@@ -17,9 +17,9 @@ Next.jsで数式を書いてみたいと思うこと、ありますよね。
 
 2次方程式の解の公式、懐かしいですね。
 
-$
+$$$
 x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}
-$
+$$$
 
 これを見ると学生時代を思い出しますね。  
 こういう数式を、Next.jsでもMarkdownに$\LaTeX$で
@@ -86,14 +86,14 @@ export const markdownToHtml = async (markdown: string) =>
 \end{cases}
 ```
 
-$
+$$$
 \gcd(x, y) =
 \begin{cases}
   y & (x = 0)\\
   x & (y = 0)\\
   \gcd(y, x \bmod y) & (\text{otherwize})
 \end{cases}
-$
+$$$
 
 上手に書けました！✨
 

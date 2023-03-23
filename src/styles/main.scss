@@ -130,10 +130,22 @@
 			}
 		}
 		.plantuml {
-			@apply my-4 max-w-full w-fit overflow-auto shadow-md border-slate-300 border-solid border rounded-md;
+			@apply my-4 max-w-full w-fit overflow-auto;
+			// @apply shadow-md border-slate-300 border-solid border rounded-md;
 		}
 		.mermaid {
-			@apply my-0 max-w-full w-fit overflow-auto shadow-md border-slate-300 border-solid border rounded-md;
+			@apply my-0 max-w-full w-fit overflow-auto;
+			// @apply shadow-md border-slate-300 border-solid border rounded-md;
+		}
+		.math-display {
+			@apply p-2 max-w-full w-fit overflow-x-auto whitespace-nowrap break-keep block;
+			//  @apply shadow-md border-slate-300 border-solid border rounded-md;
+			.katex-display {
+				margin: 0;
+				>.katex {
+					text-align: left;
+				}
+			}
 		}
 	}
 }

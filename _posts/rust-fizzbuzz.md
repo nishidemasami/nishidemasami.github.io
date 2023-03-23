@@ -208,7 +208,7 @@ fn test() {
 
 fizzbuzz関数$f(x)$を定義してみます。
 
-$
+$$$
 f(x) =
 \begin{cases}
   \text{FizzBuzz} & (x \bmod 3 = 0 \land x \bmod 5 = 0)\\
@@ -216,7 +216,7 @@ f(x) =
   \text{Buzz} & (x \bmod 3 \neq 0 \land x \bmod 5 = 0)\\
   x & (\text{otherwize})\\
 \end{cases}
-$
+$$$
 
 ここで定義を冷静になって見てみると、$x$に対する操作は「3で割る」「5で割る」「割った結果を0と比較する」「文字列に変換する」しかしていないことしかわかります。  
 型で表すと以下のようなものです。
