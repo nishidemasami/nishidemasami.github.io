@@ -17,8 +17,6 @@ tags:
 ---
 */
 
-import React from 'react';
-
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
@@ -55,7 +53,7 @@ const About = (props: AboutProps) => (
 	>
 		<h1 className="content-title">Gatsbyでブログをリニューアルしてみました</h1>
 		<div className="content-date">
-			{format(new Date('2021-03-06T18:04:03+0900'), 'LLLL d, yyyy')}
+			Posted {format(new Date('2021-03-06T18:04:03+0900'), 'LLLL d, yyyy')}
 		</div>
 		<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
 			{['JavaScript', 'TypeScript', 'React', 'Gatsby.js'].map((tag) => (

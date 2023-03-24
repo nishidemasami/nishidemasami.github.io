@@ -3,6 +3,7 @@
 	"editor.tabSize": 2,
 	"editor.detectIndentation": false,
 	"editor.insertSpaces": false,
+	"editor.wordWrap": "on",
 	"jest.autoRun": {
 		"watch": false,
 		"onSave": "test-file"

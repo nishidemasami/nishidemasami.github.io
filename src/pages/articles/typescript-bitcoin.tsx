@@ -14,8 +14,6 @@ tags:
 ---
 */
 
-import React from 'react';
-
 import { format } from 'date-fns';
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
@@ -228,7 +226,7 @@ const ReactSoundTest = (props: ReactSoundTestProps) => (
 			Typescriptでビットコインアドレスを生成する
 		</h1>
 		<div className="content-date">
-			{format(new Date('2022-12-10T01:04:03+0900'), 'LLLL d, yyyy')}
+			Posted {format(new Date('2022-12-10T01:04:03+0900'), 'LLLL d, yyyy')}
 		</div>
 		<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
 			{['TypeScript', 'React', 'Bitcoin'].map((tag) => (

@@ -54,7 +54,7 @@ const DisplayPost = (props: IPostProps) => (
 	>
 		<h1 className="content-title">{props.title}</h1>
 		<div className="content-date">
-			{format(new Date(props.date), 'LLLL d, yyyy')}
+			Posted {format(new Date(props.date), 'LLLL d, yyyy')}
 		</div>
 
 		<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">

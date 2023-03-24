@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { format } from 'date-fns';
 import Link from 'next/link';
 
@@ -29,7 +27,7 @@ const BlogGallery = (props: IBlogGalleryProps) => (
 
 					<div className="text-left clear-both">{elt.description}</div>
 					<p className="text-left text-sm ">
-						{format(new Date(elt.date), 'LLL d, yyyy')}
+						Posted {format(new Date(elt.date), 'LLL d, yyyy')}
 					</p>
 				</div>
 			);

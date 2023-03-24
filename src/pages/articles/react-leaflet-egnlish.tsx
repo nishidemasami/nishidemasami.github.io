@@ -17,7 +17,7 @@ tags:
 ---
 */
 
-import React from 'react';
+import { useMemo } from 'react';
 
 import { CircularProgress } from '@mui/material';
 import { format } from 'date-fns';
@@ -226,7 +226,7 @@ export default LeafletEnglishDemo;
 `;
 
 const ReactLeafletTest = (props: ReactSoundTestProps) => {
-	const LeafletDemoComponent = React.useMemo(
+	const LeafletDemoComponent = useMemo(
 		() =>
 			dynamic(() => import('../../components/Leaflet/LeafletEnglishDemo'), {
 				loading: () => <CircularProgress className="w-full" />,
@@ -247,7 +247,7 @@ const ReactLeafletTest = (props: ReactSoundTestProps) => {
 		>
 			<h1 className="content-title">Reactで地図上に地名を英語で表示する</h1>
 			<div className="content-date">
-				{format(new Date('2023-01-28T12:00:00+0900'), 'LLLL d, yyyy')}
+				Posted {format(new Date('2023-01-28T12:00:00+0900'), 'LLLL d, yyyy')}
 			</div>
 			<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
 				{[

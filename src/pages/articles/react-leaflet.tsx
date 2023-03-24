@@ -17,7 +17,7 @@ tags:
 ---
 */
 
-import React from 'react';
+import { useMemo } from 'react';
 
 import { CircularProgress } from '@mui/material';
 import { format } from 'date-fns';
@@ -319,7 +319,7 @@ const LeafletDemoComponent = React.useMemo(
 `;
 
 const ReactLeafletTest = (props: ReactSoundTestProps) => {
-	const LeafletDemoComponent = React.useMemo(
+	const LeafletDemoComponent = useMemo(
 		() =>
 			dynamic(() => import('../../components/Leaflet/LeafletDemo'), {
 				loading: () => <CircularProgress className="w-full" />,
@@ -342,7 +342,7 @@ const ReactLeafletTest = (props: ReactSoundTestProps) => {
 				Reactで国土地理院地図やOpenStreetMapを表示する
 			</h1>
 			<div className="content-date">
-				{format(new Date('2023-01-21T01:04:03+0900'), 'LLLL d, yyyy')}
+				Posted {format(new Date('2023-01-21T01:04:03+0900'), 'LLLL d, yyyy')}
 			</div>
 			<ul className="flex flex-row flex-wrap list-none p-0 m-2 justify-start">
 				{[

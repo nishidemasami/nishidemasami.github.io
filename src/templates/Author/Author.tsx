@@ -6,7 +6,6 @@ const Author = () => {
 	const { author, description } = AppConfig;
 	return (
 		<div>
-			<p className="text-zinc-800 text-xs my-2">{description}</p>
 			<Link href="/portfolio/">
 				<img
 					src="/assets/images/author.jpg"
@@ -16,6 +15,7 @@ const Author = () => {
 					alt={author}
 				/>
 			</Link>
+			<p className="text-zinc-800 text-xs my-2">{description}</p>
 		</div>
 	);
 };
