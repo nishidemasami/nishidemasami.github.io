@@ -25,21 +25,16 @@ OnionドメインのウェブサイトをDockerで構築して公開したいこ
 
 ### Docker
 
-まず`compose.yaml`を作ります。  
-ネットワークは、外部と接続されている`front`ネットワークと、外部とつながっていない独立したネットワークの`tor_network`を作成します。  
-`tor`コンテナだけ外部と接続し、`nginx`コンテナが外部と遮断し、そして`tor`コンテナと`nginx`コンテナを`tor_network`ネットワークでつなげることにします。  
-`nginx`コンテナは、余計なものが入っていない`nginx:alpine`を使用します。  
-`tor`コンテナは、後述の`Dockerfile`を使用します。  
+まず`compose.yaml`を作ります。
 
 <div class="preshiki">compose.yaml</div>
 
 ```yaml
-version: '3'
+version: '3.8'
 
 services:
   nginx:
     image: nginx:alpine
-    network_mode: none
     networks:
       - tor_network
     volumes:
@@ -62,7 +57,46 @@ networks:
     internal: true
 ```
 
-どちらも`restart: unless-stopped`で、落ちたら再起動するようにしています。
+ネットワークは、外部に接続するための`front`ネットワークと、外部とつながっていない内部だけで独立したネットワークの`tor_network`を作成します。  
+`tor`コンテナだけ外部と接続し、`nginx`コンテナを外部と遮断し、そして`tor`コンテナと`nginx`コンテナを`tor_network`ネットワークでつなげることにします。  
+
+ネットワーク図に表すと以下のようになります。
+
+```plantuml
+@startuml
+
+!define ICONURL https://raw.githubusercontent.com/Roemer/plantuml-office/master/office2014
+!includeurl ICONURL/Servers/database_server.puml
+!includeurl ICONURL/Servers/application_server.puml
+!includeurl ICONURL/Concepts/firewall_orange.puml
+
+nwdiag {
+	internet [ shape = cloud];
+	internet -- 仮想ブリッジ;
+
+	group {
+    color = "#CCFFCC";
+    description = "Docker\n内部\n ";
+
+    nginx;
+    tor;
+  }
+  network front {
+      tor [description = "<&cog*4>\ntor"];
+      仮想ブリッジ [description = "Docker\n仮想ブリッジ"];
+  }
+  network tor_network {
+      nginx [address = "nginx",description = "<$application_server>\n nginx"];
+      tor [description = "<&cog*4>\ntor"];
+  }
+}
+@enduml
+```
+
+`nginx`コンテナは、余計なものが入っていない`nginx:alpine`を使用します。  
+`tor`コンテナは、後述の`Dockerfile`を使用します。  
+
+また、どちらも`restart: unless-stopped`で、落ちたら再起動するようにしています。不要だったかもしれません。
 
 ### Tor
 
