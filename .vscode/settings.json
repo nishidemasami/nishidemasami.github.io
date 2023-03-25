@@ -4,6 +4,7 @@
 	"editor.detectIndentation": false,
 	"editor.insertSpaces": false,
 	"editor.wordWrap": "on",
+	"scss.lint.unknownAtRules": "ignore",
 	"jest.autoRun": {
 		"watch": false,
 		"onSave": "test-file"

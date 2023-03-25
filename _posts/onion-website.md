@@ -25,12 +25,13 @@ OnionドメインのウェブサイトをDockerで構築して公開したいこ
 
 ### Docker
 
-まず`docker-compose.yml`を作ります。  
-`tor`コンテナと`nginx`コンテナを用意して`tor_network`ネットワークでつなげることにします。  
-`nginx`コンテナは、なんとなくセキュリティが高い気がする`nginx:alpine`を使用します。  
+まず`compose.yaml`を作ります。  
+ネットワークは、外部と接続されている`front`ネットワークと、外部とつながっていない独立したネットワークの`tor_network`を作成します。  
+`tor`コンテナだけ外部と接続し、`nginx`コンテナが外部と遮断し、そして`tor`コンテナと`nginx`コンテナを`tor_network`ネットワークでつなげることにします。  
+`nginx`コンテナは、余計なものが入っていない`nginx:alpine`を使用します。  
 `tor`コンテナは、後述の`Dockerfile`を使用します。  
 
-<div class="preshiki">docker-compose.yml</div>
+<div class="preshiki">compose.yaml</div>
 
 ```yaml
 version: '3'
@@ -38,23 +39,30 @@ version: '3'
 services:
   nginx:
     image: nginx:alpine
-    network_mode: "none"
+    network_mode: none
     networks:
       - tor_network
     volumes:
       - ./htdocs:/usr/share/nginx/html:ro
+    restart: unless-stopped
   tor:
     build:
       dockerfile: ./tor/Dockerfile
     networks:
       - tor_network
+      - front
     volumes:
       - ./data:/var/lib/tor
       - ./tor/settings:/etc/tor
+    restart: unless-stopped
 
 networks:
+  front:
   tor_network:
+    internal: true
 ```
+
+どちらも`restart: unless-stopped`で、落ちたら再起動するようにしています。
 
 ### Tor
 
@@ -71,7 +79,7 @@ RUN apk add tor
 CMD ["tor", "-f", "/etc/tor/torrc"]
 ```
 
-最後に、torの設定ファイルである`torrc`で、80ポートへの接続を`nginx`コンテナに向けています。  
+torの設定ファイルである`torrc`で、80ポートへの接続を`nginx`コンテナに向けています。  
 ※Dockerネットワーク内ではコンテナ名で名前解決をすることができる
 
 <div class="preshiki">tor/settings/torrc</div>
@@ -82,11 +90,12 @@ HiddenServiceDir /var/lib/tor/hidden_service/
 HiddenServicePort 80 nginx:80
 ```
 
-誰かの踏み台にされるのだけは防ぐために`SocksPort 0`の設定をしていますが、自分でもTorプロクシとして利用したい場合はここを`SocksPort 0.0.0.0:9150`として、`Dockerfile`で`EXPOSE 9150`をしてから`docker-compose.yml`でtorのportsに`"9150:9150"`を追加することでSOCKSホストとして利用できます。
+誰かの踏み台にされるのだけは防ぐために`SocksPort 0`の設定をしていますが、自分でもTorプロクシとして利用したい場合はここを`SocksPort 0.0.0.0:9150`として、`Dockerfile`で`EXPOSE 9150`をしてから`compose.yaml`でtorのportsに`"9150:9150"`を追加することでSOCKSホストとして利用できます。
 
 ### Nginx
 
-最小限の設定としては以上で完了ですが、なにも表示されないと動いているかどうかわからないので`index.html`を配置しておきます。
+Nginxは`nginx:alpine`イメージをそのまま使います。  
+なにも表示されないと動いているかどうかわかりにくいので`index.html`を配置しておきます。
 
 <div class="preshiki">htdocs/index.html</div>
 
@@ -110,7 +119,7 @@ Dockerは普通に`docker-compose up -d`コマンドで起動します。
 
 ### 起動確認(Onionドメインの疎通確認)
 
-起動すると、`data/hidden_service/hostname`に以下のようなファイルが出力されています。
+正常に起動すると、`data/hidden_service/hostname`に以下のようなファイルが出力されています。
 
 <pre class="preshiki">data/hidden_service/hostname</pre>
 
