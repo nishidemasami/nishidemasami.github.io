@@ -1,9 +1,5 @@
-import React from 'react';
-
-import { AppProps } from 'next/app';
-
 import '../styles/main.scss';
-import '../styles/katex.min.css';
+import { AppProps } from 'next/app';
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
 	<Component {...pageProps} />

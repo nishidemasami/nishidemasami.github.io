@@ -1,5 +1,5 @@
 import rehypeShiki from '@leafac/rehype-shiki';
-import rehypeKatex from 'rehype-katex';
+import rehypeMathJaxSvg from 'rehype-mathjax/svg';
 import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -81,7 +81,7 @@ export const markdownToHtml = async (markdown: string) =>
 					theme: 'github-light',
 				}),
 			})
-			.use(rehypeKatex)
+			.use(rehypeMathJaxSvg)
 			.use(rehypeStringify, { allowDangerousHtml: true })
 			.process(markdown)
 	)
