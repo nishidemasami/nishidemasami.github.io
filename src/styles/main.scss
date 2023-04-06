@@ -18,7 +18,7 @@
 		@apply text-center text-sm mt-[-14px];
 	}
 	.photo-space {
-		@apply float-none m-auto p-2 w-96 bg-white;
+		@apply float-none m-auto p-2 w-96 bg-white max-w-full;
 	}
 	.photo-space-detail {
 		@apply text-center w-full text-xs;
