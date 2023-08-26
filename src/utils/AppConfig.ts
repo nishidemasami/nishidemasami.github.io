@@ -1,8 +1,7 @@
 export const AppConfig = {
 	site_name: 'NISHIDEMASAMI.GITHUB.IO',
 	title: 'NISHIDEMASAMI.GITHUB.IO',
-	description:
-		'個人のブログです。有益なことや無益なことなどいろいろ書いています。',
+	description: '西出正美です。有益なことや無益なことなどいろいろ書いています。',
 	url: 'https://nishidemasami.github.io',
 	locale: 'ja',
 	author: 'NISHIDE, Masami',
