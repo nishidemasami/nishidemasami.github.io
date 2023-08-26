@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Recommend = () => (
 	<nav className="my-2 py-1 border-t border-t-slate-200 relative">
-		おすすめの記事
+		おすすめのレポート
 		<ul className="m-0 p-0 border-0 list-[circle] ml-5">
 			{[
 				{

@@ -30,7 +30,7 @@ const Index = (props: IndexProps) => (
 			/>
 		}
 	>
-		<h1 className="content-title">記事一覧</h1>
+		<h1 className="content-title">レポート一覧</h1>
 		<BlogGallery posts={props.posts} pagination={props.pagination} />
 	</Main>
 );

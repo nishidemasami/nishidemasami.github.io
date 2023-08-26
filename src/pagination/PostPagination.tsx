@@ -13,7 +13,7 @@ const PostPagination = (props: IPaginationProps) => (
 	<div className="text-sm flex justify-between">
 		{props.prevPost && (
 			<div className="w-1/2">
-				← 新しい記事
+				← 新しいレポート
 				<br />
 				<Link
 					href={
@@ -34,7 +34,7 @@ const PostPagination = (props: IPaginationProps) => (
 
 		{props.nextPost && (
 			<div className="text-right ml-auto w-1/2">
-				過去の記事 →
+				過去のレポート →
 				<br />
 				<Link
 					href={

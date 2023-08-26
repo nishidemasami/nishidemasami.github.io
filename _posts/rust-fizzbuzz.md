@@ -13,7 +13,7 @@ tags:
 RustでFizzBuzzを書いてみたいと思うこと、ありますよね。  
 僕はあるので自分用にメモです。
 
-なお、この記事を書くにあたって<a target="_blank" href="https://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0Rust-%E7%AC%AC2%E7%89%88-Jim-Blandy/dp/4873119782?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=16SB3SPXD9LVL&keywords=rust&qid=1672662058&sprefix=rust+%2Caps%2C261&sr=8-4&linkCode=ll1&tag=nishidemasami-22&linkId=5f2948f4e335959907e6a8b8e22b859d&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >プログラミングRust 第2版</a>を参考にしました。
+なお、このレポートを書くにあたって<a target="_blank" href="https://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0Rust-%E7%AC%AC2%E7%89%88-Jim-Blandy/dp/4873119782?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=16SB3SPXD9LVL&keywords=rust&qid=1672662058&sprefix=rust+%2Caps%2C261&sr=8-4&linkCode=ll1&tag=nishidemasami-22&linkId=5f2948f4e335959907e6a8b8e22b859d&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >プログラミングRust 第2版</a>を参考にしました。
 
 とりあえず最初に結論を書いておきます。
 
