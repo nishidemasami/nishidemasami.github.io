@@ -8,8 +8,9 @@ const Recommend = () => (
 		<ul className="m-0 p-0 border-0 list-[circle] ml-5">
 			{[
 				{
-					slug: 'posts/onion-website/',
-					title: 'OnionドメインのウェブサイトをDockerで構築して公開する',
+					slug: 'posts/posts/onion-distroless-website/',
+					title:
+						'OnionドメインのウェブサイトをDockerでDistrolessコンテナで構築して安全に公開する',
 				},
 				{
 					slug: 'articles/react-leaflet/',

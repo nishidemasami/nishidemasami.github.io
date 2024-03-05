@@ -92,12 +92,12 @@ alt="著者近影：天龍寺、庭園にて"/></div>
   GitHub Actions  
   GitHub Pages
 - Kubernetes
-- CloudFlare
-  CloudFlare Pages
-  CloudFlare D1
-	Cloudflare Workers
-	Cloudflare Workers KV
-	Cloudflare R2
+- CloudFlare  
+  CloudFlare Pages  
+  CloudFlare D1  
+	Cloudflare Workers  
+	Cloudflare Workers KV  
+	Cloudflare R2  
 - Ansible
 - ESXi
 - VirtualBox
