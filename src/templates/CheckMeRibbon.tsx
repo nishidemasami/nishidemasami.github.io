@@ -7,7 +7,7 @@ const CheckMeRibbon = () => (
 			target="_blank"
 		>
 			<span className="w-auto block border-slate-100 border-dotted border-y-2 indent-0 text-center no-underline leading-6 text-white break-keep whitespace-nowrap">
-			Check me on GitHub
+				Check me on GitHub
 			</span>
 		</a>
 	</div>
