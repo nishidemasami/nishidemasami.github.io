@@ -4,13 +4,14 @@ const withPWA = require('next-pwa')({
 const withBundleAnalyzer =
 	process.env.ANALYZE === 'true'
 		? // eslint-disable-next-line import/no-extraneous-dependencies
-		  require('@next/bundle-analyzer')({ enabled: true })
+			require('@next/bundle-analyzer')({ enabled: true })
 		: (config) => config;
 
 const baseUrl = '';
 
 module.exports = withBundleAnalyzer(
 	withPWA({
+		output: 'export',
 		poweredByHeader: false,
 		trailingSlash: true,
 		basePath: baseUrl,
@@ -21,5 +22,5 @@ module.exports = withBundleAnalyzer(
 		// So, the source code is "basePath-ready".
 		// You can remove `basePath` if you don't need it.
 		reactStrictMode: true,
-	})
+	}),
 );
