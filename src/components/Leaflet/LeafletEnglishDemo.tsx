@@ -35,8 +35,8 @@ const MapController: React.FC<{
 					const response = await fetch(
 						Util.template(
 							'https://cyberjapandata.gsi.go.jp/xyz/experimental_multil/{z}/{x}/{y}.geojson',
-							event.coords
-						)
+							event.coords,
+						),
 					);
 					if (!response.ok) return;
 					const geojson = await response.json();
@@ -75,7 +75,10 @@ const LeafletEnglishDemo = (): JSX.Element => {
 						color: ${color};
 						font-size: ${fontSize}px;
 						font-weight: bold;
-						text-shadow: -1px -1px #fff, 1px -1px #fff, -1px 1px #fff,
+						text-shadow:
+							-1px -1px #fff,
+							1px -1px #fff,
+							-1px 1px #fff,
 							1px 1px #fff;
 						background: transparent;
 						line-height: ${fontSize}px;

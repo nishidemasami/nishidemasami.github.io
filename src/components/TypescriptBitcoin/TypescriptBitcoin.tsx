@@ -52,7 +52,7 @@ const genWif = (privateKey: Uint8Array): string =>
 const TypescriptBitcoin: FC = () => {
 	// 秘密鍵(32バイトの16進数)
 	const [hexPrivateKey, setHexPrivateKey] = useState(
-		bufferToHex(randomBytes(32))
+		bufferToHex(randomBytes(32)),
 	);
 
 	/** 秘密鍵(32バイト) */
@@ -86,13 +86,13 @@ const TypescriptBitcoin: FC = () => {
 	/** 秘密鍵をランダムに生成 */
 	const genRamdamKey = useCallback(
 		() => setHexPrivateKey(bufferToHex(randomBytes(32))),
-		[]
+		[],
 	);
 
 	/** 秘密鍵(WIF形式) */
 	const wif = useMemo(
 		() => genWif(hexToUint8Array(hexPrivateKey)),
-		[hexPrivateKey]
+		[hexPrivateKey],
 	);
 
 	return (

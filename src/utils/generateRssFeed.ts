@@ -36,7 +36,7 @@ export const generateRssFeed = async () => {
 				link: url,
 				date: new Date(post.date),
 			});
-		})
+		}),
 	);
 	fs.writeFileSync('./public/rss.xml', feed.rss2());
 };

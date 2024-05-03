@@ -232,7 +232,7 @@ const ReactLeafletTest = (props: ReactSoundTestProps) => {
 				loading: () => <CircularProgress className="w-full" />,
 				ssr: false,
 			}),
-		[]
+		[],
 	);
 	return (
 		<Main

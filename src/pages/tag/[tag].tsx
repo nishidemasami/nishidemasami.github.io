@@ -48,8 +48,8 @@ export const getStaticPaths: GetStaticPaths<IPostUrl> = async () => {
 			new Set(
 				posts
 					.filter((post) => Number(post.tags?.length) > 0)
-					.flatMap((post) => post.tags!)
-			)
+					.flatMap((post) => post.tags!),
+			),
 		).map((tag) => ({
 			params: {
 				tag,

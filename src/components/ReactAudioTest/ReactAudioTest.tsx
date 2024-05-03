@@ -25,7 +25,7 @@ const ReactAudioTest: React.FunctionComponent = () => {
 	>(undefined);
 	// 音量調節：初期値undefined
 	const [gainState, setGainState] = React.useState<GainNode | undefined>(
-		undefined
+		undefined,
 	);
 
 	React.useEffect(() => {
@@ -75,7 +75,7 @@ const ReactAudioTest: React.FunctionComponent = () => {
 				const myArrayBuffer = audioContext.createBuffer(
 					channels,
 					frameCount,
-					audioContext.sampleRate
+					audioContext.sampleRate,
 				);
 
 				for (let channel = 0; channel < channels; channel += 1) {

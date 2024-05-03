@@ -31,7 +31,7 @@ export function getPostSlugs() {
 	].filter((path) => {
 		const fullPath = join(
 			/.*\.md$/.test(path) ? postsDirectory : pagesPostsDirectory,
-			path
+			path,
 		);
 		const fileContents = fs.readFileSync(fullPath, 'utf8');
 		const { data } = matter(fileContents.replace(/\/\*\*\r?\n/u, ''));
@@ -51,7 +51,7 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
 	} else {
 		fileContents = fs.readFileSync(
 			join(pagesPostsDirectory, `${slug}.tsx`),
-			'utf8'
+			'utf8',
 		);
 		realSlug = `articles/${slug.replace(/(\.md|\.tsx)$/, '')}`;
 	}
@@ -88,7 +88,7 @@ function getPostByPath(path: string, fields: string[] = []): PostItems {
 		: `articles/${path.replace(/(\.md|\.tsx)$/, '')}`;
 	const fullPath = join(
 		/.*\.md$/.test(path) ? postsDirectory : pagesPostsDirectory,
-		path
+		path,
 	);
 	const fileContents = fs.readFileSync(fullPath, 'utf8');
 	const { data, content } = matter(fileContents.replace(/\/\*\*\r?\n/u, ''));

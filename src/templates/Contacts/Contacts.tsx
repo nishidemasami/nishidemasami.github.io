@@ -28,7 +28,7 @@ const Contacts = ({ contacts }: Props) => (
 							<Icon name={name} icon={getIcon(name)} />
 						</a>
 					</li>
-				)
+				),
 			)}
 		</ul>
 	</div>

@@ -151,7 +151,7 @@ const About = (props: AboutProps) => {
 								headers: { 'Content-Type': 'application/json' },
 								referrerPolicy: 'no-referrer',
 								body: JSON.stringify({ email, body, name }),
-							}
+							},
 						).catch(() => ({ ok: false }));
 						setProgress(false);
 						setSuccess(response.ok);

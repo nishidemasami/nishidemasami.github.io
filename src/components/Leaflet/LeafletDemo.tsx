@@ -172,7 +172,7 @@ const LeafletDemo = (): JSX.Element => {
 	const [placeName, setPlaceName] = React.useState('');
 	const selectedMap = React.useMemo(
 		() => maps.find((value) => value.name === mapName)!,
-		[mapName]
+		[mapName],
 	);
 
 	return (
@@ -201,7 +201,7 @@ const LeafletDemo = (): JSX.Element => {
 					label="場所選択"
 					onChange={(event) => {
 						const selected = places.find(
-							(value) => value.name === event.target.value
+							(value) => value.name === event.target.value,
 						);
 						if (selected) {
 							setPlaceName(selected.name);

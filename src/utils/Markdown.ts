@@ -37,7 +37,7 @@ const addDivMermaidPlugin: Plugin = () => {
 					// eslint-disable-next-line no-param-reassign
 					parent.children[index] = newHTML;
 				}
-			}
+			},
 		);
 	};
 };
@@ -50,7 +50,7 @@ export const markdownToHtml = async (markdown: string) =>
 			.use(remarkParse)
 			.use(remarkMath)
 			.use(remarkGfm)
-			.use(remarkPlantUML)
+			.use(remarkPlantUML as any)
 			.use(addDivMermaidPlugin)
 			.use(remarkMermaid, {
 				launchOptions: {
@@ -74,9 +74,9 @@ export const markdownToHtml = async (markdown: string) =>
 					gitGraph: mermaidOption,
 					c4: mermaidOption,
 				},
-			})
+			} as any)
 			.use(remarkRehype, { allowDangerousHtml: true, footnoteLabel: '脚注' })
-			.use(rehypeShiki, {
+			.use(rehypeShiki as any, {
 				highlighter: await getHighlighter({
 					theme: 'github-light',
 				}),
