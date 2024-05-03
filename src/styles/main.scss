@@ -130,11 +130,11 @@
 			}
 		}
 		.plantuml {
-			@apply my-4 max-w-full w-fit overflow-auto;
+			@apply my-4 max-w-full overflow-auto;
 			// @apply shadow-md border-slate-300 border-solid border rounded-md;
 		}
 		.mermaid {
-			@apply my-0 max-w-full w-fit overflow-auto;
+			@apply my-0 max-w-full overflow-auto;
 			// @apply shadow-md border-slate-300 border-solid border rounded-md;
 		}
 		.math-display {
