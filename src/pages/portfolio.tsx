@@ -36,6 +36,7 @@ alt="著者近影：天龍寺、庭園にて"/></div>
 - ネットワークスペシャリスト ライセンス番号: 第 NW-2016-10-01567 号
 - データベーススペシャリスト ライセンス番号: 第 DB-2023-10-01382 号
 - [情報処理安全確保支援士(RISS) 登録番号: 第 007398 号](https://riss.ipa.go.jp/r?r=007398)
+- Trend Micro Certified Professional for Ransomware Threat Defense 認定番号: ATD-0357
 
 ### 最終学歴
 
