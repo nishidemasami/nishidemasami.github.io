@@ -4,7 +4,7 @@ import { useState, FC, useMemo, useCallback } from 'react';
 
 import { Button, TextField } from '@mui/material';
 import { bech32 } from 'bech32';
-import { encode } from 'bs58';
+import bs58 from 'bs58';
 import RIPEMD160 from 'ripemd160';
 import { publicKeyCreate, privateKeyVerify } from 'secp256k1';
 
@@ -31,7 +31,7 @@ const calcBase58Checksum = (data: BinaryLike): Buffer =>
 
 /** BASE58変換＋チェックサム */
 const base58WithChecksum = (data: Uint8Array): string =>
-	encode([...data, ...calcBase58Checksum(data)]);
+	bs58.encode([...data, ...calcBase58Checksum(data)]);
 
 /** ビットコインアドレス(BASE58(P2PKH)形式)生成 */
 const genBitcoinAddressP2PKH = (publicKey: Uint8Array): string =>
