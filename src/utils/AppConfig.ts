@@ -8,10 +8,10 @@ export const AppConfig = {
 	copyright: '©NISHIDE, Masami Some Rights Reserved',
 	pagination_size: 10,
 	sidebar_links: [
-		{ label: 'このサイトについて', path: '/about/' },
-		{ label: 'ポートフォリオ', path: '/portfolio/' },
-		{ label: '連絡フォーム', path: '/contact/' },
-		// { label: 'Blog', path: '/blog/1/' },
+		{ label: 'このサイトについて', path: '/about' },
+		{ label: 'ポートフォリオ', path: '/portfolio' },
+		{ label: '連絡フォーム', path: '/contact' },
+		// { label: 'Blog', path: '/blog/1' },
 	],
 	contacts: {
 		email: 'nishidemasami@gmail.com',

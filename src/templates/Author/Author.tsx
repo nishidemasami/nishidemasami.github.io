@@ -6,7 +6,7 @@ const Author = () => {
 	const { author, description } = AppConfig;
 	return (
 		<div>
-			<Link href="/portfolio/">
+			<Link href="/portfolio/" as="/portfolio/index.html">
 				<img
 					src="/assets/images/author.jpg"
 					className="inline-block m-0 rounded-full bg-clip-padding object-cover"

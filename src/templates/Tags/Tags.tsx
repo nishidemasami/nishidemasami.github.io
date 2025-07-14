@@ -23,7 +23,13 @@ const Tags = (props: ITagPostsProps) => (
 				.map((tag) => {
 					return (
 						<li className="m-0 text-sm" key={tag}>
-							<Link href="/tag/[tag]" as={`/tag/${tag}`}>
+							<Link
+								href={{
+									pathname: '/tag/[tag]',
+									query: { tag },
+								}}
+								as={`/tag/${tag}/index.html`}
+							>
 								{tag}({props.tags.filter((countTag) => countTag === tag).length}
 								)
 							</Link>

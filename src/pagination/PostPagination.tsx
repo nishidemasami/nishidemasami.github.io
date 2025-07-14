@@ -18,14 +18,15 @@ const PostPagination = (props: IPaginationProps) => (
 				<Link
 					href={
 						props.prevPost.slug.startsWith('posts/')
-							? '/posts/[slug]'
+							? {
+									pathname: '/posts/[slug]',
+									query: {
+										slug: props.prevPost.slug.replace(/^.*\/([^/]*)$/, '$1'),
+									},
+								}
 							: `/${props.prevPost.slug}`
 					}
-					as={
-						props.prevPost.slug.startsWith('posts/')
-							? `/${props.prevPost.slug}`
-							: undefined
-					}
+					as={`/${props.prevPost.slug}/index.html`}
 				>
 					{props.prevPost.title}
 				</Link>
@@ -39,14 +40,15 @@ const PostPagination = (props: IPaginationProps) => (
 				<Link
 					href={
 						props.nextPost.slug.startsWith('posts/')
-							? '/posts/[slug]'
+							? {
+									pathname: '/posts/[slug]',
+									query: {
+										slug: props.nextPost.slug.replace(/^.*\/([^/]*)$/, '$1'),
+									},
+								}
 							: `/${props.nextPost.slug}`
 					}
-					as={
-						props.nextPost.slug.startsWith('posts/')
-							? `/${props.nextPost.slug}`
-							: undefined
-					}
+					as={`/${props.nextPost.slug}/index.html`}
 				>
 					{props.nextPost.title}
 				</Link>

@@ -19,8 +19,15 @@ const BlogGallery = (props: IBlogGalleryProps) => (
 					className="mb-3 break-all justify-between clear-both p-4 m-2 rounded-lg overflow-hidden shadow-md border-0 bg-white"
 				>
 					<Link
-						href={postFlag ? '/posts/[slug]' : `/${elt.slug}`}
-						as={postFlag ? `/${elt.slug}` : undefined}
+						href={
+							postFlag
+								? {
+										pathname: '/posts/[slug]',
+										query: { slug: elt.slug.replace(/^.*\/([^/]*)$/, '$1') },
+									}
+								: `/${elt.slug}`
+						}
+						as={`/${elt.slug}/index.html`}
 					>
 						<p className="text-left text-2xl ">{elt.title}</p>
 					</Link>

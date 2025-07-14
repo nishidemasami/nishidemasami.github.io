@@ -18,10 +18,13 @@ const Recents = (props: IRecentPostsProps) => (
 						<Link
 							href={
 								post.slug.startsWith('posts/')
-									? '/posts/[slug]'
+									? {
+											pathname: '/posts/[slug]',
+											query: { slug: post.slug.replace(/^.*\/([^/]*)$/, '$1') },
+										}
 									: `/${post.slug}`
 							}
-							as={post.slug.startsWith('posts/') ? `/${post.slug}` : undefined}
+							as={`/${post.slug}/index.html`}
 						>
 							{post.title}
 						</Link>

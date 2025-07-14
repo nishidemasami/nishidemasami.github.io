@@ -17,11 +17,11 @@ GitHub ActionsでCI/CDをしています。
 
 ### 著者について
 
-[ポートフォリオ](/portfolio)
+[ポートフォリオ](/portfolio/index.html)
 
 ### お問い合わせ
 
-[連絡フォーム](/contact)
+[連絡フォーム](/contact/index.html)
 `;
 
 type AboutProps = {

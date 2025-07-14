@@ -212,7 +212,13 @@ const ReactSoundTest = (props: ReactSoundTestProps) => (
 					className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
 					key={tag}
 				>
-					<Link href="/tag/[tag]" as={`/tag/${tag}`}>
+					<Link
+						href={{
+							pathname: '/tag/[tag]',
+							query: { tag },
+						}}
+						as={`/tag/${tag}/index.html`}
+					>
 						#{tag}
 					</Link>
 				</li>

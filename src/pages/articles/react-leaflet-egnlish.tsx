@@ -49,7 +49,7 @@ type ReactSoundTestProps = {
 const firstArticle = `Next.jsとReactとTypeScriptで地図に地名を英字表記で表示したいこと、ありますよね。  
 僕はあるので自分用にメモです。<sup>[<a target="_blank" href="https://www.amazon.co.jp/dp/4873119049?&linkCode=ll1&tag=nishidemasami-22&linkId=269abe7d00fb75538542192fd6ea40b4&language=ja_JP&ref_=as_li_ss_tl" rel="noreferrer" >参考文献</a>]</sup>
 
-[前回のレポート](https://nishidemasami.github.io/articles/react-leaflet/)の続きです。
+[前回のレポート](https://nishidemasami.github.io/articles/react-leaflet/index.html)の続きです。
 
 国土地理院が、地図データをgeojson形式で公開してくれています。  
 [ベクトルタイルとその提供実験について 国土地理院](https://maps.gsi.go.jp/development/vt.html)  
@@ -262,7 +262,13 @@ const ReactLeafletTest = (props: ReactSoundTestProps) => {
 						className="px-2 py-1 m-1 rounded-full overflow-hidden shadow-md border-0 bg-white w-fit break-all"
 						key={tag}
 					>
-						<Link href="/tag/[tag]" as={`/tag/${tag}`}>
+						<Link
+							href={{
+								pathname: '/tag/[tag]',
+								query: { tag },
+							}}
+							as={`/tag/${tag}/index.html`}
+						>
 							#{tag}
 						</Link>
 					</li>

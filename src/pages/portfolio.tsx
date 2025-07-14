@@ -44,10 +44,10 @@ alt="著者近影：天龍寺、庭園にて"/></div>
 
 ### 得意なプログラミング言語
 
-- [TypeScript](/tag/TypeScript/)
-- [JavaScript](/tag/JavaScript/)
-- [Rust](/tag/Rust/)
-- [Java](/tag/Java/)
+- [TypeScript](/tag/TypeScript/index.html)
+- [JavaScript](/tag/JavaScript/index.html)
+- [Rust](/tag/Rust/index.html)
+- [Java](/tag/Java/index.html)
 - Ruby
 - Python
 - PHP
@@ -55,10 +55,10 @@ alt="著者近影：天龍寺、庭園にて"/></div>
 
 ### 得意なライブラリ
 
-- [React](/tag/React/)
-- [JavaScript](/tag/JavaScript/)
-- [Next.js](/tag/Next.js/)
-- [Gatsby.js](/tag/Gatsby.js/)
+- [React](/tag/React/index.html)
+- [JavaScript](/tag/JavaScript/index.html)
+- [Next.js](/tag/Next.js/index.html)
+- [Gatsby.js](/tag/Gatsby.js/index.html)
 - Tailwind CSS
 - Spring Framework
 - Express.js
@@ -71,8 +71,8 @@ alt="著者近影：天龍寺、庭園にて"/></div>
 
 ### 得意な技術
 
-- [Docker](/tag/Docker/)
-- [Tor](/tag/Tor/)
+- [Docker](/tag/Docker/index.html)
+- [Tor](/tag/Tor/index.html)
 - tRPC
 - Prisma
 - NextAuth
