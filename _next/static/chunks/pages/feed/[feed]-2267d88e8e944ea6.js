@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[27],{26936:(_,e,n)=>{"use strict";n.r(e),n.d(e,{__N_SSG:()=>u,default:()=>t});var s=n(37876),u=!0;let t=()=>(0,s.jsx)(s.Fragment,{})},93852:(_,e,n)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/feed/[feed]",function(){return n(26936)}])}},_=>{_.O(0,[636,593,792],()=>_(_.s=93852)),_N_E=_.O()}]);
