@@ -21,7 +21,7 @@ export const AppConfig = {
 		github: 'nishidemasami',
 		rss: '',
 		vkontakte: '',
-		linkedin: 'masami-nishide-66820bb2',
+		linkedin: '',
 		instagram: 'nishidemasami',
 		line: '',
 		gitlab: '',
